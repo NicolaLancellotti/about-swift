@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<playground version='6.0' target-platform='osx' display-mode='rendered'>
+    <pages>
+        <page name='Constants and Variables'/>
+        <page name='Control Flow'/>
+        <page name='Optionals'/>
+        <page name='Functions'/>
+        <page name='Tuples'/>
+        <page name='Structures'/>
+        <page name='Enumerations'/>
+        <page name='Classes'/>
+        <page name='Optional Chaining'/>
+        <page name='Closures'/>
+        <page name='Type Casting'/>
+        <page name='Protocols'/>
+        <page name='Extensions'/>
+        <page name='Errors'/>
+        <page name='Generics'/>
+        <page name='Metatype Type'/>
+        <page name='Operators'/>
+        <page name='Access Control'/>
+        <page name='Copying'/>
+        <page name='Mix And Match'/>
+        <page name='Miscellaneous'/>
+        <page name='Checking API Availability'/>
+    </pages>
+</playground>
