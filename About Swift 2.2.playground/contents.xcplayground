@@ -23,5 +23,6 @@
         <page name='Mix And Match'/>
         <page name='Miscellaneous'/>
         <page name='Checking API Availability'/>
+        <page name='Created by'/>
     </pages>
 </playground>
