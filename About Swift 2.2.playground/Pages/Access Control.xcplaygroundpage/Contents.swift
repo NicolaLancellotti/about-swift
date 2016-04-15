@@ -38,7 +38,7 @@ private class SomePrivateClass {        // explicitly private class
 }
 
 
-//: ## Set
+//: ## Swift allows the get of a property to be more accessible than its set
 public struct TrackedString {
     
     public private(set) var numberOfEdits = 0
