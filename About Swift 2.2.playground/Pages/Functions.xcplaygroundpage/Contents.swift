@@ -80,6 +80,27 @@ var a = 1
 var b = 2
 swap(&a, &b)
 
+/*:
+ ## Function overloading
+ 
+ If a function with the same name but a distinct signature already exists, it just defines a new overload. Keep in mind that Swift allows function overloading even when two signatures differ only in their return type.
+ */
+func foo(aString: String) {
+    print(aString)
+}
+
+func foo() {
+    print("Foo!")
+}
+
+func foo() -> String {
+    return "Foo!"
+}
+
+foo("Hello, world!")
+foo() as Void
+var value: String = foo()
+
 //: ## Nested Functions
 func globalFunction() {
     var value = 1
