@@ -14,31 +14,15 @@ func funcWithReturnValue() -> Bool {
     return false
 }
 //: ## Functions With Parameters
-
-//: * Objective-C Method Style
-func printDifferenceOf(x: Int, less y: Int) {
+func printDifference(of x: Int, less y: Int) {
     print("\(x - y)")
 }
-printDifferenceOf(1, less: 2)
+printDifference(of: 1, less: 2)
 
-//: * C Function Style
-
-func printDifference(x: Int, _ y: Int) {
-    print("\(x - y)")
+func sum(x: Int, _ y: Int) -> Int {
+    return x + y
 }
-printDifference(1, 2)
-
-//: * Other
-func printDifference(minuend x: Int, subtrahend y: Int) {
-    print("\(x - y)")
-}
-printDifference(minuend: 10, subtrahend: 6)
-
-
-func printAnotherDifferenceOf(x: Int, less: Int) {
-    print("\(x - less)")
-}
-printAnotherDifferenceOf(10, less: 6)
+sum(1, 2)
 
 //: ## Functions With Default Parameter Values
 func funcWithDefaultParameterValue(param: Int = 12) {
@@ -85,8 +69,12 @@ swap(&a, &b)
  
  If a function with the same name but a distinct signature already exists, it just defines a new overload. Keep in mind that Swift allows function overloading even when two signatures differ only in their return type.
  */
-func foo(aString: String) {
-    print(aString)
+func foo(value: String) {
+    print(value)
+}
+
+func foo(value: Int) {
+    print(value)
 }
 
 func foo() {
@@ -98,6 +86,7 @@ func foo() -> String {
 }
 
 foo("Hello, world!")
+foo(1)
 foo() as Void
 var value: String = foo()
 
@@ -120,8 +109,8 @@ func doSomething(optionalValue: Int?) {
     }
     print("value: \(value)")
 }
-var value: Int? = nil
-doSomething(value)
+var optionalValue: Int? = nil
+doSomething(optionalValue)
 
 
 /*:
