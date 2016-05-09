@@ -1,6 +1,5 @@
 /*:
  # Constants and Variables
- Global constants and variables are always computed lazily.
  */
 
 /*:
