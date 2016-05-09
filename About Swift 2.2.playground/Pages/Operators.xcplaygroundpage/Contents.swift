@@ -119,7 +119,7 @@ myVector += Vector2D(x: 1, y: 1)
 myVector.x
 myVector.y
 
-//: Overload the ~= operator to match a two type.
+//: Pattern matching
 func ~=(pattern: String, value: Int) -> Bool {
     return pattern == "\(value)"
 }
@@ -133,10 +133,6 @@ case ("0", "0"):
 default:
     print("The point is at (\(point.0), \(point.1)).")
 }
-
-
-
-
 /*:
  Prefix and Postfix Operators
  
