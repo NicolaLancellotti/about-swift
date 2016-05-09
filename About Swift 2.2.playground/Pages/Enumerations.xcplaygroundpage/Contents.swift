@@ -5,39 +5,39 @@
 //: Enumeration case values without associated values are hashable by default.
 
 enum CompassPoint {
-    case North
-    case South
-    case East, West
+    case north
+    case south
+    case east, west
 }
 
-var aCompassPoint = CompassPoint.West
-aCompassPoint = .East
+var aCompassPoint = CompassPoint.west
+aCompassPoint = .east
 
 enum OnOffSwitch {
-    case On, Off
+    case on, off
     
     mutating func toggle() {
         switch self {
-        case Off:
-            self = On
-        case On:
-            self = Off
+        case off:
+            self = on
+        case on:
+            self = off
         }
     }
 }
 
 
 enum TemperatureUnit {
-    case Kelvin, Celsius, Fahrenheit
+    case kelvin, celsius, fahrenheit
     
     init?(symbol: Character) {
         switch symbol {
         case "K":
-            self = .Kelvin
+            self = .kelvin
         case "C":
-            self = .Celsius
+            self = .celsius
         case "F":
-            self = .Fahrenheit
+            self = .fahrenheit
         default:
             return nil
         }
@@ -96,7 +96,7 @@ enum ASCIIControlCharacter: Character {
 
 
 enum Planet: Int {
-    case Mercury = 1, Venus, Earth, Mars, Jupiter , Saturn, Uranus, Neptune
+    case mercury = 1, venus, earth, mars, jupiter , saturn, uranus, neptune
 }
 
 
@@ -118,15 +118,15 @@ let aPlanet = Planet(rawValue: 2)
  */
 
 enum ArithmeticExpression {
-    case Number(Int)
-    indirect case Addition(ArithmeticExpression, ArithmeticExpression)
-    indirect case Multiplication(ArithmeticExpression, ArithmeticExpression)
+    case number(Int)
+    indirect case addition(ArithmeticExpression, ArithmeticExpression)
+    indirect case multiplication(ArithmeticExpression, ArithmeticExpression)
 }
 
 indirect enum ArithmeticExpression2 {
-    case Number(Int)
-    case Addition(ArithmeticExpression2, ArithmeticExpression2)
-    case Multiplication(ArithmeticExpression2, ArithmeticExpression2)
+    case number(Int)
+    case addition(ArithmeticExpression2, ArithmeticExpression2)
+    case multiplication(ArithmeticExpression2, ArithmeticExpression2)
 }
 
 /*:
@@ -144,6 +144,5 @@ let enumValues: [Shape] = [.square(side: 10), .square(side: 10), .rectangle(base
 for case .square(let value) in enumValues where value == 10 {
     
 }
-
 
 //: [Next](@next)
