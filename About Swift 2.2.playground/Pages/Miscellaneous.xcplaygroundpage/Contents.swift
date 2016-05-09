@@ -31,9 +31,9 @@ struct Increaser {
 }
 
 /*:
- ## One-Time Initialization
+ ## Lazy One-Time Initialization
  
- In Swift, global constants and stored type properties are guaranteed to be initialized only once, even when accessed across multiple threads simultaneously.
+ The lazy initializer for the global variables, global constants and stored type properties is run the first time that global is accessed, and is launched as dispatch_once to make sure that the initialization is atomic.
  */
 
 /*:
