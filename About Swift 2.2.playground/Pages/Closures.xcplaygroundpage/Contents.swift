@@ -143,34 +143,58 @@ functionWithClosure({ () -> Bool in
 
 /*:
  ##  Closure capture list
+
+ You can use a capture list to explicitly control how values are captured in a closure.
  
- A strong reference cycle can occur if you assign a closure to a property of a class instance, and the body of that closure captures the instance. This capture might occur because the closure’s body accesses a property of the instance, or because the closure calls a method on the instance. In either case, these accesses cause the closure to “capture” self, creating a strong reference cycle.
+ The entries in the capture list are initialized when the closure is created. For each entry in the capture list, a constant is initialized to the value of the constant or variable that has the same name in the surrounding scope.
  
- Swift requires you to write self.someProperty or self.someMethod() (rather than just someProperty or someMethod()) whenever you refer to a member of self within a closure. This helps you remember that it’s possible to capture self by accident.
- 
- 
- * Define a capture in a closure as an unowned reference when the closure and the instance it captures will always refer to each other, and will always be deallocated at the same time.
- 
- * Define a capture as a weak reference when the captured reference may become nil at some point in the future.
+ If the type of the expression’s value is a class, you can mark the expression in a capture list with `weak` or `unowned` to capture a weak or unowned reference to the expression’s value.
+
+ If you use a capture list, you must also use the `in` keyword, even if you omit the parameter names, parameter types, and return type.
  
  */
-
-
-class ClassWithClosureCaptureList {
-    var delegate: NSObject?
-    
-    lazy var someClosure: (Int, String) -> () = {
-        [unowned self, weak delegate = self.delegate] (value0: Int, value1: String) -> () in
-        
-        self.method()
-    }
-    
-    func method() {
-        
-    }
+var a = 0
+var b = 0
+let closure4 = { [a] in
+    print(a, b)
 }
 
+a = 10
+b = 10
+closure4() // Prints "0 10"
 
+//:This distinction is not visible when the captured variable’s type has reference semantics.
+
+class SimpleClass {
+    var value: Int = 0
+}
+var x = SimpleClass()
+var y = SimpleClass()
+let closure5 = { [x] in
+    print(x.value, y.value)
+}
+
+x.value = 10
+y.value = 10
+closure5() // Prints "10 10"
+
+/*:
+ - note:
+ A strong reference cycle can occur if you assign a closure to a property of a class instance, and the body of that closure captures the instance. This capture might occur because the closure’s body accesses a property of the instance, or because the closure calls a method on the instance. In either case, these accesses cause the closure to “capture” self, creating a strong reference cycle.\
+ \
+ Swift requires you to write self.someProperty or self.someMethod() (rather than just someProperty or someMethod()) whenever you refer to a member of self within a closure. This helps you remember that it’s possible to capture self by accident.
+ */
+
+class ClassWithClosureCaptureList {
+    
+    var value = ""
+    
+    lazy var someClosure: () -> () = {
+        [unowned self] in
+        print(self.value)
+    }
+    
+}
 
 //: ## Setting a Default Property Value with a Closure or Function
 class ClassWithSetPropertyWithClosure {
