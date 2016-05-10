@@ -13,7 +13,24 @@ functionWithoutParameters()
 func funcWithReturnValue() -> Bool {
     return false
 }
-//: ## Functions With Parameters
+/*:
+ ## Functions With Parameters
+ Function parameters have both an external parameter name and a local parameter name. An external parameter name is used to label arguments passed to a function call. A local parameter name is used in the implementation of the function.
+ 
+ By default, the first parameter omits its external name, and the second and subsequent parameters use their local name as their external name
+ */
+func functionWithParameters(localParameterName1: Int,
+                            externalParameterName2 localParameterName2: Int,
+                                                   localParameterName3: Int,
+                                                   _ localParameterName4: Int) {
+    let sum = localParameterName1 + localParameterName2 + localParameterName3 + localParameterName4
+    print("Sum: \(sum)")
+}
+
+functionWithParameters(1, externalParameterName2: 2, localParameterName3: 3, 4)
+
+
+
 func printDifference(of x: Int, less y: Int) {
     print("\(x - y)")
 }
@@ -26,8 +43,9 @@ sum(1, 2)
 
 //: ## Functions With Default Parameter Values
 func funcWithDefaultParameterValue(param: Int = 12) {
-    
+    print("Value: \(param)")
 }
+
 funcWithDefaultParameterValue()
 funcWithDefaultParameterValue(1)
 
@@ -62,8 +80,9 @@ func swapTwoInts(inout a: Int, inout _ b: Int) {
 }
 var a = 1
 var b = 2
-swap(&a, &b)
-
+swapTwoInts(&a, &b)
+a
+b
 /*:
  ## Function overloading
  
@@ -89,13 +108,15 @@ foo("Hello, world!")
 foo(1)
 foo() as Void
 var value: String = foo()
-
 //: ## Nested Functions
 func globalFunction() {
     var value = 1
+    
     func nestedFunction() {
         print(value)
     }
+    
+    nestedFunction()
 }
 /*:
  ## Early Exit
@@ -109,6 +130,7 @@ func doSomething(optionalValue: Int?) {
     }
     print("value: \(value)")
 }
+
 var optionalValue: Int? = nil
 doSomething(optionalValue)
 
@@ -132,6 +154,7 @@ func functionWithDefers() {
         print("Second defer")
     }
 }
+
 functionWithDefers()
 
 
