@@ -3,6 +3,7 @@
 //: # Control Flow
 let condition1 = false
 let condition2 = false
+let condition3 = false
 
 //: ## For-In
 
@@ -12,12 +13,17 @@ for i in 0...4  {
 }
 
 //: 0 <= i < 4
-for i in 0..<4 {
+for _ in 0..<4 {
     
 }
+/*:
+ * callout(Wildcard Pattern):
+ A wildcard pattern matches and ignores any value and consists of an underscore (_). Use a wildcard pattern when you don’t care about the values being matched against.
+ */
 
 //: i = 0, 2, 4
-for i in 0...4 where i % 2 == 0 {
+for i in 0...4 where i % 2 == 0  {
+    
 }
 
 
@@ -47,8 +53,9 @@ if condition1 {
 
 /*:
  ### Switch
- * Every switch statement must be exhaustive.
+ * Every switch statement must be exhaustive. (If it’s not appropriate to provide a case for every possible value, you can define a default case to cover any values that are not addressed explicitly).
  * The body of each case must contain at least one executable statement.
+ * No Implicit Fallthrough.
  */
 
 
@@ -76,7 +83,6 @@ default:
     print("\(number) is odd")
 }
 
-
 //: Interval Matching
 number = 5
 switch number {
@@ -99,7 +105,11 @@ default:
 
 label1: while condition1 {
     while condition2 {
-        continue label1
+        if condition3 {
+            continue label1
+        }
+        // do something
+        
     }
 }
 
