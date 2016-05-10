@@ -84,23 +84,23 @@ var red:Int, green, blue: Double
  */
 
 var value = 10 {
-willSet {
-    print("new: \(newValue) actual: \(value)")
-}
-didSet{
-    print("old: \(oldValue) actual: \(value)")
-}
+    willSet {
+        print("new: \(newValue) actual: \(value)")
+    }
+    didSet{
+        print("old: \(oldValue) actual: \(value)")
+    }
 }
 
 value = 100
 
 var anInt = 10 {
-willSet(newInt) {
-    print("new: \(newInt) actual: \(anInt)")
-}
-didSet(oldInt) {
-    print("old: \(oldInt) actual: \(anInt)")
-}
+    willSet(newInt) {
+        print("new: \(newInt) actual: \(anInt)")
+    }
+    didSet(oldInt) {
+        print("old: \(oldInt) actual: \(anInt)")
+    }
 }
 
 /*:
@@ -111,12 +111,12 @@ didSet(oldInt) {
 var km = 1.0
 
 var miles: Double {
-get {
-    return km * 0.621371
-}
-set {
-    km = newValue * 1.60934
-}
+    get {
+        return km * 0.621371
+    }
+    set {
+        km = newValue * 1.60934
+    }
 }
 
 
@@ -130,8 +130,7 @@ miles
 var miles2: Double {
     return km * 0.621371
 }
+
 miles2
-
-
 //: [Next](@next)
 

@@ -85,7 +85,9 @@ if let definiteString = assumedString {
 /*:
  ## Nil Coalescing Operator
  
- (a ?? b) is the same of a != nil ? a! : b
+ `let c = a ?? b`\
+ is the same of \
+ `let c = a != nil ? a! : b`
  
  */
 
