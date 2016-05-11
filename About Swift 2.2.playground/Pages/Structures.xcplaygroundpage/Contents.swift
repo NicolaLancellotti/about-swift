@@ -2,8 +2,14 @@
 
 //: # Structures
 
+/*:
+ - note:
+ Structures are Value Types
+ */
+
 //: ## Structures With Default Values
 struct Person {
+    // Properties
     var name = "Nicola"
     var age = 23
     let male = true
@@ -26,6 +32,7 @@ aPerson = Person(name: "Nicola", age: 23)
 struct Dog {
     var name: String
     var age: Int
+    let male: Bool
 }
 
 /*:
@@ -34,7 +41,7 @@ struct Dog {
  Unlike a default initializer, the structure receives a memberwise initializer even if it has stored properties that do not have default values.
  */
 
-let aDog = Dog(name: "dogName", age: 5);
+let aDog = Dog(name: "dogName", age: 5, male: true);
 
 
 /*:
@@ -116,6 +123,8 @@ struct StructureWithFailableInitializers {
     }
 }
 
+var aStructure = StructureWithFailableInitializers()
+
 //: ## Accessing Properties
 aPerson.name = "Nicola" // Set
 let name = aPerson.name // Get
@@ -130,7 +139,10 @@ let name = aPerson.name // Get
  
  * Must be variables because constant properties must always have a value before initialization completes.
  * Can't have Property Observers.
- 
+ */
+
+/*:
+ - important:
  If a lazy property has not yet been initialized and is accessed by more than one thread at the same time, there is no guarantee that the property will be initialized only once.
  */
 
