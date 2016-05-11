@@ -4,6 +4,11 @@
 
 //: Enumeration case values without associated values are hashable by default.
 
+/*:
+ - note:
+ Enumeration are Value Types
+ */
+
 enum CompassPoint {
     case north
     case south
@@ -128,6 +133,24 @@ indirect enum ArithmeticExpression2 {
     case addition(ArithmeticExpression2, ArithmeticExpression2)
     case multiplication(ArithmeticExpression2, ArithmeticExpression2)
 }
+
+let five = ArithmeticExpression.number(5)
+let four = ArithmeticExpression.number(4)
+let sum = ArithmeticExpression.addition(five, four)
+let product = ArithmeticExpression.multiplication(sum, ArithmeticExpression.number(2))
+
+func evaluate(expression: ArithmeticExpression) -> Int {
+    switch expression {
+    case let .number(value):
+        return value
+    case let .addition(left, right):
+        return evaluate(left) + evaluate(right)
+    case let .multiplication(left, right):
+        return evaluate(left) * evaluate(right)
+    }
+}
+
+print(evaluate(product))
 
 /*:
  ## Computed properties and Methods

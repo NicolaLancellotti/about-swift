@@ -10,6 +10,11 @@ import Foundation
  * Closure expressions are unnamed closures written in a lightweight syntax that can capture values from their surrounding context.
  */
 
+/*:
+ - note:
+ Closures are Reference Types
+ */
+
 //: ### The type of a closure is a tuple
 func doSomething(par1: Int, par2: Bool) {
     
@@ -108,10 +113,6 @@ closure1()
 var closure2 = makeIncrementer(forIncrement: 50)
 closure2()
 closure2()
-
-//: ## Closures are Reference Types
-var closure3 = closure2
-closure3()
 
 /*:
  ## Nonescaping Closures

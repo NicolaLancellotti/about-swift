@@ -3,6 +3,11 @@ import Foundation
 //: # Classes
 
 /*:
+ - note:
+ Classes are Reference Types
+ */
+
+/*:
  ## Identity Operators
  * Identical to ===
  * Not identical to !==

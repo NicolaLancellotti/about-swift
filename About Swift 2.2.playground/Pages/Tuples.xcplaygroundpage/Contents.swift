@@ -5,6 +5,11 @@
  Tuples are useful for temporary groups of related values.
  */
 
+/*:
+ - note:
+ Tuples are Value Types
+ */
+
 var yellowRGB = (red: 1, green: 1, blue: 0)
 yellowRGB.red
 yellowRGB.green
@@ -78,7 +83,11 @@ for (x, _) in points {
  ## Functions can Return a Tuple.
  */
 func funcReturnTuple() -> (par1: Bool, par2: Bool) {
-    return (true, true)
+    return (true, false)
 }
+
+let value = funcReturnTuple()
+value.par1
+value.par2
 
 //: [Next](@next)
