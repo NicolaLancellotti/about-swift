@@ -13,6 +13,8 @@ functionWithoutParameters()
 func funcWithReturnValue() -> Bool {
     return false
 }
+
+let aBool = funcWithReturnValue()
 /*:
  ## Functions With Parameters
  Function parameters have both an external parameter name and a local parameter name. An external parameter name is used to label arguments passed to a function call. A local parameter name is used in the implementation of the function.
@@ -22,7 +24,7 @@ func funcWithReturnValue() -> Bool {
 func functionWithParameters(localParameterName1: Int,
                             externalParameterName2 localParameterName2: Int,
                                                    localParameterName3: Int,
-                                                   _ localParameterName4: Int) {
+                                                 _ localParameterName4: Int) {
     let sum = localParameterName1 + localParameterName2 + localParameterName3 + localParameterName4
     print("Sum: \(sum)")
 }
@@ -78,9 +80,12 @@ func swapTwoInts(inout a: Int, inout _ b: Int) {
     a = b
     b = temporaryA
 }
+
 var a = 1
 var b = 2
+
 swapTwoInts(&a, &b)
+
 a
 b
 /*:
@@ -110,14 +115,18 @@ foo() as Void
 var value: String = foo()
 //: ## Nested Functions
 func globalFunction() {
-    var value = 1
+    var variable = 1
     
     func nestedFunction() {
-        print(value)
+        // Nested functions can capture values from their enclosing function.
+        variable = 2
+        print("Variable: \(variable)")
     }
     
     nestedFunction()
 }
+
+globalFunction()
 /*:
  ## Early Exit
  A guard statement is used to transfer program control out of a scope if one or more conditions aren’t met.
@@ -163,7 +172,6 @@ functionWithDefers()
  
  You can mark a function or method type with @noreturn attribute to indicate that the function or method doesn’t return to its caller.
  */
-
 @noreturn func loop() {
     while true {
         
@@ -173,6 +181,4 @@ functionWithDefers()
 @noreturn func terminateApp() {
     abort()
 }
-
-
 //: [Next](@next)

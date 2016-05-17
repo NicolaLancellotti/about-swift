@@ -33,32 +33,24 @@ if possibleString != nil {
  */
 
 if let constantString = possibleString {
-    constantString
+    print("Value: \(constantString)")
 }
+
 
 var possibleName: String? = "Nicola"
 var possibleAge: Int? = 23
 
 if let name = possibleName, let age = possibleAge {
-    print("Name: \(name)")
-    print("Age: \(age)")
-}
-
-possibleName = nil
-if let name = possibleName, let age = possibleAge {
-    print("Name: \(name)")
-    print("Age: \(age)")
+    print("Name: \(name) Age: \(age)")
 } else {
-    print("nil")
+    print("possibleName is nil or possibleAge is nil")
 }
 
 if let name = possibleName, let age = possibleAge where age > 23 {
-    print("Name: \(name)")
-    print("Age: \(age)")
+    print("Name: \(name) Age: \(age)")
 } else {
-    print("Age isn't > 22")
+    print("possibleName is nil or possibleAge is nil or age isn't > 23")
 }
-
 /*:
  ## Implicitly Unwrapped Optionals
  
@@ -81,7 +73,6 @@ if assumedString != nil {
 if let definiteString = assumedString {
     print(definiteString)
 }
-
 /*:
  ## Nil Coalescing Operator
  
@@ -98,6 +89,4 @@ var colorNameToUse = userDefinedColorName ?? defaultColorName
 
 userDefinedColorName = "green"
 colorNameToUse = userDefinedColorName ?? defaultColorName
-
-
 //: [Next](@next)
