@@ -109,6 +109,14 @@ struct Rect {
         self.init(origin: Point(x: originX, y: originY), size: size)
     }
 }
+
+let aRect1 = Rect()
+
+let aRect2 = Rect(center: Point(x: 1, y: 10),
+                  size: Size(width: 100, height: 80))
+
+let aRect3 = Rect(origin: Point(x: 100, y: 90),
+                  size: Size(width: 90, height: 90))
 /*:
  ## Failable Initializers
  
@@ -150,6 +158,10 @@ struct StructureWithLazyStoredProperty {
     lazy var property = Person()
 }
 
+var aStructureWithLazyStoredProperty = StructureWithLazyStoredProperty()
+
+aStructureWithLazyStoredProperty.property // The instance of person has been created.
+
 /*:
  ## Computed Properties
  Like Computed Variables.
@@ -173,6 +185,8 @@ StructureWithTypeProperties.computedTypeProperty
 
 struct StructureWithMethods {
     
+    var storedProperty = 1
+    
     //_____________________________________________
     // Instance methods
     
@@ -181,9 +195,14 @@ struct StructureWithMethods {
     }
     
     // Mutating methods
+    
     // Properties can be modified from within mutating methods.
+    mutating func mutatingInstanceMethod2(value: Int) {
+        self.storedProperty = value
+    }
+    
     // Mutating methods can assign an entirely new instance to the implicit self property.
-    mutating func mutatingInstanceMethod() {
+    mutating func mutatingInstanceMethod1() {
         self = StructureWithMethods()
     }
     

@@ -7,133 +7,52 @@ import Foundation
  Classes are Reference Types
  */
 
-/*:
- ## Identity Operators
- * Identical to ===
- * Not identical to !==
- */
-class ClassIdentityOperators {
-    
-}
-let object1 = ClassIdentityOperators()
-let object2 = ClassIdentityOperators()
-let object3 = object1
 
-object1 === object2
-object1 === object3
+//: ## Inheritance
 
-/*:
- ## Methods and Properties
- 
- Property observers, Computed properties and Subscripts are like structures.
- */
-
-class ClassWithMethodsAndProperties {
+class SomeSuperclass {
     
     //_____________________________________________
     // Instance Property
     
-    // Allow subclasses to Overriding:
-    //      Property Getters Setters.
-    //      Property Observers.
     var storedProperty = ""
     
-    var computedProperty: Int {
-        set { }
-        get { return 0 }
-    }
-    
-    // Do not allow subclasses to Overriding:
-    //      Property Getters Setters.
-    //      Property Observers.
-    final var finalStoredProperty = ""
-    
-    final var finalComputedProperty: Int {
-        set { }
-        get { return 0 }
+    var computedProperty: String {
+        return "SomeSuperclass"
     }
     
     //_____________________________________________
-    // Instance Instance Methods
+    // Subscripts
     
-    // Allow subclasses to override the superclass’s implementation.
+    subscript(index: Int) -> Int {
+        get {
+            return 0
+        }
+        set {
+            
+        }
+    }
+    
+    //_____________________________________________
+    // Instance Methods
+    
     func instanceMethod() {
         
     }
     
-    // Do not allow subclasses to override the superclass’s implementation.
-    final func finalInstanceMethod() {
-        
-    }
-    
     //_____________________________________________
-    // Type Property
-    
-    // Allow subclasses to Overriding:
-    //      Property Getters Setters.
-    //      Property Observers.
+    // Type Computed Property
     
     class var typeComputedProperty: Int {
         set { }
         get { return 0 }
     }
     
-    // Do not allow subclasses to Overriding:
-    //      Property Getters Setters.
-    //      Property Observers.
-    
-    static var staticTypeComputedProperty: Int {
-        set { }
-        get { return 0 }
-    }
-    
-    // class stored propety aren't supported, only static stored property are supported
-    // so it is not possible Overriding Property Getters Setters and Overriding Property Observers.
-    static var typeStoredProperty = 0
-    
     //_____________________________________________
     // Type Methods
     
-    // Allow subclasses to override the superclass’s implementation.
     class func typeClassMethod() {
         
-    }
-    
-    // Do not allow subclasses to override the superclass’s implementation.
-    static func staticTypeClassMethod() {
-        
-    }
-    
-}
-
-/*:
- ## Requiring Dynamic Dispatch
- 
- When Swift APIs are imported by the Objective-C runtime, there are no guarantees of dynamic dispatch for properties, methods, subscripts, or initializers. The Swift compiler may still devirtualize or inline member access to optimize the performance of your code, bypassing the Objective-C runtime.
- 
- 
- You can use the **dynamic** modifier to require that access to members be dynamically dispatched through the Objective-C runtime.
- */
-class ClassWithRequiringDynamicDispatch {
-    
-    dynamic var variable: String = ""
-    
-    dynamic func foo() {
-        
-    }
-}
-
-//: ## Inheritance
-class SomeSuperclass {
-    
-    var description: String {
-        return "SomeSuperclass"
-    }
-    
-    var someProperty: Double = 0.0
-    
-    func someMethod() {
-        print("SomeSuperclass - someMethod")
     }
     
 }
@@ -142,15 +61,16 @@ class SomeSubclass: SomeSuperclass {
     // You must always state both the name and the type of the property you are overriding.
     
     
+    //_____________________________________________
     // Overriding Property Getters and Setters
     //
     // You can present an inherited read-only property as a read-write property by providing both a
-    // getter and a setter but not the contrary.
-    override var description: String {
-        return super.description + "- SomeSubclass"
+    // getter and a setter but not the other way around.
+    override var computedProperty: String {
+        return super.computedProperty + "- SomeSubclass"
     }
     
-    
+    //_____________________________________________
     // Overriding Property Observers
     // Property observers can be added to any property (stored or computed property).
     
@@ -162,25 +82,85 @@ class SomeSubclass: SomeSuperclass {
     
     // You cannot add property observers to inherited constant stored properties or inherited read-only
     // computed properties.
-    override var someProperty: Double {
+    override var storedProperty: String {
         didSet {
             
         }
     }
     
+    //_____________________________________________
     // Overriding Methods
-    override func someMethod() {
+    override func instanceMethod() {
         print("SomeSubclass - someMethod")
     }
     
 }
 
 /*:
+ - note:
  You cannot provide both an overriding setter and an overriding property observer for the same property.
- 
- If you want to observe changes to a property’s value, and you are already providing a custom setter for that property, you can simply observe any value changes from within the custom setter.
+ \
+ \
+If you want to observe changes to a property’s value, and you are already providing a custom setter for that property, you can simply observe any value changes from within the custom setter.
  */
 
+/*: 
+ ## Preventing Overrides
+ You can mark an entire class as final by writing the final modifier before the class keyword in its class definition (final class).
+ */
+class ClassWithMethodsAndPropertiesFinal {
+    
+    //_____________________________________________
+    // Instance Property
+    
+    final var storedProperty = ""
+    
+    final var computedProperty: Int {
+        set {
+        }
+        get {
+            return 0
+        }
+    }
+    
+    //_____________________________________________
+    // Subscripts
+    
+    final subscript(index: Int) -> Int {
+        get {
+            return 0
+        }
+        set {
+            
+        }
+    }
+    
+    
+    //_____________________________________________
+    // Instance Methods
+    
+    final func instanceMethod() {
+        
+    }
+    
+    //_____________________________________________
+    // Type Property
+    
+    static var typeStoredProperty = 0
+    
+    static var typeComputedProperty: Int {
+        set { }
+        get { return 0 }
+    }
+    
+    //_____________________________________________
+    // Type Methods
+    
+    static func typeClassMethod() {
+        
+    }
+    
+}
 /*:
  ## Initialization
  Class instances do not receive a default memberwise initialize.
@@ -214,6 +194,7 @@ class SomeSubClass: SomeSuperClass {
     var propertySubClass1: Int
     var propertySubClass2: Int
     
+    //_____________________________________________
     // Designated Initializers
     
     init(propertySubClass1: Int, propertySubClass2: Int) {
@@ -238,6 +219,7 @@ class SomeSubClass: SomeSuperClass {
         super.init()
     }
     
+    //_____________________________________________
     // Convenience Initializers
     
     convenience init(propertySubClass1: Int) {
@@ -252,11 +234,9 @@ class SomeSubClass: SomeSuperClass {
 
 
 /*:
- ### Inheritance
- * You always write the override modifier when overriding a superclass designated initializer, even if your subclass’s implementation of the initializer is a convenience initializer.
- * Swift subclasses do not inherit their superclass initializers by default.
- 
  ### Automatic Initializer Inheritance
+ Swift subclasses do not inherit their superclass initializers by default.
+ 
  Assuming that you provide default values for any new properties you introduce in a subclass.
  
  * If your subclass doesn’t define any designated initializers.
@@ -270,8 +250,6 @@ class SomeSubClass: SomeSuperClass {
  ### Failable initializer
  
  You can override a failable initializer with a nonfailable initializer but not the other way around.
- 
- A failable initializer can delegate to any kind of initializer. A nonfailable initializer can delegate to another nonfailable initializer or to an init! failable initializer. A nonfailable initializer can delegate to an init? failable initializer by force-unwrapping the result of the superclass’s initializer—for example, by writing super.init()!.
  
  Initialization failure propagates through initializer delegation. Specifically, if a failable initializer delegates to an initializer that fails and returns nil, then the initializer that delegated also fails and implicitly returns nil.
  */
@@ -304,25 +282,24 @@ class SubClassWithFailableInitializer: ClassWithFailableInitializer {
 }
 /*:
  ### Required Initializers
- 
- Write the required modifier before the definition of a class initializer to indicate that every subclass of the class must implement that initializer:
- 
- * You must also write the required modifier before every subclass implementation of a required initializer.
- * You do not write the override modifier when overriding a required designated initializer.
- 
- 
- You do not have to provide an explicit implementation of a required initializer if you can satisfy the requirement with an inherited initializer.
  */
 class ClassWithRequiredInitializer {
+    
+    // Every subclass of the class must implement that initializer
     required init() {
         
     }
+    
 }
 
 class SubClassWithRequiredInitializer: ClassWithRequiredInitializer {
+
+    // You must also write the required modifier before every subclass implementation of a required initializer
+    // You do not write the override modifier when overriding a required designated initializer
     required init() {
-        
+       
     }
+    
 }
 /*:
  ## Deinitialization
@@ -348,6 +325,21 @@ class ClassWithDeinit {
  - note: See ARC.pdf in Resources
  */
 
+/*:
+ ## Identity Operators
+ * Identical to ===
+ * Not identical to !==
+ */
+class ClassIdentityOperators {
+    
+}
+let object1 = ClassIdentityOperators()
+let object2 = ClassIdentityOperators()
+let object3 = object1
+
+object1 === object2
+object1 === object3
+
 //: ## Distinguish between methods or initializers whose names differ only by the names of their arguments
 
 class SomeClass {
@@ -365,7 +357,21 @@ let b = instance.someMethod(_:y:)        // Unambiguous
 //let d = instance.overloadedMethod(_:y:)  // Still ambiguous
 let e: (Int, Bool) -> Void  = instance.overloadedMethod(_:y:)  // Unambiguous
 
+/*:
+ ## Requiring Dynamic Dispatch
+ 
+ When Swift APIs are imported by the Objective-C runtime, there are no guarantees of dynamic dispatch for properties, methods, subscripts, or initializers. The Swift compiler may still devirtualize or inline member access to optimize the performance of your code, bypassing the Objective-C runtime.
+ 
+ 
+ You can use the **dynamic** modifier to require that access to members be dynamically dispatched through the Objective-C runtime.
+ */
+class ClassWithRequiringDynamicDispatch {
+    
+    dynamic var variable: String = ""
+    
+    dynamic func foo() {
+        
+    }
+}
 
 //: [Next](@next)
-
-

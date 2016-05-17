@@ -31,20 +31,16 @@ variableString = "Hello"
 variableString = "Ciao"
 variableString = "Privet"
 
-let constantInt: Int
-constantInt = 0
-
-
+let constantInt: Int // Declaration
+constantInt = 0      // Initialization
 /*:
  ## Type Inference
  Type inference enables a compiler to deduce the type of a particular expression automatically when it compiles your code, simply by examining the values you provide.
  */
-let pi = 3.14159 // Double
+let pi = 3.14159        // Double
 let booleanValue = true // Bool
-
 //: If you combine integer and floating-point literals in an expression, a type of Double will be inferred from the context.
 let anotherPi = 3 + 0.14159
-
 /*:
  - experiment:
  Press the option key and click on a variable or constant name to see the type inferred.
@@ -65,14 +61,9 @@ let anotherPi = 3 + 0.14159
 
 //: Floating-point values are always truncated when used to initialize a new integer value. This means that 4.75 becomes 4, and -3.9 becomes -3.
 let integerPi: Int = Int(pi)
-
 //: ## Declare Multiple Constants/Variables on a Single Line
 let x = 0.0, y = 0.0, z = 0.0
 var red:Int, green, blue: Double
-
-
-
-
 /*:
  ## Observers for Stored Variables
  The variables you have encountered have all been stored variables.
@@ -107,9 +98,10 @@ var anInt = 10 {
  ## Computed Variables
  They provide a getter and an optional setter to retrieve and set other properties and values indirectly.
  */
-
+// Stored Variable
 var km = 1.0
 
+// Computed Variable
 var miles: Double {
     get {
         return km * 0.621371
@@ -133,4 +125,3 @@ var miles2: Double {
 
 miles2
 //: [Next](@next)
-

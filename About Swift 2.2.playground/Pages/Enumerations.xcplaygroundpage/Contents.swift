@@ -2,13 +2,10 @@
 
 //: # Enumeration
 
-//: Enumeration case values without associated values are hashable by default.
-
 /*:
  - note:
  Enumeration are Value Types
  */
-
 enum CompassPoint {
     case north
     case south
@@ -18,8 +15,25 @@ enum CompassPoint {
 var aCompassPoint = CompassPoint.west
 aCompassPoint = .east
 
+
+/*:
+ ## Initializers, Computed Properties, Methods and Subscripts
+ Like structures.
+ */
 enum OnOffSwitch {
     case on, off
+    
+    
+    init?(symbol: String) {
+        switch symbol {
+        case "on":
+            self = .on
+        case "off":
+            self = .off
+        default:
+            return nil
+        }
+    }
     
     mutating func toggle() {
         switch self {
@@ -29,33 +43,19 @@ enum OnOffSwitch {
             self = off
         }
     }
-}
-
-
-enum TemperatureUnit {
-    case kelvin, celsius, fahrenheit
     
-    init?(symbol: Character) {
-        switch symbol {
-        case "K":
-            self = .kelvin
-        case "C":
-            self = .celsius
-        case "F":
-            self = .fahrenheit
-        default:
-            return nil
-        }
-    }
 }
 
+var anOnOffSwitch: OnOffSwitch = .on
+anOnOffSwitch.toggle()
+
+let anotherOnOffSwitch = OnOffSwitch(symbol: "Z")
 
 /*:
  ## Associated Values
- Like tagged unions.
+ 
+ Enumeration case values without associated values are hashable by default.
  */
-
-
 enum Shape {
     case square(side: Double)
     case rectangle(base: Double, height: Double)
@@ -63,17 +63,10 @@ enum Shape {
 
 var aShape = Shape.square(side: 10)
 aShape = .rectangle(base: 10, height: 11)
-
-switch aShape {
-case let .rectangle(base, height):
-    break
-case .square(let side):
-    break
-}
-
 //: Enumeration cases that store associated values can be used as functions that create instances of the enumeration with the specified associated values.
 let makeSquare = Shape.square
 makeSquare(side: 10)
+
 let makeRectangle = Shape.rectangle
 makeRectangle(base: 10, height: 22)
 
@@ -82,40 +75,39 @@ makeRectangle(base: 10, height: 22)
  Raw values can be:
  * Integer.
  * Floating-point.
- * Strings.
  * Characters.
+ * Strings.
  
  Each raw value must be unique within its enumeration declaration.
  */
-
-enum ASCIIControlCharacter: Character {
-    case Tab = "\t"
-    case LineFeed = "\n"
-    case CarriageReturn = "\r"
-}
-
-/*:
- ### Implicitly Assigned Raw Values
- When strings are used for raw values, the implicit value for each case is the text of that case’s name.
- */
-
-
 enum Planet: Int {
+    //When integers are used for raw values, the implicit value for each case is one more than the previous case. If the first case doesn’t have a value set, its value is 0.
     case mercury = 1, venus, earth, mars, jupiter , saturn, uranus, neptune
 }
 
-
-/*:
- ### Initializing from a Raw Value
- Enumerations with raw values automatically receive a failable initializer.
- */
-let aPlanet = Planet(rawValue: 2)
+let aPlanet = Planet.earth
+aPlanet.rawValue
 
 
+enum ASCIIControlCharacter: Character {
+    case tab = "\t"
+    case lineFeed = "\n"
+    case carriageReturn = "\r"
+}
+
+enum Day: String {
+    // When strings are used for raw values, the implicit value for each case is the text of that case’s name.
+    case sunday, monday, tuesday, wednesday, thursday, saturday
+}
+
+let aDay = Day.sunday
+aDay.rawValue
+//: Enumerations with raw values automatically receive a failable initializer.
+let anotherPlanet = Planet(rawValue: 2)
 /*:
  ## Recursive Enumerations
  
- instances of enumeration types have value semantics, which means they have a fixed layout in memory. To support recursion, the compiler must insert a layer of indirection.
+ Instances of enumeration types have value semantics, which means they have a fixed layout in memory. To support recursion, the compiler must insert a layer of indirection.
  
  To enable indirection for a particular enumeration case, mark it with the indirect declaration modifier.
  
@@ -152,20 +144,36 @@ func evaluate(expression: ArithmeticExpression) -> Int {
 
 print(evaluate(product))
 
-/*:
- ## Computed properties and Methods
- Like structures.
- */
 
 //: ## Enumeration Case Pattern
 
-if case .square(let side) = aShape where side == 10 {
+//: Switch
+var anotherShape: Shape
+anotherShape = .rectangle(base: 10, height: 100)
+//anotherShape = .square(side: 10)
+//anotherShape = .square(side: 11)
+
+switch anotherShape {
+case let .rectangle(base, height):
+    print("A rectangle with base: \(base) and height: \(height)")
+case .square(let side) where side == 10:
+    print("A square with side: 10")
+default:
+    print("A square with side != 10")
 }
+//: If
+if case .rectangle(let base, let height) = anotherShape {
+     print("A rectangle with base: \(base) and height: \(height)")
+} else if case .square(let side) = anotherShape where side == 10 {
+    print("A square with side: 10")
+} else {
+    print("A square with side != 10")
+}
+//: For
+let enumValues: [Shape] = [.square(side: 10), .square(side: 20), .rectangle(base: 10, height: 11)]
 
-
-let enumValues: [Shape] = [.square(side: 10), .square(side: 10), .rectangle(base: 10, height: 11)]
-for case .square(let value) in enumValues where value == 10 {
-    
+for case .square(let side) in enumValues where side > 10 {
+    print("A square with side: \(side)")
 }
 
 //: [Next](@next)

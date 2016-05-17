@@ -25,9 +25,7 @@ redColor
 blueColor
 
 let (a, _, (b, c)) = ("test", 9.45, (12, 3))
-
 //: ## Switch
-
 let somePoint = (1, 1)
 switch somePoint {
 case (0, 0):
@@ -41,7 +39,6 @@ case (-2...2, -2...2):
 default:
     print("(\(somePoint.0), \(somePoint.1)) is outside of the box")
 }
-
 //: ### Value Bindings
 let anotherPoint = (2, 0)
 switch anotherPoint {
@@ -52,17 +49,12 @@ case (0, let y):
 case let (x, y):
     print("somewhere else at (\(x), \(y))")
 }
-
-
-
-
 //: # Tuple Pattern
 let points = [(0, 0), (1, 0), (1, 1), (2, 0), (2, 1)]
 
 for (x, _) in points {
     x
 }
-
 /*:
  # Comparison Operators
  

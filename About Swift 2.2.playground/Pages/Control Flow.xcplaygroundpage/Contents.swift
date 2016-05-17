@@ -4,17 +4,15 @@
 let condition1 = false
 let condition2 = false
 let condition3 = false
-
 //: ## For-In
 
 //: 0 <= i <= 4
 for i in 0...4  {
-    
+    // do something
 }
-
 //: 0 <= i < 4
 for _ in 0..<4 {
-    
+    // do something
 }
 /*:
  * callout(Wildcard Pattern):
@@ -22,33 +20,40 @@ for _ in 0..<4 {
  */
 
 //: i = 0, 2, 4
+
 for i in 0...4 where i % 2 == 0  {
-    
+    // do something
 }
 
+//: is the same of:
 
+for i in 0...4 {
+    if i % 2 == 0 {
+        // do something
+    }
+}
 //: ## While Loops
 
 //: ### While
 
 while condition1 {
-    
+    // do something
 }
 
 //: ### Repeat-While
 repeat {
-    
+    // do something
 } while condition1
 
 //: ## Conditional Statements
 
 //: ### If
 if condition1 {
-    
+   // do something
 } else if condition2 {
-    
+    // do something
 } else {
-    
+    // do something
 }
 
 /*:
@@ -57,9 +62,6 @@ if condition1 {
  * The body of each case must contain at least one executable statement.
  * No Implicit Fallthrough.
  */
-
-
-
 var number = 0
 
 switch number {
@@ -100,7 +102,6 @@ default:
  * fallthrough (A fallthrough statement continue execution from one case to the next of a switch).
  */
 
-
 //: ## Labeled Statements
 
 label1: while condition1 {
@@ -114,14 +115,12 @@ label1: while condition1 {
 }
 
 label2: for i in 1...4 {
-    
+    // do something
 }
 
 label3: if condition1 {
-    
+    // do something
 }
-
-
 /*:
  ## Build Configurations
  
@@ -138,20 +137,15 @@ label3: if condition1 {
  The arch(arm) build configuration does not return true for ARM 64 devices.
  The arch(i386) build configuration returns true when code is compiled for the 32–bit iOS simulator.
  */
-
-
-
 #if os(OSX)
-    
+    // do something
 #elseif arch(arm)
-    
+    // do something
 #elseif swift(>=2.1)
-    
+    // do something
 #elseif !condition1
-    
+    // do something
 #else
-    
+    // do something
 #endif
-
-
 //: [Next](@next)
