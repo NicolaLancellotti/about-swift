@@ -17,7 +17,7 @@ aCompassPoint = .east
 
 
 /*:
- ## Initializers, Computed Properties and Methods
+ ## Initializers, Computed Properties, Methods and Subscripts
  Like structures.
  */
 enum OnOffSwitch {
@@ -43,6 +43,7 @@ enum OnOffSwitch {
             self = off
         }
     }
+    
 }
 
 var anOnOffSwitch: OnOffSwitch = .on
@@ -89,9 +90,9 @@ aPlanet.rawValue
 
 
 enum ASCIIControlCharacter: Character {
-    case Tab = "\t"
-    case LineFeed = "\n"
-    case CarriageReturn = "\r"
+    case tab = "\t"
+    case lineFeed = "\n"
+    case carriageReturn = "\r"
 }
 
 enum Day: String {
