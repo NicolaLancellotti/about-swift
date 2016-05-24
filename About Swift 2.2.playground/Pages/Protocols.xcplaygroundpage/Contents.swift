@@ -101,36 +101,7 @@ let object1: SomeProtocol
 
 let object2: protocol<SomeProtocol, SomeClassOnlyProtocol>
 
-/*:
- ## Optional Protocol Requirements
- 
- When you use a method or property in an optional requirement, its type automatically becomes an optional. For example, a method of type (Int) -> String becomes ((Int) -> String)?.
- 
- 
- Optional protocol requirements can only be specified if your protocol is marked with the @objc attribute.
- Note also that @objc protocols can be adopted only by classes that inherit from Objective-C classes or other @objc classes. They can’t be adopted by structures or enumerations.
- */
 
-@objc
-protocol CounterDataSource {
-    optional func incrementForCount(count: Int) -> Int
-    optional var fixedIncrement: Int { get }
-}
-
-class Counter {
-    
-    var count = 0
-    
-    var dataSource: CounterDataSource?
-    
-    func increment() {
-        if let amount = dataSource?.incrementForCount?(count) {
-            count += amount
-        } else if let amount = dataSource?.fixedIncrement {
-            count += amount
-        }
-    }
-}
 
 
 
