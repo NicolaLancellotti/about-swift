@@ -25,7 +25,6 @@
  
  You can provide a type annotation when you declare a constant or variable, to be clear about the kind of values the constant or variable can store.
  */
-
 var variableString: String
 variableString = "Hello"
 variableString = "Ciao"
@@ -73,7 +72,6 @@ var red:Int, green, blue: Double
  * didSet is called immediately after the new value is stored.
  
  */
-
 var value = 10 {
     willSet {
         print("new: \(newValue) actual: \(value)")
@@ -93,7 +91,6 @@ var anInt = 10 {
         print("old: \(oldInt) actual: \(anInt)")
     }
 }
-
 /*:
  ## Computed Variables
  They provide a getter and an optional setter to retrieve and set other properties and values indirectly.
@@ -111,13 +108,11 @@ var miles: Double {
     }
 }
 
-
 miles = 4
 km
 
 km = 2
 miles
-
 //: ### Read-only Computed Variables.
 var miles2: Double {
     return km * 0.621371

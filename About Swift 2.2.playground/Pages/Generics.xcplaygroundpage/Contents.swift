@@ -14,7 +14,6 @@
  
  You can provide more than one type parameter by writing multiple type parameter names within the angle brackets, separated by commas.
  */
-
 func swapTwoValues<T>(inout a: T, inout _ b: T) {
     let temporaryA = a
     a = b
@@ -26,7 +25,6 @@ var b = "B"
 swap(&a, &b)
 b
 a
-
 //: ## Structures and Classes
 struct Stack<Element> {
     
@@ -52,7 +50,6 @@ extension Stack {
 
 var stackOfStrings = Stack<String>()
 stackOfStrings.push("Ciao")
-
 /*:
  ## Protocols
  */
@@ -87,7 +84,6 @@ struct SomeStructure: Container {
     }
     
 }
-
 /*:
  ## Type Constraint
  
@@ -108,7 +104,6 @@ func findIndex<T: Equatable>(array: [T], _ valueToFind: T) -> Int? {
     }
     return nil
 }
-
 /*:
  Where Clauses
  
@@ -128,5 +123,4 @@ func allItemsMatch<C1: Container, C2: Container where C1.ItemType == C2.ItemType
     }
     return true
 }
-
 //: [Next](@next)

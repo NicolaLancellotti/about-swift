@@ -6,16 +6,13 @@
 
 typealias Length = Double
 let length: Length = 0.0
-
 //: ## Multiple separate statements on a single line
 let cat = "?"; print(cat)
-
 /*:
  ## @warn_unused_result
  
  Apply this attribute to a method or function declaration to have the compiler emit a warning when the method or function is called without using its result.
  */
-
 struct Increaser {
     var value = 0
     
@@ -29,7 +26,6 @@ struct Increaser {
         value += 1
     }
 }
-
 /*:
  ## Lazy One-Time Initialization
  
@@ -56,7 +52,6 @@ struct Increaser {
 //let someOptional: Optional<Int> = 42
 let someOptional: Int? = 42
 let arrayOfOptionalInts: [Int?] = [nil, 2, 3, nil, 5]
-
 //: Enumeration Case Pattern
 if case .Some(let x)  = someOptional {
     //   print("x: \(x)")
@@ -65,7 +60,6 @@ if case .Some(let x)  = someOptional {
 for case .Some(let number) in arrayOfOptionalInts {
     //    print("\(number)")
 }
-
 //: Optional Pattern
 if case let x? = someOptional {
     //        print("x: \(x)")
@@ -74,5 +68,4 @@ if case let x? = someOptional {
 for case let number? in arrayOfOptionalInts {
     //        print("\(number)")
 }
-
 //: [Next](@next)

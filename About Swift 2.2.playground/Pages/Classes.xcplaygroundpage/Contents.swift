@@ -7,9 +7,7 @@ import Foundation
  Classes are Reference Types
  */
 
-
 //: ## Inheritance
-
 class SomeSuperclass {
     
     //_____________________________________________
@@ -182,7 +180,6 @@ class ClassWithMethodsAndPropertiesFinal {
  
  
  */
-
 class SomeSuperClass {
     
     var propertySuperClass: Int = 0
@@ -231,8 +228,6 @@ class SomeSubClass: SomeSuperClass {
     }
     
 }
-
-
 /*:
  ### Automatic Initializer Inheritance
  Swift subclasses do not inherit their superclass initializers by default.
@@ -308,13 +303,11 @@ class SubClassWithRequiredInitializer: ClassWithRequiredInitializer {
  * Superclass deinitializers are always called, even if a subclass does not provide its own deinitializer.
  * The subclass object is not deallocated until all deinitializers in its inheritance chain have finished executing.
  */
-
 class ClassWithDeinit {
     deinit {
         
     }
 }
-
 /*:
  ## Automatic Reference Counting
  * Weak references must be declared as variables, to indicate that their value can change at runtime.
@@ -333,21 +326,21 @@ class ClassWithDeinit {
 class ClassIdentityOperators {
     
 }
+
 let object1 = ClassIdentityOperators()
 let object2 = ClassIdentityOperators()
 let object3 = object1
 
 object1 === object2
 object1 === object3
-
 //: ## Distinguish between methods or initializers whose names differ only by the names of their arguments
-
 class SomeClass {
     func someMethod(x: Int, y: Int) {}
     func someMethod(x: Int, z: Int) {}
     func overloadedMethod(x: Int, y: Int) {}
     func overloadedMethod(x: Int, y: Bool) {}
 }
+
 let instance = SomeClass()
 
 //let a = instance.someMethod              // Ambiguous
@@ -356,7 +349,6 @@ let b = instance.someMethod(_:y:)        // Unambiguous
 //let c = instance.overloadedMethod        // Ambiguous
 //let d = instance.overloadedMethod(_:y:)  // Still ambiguous
 let e: (Int, Bool) -> Void  = instance.overloadedMethod(_:y:)  // Unambiguous
-
 /*:
  ## Requiring Dynamic Dispatch
  
@@ -373,5 +365,4 @@ class ClassWithRequiringDynamicDispatch {
         
     }
 }
-
 //: [Next](@next)

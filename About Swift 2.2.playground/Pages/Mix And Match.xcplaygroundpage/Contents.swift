@@ -41,12 +41,10 @@ class AClass : NSObject {
     }
     
 }
-
 //: ## Selector Expression
 let x = AClass()
 let aSelector = #selector(x.foo(_:) as (String) -> Void)
 let anotherSelector = #selector(x.bar)
-
 /*:
  ## Optional Protocol Requirements
  
@@ -56,7 +54,6 @@ let anotherSelector = #selector(x.bar)
  Optional protocol requirements can only be specified if your protocol is marked with the @objc attribute.
  Note also that @objc protocols can be adopted only by classes that inherit from Objective-C classes or other @objc classes. They can’t be adopted by structures or enumerations.
  */
-
 @objc
 protocol CounterDataSource {
     optional func incrementForCount(count: Int) -> Int
@@ -77,6 +74,4 @@ class Counter {
         }
     }
 }
-
-
 //: [Next](@next)

@@ -10,8 +10,6 @@
  You specify optional chaining by placing a question mark (?) after the optional value on which you wish to call a property, method or subscript if the optional is non-nil
  
  */
-
-
 class Person {
     var name = ""
     
@@ -36,7 +34,6 @@ class Person {
     
 }
 
-
 var person: Person?
 //: ## Accessing Properties Through Optional Chaining
 let name = person?.name
@@ -51,7 +48,6 @@ if (person?.name = "Nicola") != nil {
 } else {
     false
 }
-
 /*:
  ## Calling Methods Through Optional Chaining
  
@@ -67,7 +63,6 @@ if person?.printName() != nil {
 } else {
     false
 }
-
 //: ## Accessing Subscripts Through Optional Chaining
 //person = Person()
 //person?.children.append(Person())
@@ -80,8 +75,6 @@ if (person?[0].name = "Ilenia") != nil {
 } else {
     false
 }
-
-
 /*:
  ## Linking Multiple Levels of Chaining
  

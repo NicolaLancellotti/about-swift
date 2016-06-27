@@ -14,8 +14,6 @@ enum CompassPoint {
 
 var aCompassPoint = CompassPoint.west
 aCompassPoint = .east
-
-
 /*:
  ## Initializers, Computed Properties, Methods and Subscripts
  Like structures.
@@ -50,7 +48,6 @@ var anOnOffSwitch: OnOffSwitch = .on
 anOnOffSwitch.toggle()
 
 let anotherOnOffSwitch = OnOffSwitch(symbol: "Z")
-
 /*:
  ## Associated Values
  
@@ -69,7 +66,6 @@ makeSquare(side: 10)
 
 let makeRectangle = Shape.rectangle
 makeRectangle(base: 10, height: 22)
-
 /*:
  ## Raw Values
  Raw values can be:
@@ -87,7 +83,6 @@ enum Planet: Int {
 
 let aPlanet = Planet.earth
 aPlanet.rawValue
-
 
 enum ASCIIControlCharacter: Character {
     case tab = "\t"
@@ -113,7 +108,6 @@ let anotherPlanet = Planet(rawValue: 2)
  
  Write indirect before the beginning of the enumeration, to enable indirection for all of the enumeration’s cases.
  */
-
 enum ArithmeticExpression {
     case number(Int)
     indirect case addition(ArithmeticExpression, ArithmeticExpression)
@@ -143,8 +137,6 @@ func evaluate(expression: ArithmeticExpression) -> Int {
 }
 
 print(evaluate(product))
-
-
 //: ## Enumeration Case Pattern
 
 //: Switch
@@ -175,5 +167,4 @@ let enumValues: [Shape] = [.square(side: 10), .square(side: 20), .rectangle(base
 for case .square(let side) in enumValues where side > 10 {
     print("A square with side: \(side)")
 }
-
 //: [Next](@next)

@@ -20,36 +20,29 @@ struct Person {
  Swift provides a default initializer for any structure that provides default values for all of its properties and does not provide at least one initializer itself.
  */
 var aPerson = Person()
-
 /*:
  Structure types automatically receive a memberwise initializer if they do not define any of their own custom initializers.
  
  Swift provides an automatic external name for every parameter in an initializer.
  */
 aPerson = Person(name: "Nicola", age: 23)
-
 //: ## Structures Without Default values
 struct Dog {
     var name: String
     var age: Int
     let male: Bool
 }
-
 /*:
  ### Initialization
  
  Unlike a default initializer, the structure receives a memberwise initializer even if it has stored properties that do not have default values.
  */
-
 let aDog = Dog(name: "dogName", age: 5, male: true);
-
-
 /*:
  ## Customizing Initialization
  
  An initializer cannot call any instance methods, read the values of any instance properties, or refer to self as a value until after the first phase of initialization is complete.
  */
-
 struct Celsius {
     var temperatureInCelsius: Double
     
@@ -66,11 +59,9 @@ struct Celsius {
     }
 }
 
-
 Celsius(fromFahrenheit: 10)
 Celsius(fromKelvin: 10)
 Celsius(10)
-
 /*:
  ## Initializer Delegation for Value Types
  
@@ -78,10 +69,10 @@ Celsius(10)
  
  For value types, you use self.init to refer to other initializers from the same value type when writing your own custom initializers. You can call self.init only from within an initializer.
  */
-
 struct Size {
     var width = 0.0, height = 0.0
 }
+
 struct Point {
     var x = 0.0, y = 0.0
 }
@@ -124,7 +115,6 @@ let aRect3 = Rect(origin: Point(x: 100, y: 90),
  
  A failable initializer can delegate across to another failable initializer.
  */
-
 struct StructureWithFailableInitializers {
     init?() {
         return nil
@@ -132,11 +122,9 @@ struct StructureWithFailableInitializers {
 }
 
 var aStructure = StructureWithFailableInitializers()
-
 //: ## Accessing Properties
 aPerson.name = "Nicola" // Set
 let name = aPerson.name // Get
-
 /*:
  ## Observers for Stored properties
  Like Observers for Stored Variables
@@ -153,7 +141,6 @@ let name = aPerson.name // Get
  - important:
  If a lazy property has not yet been initialized and is accessed by more than one thread at the same time, there is no guarantee that the property will be initialized only once.
  */
-
 struct StructureWithLazyStoredProperty {
     lazy var property = Person()
 }
@@ -161,7 +148,6 @@ struct StructureWithLazyStoredProperty {
 var aStructureWithLazyStoredProperty = StructureWithLazyStoredProperty()
 
 aStructureWithLazyStoredProperty.property // The instance of person has been created.
-
 /*:
  ## Computed Properties
  Like Computed Variables.
@@ -180,9 +166,7 @@ struct StructureWithTypeProperties {
 
 StructureWithTypeProperties.typeProperty = 11
 StructureWithTypeProperties.computedTypeProperty
-
 //: ## Methods
-
 struct StructureWithMethods {
     
     var storedProperty = 1
@@ -214,7 +198,6 @@ struct StructureWithMethods {
     }
     
 }
-
 /*:
  ## Subscripts
  
@@ -226,7 +209,6 @@ struct StructureWithMethods {
  * use in-out parameters.
  * provide default parameter values.
  */
-
 struct StructureWithSubscripts {
     
     subscript(index: Int) -> Int {
@@ -244,11 +226,9 @@ struct StructureWithSubscripts {
     }
     
 }
-
 /*:
  - example: A struct Matrix with subscript.
  */
-
 struct Matrix {
     
     let rows: Int, columns: Int
@@ -285,6 +265,4 @@ for i in 0..<value {
     identityMatrix[i, i] = 1
 }
 //identityMatrix.printMatrix()
-
-
 //: [Next](@next)
