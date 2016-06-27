@@ -20,13 +20,10 @@ for _ in 0..<4 {
  */
 
 //: i = 0, 2, 4
-
 for i in 0...4 where i % 2 == 0  {
     // do something
 }
-
 //: is the same of:
-
 for i in 0...4 {
     if i % 2 == 0 {
         // do something
@@ -35,16 +32,13 @@ for i in 0...4 {
 //: ## While Loops
 
 //: ### While
-
 while condition1 {
     // do something
 }
-
 //: ### Repeat-While
 repeat {
     // do something
 } while condition1
-
 //: ## Conditional Statements
 
 //: ### If
@@ -55,7 +49,6 @@ if condition1 {
 } else {
     // do something
 }
-
 /*:
  ### Switch
  * Every switch statement must be exhaustive. (If it’s not appropriate to provide a case for every possible value, you can define a default case to cover any values that are not addressed explicitly).
@@ -72,7 +65,6 @@ case 1:
 default:
     print("> 1")
 }
-
 //: Where & Value Bindings
 number = 12
 
@@ -84,7 +76,6 @@ case let x where x % 2 == 0:
 default:
     print("\(number) is odd")
 }
-
 //: Interval Matching
 number = 5
 switch number {
@@ -93,8 +84,6 @@ case 0...5:
 default:
     print("x >= 6")
 }
-
-
 /*:
  ## Control Transfer Statements
  * continue (A continue statement ends program execution of the current iteration of a loop statement but does not stop execution of the loop statement).
@@ -103,7 +92,6 @@ default:
  */
 
 //: ## Labeled Statements
-
 label1: while condition1 {
     while condition2 {
         if condition3 {

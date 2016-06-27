@@ -23,18 +23,14 @@ case "u":
 default:
     assertionFailure()
 }
-
-
 /*:
  # Error Handling
  Errors are represented by values of types that conform to the ErrorType protocol.
  */
-
 enum MyErrorType: ErrorType {
     case ErrorType1
     case ErrorType2(value: Int)
 }
-
 //:There are four ways to handle errors in Swift.
 
 /*:
@@ -42,7 +38,6 @@ enum MyErrorType: ErrorType {
  
  Only throwing functions can propagate errors.
  */
-
 func canThrowErrors(mustThrow: Bool = false) throws -> Int {
     if mustThrow {
         throw MyErrorType.ErrorType1
@@ -50,7 +45,6 @@ func canThrowErrors(mustThrow: Bool = false) throws -> Int {
         return 1
     }
 }
-
 /*:
  2 - Handle the error using a do-catch statement.
  
@@ -66,9 +60,7 @@ do {
 } catch {
     
 }
-
 //: 3 - Handle the error as an optional value.
-
 let value1 = try? canThrowErrors()
 
 // Equivalent to
@@ -78,16 +70,12 @@ do {
 } catch {
     value2 = nil
 }
-
-
 /*:
  4 - Assert that the error will not occur.
  
  If an error actually is thrown, you’ll get a runtime error.
  */
-
 let value3 = try! canThrowErrors()
-
 /*:
  ## Rethrowing Functions and Methods
  
@@ -99,11 +87,8 @@ let value3 = try! canThrowErrors()
 func functionWithCallback(callback: () throws -> Int) rethrows {
     try callback()
 }
-
-
 /*:
  # Fatal Error
  */
 //fatalError()
-
 //: [Next](@next)

@@ -12,8 +12,6 @@ var possibleString: String?
 possibleString = "Ciao"
 possibleString = nil
 possibleString = "Hello"
-
-
 /*:
  ## Forced Unwrapping
  
@@ -21,21 +19,17 @@ possibleString = "Hello"
  
  Trying to use ! to access a non-existent optional value triggers a runtime error.
  */
-
 if possibleString != nil {
     print(possibleString!)
 }
-
 /*:
  ## Optional Binding
  
  You use optional binding to find out whether an optional contains a value, and if so, to make that value available as a temporary constant.
  */
-
 if let constantString = possibleString {
     print("Value: \(constantString)")
 }
-
 
 var possibleName: String? = "Nicola"
 var possibleAge: Int? = 23
@@ -81,7 +75,6 @@ if let definiteString = assumedString {
  `let c = a != nil ? a! : b`
  
  */
-
 let defaultColorName = "red"
 var userDefinedColorName: String?   // defaults to nil
 

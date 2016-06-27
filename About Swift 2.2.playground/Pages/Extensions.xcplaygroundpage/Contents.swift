@@ -25,7 +25,6 @@ extension Double {
 }
 
 let aMarathon = 42.km + 195.m
-
 //: * Provide new convenience initializers.
 class SomeClass {
     init() {
@@ -37,7 +36,6 @@ extension SomeClass {
         self.init()
     }
 }
-
 //: * Define instance methods and type methods.
 extension Int {
     
@@ -51,8 +49,6 @@ extension Int {
 3.repetitions {
     print("Goodbye!")
 }
-
-
 //: * Define subscripts.
 extension Int {
     subscript(digitIndex: Int) -> Int {
@@ -69,8 +65,6 @@ value[0]
 value[1]
 value[2]
 value[3]
-
-
 //: * Define and use new nested types.
 extension Int {
     
@@ -90,18 +84,15 @@ extension Int {
     }
     
 }
-
 /*:
  * Make an existing type conform to a protocol
  
  If a type already conforms to all of the requirements of a protocol, but has not yet stated that it adopts that protocol, you can make it adopt the protocol with an empty extension.
  
  */
-
 protocol SomeProtocol {
     func foo()
 }
-
 
 struct SomeType {
     func foo() {
@@ -111,7 +102,6 @@ struct SomeType {
 extension SomeType: SomeProtocol {
     
 }
-
 /*:
  ## Protocol Extensions
  
@@ -123,8 +113,6 @@ extension SomeType: SomeProtocol {
  - important:
  For no required method or property, static dispaching is performed.
  */
-
-
 protocol AProtocol {
     
     func foo() -> String
@@ -168,7 +156,6 @@ let anotherInstace: AProtocol = AStructure()
 anotherInstace.foo()
 anotherInstace.fubar()
 anotherInstace.bar() // static dispaching
-
 /*:
  ### Adding Constraints to Protocol Extensions
  
@@ -184,7 +171,4 @@ extension CollectionType where Generator.Element: SomeProtocol {
     }
     
 }
-
-
-
 //: [Next](@next)

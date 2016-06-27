@@ -1,28 +1,23 @@
 //: [Previous](@previous)
-
 import Foundation
-
 //: # Type Casting
 
 /*:
  ## Checking Type
  Use the type check operator (is) to check whether an instance is of a certain subclass type. The type check operator returns true if the instance is of that subclass type and false if it is not.
  */
-
-class ClasseA: NSObject {
+class ClassA: NSObject {
 }
 
-class ClasseB: ClasseA {
+class ClassB: ClassA {
 }
 
-
-let objectAnyObject: Any = ClasseB()
+let objectAnyObject: Any = ClassB()
 
 objectAnyObject is NSObject
-objectAnyObject is ClasseA
-objectAnyObject is ClasseB
+objectAnyObject is ClassA
+objectAnyObject is ClassB
 objectAnyObject is String
-
 /*:
  ## Casting
  
@@ -30,12 +25,11 @@ objectAnyObject is String
  
  * Use the forced form of the type cast operator (as!) only when you are sure that the downcast will always succeed. This form of the operator will trigger a runtime error if you try to downcast to an incorrect class type.
  */
-let objectClasseA : ClasseA = ClasseB()
+let objectClassA : ClassA = ClassB()
 
-let o1 = objectClasseA as NSObject // Guaranteed conversion
-let o2 = objectAnyObject as! ClasseB // Forced conversion
+let o1 = objectClassA as NSObject // Guaranteed conversion
+let o2 = objectAnyObject as! ClassB // Forced conversion
 let o3 = objectAnyObject as? String
-
 /*:
  ## Type Casting for Any and AnyObject
  * AnyObject can represent an instance of any class type.
@@ -43,7 +37,6 @@ let o3 = objectAnyObject as? String
  
  You can use the is and as operators in a switch statement’s cases to discover the specific type of a constant or variable that is known only to be of type Any or AnyObject.
  */
-
 func f(any: Any) { print("Function for Any") }
 func f(int: Int) { print("Function for Int") }
 let x = 10
@@ -51,10 +44,7 @@ let y: Any = x
 f(x) // prints "Function for Int"
 f(y) // prints "Function for Any"
 f(x as Any) // prints "Function for Any"
-
-
 //: ### Switch
-
 var things = [Any]()
 things.append(0)
 things.append(0.0)
@@ -63,7 +53,7 @@ things.append(3.14159)
 things.append(-3.14159)
 things.append("hello")
 things.append((3.0, 5.0))
-things.append(ClasseA())
+things.append(ClassA())
 things.append({ (name: String) -> String in "Hello, \(name)" })
 
 for thing in things {
@@ -82,15 +72,14 @@ for thing in things {
         print("a string value of \"\(someString)\"")
     case let (x, y) as (Double, Double):
         print("an (x, y) point at \(x), \(y)")
-    case let classeA as ClasseA:
-        print("classeA")
+    case let ClassA as ClassA:
+        print("ClassA")
     case let stringConverter as (String) -> String:
         print(stringConverter("Michael"))
     default:
         print("something else")
     }
 }
-
 /*:
  - note:
  As a performance optimization, an unconditional downcast of a collection to a collection with a more specific type, such as NSArray as! [NSView], may defer type checking of each element until they are individually accessed. As a result, an unconditional downcast to an incompatible type may appear to succeed, until a type cast failure of an element triggers a runtime error.

@@ -19,8 +19,6 @@
  ## Custom Types
  No entity can be defined in terms of another entity that has a lower (more restrictive) access level.
  */
-
-
 public class SomePublicClass {          // explicitly public class
     public var somePublicProperty = 0   // explicitly public class member
     var someInternalProperty = 0        // implicitly internal class member
@@ -36,8 +34,6 @@ private class SomePrivateClass {        // explicitly private class
     var somePrivateProperty = 0         // implicitly private class member
     func somePrivateMethod() {}         // implicitly private class
 }
-
-
 //: ## Swift allows the get of a property to be more accessible than its set
 public struct TrackedString {
     
@@ -51,6 +47,4 @@ public struct TrackedString {
     
     public init() {}
 }
-
-
 //: [Next](@next)

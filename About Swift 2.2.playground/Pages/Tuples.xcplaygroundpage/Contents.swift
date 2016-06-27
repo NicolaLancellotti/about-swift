@@ -9,7 +9,6 @@
  - note:
  Tuples are Value Types
  */
-
 var yellowRGB = (red: 1, green: 1, blue: 0)
 yellowRGB.red
 yellowRGB.green
@@ -65,12 +64,9 @@ for (x, _) in points {
  The Swift standard library includes tuple comparison operators for tuples with less than seven elements. To compare tuples with seven or more elements, you must implement the comparison operators yourself.
  
  */
-
 (1, "zebra") < (2, "apple")   // true because 1 is less than 2
 (3, "apple") < (3, "bird")    // true because 3 is equal to 3, and "apple" is less than "bird"
 (4, "dog") == (4, "dog")      // true because 4 is equal to 4, and "dog" is equal to "dog"
-
-
 /*:
  ## Functions can Return a Tuple.
  */
@@ -81,5 +77,4 @@ func funcReturnTuple() -> (par1: Bool, par2: Bool) {
 let value = funcReturnTuple()
 value.par1
 value.par2
-
 //: [Next](@next)

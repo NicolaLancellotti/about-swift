@@ -40,12 +40,9 @@ func funcWithFuncReturn(flag: Bool) -> ((Int) -> Int)? {
         return nil
     }
 }
-
-
 //: # Closure Expression
 
 //: ## Function
-
 let names = ["Chris", "Alex", "Ewa", "Barry", "Daniella"]
 
 
@@ -54,7 +51,6 @@ func backwards(s1: String, _ s2: String) -> Bool {
 }
 
 names.sort(backwards)
-
 //: ## Closure Expression
 let closure = { (s1: String, s2: String) -> Bool in
     return s1 > s2
@@ -66,25 +62,20 @@ names.sort(closure)
 names.sort({ (s1: String, s2: String) -> Bool in
     return s1 > s2
 })
-
 //: ### Inferring Type From Context
 names.sort({ s1, s2 in
     return s1 > s2
 })
-
 //: ### Implicit Returns from Single-Expression Closures
 names.sort({ s1, s2 in
     s1 > s2
 })
-
 //: ### Shorthand Argument Names
 names.sort({
     $0 > $1
 })
-
 //: ### Operator Functions
 names.sort(>)
-
 //: ## Trailing Closures
 names.sort() {
     $0 > $1
@@ -94,7 +85,6 @@ names.sort() {
 names.sort {
     $0 > $1
 }
-
 //: ## Capturing Values
 func makeIncrementer(forIncrement amount: Int) -> () -> Int {
     var runningTotal = 0
@@ -105,7 +95,6 @@ func makeIncrementer(forIncrement amount: Int) -> () -> Int {
     return incrementer
 }
 
-
 var closure1 = makeIncrementer(forIncrement: 10)
 closure1()
 closure1()
@@ -113,7 +102,6 @@ closure1()
 var closure2 = makeIncrementer(forIncrement: 50)
 closure2()
 closure2()
-
 /*:
  ## Nonescaping Closures
  
@@ -129,11 +117,10 @@ func someFunctionWithNoescapeClosure(@noescape closure: () -> Void) {
  
  The @autoclosure attribute implies the @noescape attribute, if you want an autoclosure that is allowed to escape, use the @autoclosure(escaping).
  */
-
 func functionWithAutoclosure(@autoclosure closure: () -> Bool) {
 }
-functionWithAutoclosure(2 > 1)
 
+functionWithAutoclosure(2 > 1)
 
 func functionWithClosure(closure: () -> Bool) {
 }
@@ -141,7 +128,6 @@ func functionWithClosure(closure: () -> Bool) {
 functionWithClosure({ () -> Bool in
     return 2 > 1
 })
-
 /*:
  ##  Closure capture list
 
@@ -163,12 +149,11 @@ let closure4 = { [a] in
 a = 10
 b = 10
 closure4() // Prints "0 10"
-
 //:This distinction is not visible when the captured variable’s type has reference semantics.
-
 class SimpleClass {
     var value: Int = 0
 }
+
 var x = SimpleClass()
 var y = SimpleClass()
 let closure5 = { [x] in
@@ -178,14 +163,12 @@ let closure5 = { [x] in
 x.value = 10
 y.value = 10
 closure5() // Prints "10 10"
-
 /*:
  - note:
  A strong reference cycle can occur if you assign a closure to a property of a class instance, and the body of that closure captures the instance. This capture might occur because the closure’s body accesses a property of the instance, or because the closure calls a method on the instance. In either case, these accesses cause the closure to “capture” self, creating a strong reference cycle.\
  \
  Swift requires you to write self.someProperty or self.someMethod() (rather than just someProperty or someMethod()) whenever you refer to a member of self within a closure. This helps you remember that it’s possible to capture self by accident.
  */
-
 class ClassWithClosureCaptureList {
     
     var value = ""
@@ -196,16 +179,13 @@ class ClassWithClosureCaptureList {
     }
     
 }
-
 //: ## Setting a Default Property Value with a Closure or Function
 class ClassWithSetPropertyWithClosure {
     let someProperty: Int = {
         return 2
     }()
 }
-
 //: ## Functional Programming
-
 struct Person {
     let name: String
     let age: Double
@@ -226,10 +206,7 @@ averageAge
 
 let maxAge = people.reduce(0) { max($0, $1.age) }
 maxAge
-
-
 //: Memoization
-
 func memoize<T: Hashable, U>( body: ((T)->U, T)->U ) -> (T)->U {
     var memo = Dictionary<T, U>()
     
@@ -249,7 +226,4 @@ print("\nFactorial of: 2")
 factorial(2)
 print("\nFactorial of: 4")
 factorial(4)
-
-
-
 //: [Next](@next)

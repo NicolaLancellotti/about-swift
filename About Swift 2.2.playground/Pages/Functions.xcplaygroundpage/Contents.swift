@@ -6,10 +6,9 @@ import Foundation
 func functionWithoutParameters() {
     
 }
+
 functionWithoutParameters()
-
 //: ## Functions With Return Values
-
 func funcWithReturnValue() -> Bool {
     return false
 }
@@ -32,17 +31,18 @@ func functionWithParameters(localParameterName1: Int,
 functionWithParameters(1, externalParameterName2: 2, localParameterName3: 3, 4)
 
 
-
 func printDifference(of x: Int, less y: Int) {
     print("\(x - y)")
 }
+
 printDifference(of: 1, less: 2)
+
 
 func sum(x: Int, _ y: Int) -> Int {
     return x + y
 }
-sum(1, 2)
 
+sum(1, 2)
 //: ## Functions With Default Parameter Values
 func funcWithDefaultParameterValue(param: Int = 12) {
     print("Value: \(param)")
@@ -50,7 +50,6 @@ func funcWithDefaultParameterValue(param: Int = 12) {
 
 funcWithDefaultParameterValue()
 funcWithDefaultParameterValue(1)
-
 /*:
  ## Functions With Variadic Parameters
  
@@ -63,10 +62,10 @@ func sum(numbers: Double...) -> Double {
     }
     return sum
 }
+
 sum(1.0, 2.0, 3.0, 5)
 
 max(1, 2, 3, 4, 5, 6)
-
 /*:
  ## Functions With In-Out Parameters
  
@@ -131,7 +130,6 @@ globalFunction()
  ## Early Exit
  A guard statement is used to transfer program control out of a scope if one or more conditions aren’t met.
  */
-
 func doSomething(optionalValue: Int?) {
     guard let value = optionalValue else {
         print("*** Error **** value must not be nil")
@@ -142,8 +140,6 @@ func doSomething(optionalValue: Int?) {
 
 var optionalValue: Int? = nil
 doSomething(optionalValue)
-
-
 /*:
  ## Cleanup Actions
  
@@ -154,7 +150,6 @@ doSomething(optionalValue)
  * Deferred actions are executed in reverse order of how they are specified.
  
  */
-
 func functionWithDefers() {
     defer {
         print("First defer")
@@ -165,8 +160,6 @@ func functionWithDefers() {
 }
 
 functionWithDefers()
-
-
 /*:
  ## Noreturn Functions
  

@@ -22,7 +22,6 @@ import Foundation
  
  Doesn’t specify whether the property should be a stored property or a computed property.
  */
-
 protocol ProtocolWithPropertyRequirements {
     //  Property requirements are always declared as variable properties.
     var mustBeSettable: Int { get set }
@@ -31,7 +30,6 @@ protocol ProtocolWithPropertyRequirements {
     //  Always prefix type property requirements with the static keyword.
     static var someTypeProperty: Int { get set }
 }
-
 /*:
  ## Subscript Requirements
  */
@@ -76,21 +74,16 @@ protocol ProtocolWithInitializerRequirements {
  ## Protocol Inheritance
  A protocol can inherit one or more other protocols and can add further requirements on top of the requirements it inherits.
  */
-
 protocol InheritingProtocol: ProtocolWithInitializerRequirements, ProtocolWithMethodRequirements {
     
 }
-
 /*:
  ## Class-Only Protocols
  You can limit protocol adoption to class types (and not structures or enumerations) by adding the class keyword to a protocol’s inheritance list. The class keyword must always appear first in a protocol’s inheritance list, before any inherited protocols.
  */
-
 protocol SomeClassOnlyProtocol: class, ProtocolWithInitializerRequirements {
     
 }
-
-
 /*:
  ## Protocol Composition
  It can be useful to require a type to conform to multiple protocols at once. You can combine multiple protocols into a single requirement with a protocol composition. Protocol compositions have the form protocol<SomeProtocol, AnotherProtocol>.
@@ -100,9 +93,4 @@ protocol SomeProtocol {}
 let object1: SomeProtocol
 
 let object2: protocol<SomeProtocol, SomeClassOnlyProtocol>
-
-
-
-
-
 //: [Next](@next)
