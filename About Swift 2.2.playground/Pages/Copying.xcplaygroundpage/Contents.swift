@@ -8,7 +8,7 @@ class MyType: NSObject, NSCopying {
         self.value = value
     }
     
-    @objc func copyWithZone(zone: NSZone) -> AnyObject {
+    @objc func copy(with zone: NSZone?) -> AnyObject {
         return MyType(value: value)
     }
 }

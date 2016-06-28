@@ -20,7 +20,7 @@ let aBool = funcWithReturnValue()
  
  By default, the first parameter omits its external name, and the second and subsequent parameters use their local name as their external name
  */
-func functionWithParameters(localParameterName1: Int,
+func functionWithParameters(_ localParameterName1: Int,
                             externalParameterName2 localParameterName2: Int,
                                                    localParameterName3: Int,
                                                  _ localParameterName4: Int) {
@@ -38,13 +38,13 @@ func printDifference(of x: Int, less y: Int) {
 printDifference(of: 1, less: 2)
 
 
-func sum(x: Int, _ y: Int) -> Int {
+func sum(_ x: Int, _ y: Int) -> Int {
     return x + y
 }
 
 sum(1, 2)
 //: ## Functions With Default Parameter Values
-func funcWithDefaultParameterValue(param: Int = 12) {
+func funcWithDefaultParameterValue(_ param: Int = 12) {
     print("Value: \(param)")
 }
 
@@ -55,7 +55,7 @@ funcWithDefaultParameterValue(1)
  
  A function may have at most one variadic parameter.
  */
-func sum(numbers: Double...) -> Double {
+func sum(_ numbers: Double...) -> Double {
     var sum = 0.0
     for value in numbers {
         sum += value
@@ -74,7 +74,7 @@ max(1, 2, 3, 4, 5, 6)
  
  If you pass a property that has observers to a function as an in-out parameter, the willSet and didSet observers are always called. This is because of the copy-in copy-out memory model for in-out parameters: The value is always written back to the property at the end of the function.
  */
-func swapTwoInts(inout a: Int, inout _ b: Int) {
+func swapTwoInts(_ a: inout Int, _ b: inout Int) {
     let temporaryA = a
     a = b
     b = temporaryA
@@ -92,11 +92,11 @@ b
  
  If a function with the same name but a distinct signature already exists, it just defines a new overload. Keep in mind that Swift allows function overloading even when two signatures differ only in their return type.
  */
-func foo(value: String) {
+func foo(_ value: String) {
     print(value)
 }
 
-func foo(value: Int) {
+func foo(_ value: Int) {
     print(value)
 }
 
@@ -130,7 +130,7 @@ globalFunction()
  ## Early Exit
  A guard statement is used to transfer program control out of a scope if one or more conditions aren’t met.
  */
-func doSomething(optionalValue: Int?) {
+func doSomething(_ optionalValue: Int?) {
     guard let value = optionalValue else {
         print("*** Error **** value must not be nil")
         return

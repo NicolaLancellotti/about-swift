@@ -37,8 +37,8 @@ let o3 = objectAnyObject as? String
  
  You can use the is and as operators in a switch statement’s cases to discover the specific type of a constant or variable that is known only to be of type Any or AnyObject.
  */
-func f(any: Any) { print("Function for Any") }
-func f(int: Int) { print("Function for Int") }
+func f(_ any: Any) { print("Function for Any") }
+func f(_ int: Int) { print("Function for Int") }
 let x = 10
 let y: Any = x
 f(x) // prints "Function for Int"

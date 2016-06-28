@@ -125,7 +125,7 @@ let four = ArithmeticExpression.number(4)
 let sum = ArithmeticExpression.addition(five, four)
 let product = ArithmeticExpression.multiplication(sum, ArithmeticExpression.number(2))
 
-func evaluate(expression: ArithmeticExpression) -> Int {
+func evaluate(_ expression: ArithmeticExpression) -> Int {
     switch expression {
     case let .number(value):
         return value

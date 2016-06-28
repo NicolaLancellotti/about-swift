@@ -16,8 +16,8 @@ let cat = "?"; print(cat)
 struct Increaser {
     var value = 0
     
-    //    @warn_unused_result(message="my message")
-    @warn_unused_result(mutable_variant="increase")
+    //    @warn_unused_result(message:"my message")
+    @warn_unused_result(mutable_variant:"increase")
     func increased() -> Int {
         return value + 1
     }
@@ -53,11 +53,11 @@ struct Increaser {
 let someOptional: Int? = 42
 let arrayOfOptionalInts: [Int?] = [nil, 2, 3, nil, 5]
 //: Enumeration Case Pattern
-if case .Some(let x)  = someOptional {
+if case .some(let x)  = someOptional {
     //   print("x: \(x)")
 }
 
-for case .Some(let number) in arrayOfOptionalInts {
+for case .some(let number) in arrayOfOptionalInts {
     //    print("\(number)")
 }
 //: Optional Pattern
