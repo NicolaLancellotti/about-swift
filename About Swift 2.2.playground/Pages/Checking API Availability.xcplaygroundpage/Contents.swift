@@ -21,7 +21,7 @@ The available attribute always appears with a list of two or more comma-separate
 
 You can also use an asterisk (*) to indicate the availability of the declaration on all of the platform names listed above.
 */
-@available(iOS, introduced=2.1, deprecated=3, obsoleted=8, message="aMessage")
+@available(iOS, introduced:2.1, deprecated:3, obsoleted:8, message:"aMessage")
 @available(tvOS, unavailable)
 func aFunction() {
     
@@ -45,6 +45,6 @@ Subsequent release renames MyProtocol
 protocol MyRenamedProtocol {
 }
 
-@available(*, unavailable, renamed="MyRenamedProtocol")
+@available(*, unavailable, renamed:"MyRenamedProtocol")
 typealias MyProtocol = MyRenamedProtocol
 //: [Next](@next)

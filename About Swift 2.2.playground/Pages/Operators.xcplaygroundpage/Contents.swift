@@ -6,8 +6,8 @@
 let condition1 = true
 var value = condition1 ? 1 : 2
 //: ## Remainder Operator
-8  % 2.1
--8.3 % 2
+8.truncatingRemainder(dividingBy: 2.1)
+-8.3.truncatingRemainder(dividingBy: 2)
 //: ## Compound Assignment Operators
 var a = 1.5
 a += 10
@@ -89,7 +89,7 @@ var myVector = Vector2D(x: 1, y: 2) + Vector2D(x: 2, y: 4)
 myVector.x
 myVector.y
 
-func += (inout left: Vector2D, right: Vector2D) {
+func += (left: inout Vector2D, right: Vector2D) {
     left = left + right
 }
 
@@ -120,12 +120,12 @@ prefix func - (vector: Vector2D) -> Vector2D {
     return Vector2D(x: -vector.x, y: -vector.y)
 }
 
-prefix func ++ (inout vector: Vector2D) -> Vector2D {
+prefix func ++ (vector: inout Vector2D) -> Vector2D {
     vector += Vector2D(x: 1.0, y: 1.0)
     return vector
 }
 
-postfix func ++ (inout vector: Vector2D) -> Vector2D {
+postfix func ++ (vector: inout Vector2D) -> Vector2D {
     let tmp = vector
     vector += Vector2D(x: 1.0, y: 1.0)
     return tmp
@@ -175,12 +175,12 @@ func *** (value0: Int, value1: Int) -> Int {
  
  */
 prefix operator +++ {}
-prefix func +++ (inout vector: Vector2D) -> Vector2D {
+prefix func +++ (vector: inout Vector2D) -> Vector2D {
     vector += vector
     return vector
 }
 
-prefix func +++ (inout value: Int) -> Int {
+prefix func +++ (value: inout Int) -> Int {
     value += 2
     return value
 }

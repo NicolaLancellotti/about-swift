@@ -39,7 +39,7 @@ extension SomeClass {
 //: * Define instance methods and type methods.
 extension Int {
     
-    func repetitions(task: () -> Void) {
+    func repetitions(_ task: () -> Void) {
         for _ in 0..<self {
             task()
         }
@@ -69,17 +69,17 @@ value[3]
 extension Int {
     
     enum Kind {
-        case Negative, Zero, Positive
+        case negative, zero, positive
     }
     
     var kind: Kind {
         switch self {
         case 0:
-            return .Zero
+            return .zero
         case let x where x > 0:
-            return .Positive
+            return .positive
         default:
-            return .Negative
+            return .negative
         }
     }
     
@@ -164,7 +164,7 @@ anotherInstace.bar() // static dispaching
  If a conforming type satisfies the requirements for multiple constrained extensions that provide implementations for the same method or property, Swift will use the implementation corresponding to the most specialized constraints.
  
  */
-extension CollectionType where Generator.Element: SomeProtocol {
+extension Collection where Iterator.Element: SomeProtocol {
     
     var textualDescription: String {
         return ""

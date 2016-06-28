@@ -335,10 +335,10 @@ object1 === object2
 object1 === object3
 //: ## Distinguish between methods or initializers whose names differ only by the names of their arguments
 class SomeClass {
-    func someMethod(x: Int, y: Int) {}
-    func someMethod(x: Int, z: Int) {}
-    func overloadedMethod(x: Int, y: Int) {}
-    func overloadedMethod(x: Int, y: Bool) {}
+    func someMethod(_ x: Int, y: Int) {}
+    func someMethod(_ x: Int, z: Int) {}
+    func overloadedMethod(_ x: Int, y: Int) {}
+    func overloadedMethod(_ x: Int, y: Bool) {}
 }
 
 let instance = SomeClass()

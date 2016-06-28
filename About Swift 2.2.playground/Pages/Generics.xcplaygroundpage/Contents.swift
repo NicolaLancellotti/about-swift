@@ -14,7 +14,7 @@
  
  You can provide more than one type parameter by writing multiple type parameter names within the angle brackets, separated by commas.
  */
-func swapTwoValues<T>(inout a: T, inout _ b: T) {
+func swapTwoValues<T>(a: inout T, _ b: inout T) {
     let temporaryA = a
     a = b
     b = temporaryA

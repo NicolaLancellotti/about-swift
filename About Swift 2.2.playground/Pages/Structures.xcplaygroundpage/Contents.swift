@@ -181,7 +181,7 @@ struct StructureWithMethods {
     // Mutating methods
     
     // Properties can be modified from within mutating methods.
-    mutating func mutatingInstanceMethod2(value: Int) {
+    mutating func mutatingInstanceMethod2(_ value: Int) {
         self.storedProperty = value
     }
     
@@ -237,7 +237,7 @@ struct Matrix {
     init(rows: Int, columns: Int) {
         self.rows = rows
         self.columns = columns
-        grid = Array(count: rows * columns, repeatedValue: 0)
+        grid = Array(repeating: 0, count: rows * columns)
     }
     
     subscript(row: Int, column: Int) -> Int {
