@@ -26,5 +26,6 @@
         <page name='Created by'/>
         <page name='Literal Convertible Protocols'/>
         <page name='Convertible Protocols'/>
+        <page name='Library Functions'/>
     </pages>
 </playground>
