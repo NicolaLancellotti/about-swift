@@ -1,5 +1,7 @@
 //: [Previous](@previous)
 
+//: # Other Protocols
+
 /*:
  ## Convertible Protocols
  * StringInterpolationConvertible
