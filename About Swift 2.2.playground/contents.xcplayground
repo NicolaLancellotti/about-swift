@@ -24,5 +24,6 @@
         <page name='Miscellaneous'/>
         <page name='Checking API Availability'/>
         <page name='Created by'/>
+        <page name='Literal Convertible Protocols'/>
     </pages>
 </playground>
