@@ -44,7 +44,10 @@ let y: Any = x
 f(x) // prints "Function for Int"
 f(y) // prints "Function for Any"
 f(x as Any) // prints "Function for Any"
-//: ### Switch
+/*:
+ ### Switch
+ In a switch statement, a value is cast to a type only when pattern matching with that type succeeds. For that reason, you use the as operator instead of the conditional as? or unconditional as! operators.
+ */
 var things = [Any]()
 things.append(0)
 things.append(0.0)
