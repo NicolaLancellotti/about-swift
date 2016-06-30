@@ -24,8 +24,9 @@
         <page name='Miscellaneous'/>
         <page name='Checking API Availability'/>
         <page name='Created by'/>
+        <page name='Library Functions'/>
         <page name='Literal Convertible Protocols'/>
         <page name='Convertible Protocols'/>
-        <page name='Library Functions'/>
+        <page name='Other Protocols'/>
     </pages>
 </playground>
