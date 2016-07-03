@@ -16,23 +16,23 @@ import Foundation
  */
 
 //: ### The type of a closure is a tuple
-func doSomething(par1: Int, par2: Bool) {
+func doSomething(_ par1: Int, par2: Bool) {
     
 }
 let func1: (Int, Bool) -> () = doSomething
 func1(1, true)
 
 //: ### Closure can have a closure as a parameter
-func funcWithFuncParam(closure: (Int, Bool) -> ()) {
+func funcWithFuncParam(_ closure: (Int, Bool) -> ()) {
     
 }
 funcWithFuncParam(func1)
 
 
 //: ### Closure can return a closure
-func funcWithFuncReturn(flag: Bool) -> ((Int) -> Int)? {
+func funcWithFuncReturn(_ flag: Bool) -> ((Int) -> Int)? {
     if flag {
-        func function(value: Int) -> Int {
+        func function(_ value: Int) -> Int {
             return value + 1
         }
         return function
@@ -46,43 +46,43 @@ func funcWithFuncReturn(flag: Bool) -> ((Int) -> Int)? {
 let names = ["Chris", "Alex", "Ewa", "Barry", "Daniella"]
 
 
-func backwards(s1: String, _ s2: String) -> Bool {
+func backwards(_ s1: String, _ s2: String) -> Bool {
     return s1 > s2
 }
 
-names.sort(backwards)
+names.sorted(isOrderedBefore: backwards)
 //: ## Closure Expression
 let closure = { (s1: String, s2: String) -> Bool in
     return s1 > s2
 }
 
-names.sort(closure)
+names.sorted(isOrderedBefore: closure)
 
 
-names.sort({ (s1: String, s2: String) -> Bool in
+names.sorted(isOrderedBefore: { (s1: String, s2: String) -> Bool in
     return s1 > s2
 })
 //: ### Inferring Type From Context
-names.sort({ s1, s2 in
+names.sorted(isOrderedBefore: { s1, s2 in
     return s1 > s2
 })
 //: ### Implicit Returns from Single-Expression Closures
-names.sort({ s1, s2 in
+names.sorted(isOrderedBefore: { s1, s2 in
     s1 > s2
 })
 //: ### Shorthand Argument Names
-names.sort({
+names.sorted(isOrderedBefore: {
     $0 > $1
 })
 //: ### Operator Functions
-names.sort(>)
+names.sorted(isOrderedBefore: >)
 //: ## Trailing Closures
-names.sort() {
+names.sorted() {
     $0 > $1
 }
 //If a closure expression is the only argument you do not need to write a pair of parentheses ()
 
-names.sort {
+names.sorted {
     $0 > $1
 }
 //: ## Capturing Values
@@ -107,7 +107,7 @@ closure2()
  
  A closure is said to escape a function when the closure is passed as an argument to the function, but is called after the function returns.
  */
-func someFunctionWithNoescapeClosure(@noescape closure: () -> Void) {
+func someFunctionWithNoescapeClosure(_ closure: @noescape () -> Void) {
     closure()
 }
 /*:
@@ -117,12 +117,12 @@ func someFunctionWithNoescapeClosure(@noescape closure: () -> Void) {
  
  The @autoclosure attribute implies the @noescape attribute, if you want an autoclosure that is allowed to escape, use the @autoclosure(escaping).
  */
-func functionWithAutoclosure(@autoclosure closure: () -> Bool) {
+func functionWithAutoclosure(_ closure: @autoclosure () -> Bool) {
 }
 
 functionWithAutoclosure(2 > 1)
 
-func functionWithClosure(closure: () -> Bool) {
+func functionWithClosure(_ closure: () -> Bool) {
 }
 
 functionWithClosure({ () -> Bool in
@@ -130,13 +130,13 @@ functionWithClosure({ () -> Bool in
 })
 /*:
  ##  Closure capture list
-
+ 
  You can use a capture list to explicitly control how values are captured in a closure.
  
  The entries in the capture list are initialized when the closure is created. For each entry in the capture list, a constant is initialized to the value of the constant or variable that has the same name in the surrounding scope.
  
  If the type of the expression’s value is a class, you can mark the expression in a capture list with `weak` or `unowned` to capture a weak or unowned reference to the expression’s value.
-
+ 
  If you use a capture list, you must also use the `in` keyword, even if you omit the parameter names, parameter types, and return type.
  
  */
@@ -198,7 +198,7 @@ let people = [
     Person(name: "Angela", age: 10)
 ]
 
-let sortedChildrenNames = people.filter {$0.age < 10} .map {$0.name} .sort {$0 < $1}
+let sortedChildrenNames = people.filter {$0.age < 10} .map {$0.name} .sorted {$0 < $1}
 sortedChildrenNames
 
 let averageAge = people.reduce(0.0) { $0 + $1.age } / Double(people.count)
@@ -207,10 +207,10 @@ averageAge
 let maxAge = people.reduce(0) { max($0, $1.age) }
 maxAge
 //: Memoization
-func memoize<T: Hashable, U>( body: ((T)->U, T)->U ) -> (T)->U {
+func memoize<T: Hashable, U>( _ body: ((T)->U, T)->U ) -> (T)->U {
     var memo = Dictionary<T, U>()
     
-    func result(x: T) -> U {
+    func result(_ x: T) -> U {
         if let q = memo[x] { return q }
         let r = body(result, x)
         memo[x] = r
