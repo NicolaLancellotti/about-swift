@@ -9,6 +9,20 @@ let length: Length = 0.0
 //: ## Multiple separate statements on a single line
 let cat = "?"; print(cat)
 /*:
+ ## Line Control Statement
+ 
+ A line control statement is used to specify a line number and filename that can be different from the line number and filename of the source code being compiled. Use a line control statement to change the source code location used by Swift for diagnostic and debugging purposes.
+ */
+var file = #file
+var line = #line
+
+//#sourceLocation(file: "someFile", line: 1)
+file = #file
+line = #line
+//#sourceLocation()
+file = #file
+line = #line
+/*:
  ## @warn_unused_result
  
  Apply this attribute to a method or function declaration to have the compiler emit a warning when the method or function is called without using its result.
