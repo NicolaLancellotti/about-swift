@@ -16,40 +16,34 @@ func funcWithReturnValue() -> Bool {
 let aBool = funcWithReturnValue()
 /*:
  ## Functions With Parameters
- Function parameters have both an external parameter name and a local parameter name. An external parameter name is used to label arguments passed to a function call. A local parameter name is used in the implementation of the function.
  
- By default, the first parameter omits its external name, and the second and subsequent parameters use their local name as their external name
+ Each function parameter has both an argument label and a parameter name. The argument label is used when calling the function; each argument is written in the function call with its argument label before it. The parameter name is used in the implementation of the function. By default, parameters use their parameter name as their argument label.
+ 
  */
-func functionWithParameters(_ localParameterName1: Int,
-                            externalParameterName2 localParameterName2: Int,
-                                                   localParameterName3: Int,
-                                                 _ localParameterName4: Int) {
-    let sum = localParameterName1 + localParameterName2 + localParameterName3 + localParameterName4
-    print("Sum: \(sum)")
+func difference(x: Int, y: Int) -> Int {
+    return x - y
+}
+difference(x: 1, y: 2)
+//: Specifying Argument Labels
+func difference(of x: Int, less y: Int) -> Int {
+    return x - y
 }
 
-functionWithParameters(1, externalParameterName2: 2, localParameterName3: 3, 4)
+difference(of: 1, less: 2)
 
-
-func printDifference(of x: Int, less y: Int) {
-    print("\(x - y)")
+//: If you don’t want an argument label for a parameter, write an underscore (_) instead of an explicit argument label for that parameter.
+func difference(_ x: Int, _ y: Int) -> Int {
+    return x - y
 }
 
-printDifference(of: 1, less: 2)
-
-
-func sum(_ x: Int, _ y: Int) -> Int {
-    return x + y
-}
-
-sum(1, 2)
+difference(1, 2)
 //: ## Functions With Default Parameter Values
-func funcWithDefaultParameterValue(_ param: Int = 12) {
+func funcWithDefaultParameterValue(param: Int = 12) {
     print("Value: \(param)")
 }
 
 funcWithDefaultParameterValue()
-funcWithDefaultParameterValue(1)
+funcWithDefaultParameterValue(param: 1)
 /*:
  ## Functions With Variadic Parameters
  
