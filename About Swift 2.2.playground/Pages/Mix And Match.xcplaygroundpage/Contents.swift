@@ -20,31 +20,49 @@ This excludes Swift-only features such as those listed here:
 */
 
 //: ## Selector Conflicts
-class AClass : NSObject {
+class SomeClass : NSObject {
     
-    func foo(value: Int){
+    var property: String = ""
+    
+    func foo(_ value: Int){
         
     }
     
     @objc(fooWithStrig:)
-    func foo(value: String){
+    func foo(_ value: String){
         
     }
     
     @nonobjc
-    func foo(value: Double){
+    func foo(_ value: Double){
         
-    }
-    
-    func bar() {
-        print("ciao")
     }
     
 }
 //: ## Selector Expression
-let x = AClass()
-let aSelector = #selector(x.foo(_:) as (String) -> Void)
-let anotherSelector = #selector(x.bar)
+extension SomeClass {
+    func bar() {
+        
+    }
+    
+    func foobar(value: Int) {
+        
+    }
+    
+}
+
+let selectorForPropertyGetter = #selector(getter: SomeClass.property)
+let selectorForPropertySetter = #selector(setter: SomeClass.property)
+
+let selectorForMethodBar = #selector(SomeClass.bar)
+let selectorForMethodFoobar = #selector(SomeClass.foobar(value:))
+
+let selectorForMethodFooString = #selector(SomeClass.foo(_:) as (SomeClass) -> (String) -> Void)
+let selectorForMethodFooDouble = #selector(SomeClass.foo(_:) as (SomeClass) -> (Int) -> Void)
+
+let x = SomeClass()
+let selectorForMethodBar2 = #selector(x.bar)
+let selectorForMethodFooString2 = #selector(x.foo(_:) as (String) -> Void)
 /*:
  ## Optional Protocol Requirements
  
@@ -54,6 +72,7 @@ let anotherSelector = #selector(x.bar)
  Optional protocol requirements can only be specified if your protocol is marked with the @objc attribute.
  Note also that @objc protocols can be adopted only by classes that inherit from Objective-C classes or other @objc classes. They can’t be adopted by structures or enumerations.
  */
+/*
 @objc
 protocol CounterDataSource {
     optional func incrementForCount(count: Int) -> Int
@@ -74,4 +93,5 @@ class Counter {
         }
     }
 }
+ */
 //: [Next](@next)
