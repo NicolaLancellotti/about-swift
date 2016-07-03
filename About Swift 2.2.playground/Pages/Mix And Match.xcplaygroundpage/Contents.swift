@@ -22,7 +22,7 @@ This excludes Swift-only features such as those listed here:
 //: ## Selector Conflicts
 class SomeClass : NSObject {
     
-    var property: String = ""
+    var someProperty: String = "Hello"
     
     func foo(_ value: Int){
         
@@ -39,6 +39,8 @@ class SomeClass : NSObject {
     }
     
 }
+
+let instance = SomeClass()
 //: ## Selector Expression
 extension SomeClass {
     func bar() {
@@ -51,8 +53,8 @@ extension SomeClass {
     
 }
 
-let selectorForPropertyGetter = #selector(getter: SomeClass.property)
-let selectorForPropertySetter = #selector(setter: SomeClass.property)
+let selectorForPropertyGetter = #selector(getter: SomeClass.someProperty)
+let selectorForPropertySetter = #selector(setter: SomeClass.someProperty)
 
 let selectorForMethodBar = #selector(SomeClass.bar)
 let selectorForMethodFoobar = #selector(SomeClass.foobar(value:))
@@ -60,9 +62,15 @@ let selectorForMethodFoobar = #selector(SomeClass.foobar(value:))
 let selectorForMethodFooString = #selector(SomeClass.foo(_:) as (SomeClass) -> (String) -> Void)
 let selectorForMethodFooDouble = #selector(SomeClass.foo(_:) as (SomeClass) -> (Int) -> Void)
 
-let x = SomeClass()
-let selectorForMethodBar2 = #selector(x.bar)
-let selectorForMethodFooString2 = #selector(x.foo(_:) as (String) -> Void)
+let selectorForMethodBar2 = #selector(instance.bar)
+let selectorForMethodFooString2 = #selector(instance.foo(_:) as (String) -> Void)
+/*: 
+ ## Key-Path Expression
+ 
+ A key-path expression lets you access the string used to refer to a property in Objective-C for use in key-value coding and key-value observing APIs.
+ */
+let keyPath = #keyPath(SomeClass.someProperty)
+instance.value(forKey: keyPath)
 /*:
  ## Optional Protocol Requirements
  
@@ -72,7 +80,6 @@ let selectorForMethodFooString2 = #selector(x.foo(_:) as (String) -> Void)
  Optional protocol requirements can only be specified if your protocol is marked with the @objc attribute.
  Note also that @objc protocols can be adopted only by classes that inherit from Objective-C classes or other @objc classes. They can’t be adopted by structures or enumerations.
  */
-/*
 @objc
 protocol CounterDataSource {
     optional func incrementForCount(count: Int) -> Int
@@ -93,5 +100,4 @@ class Counter {
         }
     }
 }
- */
 //: [Next](@next)
