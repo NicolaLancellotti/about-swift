@@ -25,7 +25,7 @@ default:
 }
 /*:
  # Error Handling
- Errors are represented by values of types that conform to the ErrorType protocol.
+ Errors are represented by values of types that conform to the ErrorProtocol.
  */
 enum MyErrorType: ErrorProtocol {
     case errorType1
