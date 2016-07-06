@@ -3,7 +3,6 @@ struct SomeStructure {
     var value: Int = 0
 }
 let instance = SomeStructure()
-
 /*:
  ## Equatable
  A type that can be compared for value equality.
@@ -17,7 +16,6 @@ extension SomeStructure: Equatable {
 func ==(lhs: SomeStructure, rhs: SomeStructure) -> Bool {
     return lhs.value == rhs.value
 }
-
 /*:
  ## Hashable
  A type that provides an integer hash value.
@@ -44,7 +42,6 @@ extension SomeStructure: Comparable {
 func <(lhs: SomeStructure, rhs: SomeStructure) -> Bool {
     return lhs.value < rhs.value
 }
-
 /*:
  ## Strideable
  Conforming types are notionally continuous, one-dimensional values that can be offset and measured.
@@ -65,6 +62,23 @@ let instance1 = SomeStructure(value: 1)
 let instance2 = instance1.advanced(by: 1)
 instance2.value
 instance1.distance(to: instance2)
+/*:
+ ## RawRepresentable
+ A type that can be converted to and from an associated raw value.
+ */
+extension SomeStructure: RawRepresentable {
+    
+    init?(rawValue: String) {
+        guard let value = Int(rawValue) else {
+            return nil
+        }
+        self.value = value
+    }
+    
+    var rawValue: String {
+        return String(value)
+    }
+}
 
-
+SomeStructure(rawValue: "123")?.rawValue
 //: [Next](@next)
