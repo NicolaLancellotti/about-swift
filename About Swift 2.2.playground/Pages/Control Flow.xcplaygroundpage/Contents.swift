@@ -29,19 +29,17 @@ for i in 0...4 {
         // do something
     }
 }
-//: ## While Loops
 
-//: ### While
+//: ## While
 while condition1 {
     // do something
 }
-//: ### Repeat-While
+//: ## Repeat-While
 repeat {
     // do something
 } while condition1
-//: ## Conditional Statements
 
-//: ### If
+//: ## If
 if condition1 {
    // do something
 } else if condition2 {
@@ -50,7 +48,7 @@ if condition1 {
     // do something
 }
 /*:
- ### Switch
+ ## Switch
  * Every switch statement must be exhaustive. (If it’s not appropriate to provide a case for every possible value, you can define a default case to cover any values that are not addressed explicitly).
  * The body of each case must contain at least one executable statement.
  * No Implicit Fallthrough.
@@ -65,7 +63,7 @@ case 1:
 default:
     print("> 1")
 }
-//: Where & Value Bindings
+//: ### Where & Value Bindings
 number = 12
 
 switch number {
@@ -76,13 +74,29 @@ case let x where x % 2 == 0:
 default:
     print("\(number) is odd")
 }
-//: Interval Matching
+//: ### Interval Matching
 number = 5
 switch number {
 case 0...5:
     print("0 <= x <= 5")
 default:
     print("x >= 6")
+}
+//: ### Compound Cases
+let someCharacter: Character = "e"
+switch someCharacter {
+case "a", "e", "i", "o", "u":
+    print("\(someCharacter) is a vowel")
+default:
+    print("\(someCharacter) is not a vowel")
+}
+//: ### Compound cases can also include value bindings
+let stillAnotherPoint = (9, 0)
+switch stillAnotherPoint {
+case (let distance, 0), (0, let distance):
+    print("On an axis, \(distance) from the origin")
+default:
+    print("Not on an axis")
 }
 /*:
  ## Control Transfer Statements
