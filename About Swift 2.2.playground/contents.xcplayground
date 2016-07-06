@@ -30,5 +30,6 @@
         <page name='Library Functions'/>
         <page name='Literal Convertible Protocols'/>
         <page name='Convertible Protocols'/>
+        <page name='Able Protocols'/>
     </pages>
 </playground>
