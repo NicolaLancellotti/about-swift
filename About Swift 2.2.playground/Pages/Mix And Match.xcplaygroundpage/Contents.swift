@@ -80,24 +80,29 @@ instance.value(forKey: keyPath)
  Optional protocol requirements can only be specified if your protocol is marked with the @objc attribute.
  Note also that @objc protocols can be adopted only by classes that inherit from Objective-C classes or other @objc classes. They can’t be adopted by structures or enumerations.
  */
-@objc
-protocol CounterDataSource {
-    optional func incrementForCount(count: Int) -> Int
-    optional var fixedIncrement: Int { get }
+@objc protocol CounterDataSource {
+    @objc optional func increment(forCount count: Int) -> Int
+    @objc optional var fixedIncrement: Int { get }
+}
+
+class ThreeSource: NSObject, CounterDataSource {
+    let fixedIncrement = 3
 }
 
 class Counter {
-    
     var count = 0
-    
     var dataSource: CounterDataSource?
-    
     func increment() {
-        if let amount = dataSource?.incrementForCount?(count) {
+        if let amount = dataSource?.increment?(forCount: count) {
             count += amount
         } else if let amount = dataSource?.fixedIncrement {
             count += amount
         }
     }
 }
+
+var counter = Counter()
+counter.dataSource = ThreeSource()
+counter.increment()
+counter.count
 //: [Next](@next)
