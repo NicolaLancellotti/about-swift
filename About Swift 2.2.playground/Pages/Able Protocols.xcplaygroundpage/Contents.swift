@@ -29,4 +29,20 @@ extension SomeStructure: Hashable {
         return value.hashValue
     }
 }
+/*:
+ ## Comparable
+ A type that can be compared using the relational operators <, <=, >=, and >.
+ 
+ Inherits From Equatable
+ 
+ A type conforming to Comparable need only supply the < and == operators; default implementations of <=, >, >=, and != are supplied by the standard library.
+ */
+extension SomeStructure: Comparable {
+    
+}
+
+func <(lhs: SomeStructure, rhs: SomeStructure) -> Bool {
+    return lhs.value < rhs.value
+}
+
 //: [Next](@next)
