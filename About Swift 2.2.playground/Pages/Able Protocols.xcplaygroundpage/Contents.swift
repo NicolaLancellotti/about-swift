@@ -45,4 +45,26 @@ func <(lhs: SomeStructure, rhs: SomeStructure) -> Bool {
     return lhs.value < rhs.value
 }
 
+/*:
+ ## Strideable
+ Conforming types are notionally continuous, one-dimensional values that can be offset and measured.
+ 
+ Inherits From Comparable
+ */
+extension SomeStructure: Strideable {
+    func advanced(by n: Int) -> SomeStructure {
+        return SomeStructure(value: self.value + n)
+    }
+    
+    func distance(to other: SomeStructure) -> Int {
+        return self.value - other.value
+    }
+}
+
+let instance1 = SomeStructure(value: 1)
+let instance2 = instance1.advanced(by: 1)
+instance2.value
+instance1.distance(to: instance2)
+
+
 //: [Next](@next)
