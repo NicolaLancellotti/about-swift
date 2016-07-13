@@ -54,7 +54,4 @@ strideof(Structure)
 class SomeClass { }
 let object = SomeClass()
 unsafeAddress(of: object)
-
-
-
 //: [Next](@next)

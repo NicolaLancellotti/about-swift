@@ -30,6 +30,7 @@
         <page name='Literal Convertible Protocols'/>
         <page name='Convertible Protocols'/>
         <page name='Able Protocols'/>
+        <page name='Sequence'/>
         <page name='Created by'/>
     </pages>
 </playground>
