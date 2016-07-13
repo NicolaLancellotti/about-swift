@@ -55,26 +55,6 @@ class SomeClass { }
 let object = SomeClass()
 unsafeAddress(of: object)
 
-/*: ## ___________________________________________________
- ## To Do
- 
- * dump
- * isUniquelyReferenced
- * isUniquelyReferencedNonObjC
- * precondition
- * preconditionFailure
- * stride
- 
- * transcode
- 
- * getVaList
- 
- * withExtendedLifetime
- * withUnsafeMutablePointer
- * withUnsafeMutablePointers
- * withUnsafePointer
- * withUnsafePointers
- * withVaList
- */
+
 
 //: [Next](@next)

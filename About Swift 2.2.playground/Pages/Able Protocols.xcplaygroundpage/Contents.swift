@@ -1,4 +1,6 @@
 //: [Previous](@previous)
+
+//: # Able Protocols
 struct SomeStructure {
     var value: Int = 0
 }

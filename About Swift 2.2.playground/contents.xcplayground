@@ -26,10 +26,10 @@
         <page name='Miscellaneous'/>
         <page name='Checking API Availability'/>
         <page name='Standard Library'/>
-        <page name='Created by'/>
         <page name='Library Functions'/>
         <page name='Literal Convertible Protocols'/>
         <page name='Convertible Protocols'/>
         <page name='Able Protocols'/>
+        <page name='Created by'/>
     </pages>
 </playground>
