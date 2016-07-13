@@ -1,6 +1,20 @@
 //: [Previous](@previous)
 
-//: # Able Protocols
+/*:
+ # Able Protocols
+ * Equatable
+ * Hashable
+ * Comparable
+ * Strideable
+ * RawRepresentable
+ * AbsoluteValuable
+ * Streamable
+ * IndexableBase
+ * Indexable
+ * MutableIndexable
+ * BidirectionalIndexable
+ * RandomAccessIndexable
+ */
 struct SomeStructure {
     var value: Int = 0
 }
