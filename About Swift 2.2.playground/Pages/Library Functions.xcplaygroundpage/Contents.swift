@@ -16,7 +16,7 @@ swap(&a, &b)
 a
 b
 //: ## Repeat Element
-let elements = repeatElement(1, count:5)
+let elements = repeatElement(1, count: 5)
 elements.count
 //: ## Zip
 var sequence1 = ["a" , "b"]

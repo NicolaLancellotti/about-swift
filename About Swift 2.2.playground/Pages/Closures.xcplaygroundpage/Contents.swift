@@ -129,7 +129,7 @@ func functionWithAutoclosure(_ closure: @autoclosure () -> Bool) {
 }
 
 functionWithAutoclosure(2 > 1)
-//:If you want an autoclosure that is allowed to escape, use both the @autoclosure and @escaping attributes.
+//: If you want an autoclosure that is allowed to escape, use both the @autoclosure and @escaping attributes.
 func functionWithEscapingAutoclosure(_ closure: @autoclosure @escaping () -> Bool) {
     
 }
@@ -156,7 +156,7 @@ let closure4 = { [a] in
 a = 10
 b = 10
 closure4() // Prints "0 10"
-//:This distinction is not visible when the captured variable’s type has reference semantics.
+//: This distinction is not visible when the captured variable’s type has reference semantics.
 class SimpleClass {
     var value: Int = 0
 }
