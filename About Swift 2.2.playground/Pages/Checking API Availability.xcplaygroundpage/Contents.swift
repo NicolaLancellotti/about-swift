@@ -12,8 +12,8 @@ The available attribute always appears with a list of two or more comma-separate
 
 * iOS
 * iOSApplicationExtension
-* OSX
-* OSXApplicationExtension
+* macOS
+* macOSApplicationExtension
 * watchOS
 * watchOSApplicationExtension
 * tvOS
@@ -27,7 +27,7 @@ func aFunction() {
     
 }
 //: If an available attribute only specifies an introduced argument in addition to a platform name argument, the following shorthand syntax can be used instead. (The shorthand form is preferred whenever possible.)
-@available(iOS 8.0, OSX 10.10, *)
+@available(iOS 8.0, macOS 10.10, *)
 class MyClass {
     
 }
