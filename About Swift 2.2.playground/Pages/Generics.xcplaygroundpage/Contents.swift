@@ -105,12 +105,13 @@ func findIndex<T: Equatable>(_ array: [T], _ valueToFind: T) -> Int? {
     return nil
 }
 /*:
- Where Clauses
+ ### Where Clauses
  
- It can also be useful to define requirements for associated types. You do this by defining where clauses as part of a type parameter list. A where clause enables you to require that an associated type must conform to a certain protocol, or that certain type parameters and associated types must be the same.
+ It can also be useful to define requirements for associated types. You do this by defining a generic where clause.
+ A generic where clause enables you to require that an associated type must conform to a certain protocol, or that certain type parameters and associated types must be the same.
  */
-func allItemsMatch<C1: Container, C2: Container>
-    (_ someContainer: C1, _ anotherContainer: C2) -> Bool where C1.ItemType == C2.ItemType, C1.ItemType: Equatable {
+func allItemsMatch<C1: Container, C2: Container>(_ someContainer: C1, _ anotherContainer: C2) -> Bool
+    where C1.ItemType == C2.ItemType, C1.ItemType: Equatable {
     
     if someContainer.count != anotherContainer.count {
         return false
