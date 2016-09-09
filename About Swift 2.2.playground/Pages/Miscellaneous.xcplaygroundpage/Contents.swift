@@ -28,21 +28,16 @@ line = #line
 file = #file
 line = #line
 /*:
- ## @warn_unused_result
+ ## Discardable Result
  
- Apply this attribute to a method or function declaration to have the compiler emit a warning when the method or function is called without using its result.
+ Apply this attribute to a function or method declaration to suppress the compiler warning when the function or method that returns a value is called without using its result.
  */
 struct Increaser {
     var value = 0
     
-    //    @warn_unused_result(message:"my message")
-    
+    @discardableResult
     func increased() -> Int {
         return value + 1
-    }
-    
-    mutating func increase() {
-        value += 1
     }
 }
 /*:
