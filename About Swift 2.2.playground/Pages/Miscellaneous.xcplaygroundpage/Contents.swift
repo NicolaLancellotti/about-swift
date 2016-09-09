@@ -7,7 +7,6 @@ typealias Length = Double
 let length: Length = 0.0
 
 typealias StringDictionary<T> = Dictionary<String, T>
-
 // The following dictionaries have the same type.
 var dictionary1: StringDictionary<Int> = [:]
 var dictionary2: Dictionary<String, Int> = [:]
