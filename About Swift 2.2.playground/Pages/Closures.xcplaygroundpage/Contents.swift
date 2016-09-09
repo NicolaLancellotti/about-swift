@@ -103,31 +103,38 @@ var closure2 = makeIncrementer(forIncrement: 50)
 closure2()
 closure2()
 /*:
- ## Nonescaping Closures
+ ## Escaping Closures
  
  A closure is said to escape a function when the closure is passed as an argument to the function, but is called after the function returns.
  */
-func someFunctionWithNoescapeClosure(_ closure: () -> Void) {
-    closure()
+var completionHandlers: [() -> Void] = []
+
+func someFunctionWithEscapingClosure(completionHandler: @escaping () -> Void) {
+    completionHandlers.append(completionHandler)
 }
 /*:
  ## Autoclosures
  
  An autoclosure is a closure that is automatically created to wrap an expression that’s being passed as an argument to a function.
  
- The @autoclosure attribute implies the @noescape attribute, if you want an autoclosure that is allowed to escape, use the @autoclosure(escaping).
+ An autoclosure lets you delay evaluation, because the code inside isn’t run until you call the closure
  */
+func functionWithClosure(_ closure: () -> Bool) {
+}
+
+functionWithClosure({ 2 > 1})
+
+
 func functionWithAutoclosure(_ closure: @autoclosure () -> Bool) {
 }
 
 functionWithAutoclosure(2 > 1)
-
-func functionWithClosure(_ closure: () -> Bool) {
+//:If you want an autoclosure that is allowed to escape, use both the @autoclosure and @escaping attributes.
+func functionWithEscapingAutoclosure(_ closure: @autoclosure @escaping () -> Bool) {
+    
 }
 
-functionWithClosure({ () -> Bool in
-    return 2 > 1
-})
+functionWithEscapingAutoclosure(2 > 1)
 /*:
  ##  Closure capture list
  
