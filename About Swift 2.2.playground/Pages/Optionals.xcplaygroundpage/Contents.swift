@@ -33,7 +33,7 @@ if let constantString = possibleString {
 
 var possibleName: String? = "Nicola"
 var possibleAge: Int? = 23
-
+//: You can include as many optional bindings and Boolean conditions in a single if statement as you need to, separated by commas.
 if let name = possibleName, let age = possibleAge {
     print("Name: \(name) Age: \(age)")
 } else {
