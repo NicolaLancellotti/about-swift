@@ -23,7 +23,8 @@ var line = #line
 //#sourceLocation(file: "someFile", line: 1)
 file = #file
 line = #line
-//#sourceLocation()
+
+//#sourceLocation() // Resets the source code location back to the default line numbering and filename
 file = #file
 line = #line
 /*:
