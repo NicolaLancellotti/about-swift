@@ -18,7 +18,7 @@ struct MyInt {
 
 var myInt: MyInt
 //: ## IntegerLiteralConvertible
-extension MyInt: IntegerLiteralConvertible {
+extension MyInt: ExpressibleByIntegerLiteral {
     
     init(integerLiteral value: Int) {
         self.value = value
@@ -29,7 +29,7 @@ extension MyInt: IntegerLiteralConvertible {
 myInt = 1
 myInt.value
 //: ## NilLiteralConvertible
-extension MyInt: NilLiteralConvertible {
+extension MyInt: ExpressibleByNilLiteral {
     
     init(nilLiteral: ()) {
         self.value = 0
@@ -40,7 +40,7 @@ extension MyInt: NilLiteralConvertible {
 myInt = nil
 myInt.value
 //: ## UnicodeScalarLiteralConvertible
-extension MyInt: UnicodeScalarLiteralConvertible {
+extension MyInt: ExpressibleByUnicodeScalarLiteral {
     
     init(unicodeScalarLiteral value: UnicodeScalar) {
         self.value = Int(String(value)) ?? 0

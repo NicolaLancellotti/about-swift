@@ -27,7 +27,7 @@ default:
  # Error Handling
  Errors are represented by values of types that conform to the ErrorProtocol.
  */
-enum MyErrorType: ErrorProtocol {
+enum MyErrorType: Error {
     case errorType1
     case errorType2(value: Int)
 }

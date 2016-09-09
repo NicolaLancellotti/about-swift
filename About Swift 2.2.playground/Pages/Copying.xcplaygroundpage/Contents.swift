@@ -8,7 +8,7 @@ class MyType: NSObject, NSCopying {
         self.value = value
     }
     
-    @objc func copy(with zone: NSZone?) -> AnyObject {
+    public func copy(with zone: NSZone? = nil) -> Any {
         return MyType(value: value)
     }
 }
@@ -40,7 +40,7 @@ struct Wrapper {
     
     private var objectForWriting: MyType {
         mutating get {
-            if !isUniquelyReferencedNonObjC(&object) {
+            if !isKnownUniquelyReferenced(&object) {
                 object = object.copy() as! MyType
             }
             return object

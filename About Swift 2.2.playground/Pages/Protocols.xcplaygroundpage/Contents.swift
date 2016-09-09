@@ -92,5 +92,5 @@ protocol SomeProtocol {}
 
 let object1: SomeProtocol
 
-let object2: protocol<SomeProtocol, SomeClassOnlyProtocol>
+let object2: SomeProtocol & SomeClassOnlyProtocol
 //: [Next](@next)

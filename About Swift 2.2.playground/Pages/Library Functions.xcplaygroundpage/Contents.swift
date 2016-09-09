@@ -40,18 +40,17 @@ let instance = Structure()
 
 // Returns the contiguous memory footprint of T.
 // Do not include any padding necessary for memory alignment.
-sizeof(Structure)
+MemoryLayout<Structure>.size
 
 // Returns the minimum memory alignment of T.
 // An alignment of x means that data of this type should (or must, depends on
 // the CPU) be stored starting at an address that is a multiple of x.
-alignof(Structure)
+MemoryLayout<Structure>.alignment
 
 // Returns the least possible interval between distinct instances of T in memory.
 // Like sizeof operator in C
-strideof(Structure)
+MemoryLayout<Structure>.stride
 
 class SomeClass { }
 let object = SomeClass()
-unsafeAddress(of: object)
 //: [Next](@next)

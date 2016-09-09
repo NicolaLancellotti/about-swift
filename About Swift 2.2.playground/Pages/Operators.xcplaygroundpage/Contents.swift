@@ -160,6 +160,7 @@ vector
  
  You can also define custom operators that begin with a dot (.). These operators are can contain additional dots such as .+.. If an operator doesn’t begin with a dot, it can’t contain a dot elsewhere.
  */
+/*
 infix operator +- {
 associativity left
 precedence 140
@@ -178,7 +179,7 @@ func *** (value0: Int, value1: Int) -> Int {
     return value0 + value1
 }
 
-10 *** 1 *** 2
+//10 *** 1 *** 2
 /*:
  ### Unary Operators
  * Keywords:
@@ -186,7 +187,7 @@ func *** (value0: Int, value1: Int) -> Int {
     * postfix
  
  */
-prefix operator +++ {}
+prefix operator +++
 prefix func +++ (vector: inout Vector2D) -> Vector2D {
     vector += vector
     return vector
@@ -197,5 +198,6 @@ prefix func +++ (value: inout Int) -> Int {
     return value
 }
 
-infix operator ** {}
+infix operator **
+ */
 //: [Next](@next)

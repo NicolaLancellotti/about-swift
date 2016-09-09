@@ -40,7 +40,7 @@ if let name = possibleName, let age = possibleAge {
     print("possibleName is nil or possibleAge is nil")
 }
 
-if let name = possibleName, let age = possibleAge where age > 23 {
+if let name = possibleName, let age = possibleAge , age > 23 {
     print("Name: \(name) Age: \(age)")
 } else {
     print("possibleName is nil or possibleAge is nil or age isn't > 23")

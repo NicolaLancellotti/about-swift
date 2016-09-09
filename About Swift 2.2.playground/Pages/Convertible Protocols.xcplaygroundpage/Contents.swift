@@ -21,7 +21,7 @@ extension SomeStructure: CustomStringConvertible {
 }
 
 print(instance)
-String(instance)
+String(describing: instance)
 /*:
  ## CustomDebugStringConvertible
  Accessing a type's debugDescription property directly or using CustomDebugStringConvertible as a generic constraint is discouraged.
