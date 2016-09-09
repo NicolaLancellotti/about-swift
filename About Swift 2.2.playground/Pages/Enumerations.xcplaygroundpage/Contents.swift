@@ -35,10 +35,10 @@ enum OnOffSwitch {
     
     mutating func toggle() {
         switch self {
-        case off:
-            self = on
-        case on:
-            self = off
+        case .off:
+            self = .on
+        case .on:
+            self = .off
         }
     }
     
@@ -156,7 +156,7 @@ default:
 //: If
 if case .rectangle(let base, let height) = anotherShape {
      print("A rectangle with base: \(base) and height: \(height)")
-} else if case .square(let side) = anotherShape where side == 10 {
+} else if case .square(let side) = anotherShape, side == 10 {
     print("A square with side: 10")
 } else {
     print("A square with side != 10")

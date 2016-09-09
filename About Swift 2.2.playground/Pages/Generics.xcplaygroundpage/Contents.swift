@@ -14,7 +14,7 @@
  
  You can provide more than one type parameter by writing multiple type parameter names within the angle brackets, separated by commas.
  */
-func swapTwoValues<T>(a: inout T, _ b: inout T) {
+func swapTwoValues<T>(_ a: inout T, _ b: inout T) {
     let temporaryA = a
     a = b
     b = temporaryA
@@ -30,7 +30,7 @@ struct Stack<Element> {
     
     var items = [Element]()
     
-    mutating func push(item: Element) {
+    mutating func push(_ item: Element) {
         items.append(item)
     }
     
@@ -58,7 +58,7 @@ protocol Container {
     //  An associated type gives a placeholder name to a type that is used as part of the protocol.
     associatedtype ItemType
     
-    mutating func append(item: ItemType)
+    mutating func append(_ item: ItemType)
     
     var count: Int { get }
     
@@ -71,7 +71,7 @@ struct SomeStructure: Container {
     
     //    typealias ItemType = Int  // Infer from contex
     
-    mutating func append(item: Int) {
+    mutating func append(_ item: Int) {
         items.append(item)
     }
     
@@ -92,12 +92,12 @@ struct SomeStructure: Container {
 class SomeClass {}
 protocol SomeProtocol{}
 
-func someFunction<T: SomeClass, U: SomeProtocol>(someT: T, someU: U) {
+func someFunction<T: SomeClass, U: SomeProtocol>(_ someT: T, someU: U) {
     
 }
 
-func findIndex<T: Equatable>(array: [T], _ valueToFind: T) -> Int? {
-    for (index, value) in array.enumerate() {
+func findIndex<T: Equatable>(_ array: [T], _ valueToFind: T) -> Int? {
+    for (index, value) in array.enumerated() {
         if value == valueToFind {
             return index
         }
@@ -109,8 +109,8 @@ func findIndex<T: Equatable>(array: [T], _ valueToFind: T) -> Int? {
  
  It can also be useful to define requirements for associated types. You do this by defining where clauses as part of a type parameter list. A where clause enables you to require that an associated type must conform to a certain protocol, or that certain type parameters and associated types must be the same.
  */
-func allItemsMatch<C1: Container, C2: Container where C1.ItemType == C2.ItemType, C1.ItemType: Equatable>
-    (someContainer: C1, _ anotherContainer: C2) -> Bool {
+func allItemsMatch<C1: Container, C2: Container>
+    (_ someContainer: C1, _ anotherContainer: C2) -> Bool where C1.ItemType == C2.ItemType, C1.ItemType: Equatable {
     
     if someContainer.count != anotherContainer.count {
         return false

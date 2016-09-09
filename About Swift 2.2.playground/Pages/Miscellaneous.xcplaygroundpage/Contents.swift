@@ -36,7 +36,7 @@ struct Increaser {
     var value = 0
     
     //    @warn_unused_result(message:"my message")
-    @warn_unused_result(mutable_variant:"increase")
+    
     func increased() -> Int {
         return value + 1
     }

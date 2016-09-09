@@ -33,16 +33,16 @@ let object = ClassA()
 object.self
 //: ### Metatype
 ClassA.self 
-object.dynamicType
+type(of: object)
 
 let someInstance: ClassB = ClassA()
-someInstance.dynamicType === ClassB.self
-someInstance.dynamicType === ClassA.self
+type(of: someInstance) === ClassB.self
+type(of: someInstance) === ClassA.self
 //: ### Call Type Methods
 ClassA.self.typeMethod()
 ClassA.typeMethod()
 
-object.dynamicType.typeMethod()
+type(of: object).typeMethod()
 //: ### Call Instance Methods
 object.self.instanceMethod()
 object.instanceMethod()
@@ -54,6 +54,6 @@ function()
 ClassA.init(data: 1)
 ClassA(data: 1)
 //: For class instances, the initializer that’s called must be marked with the required keyword or the entire class marked with the final keyword.
-object.dynamicType.init(data: 7)
+type(of: object).init(data: 7)
 //object.dynamicType(data: 5)       // Error
 //: [Next](@next)

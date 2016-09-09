@@ -40,7 +40,7 @@ struct Wrapper {
     
     private var objectForWriting: MyType {
         mutating get {
-            if !isUniquelyReferencedNonObjC(&object) {
+            if !isKnownUniquelyReferenced(&object) {
                 object = object.copy() as! MyType
             }
             return object

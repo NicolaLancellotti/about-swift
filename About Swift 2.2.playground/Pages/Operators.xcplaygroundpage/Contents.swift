@@ -186,7 +186,7 @@ func *** (value0: Int, value1: Int) -> Int {
     * postfix
  
  */
-prefix operator +++ {}
+prefix operator +++
 prefix func +++ (vector: inout Vector2D) -> Vector2D {
     vector += vector
     return vector
@@ -197,5 +197,5 @@ prefix func +++ (value: inout Int) -> Int {
     return value
 }
 
-infix operator ** {}
+infix operator **
 //: [Next](@next)

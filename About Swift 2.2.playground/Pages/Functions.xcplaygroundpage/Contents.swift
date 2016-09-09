@@ -159,13 +159,13 @@ functionWithDefers()
  
  You can mark a function or method type with @noreturn attribute to indicate that the function or method doesn’t return to its caller.
  */
-@noreturn func loop() {
+func loop() -> Never  {
     while true {
         
     }
 }
 
-@noreturn func terminateApp() {
+func terminateApp() -> Never  {
     abort()
 }
 //: [Next](@next)
