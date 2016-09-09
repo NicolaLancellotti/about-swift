@@ -82,8 +82,8 @@ instance1.distance(to: instance2)
  ## RawRepresentable
  A type that can be converted to and from an associated raw value.
  */
-extension SomeStructure: RawRepresentable {
-    
+struct SomeStructure1: RawRepresentable {
+    var value: Int = 0
     init?(rawValue: String) {
         guard let value = Int(rawValue) else {
             return nil
@@ -96,5 +96,5 @@ extension SomeStructure: RawRepresentable {
     }
 }
 
-//SomeStructure(rawValue: "123")?.rawValue
+SomeStructure1(rawValue: "123")?.rawValue
 //: [Next](@next)
