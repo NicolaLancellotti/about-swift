@@ -2,10 +2,10 @@
 
 import Foundation
 //: # Checking API Availability
-if #available(iOS 9, OSX 10.10, *) {
-    // Use iOS 9 APIs on iOS, and use OS X v10.10 APIs on OS X
+if #available(iOS 9, macOS 10.10, *) {
+    // Use iOS 9 APIs on iOS, and use macOS v10.10 APIs on macOS
 } else {
-    // Fall back to earlier iOS and OS X APIs
+    // Fall back to earlier iOS and macOS APIs
 }
 /*:
 The available attribute always appears with a list of two or more comma-separated attribute arguments. These arguments begin with one of the following platform names:
