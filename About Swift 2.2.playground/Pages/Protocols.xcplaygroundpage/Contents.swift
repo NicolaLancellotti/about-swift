@@ -86,7 +86,7 @@ protocol SomeClassOnlyProtocol: class, ProtocolWithInitializerRequirements {
 }
 /*:
  ## Protocol Composition
- It can be useful to require a type to conform to multiple protocols at once. You can combine multiple protocols into a single requirement with a protocol composition. Protocol compositions have the form protocol<SomeProtocol, AnotherProtocol>.
+ It can be useful to require a type to conform to multiple protocols at once. You can combine multiple protocols into a single requirement with a protocol composition.
  */
 protocol SomeProtocol {}
 
