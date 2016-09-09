@@ -36,6 +36,11 @@ ClassA.self
 type(of: object)
 
 let someInstance: ClassB = ClassA()
+/*:
+ ### Dynamic Type Expression
+ 
+ The type(of:) expression evaluates to the value of the runtime type of the expression.
+ */
 type(of: someInstance) === ClassB.self
 type(of: someInstance) === ClassA.self
 //: ### Call Type Methods
