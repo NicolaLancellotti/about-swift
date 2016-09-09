@@ -96,5 +96,5 @@ extension SomeStructure: RawRepresentable {
     }
 }
 
-SomeStructure(rawValue: "123")?.rawValue
+//SomeStructure(rawValue: "123")?.rawValue
 //: [Next](@next)

@@ -40,7 +40,7 @@ extension MyInt: ExpressibleByNilLiteral {
 myInt = nil
 myInt.value
 //: ## UnicodeScalarLiteralConvertible
-extension MyInt: UnicodeScalarLiteralConvertible {
+extension MyInt: ExpressibleByUnicodeScalarLiteral {
     
     init(unicodeScalarLiteral value: UnicodeScalar) {
         self.value = Int(String(value)) ?? 0

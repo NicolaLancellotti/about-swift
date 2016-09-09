@@ -50,32 +50,32 @@ func backwards(_ s1: String, _ s2: String) -> Bool {
     return s1 > s2
 }
 
-names.sorted(isOrderedBefore: backwards)
+names.sorted(by: backwards)
 //: ## Closure Expression
 let closure = { (s1: String, s2: String) -> Bool in
     return s1 > s2
 }
 
-names.sorted(isOrderedBefore: closure)
+names.sorted(by: closure)
 
 
-names.sorted(isOrderedBefore: { (s1: String, s2: String) -> Bool in
+names.sorted(by: { (s1: String, s2: String) -> Bool in
     return s1 > s2
 })
 //: ### Inferring Type From Context
-names.sorted(isOrderedBefore: { s1, s2 in
+names.sorted(by: { s1, s2 in
     return s1 > s2
 })
 //: ### Implicit Returns from Single-Expression Closures
-names.sorted(isOrderedBefore: { s1, s2 in
+names.sorted(by: { s1, s2 in
     s1 > s2
 })
 //: ### Shorthand Argument Names
-names.sorted(isOrderedBefore: {
+names.sorted(by: {
     $0 > $1
 })
 //: ### Operator Functions
-names.sorted(isOrderedBefore: >)
+names.sorted(by: >)
 //: ## Trailing Closures
 names.sorted() {
     $0 > $1
@@ -107,7 +107,7 @@ closure2()
  
  A closure is said to escape a function when the closure is passed as an argument to the function, but is called after the function returns.
  */
-func someFunctionWithNoescapeClosure(_ closure: @noescape () -> Void) {
+func someFunctionWithNoescapeClosure(_ closure: () -> Void) {
     closure()
 }
 /*:
@@ -207,7 +207,7 @@ averageAge
 let maxAge = people.reduce(0) { max($0, $1.age) }
 maxAge
 //: Memoization
-func memoize<T: Hashable, U>( _ body: ((T)->U, T)->U ) -> (T)->U {
+func memoize<T: Hashable, U>( _ body: @escaping ((T)->U, T)->U ) -> (T)->U {
     var memo = Dictionary<T, U>()
     
     func result(_ x: T) -> U {
