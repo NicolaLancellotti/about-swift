@@ -150,6 +150,8 @@ extension Vector2D {
 var vector = Vector2D(x: 1, y: 1)
 vector++
 vector
+
+/* Update is needed
 //: ## Custom Operators
 
 /*:
@@ -164,7 +166,7 @@ vector
  
  You can also define custom operators that begin with a dot (.). These operators are can contain additional dots such as .+.. If an operator doesn’t begin with a dot, it can’t contain a dot elsewhere.
  */
-/*
+
  infix operator +- {
  associativity left
  precedence 140
@@ -203,5 +205,5 @@ vector
  }
  
  infix operator **
- */
+*/
 //: [Next](@next)
