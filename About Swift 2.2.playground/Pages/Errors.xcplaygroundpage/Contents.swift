@@ -31,7 +31,7 @@ enum MyErrorType: Error {
     case errorType1
     case errorType2(value: Int)
 }
-//:There are four ways to handle errors in Swift.
+//: There are four ways to handle errors in Swift.
 
 /*:
  1 - You can propagate the error from a function to the code that calls that function.

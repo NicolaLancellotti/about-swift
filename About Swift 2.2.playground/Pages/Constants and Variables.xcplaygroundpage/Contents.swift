@@ -64,7 +64,7 @@ let anotherPi = 3 + 0.14159
 let integerPi: Int = Int(pi)
 //: ## Declare Multiple Constants/Variables on a Single Line
 let x = 0.0, y = 0.0, z = 0.0
-var red:Int, green, blue: Double
+var red: Int, green, blue: Double
 /*:
  ## Observers for Stored Variables
  The variables you have encountered have all been stored variables.
