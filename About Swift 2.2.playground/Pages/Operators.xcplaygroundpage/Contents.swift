@@ -93,22 +93,23 @@ struct Vector2D {
     var x = 0.0, y = 0.0
 }
 
-func + (left: Vector2D, right: Vector2D) -> Vector2D {
-    return Vector2D(x: left.x + right.x, y: left.y + right.y)
+extension Vector2D {
+    static func + (left: Vector2D, right: Vector2D) -> Vector2D {
+        return Vector2D(x: left.x + right.x, y: left.y + right.y)
+    }
+    
+    static func += (left: inout Vector2D, right: Vector2D) {
+        left = left + right
+    }
 }
 
 var myVector = Vector2D(x: 1, y: 2) + Vector2D(x: 2, y: 4)
 myVector.x
 myVector.y
 
-func += (left: inout Vector2D, right: Vector2D) {
-    left = left + right
-}
-
 myVector += Vector2D(x: 1, y: 1)
 myVector.x
 myVector.y
-
 //: Pattern matching
 func ~=(pattern: String, value: Int) -> Bool {
     return pattern == "\(value)"
@@ -128,19 +129,22 @@ default:
  
  You implement a prefix or postfix unary operator by writing the prefix or postfix modifier before the func keyword when declaring the operator function.
  */
-prefix func - (vector: Vector2D) -> Vector2D {
-    return Vector2D(x: -vector.x, y: -vector.y)
-}
-
-prefix func ++ (vector: inout Vector2D) -> Vector2D {
-    vector += Vector2D(x: 1.0, y: 1.0)
-    return vector
-}
-
-postfix func ++ (vector: inout Vector2D) -> Vector2D {
-    let tmp = vector
-    vector += Vector2D(x: 1.0, y: 1.0)
-    return tmp
+extension Vector2D {
+    
+    static prefix func - (vector: Vector2D) -> Vector2D {
+        return Vector2D(x: -vector.x, y: -vector.y)
+    }
+    
+    static prefix func ++ (vector: inout Vector2D) -> Vector2D {
+        vector += Vector2D(x: 1.0, y: 1.0)
+        return vector
+    }
+    
+    static postfix func ++ (vector: inout Vector2D) -> Vector2D {
+        let tmp = vector
+        vector += Vector2D(x: 1.0, y: 1.0)
+        return tmp
+    }
 }
 
 var vector = Vector2D(x: 1, y: 1)
@@ -151,53 +155,53 @@ vector
 /*:
  ### Binary Operators
  * Keyword:
-    * infix
+ * infix
  * Precedence value default: 100
  * Associativity:
-    * none (default)
-    * left
-    * right
+ * none (default)
+ * left
+ * right
  
  You can also define custom operators that begin with a dot (.). These operators are can contain additional dots such as .+.. If an operator doesn’t begin with a dot, it can’t contain a dot elsewhere.
  */
 /*
-infix operator +- {
-associativity left
-precedence 140
-}
-
-func +- (left: Vector2D, right: Vector2D) -> Vector2D {
-    return Vector2D(x: left.x + right.x, y: left.y - right.y)
-}
-//: Associativity
-infix operator *** {
-associativity right
-}
-func *** (value0: Int, value1: Int) -> Int {
-    print("value0 : \(value0)")
-    print("value1 : \(value1)")
-    return value0 + value1
-}
-
-//10 *** 1 *** 2
-/*:
+ infix operator +- {
+ associativity left
+ precedence 140
+ }
+ 
+ func +- (left: Vector2D, right: Vector2D) -> Vector2D {
+ return Vector2D(x: left.x + right.x, y: left.y - right.y)
+ }
+ //: Associativity
+ infix operator *** {
+ associativity right
+ }
+ func *** (value0: Int, value1: Int) -> Int {
+ print("value0 : \(value0)")
+ print("value1 : \(value1)")
+ return value0 + value1
+ }
+ 
+ //10 *** 1 *** 2
+ /*:
  ### Unary Operators
  * Keywords:
-    * prefix
-    * postfix
+ * prefix
+ * postfix
  
  */
-prefix operator +++
-prefix func +++ (vector: inout Vector2D) -> Vector2D {
-    vector += vector
-    return vector
-}
-
-prefix func +++ (value: inout Int) -> Int {
-    value += 2
-    return value
-}
-
-infix operator **
+ prefix operator +++
+ prefix func +++ (vector: inout Vector2D) -> Vector2D {
+ vector += vector
+ return vector
+ }
+ 
+ prefix func +++ (value: inout Int) -> Int {
+ value += 2
+ return value
+ }
+ 
+ infix operator **
  */
 //: [Next](@next)
