@@ -132,14 +132,14 @@ label3: if condition1 {
  * the literal true and false values.
  * command line flags.
  * the platform-testing functions.
- * os()      Valid arguments: OSX, iOS, watchOS, tvOS.
+ * os()      Valid arguments: macOS, iOS, watchOS, tvOS.
  * arch()    Valid arguments: x86_64, arm, arm64, i386.
  * swift()   Valid arguments: >= followed by a version number.
  
  The arch(arm) build configuration does not return true for ARM 64 devices.
  The arch(i386) build configuration returns true when code is compiled for the 32–bit iOS simulator.
  */
-#if os(OSX)
+#if os(macOS)
     // do something
 #elseif arch(arm)
     // do something
