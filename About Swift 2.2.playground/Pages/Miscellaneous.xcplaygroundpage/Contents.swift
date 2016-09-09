@@ -59,8 +59,8 @@ struct Increaser {
 /*:
  ## Optionals
  An optional is an enumeration with two associated Values:
- * case None
- * case Some(type)
+ * case none
+ * case some(Wrapped)
  
  */
 //let someOptional: Optional<Int> = 42
