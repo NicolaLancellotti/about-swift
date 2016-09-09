@@ -1,23 +1,23 @@
 //: [Previous](@previous)
 
 /*:
- # Literal Convertible Protocols
- * IntegerLiteralConvertible
- * FloatLiteralConvertible
- * BooleanLiteralConvertible
- * NilLiteralConvertible
- * UnicodeScalarLiteralConvertible
- * ExtendedGraphemeClusterLiteralConvertible
- * StringLiteralConvertible
- * ArrayLiteralConvertible
- * DictionaryLiteralConvertible
+ # Expressible By Protocols
+ * ExpressibleByIntegerLiteral
+ * ExpressibleByFloatLiteral
+ * ExpressibleByBooleanLiteral
+ * ExpressibleByNilLiteral
+ * ExpressibleByUnicodeScalarLiteral
+ * ExpressibleByExtendedGraphemeClusterLiteral
+ * ExpressibleByStringLiteral
+ * ExpressibleByArrayLiteral
+ * ExpressibleByDictionaryLiteral
  */
 struct MyInt {
     var value: Int = 0
 }
 
 var myInt: MyInt
-//: ## IntegerLiteralConvertible
+//: ## ExpressibleByIntegerLiteral
 extension MyInt: ExpressibleByIntegerLiteral {
     
     init(integerLiteral value: Int) {
@@ -28,7 +28,7 @@ extension MyInt: ExpressibleByIntegerLiteral {
 
 myInt = 1
 myInt.value
-//: ## NilLiteralConvertible
+//: ## ExpressibleByNilLiteral
 extension MyInt: ExpressibleByNilLiteral {
     
     init(nilLiteral: ()) {
@@ -39,7 +39,7 @@ extension MyInt: ExpressibleByNilLiteral {
 
 myInt = nil
 myInt.value
-//: ## UnicodeScalarLiteralConvertible
+//: ## ExpressibleByUnicodeScalarLiteral
 extension MyInt: ExpressibleByUnicodeScalarLiteral {
     
     init(unicodeScalarLiteral value: UnicodeScalar) {
