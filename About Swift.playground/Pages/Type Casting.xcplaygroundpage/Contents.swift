@@ -91,4 +91,23 @@ for thing in things {
  A conditional typecast of a collection to a collection with a more specific type, such as NSArray as? [NSView], will perform type checking of each element immediately, and return nil if a type cast failure occurs for any element.
  */
 
+/*:
+ ## Numeric Cast
+ 
+ Typically used to do conversion to any contextually-deduced integer type.
+ */
+func f1(_ x: Int32) {
+}
+
+func g1(_ x: UInt64) {
+    f1(numericCast(x))
+}
+/*:
+ ## Unsafe Bit Cast
+ 
+ Returns the bits of x, interpreted as having type U.
+ */
+let v: Double = 1024
+unsafeBitCast(v, to: UInt.self)
+let uint: UInt64 = 0b0100000010010000000000000000000000000000000000000000000000000000
 //: [Next](@next)
