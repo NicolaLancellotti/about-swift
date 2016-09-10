@@ -5,7 +5,6 @@
 //: ## Input / Output
 print("A", "B", "C", separator: "-", terminator: "END")
 //let line  = readline()
-
 //: ## Math
 abs(-10)
 max(1, 2, 3)
@@ -40,30 +39,6 @@ func g(_ x: UInt64) {
     f(numericCast(x))
 }
 
-//: ## Memory
-struct Structure {
-    let value2: Int32 = 0
-    let value0: Int16 = 0
-    let value1: Int8 = 0
-}
-
-let instance = Structure()
-
-// Returns the contiguous memory footprint of T.
-// Do not include any padding necessary for memory alignment.
-MemoryLayout<Structure>.size
-
-// Returns the minimum memory alignment of T.
-// An alignment of x means that data of this type should (or must, depends on
-// the CPU) be stored starting at an address that is a multiple of x.
-MemoryLayout<Structure>.alignment
-
-// Returns the least possible interval between distinct instances of T in memory.
-// Like sizeof operator in C
-MemoryLayout<Structure>.stride
-
-class SomeClass { }
-let object = SomeClass()
 
 //: ## Repeat Element
 let elements = repeatElement(1, count: 5)

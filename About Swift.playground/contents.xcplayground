@@ -32,5 +32,6 @@
         <page name='Able Protocols'/>
         <page name='Sequence'/>
         <page name='Created by'/>
+        <page name='Memory'/>
     </pages>
 </playground>
