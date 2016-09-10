@@ -20,13 +20,7 @@ b
 //: ## Repeat Element
 let elements = repeatElement(1, count: 5)
 elements.count
-//: ## Zip
-var sequence1 = ["a" , "b"]
-let sequence2 = [1, 2]
 
-for (a, b) in zip(sequence1, sequence2) {
-    //print("\(a) \(b)")
-}
 
 
 //: [Next](@next)
