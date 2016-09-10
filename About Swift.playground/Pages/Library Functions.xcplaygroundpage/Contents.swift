@@ -18,7 +18,11 @@ a
 b
 //: ## Cast
 
-//: ### Unsafe Bit Cast
+/*: 
+ ### Unsafe Bit Cast
+ 
+ Returns the bits of x, interpreted as having type U.
+ */
 let v: Double = 1024
 unsafeBitCast(v, to: UInt.self)
 let uint: UInt64 = 0b0100000010010000000000000000000000000000000000000000000000000000
