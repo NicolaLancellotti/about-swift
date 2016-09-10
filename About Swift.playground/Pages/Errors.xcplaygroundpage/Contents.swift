@@ -3,7 +3,10 @@
 /*:
  # Assertions
  If the condition evaluates to false, code execution ends, and your app is terminated.
- 
+ */
+
+/*:
+ - important:
  Assertions are disabled when your code is compiled with optimizations (target Release).
  */
 assert(true, "message")
@@ -23,6 +26,21 @@ case "u":
 default:
     assertionFailure()
 }
+
+/*:
+ # Preconditions
+ 
+ Use this function to detect conditions that must prevent the program from proceeding.
+ 
+ If the condition evaluates to false, code execution ends, and your app is terminated.
+ */
+
+/*:
+ - important:
+ Preconditions are not disabled when your code is compiled with optimizations (target Release).
+ */
+precondition(1 == 1)
+//preconditionFailure("some message")
 /*:
  # Error Handling
  Errors are represented by values of types that conform to the ErrorProtocol.
