@@ -5,6 +5,7 @@
 //: ## Input / Output
 print("A", "B", "C", separator: "-", terminator: "END")
 //let line  = readline()
+
 //: ## Math
 abs(-10)
 max(1, 2, 3)
@@ -15,20 +16,26 @@ var b = 2
 swap(&a, &b)
 a
 b
-//: ## Repeat Element
-let elements = repeatElement(1, count: 5)
-elements.count
-//: ## Zip
-var sequence1 = ["a" , "b"]
-let sequence2 = [1, 2]
+//: ## Cast
 
-for (a, b) in zip(sequence1, sequence2) {
-    //print("\(a) \(b)")
-}
-//: ## Unsafe Bit Cast
+//: ### Unsafe Bit Cast
 let v: Double = 1024
 unsafeBitCast(v, to: UInt.self)
 let uint: UInt64 = 0b0100000010010000000000000000000000000000000000000000000000000000
+
+/*: 
+ ### Numeric Cast
+ 
+ Typically used to do conversion to any contextually-deduced integer type.
+ */
+
+func f(_ x: Int32) {
+}
+
+func g(_ x: UInt64) {
+    f(numericCast(x))
+}
+
 //: ## Memory
 struct Structure {
     let value2: Int32 = 0
@@ -53,4 +60,17 @@ MemoryLayout<Structure>.stride
 
 class SomeClass { }
 let object = SomeClass()
+
+//: ## Repeat Element
+let elements = repeatElement(1, count: 5)
+elements.count
+//: ## Zip
+var sequence1 = ["a" , "b"]
+let sequence2 = [1, 2]
+
+for (a, b) in zip(sequence1, sequence2) {
+    //print("\(a) \(b)")
+}
+
+
 //: [Next](@next)
