@@ -5,7 +5,7 @@
  */
 
 /*:
- # Standard Library
+ # Standard Library (In Developing)
  
  - [Library Functions](Library%20Functions)
  - [Expressible By Protocols](Expressible%20By%20Protocols)
