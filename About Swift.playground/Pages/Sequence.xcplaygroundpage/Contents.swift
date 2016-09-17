@@ -1,6 +1,9 @@
 //: [Previous](@previous)
 
-//: # Sequence
+/*: 
+ # Sequence
+ A sequence is a list of values that you can step through one at a time.
+ */
 struct Countdown {
     let start: Int
 }
@@ -44,6 +47,76 @@ while let count = __g.next() {
 //    print(count)
 }
 
+//: Some Methods
+var aSequence = Array(0...5)
+aSequence.underestimatedCount
+aSequence.prefix(2)
+aSequence.dropFirst(2)
+aSequence.dropLast(2)
+aSequence.suffix(2)
+
+aSequence.first {
+    $0 > 2
+}
+
+aSequence = [0, 1, 0, 0, 2, 0, 0, 3, 0, 0, 4, 0, 0, 5]
+aSequence.split(maxSplits: 2, whereSeparator: {
+    $0 == 0
+})
+aSequence.split(maxSplits: 4, omittingEmptySubsequences: false, whereSeparator: {
+    $0 == 0
+})
+
+aSequence.contains(10)
+aSequence.elementsEqual(1...10)
+
+
+let sequenze123 = [1, 2, 3]
+
+sequenze123.lexicographicallyPrecedes([0, 3, 4])
+sequenze123.lexicographicallyPrecedes([2, 4, 6]) {
+    $0 * 2 == $1
+}
+
+sequenze123.max()
+let hues = ["Heliotrope": 296, "Coral": 16, "Aquamarine": 156]
+let greatestHue = hues.max {
+    $0.value < $1.value
+}
+
+sequenze123.min()
+sequenze123.reversed()
+sequenze123.sorted()
+sequenze123.sorted {
+    $0 > $1
+}
+
+sequenze123.starts(with: [1, 2])
+
+
+for (n, c) in aSequence.enumerated() {
+    print("\(n): '\(c)'")
+}
+
+
+let joined = [1...2, 4...5].joined(separator: [3])
+Array(joined)
+/*:
+ When enumerating a collection, the integer part of each pair is a counter for the enumeration, not necessarily the index of the paired value. These counters can only be used as indices in instances of zero-based, integer-indexed collections, such as Array and ContiguousArray
+ 
+ To iterate over the elements of a collection with its indices, use the zip(_:_:) function.
+ */
+let names: Set = ["Sofia", "Camilla", "Martina", "Mateo", "Nicolás"]
+var shorterIndices: [SetIndex<String>] = []
+for (i, name) in zip(names.indices, names) {
+    if name.characters.count <= 5 {
+        shorterIndices.append(i)
+    }
+}
+
+for i in shorterIndices {
+    print(names[i])
+}
 //: ## Functions
 
 /*:
