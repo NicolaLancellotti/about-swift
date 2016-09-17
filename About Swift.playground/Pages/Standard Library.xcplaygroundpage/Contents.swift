@@ -12,6 +12,7 @@
  - [Convertible Protocols](Convertible%20Protocols)
  - [Able Protocols](Able%20Protocols)
  - [Sequence](Sequence)
+ - [Collection](Collection)
  - [Memory](Memory)
  ****
  [Next](@next)
