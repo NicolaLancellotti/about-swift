@@ -33,7 +33,7 @@
         <page name='Sequence'/>
         <page name='Collection'/>
         <page name='Memory'/>
-        <page name='Created by'/>
         <page name='Reflection'/>
+        <page name='Created by'/>
     </pages>
 </playground>

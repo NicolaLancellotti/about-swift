@@ -9,6 +9,7 @@
  * ExpressibleByUnicodeScalarLiteral
  * ExpressibleByExtendedGraphemeClusterLiteral
  * ExpressibleByStringLiteral
+ * ExpressibleByStringInterpolation
  * ExpressibleByArrayLiteral
  * ExpressibleByDictionaryLiteral
  */
