@@ -193,4 +193,11 @@ let seq2 = stride(from: start, through: end, by: offset)
 for value in seq2 {
     print(value, terminator: " ")
 }
+/*:
+ ## LazySequenceProtocol
+ 
+ Lazy sequences can be used to avoid needless storage allocation and computation, because they use an underlying sequence for storage and compute their elements on demand.
+ 
+ */
+let lazySequence = [1, 2, 3].lazy.map { $0 * 2 }
 //: [Next](@next)
