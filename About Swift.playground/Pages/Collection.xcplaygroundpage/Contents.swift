@@ -67,4 +67,8 @@ struct First10PrimeNumbers: Collection {
 
 let primeNumbers = First10PrimeNumbers()
 primeNumbers[9]
+
+//: ## A collection whose elements are all identical.
+let elements = repeatElement(1, count: 5)
+elements.count
 //: [Next](@next)
