@@ -34,5 +34,6 @@
         <page name='Collection'/>
         <page name='Memory'/>
         <page name='Created by'/>
+        <page name='Reflection'/>
     </pages>
 </playground>
