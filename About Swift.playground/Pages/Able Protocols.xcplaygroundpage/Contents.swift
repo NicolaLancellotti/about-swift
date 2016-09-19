@@ -26,11 +26,9 @@ let instance = SomeStructure()
  When adopting Equatable, only the == operator is required to be implemented. The standard library provides an implementation for !=.
  */
 extension SomeStructure: Equatable {
-    
-}
-
-func ==(lhs: SomeStructure, rhs: SomeStructure) -> Bool {
-    return lhs.value == rhs.value
+    static func ==(lhs: SomeStructure, rhs: SomeStructure) -> Bool {
+        return lhs.value == rhs.value
+    }
 }
 /*:
  ## Hashable
