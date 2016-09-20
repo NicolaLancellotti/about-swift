@@ -13,7 +13,9 @@ var dictionary2: Dictionary<String, Int> = [:]
 //: ## Multiple separate statements on a single line
 let cat = "?"; print(cat)
 /*:
- ## Line Control Statement
+ ## Literal Expression
+ 
+ ### Line Control Statement
  
  A line control statement is used to specify a line number and filename that can be different from the line number and filename of the source code being compiled. Use a line control statement to change the source code location used by Swift for diagnostic and debugging purposes.
  */
@@ -27,6 +29,20 @@ line = #line
 //#sourceLocation() // Resets the source code location back to the default line numbering and filename
 file = #file
 line = #line
+
+//: ### The column number in which it begins.
+  #column
+//: ### The name of the declaration in which it appears.
+#function
+
+func logFunctionName(string: String = #function) {
+    print(string)
+}
+func myFunction() {
+    logFunctionName() // Prints "myFunction()".
+}
+
+myFunction()
 /*:
  ## Discardable Result
  
