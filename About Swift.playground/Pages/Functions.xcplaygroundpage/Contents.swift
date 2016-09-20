@@ -155,9 +155,11 @@ func functionWithDefers() {
 
 functionWithDefers()
 /*:
- ## Noreturn Functions
+ ## Functions that Never Return
  
- You can mark a function or method type with @noreturn attribute to indicate that the function or method doesn’t return to its caller.
+ Swift defines a Never type, which indicates that a function or method doesn’t return to its caller. Functions and methods with the Never return type are called nonreturning. 
+ 
+ Throwing and rethrowing functions can transfer program control to an appropriate catch block, even when they are nonreturning.
  */
 func loop() -> Never  {
     while true {
