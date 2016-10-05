@@ -150,60 +150,49 @@ extension Vector2D {
 var vector = Vector2D(x: 1, y: 1)
 vector++
 vector
+/*: 
+ ## Custom Operators
+ New operators are declared at a global level using the operator keyword, and are marked with the **prefix**, **infix** or **postfix** modifiers.
+ */
+prefix operator +++
 
-/* Update is needed
-//: ## Custom Operators
+extension Vector2D {
+    
+    // It doubles the x and y values of a Vector2D instance
+    static prefix func +++ (vector: inout Vector2D) -> Vector2D {
+        vector += vector
+        return vector
+    }
+}
 
+var toBeDoubled = Vector2D(x: 1.0, y: 4.0)
+let afterDoubling = +++toBeDoubled
+afterDoubling.x
+afterDoubling.y
+
+/*: 
+ ### Precedence for Custom Infix Operators
+ 
+ Custom infix operators each belong to a precedence group. A precedence group specifies an operator’s precedence relative to other infix operators, as well as the operator’s associativity.
+ 
+ For a complete list of the operator precedence groups see [Swift Standard Library Operators.](https://developer.apple.com/reference/swift/1851035-swift_standard_library_operators)
+ */
+
+infix operator +-: AdditionPrecedence
+extension Vector2D {
+    static func +- (left: Vector2D, right: Vector2D) -> Vector2D {
+        return Vector2D(x: left.x + right.x, y: left.y - right.y)
+    }
+}
+
+let firstVector = Vector2D(x: 1.0, y: 2.0)
+let secondVector = Vector2D(x: 3.0, y: 4.0)
+let plusMinusVector = firstVector +- secondVector
+plusMinusVector.x
+plusMinusVector.y
 /*:
- ### Binary Operators
- * Keyword:
- * infix
- * Precedence value default: 100
- * Associativity:
- * none (default)
- * left
- * right
- 
- You can also define custom operators that begin with a dot (.). These operators are can contain additional dots such as .+.. If an operator doesn’t begin with a dot, it can’t contain a dot elsewhere.
+ - note:
+ You do not specify a precedence when defining a prefix or postfix operator. However, if you apply both a prefix and a postfix operator to the same operand, the postfix operator is applied first.
  */
 
- infix operator +- {
- associativity left
- precedence 140
- }
- 
- func +- (left: Vector2D, right: Vector2D) -> Vector2D {
- return Vector2D(x: left.x + right.x, y: left.y - right.y)
- }
- //: Associativity
- infix operator *** {
- associativity right
- }
- func *** (value0: Int, value1: Int) -> Int {
- print("value0 : \(value0)")
- print("value1 : \(value1)")
- return value0 + value1
- }
- 
- //10 *** 1 *** 2
- /*:
- ### Unary Operators
- * Keywords:
- * prefix
- * postfix
- 
- */
- prefix operator +++
- prefix func +++ (vector: inout Vector2D) -> Vector2D {
- vector += vector
- return vector
- }
- 
- prefix func +++ (value: inout Int) -> Int {
- value += 2
- return value
- }
- 
- infix operator **
-*/
 //: [Next](@next)
