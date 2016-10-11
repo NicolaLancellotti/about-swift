@@ -34,6 +34,9 @@
         <page name='Collection'/>
         <page name='Memory'/>
         <page name='Reflection'/>
+        <page name='Numbers'/>
+        <page name='Bit Mask'/>
+        <page name='Strings'/>
         <page name='Created by'/>
     </pages>
 </playground>
