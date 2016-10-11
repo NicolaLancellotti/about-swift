@@ -186,6 +186,30 @@ class ClassWithClosureCaptureList {
     }
     
 }
+/*: 
+ ## A closure or nested function that captures an in-out parameter must be nonescaping
+ 
+ If you need to capture an in-out parameter without mutating it or to observe changes made by other code, use a capture list to explicitly capture the parameter immutably.
+ */
+func someFunction(a: inout Int) -> () -> Int {
+    return { [a] in return a + 1 }
+}
+//: If you need to capture and mutate an in-out parameter, use an explicit local copy, such as in multithreaded code that ensures all mutation has finished before the function returns.
+func multithreadedFunction(queue: DispatchQueue, x: inout Int) {
+    func increment(_ x: inout Int) {
+        x += 1
+    }
+    
+    // Make a local copy and manually copy it back.
+    var localX = x
+    defer { x = localX }
+    
+    // Operate on localX asynchronously, then wait before returning.
+    queue.async {
+        increment(&localX)
+    }
+    queue.sync {}
+}
 //: ## Setting a Default Property Value with a Closure or Function
 class ClassWithSetPropertyWithClosure {
     let someProperty: Int = {
