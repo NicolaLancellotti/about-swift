@@ -15,6 +15,9 @@
  - [Collection](Collection)
  - [Memory](Memory)
  - [Reflection](Reflection)
+ - [Numbers](Numbers)
+ - [Bit Mask](Bit%20Mask)
+ - [String](String)
  ****
  [Next](@next)
  */
