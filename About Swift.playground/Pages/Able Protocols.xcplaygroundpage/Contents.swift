@@ -1,20 +1,6 @@
 //: [Previous](@previous)
 
-/*:
- # Able Protocols
- * Equatable
- * Hashable
- * Comparable
- * Strideable
- * RawRepresentable
- * AbsoluteValuable
- * Streamable
- * IndexableBase
- * Indexable
- * MutableIndexable
- * BidirectionalIndexable
- * RandomAccessIndexable
- */
+//: # Able Protocols
 struct SomeStructure {
     var value: Int = 0
 }
@@ -56,6 +42,9 @@ extension SomeStructure: Comparable {
 func <(lhs: SomeStructure, rhs: SomeStructure) -> Bool {
     return lhs.value < rhs.value
 }
+//: ### Function with comparable parameters
+max(1, 2, 3)
+min(1, 2, 3)
 /*:
  ## Strideable
  Conforming types are notionally continuous, one-dimensional values that can be offset and measured.
