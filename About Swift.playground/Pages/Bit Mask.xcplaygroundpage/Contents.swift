@@ -3,16 +3,19 @@
 //: # OptionSet
 struct MyFontStyle : OptionSet {
     let rawValue : Int // conforms to the BitwiseOperations protocol
-    static let Bold             = MyFontStyle(rawValue: 1 << 0)
-    static let Italic           = MyFontStyle(rawValue: 1 << 1)
-    static let Underline        = MyFontStyle(rawValue: 1 << 2)
-    static let Strikethrough    = MyFontStyle(rawValue: 1 << 3)
+    static let bold             = MyFontStyle(rawValue: 1 << 0)
+    static let italic           = MyFontStyle(rawValue: 1 << 1)
+    static let underline        = MyFontStyle(rawValue: 1 << 2)
+    static let strikethrough    = MyFontStyle(rawValue: 1 << 3)
 }
 
 var style: MyFontStyle
 style = []
-style = .Underline
-style = [.Bold, .Italic]
+style = .underline
+style = [.bold, .italic]
 
-style.contains(MyFontStyle.Italic)
+style.formUnion([.bold, .italic])
+style.insert(.strikethrough)
+style.remove(.bold)
+style.contains(.italic)
 //: [Next](@next)
