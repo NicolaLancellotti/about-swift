@@ -22,9 +22,11 @@ func swapTwoValues<T>(_ a: inout T, _ b: inout T) {
 
 var a = "A"
 var b = "B"
-swap(&a, &b)
+swapTwoValues(&a, &b)
 b
 a
+
+swap(&a, &b) // Swap function in the Standard Library
 //: ## Structures and Classes
 struct Stack<Element> {
     
