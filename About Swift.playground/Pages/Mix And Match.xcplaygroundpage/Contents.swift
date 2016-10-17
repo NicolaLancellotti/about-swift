@@ -105,4 +105,46 @@ var counter = Counter()
 counter.dataSource = ThreeSource()
 counter.increment()
 counter.count
+/*:
+ ## Dynamic typing
+ 
+ When you use AnyObject as a concrete type, you have at your disposal every @objc method and property that is, methods and properties imported from Objective-C or marked with the @objc attribute.
+ 
+ These @objc symbols are available as implicitly unwrapped optional methods and properties, respectively.
+ */
+class IntegerRef {
+    let value: Int
+    init(_ value: Int) {
+        self.value = value
+    }
+    
+    @objc func getIntegerValue() -> Int {
+        return value
+    }
+    
+    @objc class func getDefaultValue() -> Int {
+        return 42
+    }
+}
+
+
+let obj: AnyObject = IntegerRef(100)
+
+let possibleValue = obj.getIntegerValue?()
+print(possibleValue)
+
+let certainValue = obj.getIntegerValue()
+print(certainValue)
+
+
+if let f = obj.getIntegerValue {
+    print("The value of 'obj' is \(f())")
+} else {
+    print("'obj' does not have a 'getIntegerValue()' method")
+}
+
+
+let someClass: AnyClass = IntegerRef.self
+var defaultValue: Int? = someClass.getDefaultValue?()
+print(defaultValue)
 //: [Next](@next)
