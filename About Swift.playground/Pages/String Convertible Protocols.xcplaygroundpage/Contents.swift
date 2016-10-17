@@ -1,10 +1,6 @@
 //: [Previous](@previous)
 
-/*:
- # Convertible Protocols
- * CustomStringConvertible
- * CustomDebugStringConvertible
- */
+//: # Convertible Protocols
 struct SomeStructure {
     var value: Int = 0
 }
