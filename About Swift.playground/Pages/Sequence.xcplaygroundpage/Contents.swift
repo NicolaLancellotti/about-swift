@@ -171,9 +171,8 @@ for value in seq0 {
     print(value, terminator: " ")
 }
 print("")
-
 /*:
- ### stride(from:through:by:)
+ ### stride(from:to:by:)
  
  Returns (self, self + stride, self + 2 * stride, … last) where last < end.
  */
@@ -185,7 +184,7 @@ for value in seq1  {
 }
 print("")
 /*:
- ### stride(from:to:by:)
+ ### stride(from:through:by:)
  
  Returns  (self, self + stride, self + 2 * stride, … last) where last <= end.
  */
