@@ -18,6 +18,7 @@
  - [Memory](Memory)
  - [String](String)
  - [Numbers](Numbers)
+ - [Pointers](Pointers)
  ****
  [Next](@next)
  */

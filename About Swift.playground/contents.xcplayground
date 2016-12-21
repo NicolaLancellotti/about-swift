@@ -37,6 +37,7 @@
         <page name='Memory'/>
         <page name='Strings'/>
         <page name='Numbers'/>
+        <page name='Pointers'/>
         <page name='Created by'/>
     </pages>
 </playground>
