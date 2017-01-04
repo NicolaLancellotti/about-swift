@@ -6,8 +6,7 @@
 let condition1 = true
 var value = condition1 ? 1 : 2
 //: ## Remainder Operator
-8.truncatingRemainder(dividingBy: 2.1)
--8.3.truncatingRemainder(dividingBy: 2)
+-9 % 2
 //: ## Compound Assignment Operators
 var a = 1.5
 a += 10
