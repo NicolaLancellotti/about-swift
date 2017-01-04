@@ -10,6 +10,10 @@ typealias StringDictionary<T> = Dictionary<String, T>
 // The following dictionaries have the same type.
 var dictionary1: StringDictionary<Int> = [:]
 var dictionary2: Dictionary<String, Int> = [:]
+
+typealias Handler1 = (Int) -> Void
+//:  You can provide parameter names for documentation purposes using the `_` in the argument label position.
+typealias Handler2 = (_ token: Int) -> Void
 //: ## Multiple separate statements on a single line
 let cat = "?"; print(cat)
 //: ## Introduce new scopes
