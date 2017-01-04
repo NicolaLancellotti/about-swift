@@ -12,6 +12,13 @@ var dictionary1: StringDictionary<Int> = [:]
 var dictionary2: Dictionary<String, Int> = [:]
 //: ## Multiple separate statements on a single line
 let cat = "?"; print(cat)
+//: ## Introduce new scopes
+do {
+    //new scope
+    do {
+        //another scope
+    }
+}
 /*:
  ## Literal Expression
  
