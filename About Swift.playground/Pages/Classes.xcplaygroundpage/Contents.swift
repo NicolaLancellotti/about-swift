@@ -349,20 +349,4 @@ let b = instance.someMethod(_:y:)        // Unambiguous
 //let c = instance.overloadedMethod        // Ambiguous
 //let d = instance.overloadedMethod(_:y:)  // Still ambiguous
 let e: (Int, Bool) -> Void  = instance.overloadedMethod(_:y:)  // Unambiguous
-/*:
- ## Requiring Dynamic Dispatch
- 
- When Swift APIs are imported by the Objective-C runtime, there are no guarantees of dynamic dispatch for properties, methods, subscripts, or initializers. The Swift compiler may still devirtualize or inline member access to optimize the performance of your code, bypassing the Objective-C runtime.
- 
- 
- You can use the **dynamic** modifier to require that access to members be dynamically dispatched through the Objective-C runtime.
- */
-class ClassWithRequiringDynamicDispatch {
-    
-    dynamic var variable: String = ""
-    
-    dynamic func foo() {
-        
-    }
-}
 //: [Next](@next)

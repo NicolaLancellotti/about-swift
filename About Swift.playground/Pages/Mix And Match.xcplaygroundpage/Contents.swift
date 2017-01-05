@@ -106,6 +106,22 @@ counter.dataSource = ThreeSource()
 counter.increment()
 counter.count
 /*:
+ ## Requiring Dynamic Dispatch
+ 
+ When Swift APIs are imported by the Objective-C runtime, there are no guarantees of dynamic dispatch for properties, methods, subscripts, or initializers. The Swift compiler may still devirtualize or inline member access to optimize the performance of your code, bypassing the Objective-C runtime.
+ 
+ 
+ You can use the **dynamic** modifier to require that access to members be dynamically dispatched through the Objective-C runtime.
+ */
+class ClassWithRequiringDynamicDispatch {
+    
+    dynamic var variable: String = ""
+    
+    dynamic func foo() {
+        
+    }
+}
+/*:
  ## Dynamic typing
  
  When you use AnyObject as a concrete type, you have at your disposal every @objc method and property that is, methods and properties imported from Objective-C or marked with the @objc attribute.
