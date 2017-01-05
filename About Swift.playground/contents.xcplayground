@@ -2,6 +2,7 @@
 <playground version='6.0' target-platform='osx' display-mode='rendered' last-migration='0800'>
     <pages>
         <page name='Contents'/>
+        <page name='Swift Language'/>
         <page name='Constants and Variables'/>
         <page name='Control Flow'/>
         <page name='Optionals'/>
@@ -24,6 +25,19 @@
         <page name='Mix And Match'/>
         <page name='Miscellaneous'/>
         <page name='Checking API Availability'/>
+        <page name='Standard Library'/>
+        <page name='Able Protocols'/>
+        <page name='Bit Mask'/>
+        <page name='Collection'/>
+        <page name='Expressible By Protocols'/>
+        <page name='Memory'/>
+        <page name='Numbers'/>
+        <page name='Pointers'/>
+        <page name='Reflection'/>
+        <page name='Sequence'/>
+        <page name='Stream And Print'/>
+        <page name='String Convertible Protocols'/>
+        <page name='Strings'/>
         <page name='Created by'/>
     </pages>
 </playground>
