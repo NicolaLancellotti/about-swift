@@ -39,6 +39,7 @@
         <page name='Numbers'/>
         <page name='Pointers'/>
         <page name='Ranges'/>
+        <page name='Type Erasure'/>
         <page name='Created by'/>
     </pages>
 </playground>
