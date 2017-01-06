@@ -2,8 +2,8 @@
 
 ### Contents
 Explanations and samples about: 
-* Swift Programming Language.
-* Swift Standard Library (in developing).
+* Swift Programming Language
+* Swift Standard Library (in developing)
 
 ### Target audience
 Developers familiar with object-oriented programming.
@@ -16,6 +16,6 @@ Developers familiar with object-oriented programming.
 * WWDC Videos
 
 ### Future Developments
-* Finish Swift Standard Library.
-* Improvements.
-* Maybe a version for learn Swift as a first language.
+* Finish Swift Standard Library
+* Improvements
+* Maybe a version for learn Swift as a first language
