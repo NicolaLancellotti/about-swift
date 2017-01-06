@@ -20,6 +20,7 @@
  - [Numbers](Numbers)
  - [Pointers](Pointers)
  - [Ranges](Ranges)
+ - [Type Erasure](Type%20Erasure)
  ****
  [Next](@next)
  */
