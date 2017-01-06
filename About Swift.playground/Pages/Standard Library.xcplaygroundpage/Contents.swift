@@ -19,6 +19,7 @@
  - [String](String)
  - [Numbers](Numbers)
  - [Pointers](Pointers)
+ - [Ranges](Ranges)
  ****
  [Next](@next)
  */

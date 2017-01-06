@@ -71,18 +71,6 @@ UInt8.min &- 1
 UInt8.max &* UInt8.max
 
 Int8.min &- 1
-
-//: ## Range
-
-//: ### Half-open range
-let lessThanFive = 0.0..<5.0
-lessThanFive.contains(4.0)
-lessThanFive.contains(4.9)
-lessThanFive.contains(5)
-//: ### Closed range
-let lowercase = "a"..."z"
-lowercase.contains("z")
-lowercase.contains("Z")
 /*:
  ## Operators Overload
  
