@@ -1,7 +1,7 @@
 //: [Previous](@previous)
 /*:
- # Collection
- A sequence whose elements can be traversed multiple times, nondestructively, and accessed by indexed subscript.
+ # Collections
+ A collections is a sequence whose elements can be traversed multiple times, nondestructively, and accessed by indexed subscript.
  
  Collection Protocols:
  * __Collection__ -  Supports forward traversal.
