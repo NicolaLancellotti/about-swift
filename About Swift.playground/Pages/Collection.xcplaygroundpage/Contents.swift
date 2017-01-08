@@ -48,6 +48,23 @@ slice.index(of: 3)
 collection.removeFirst(2) // remove 1, 2
 collection.removeFirst() // remove 3
 collection
+
+/*:
+ When enumerating a collection, the integer part of each pair is a counter for the enumeration, not necessarily the index of the paired value. These counters can only be used as indices in instances of zero-based, integer-indexed collections, such as Array and ContiguousArray
+ 
+ To iterate over the elements of a collection with its indices, use the zip(_:_:) function.
+ */
+let names: Set = ["Sofia", "Camilla", "Martina", "Mateo", "Nicolás"]
+var shorterIndices: [SetIndex<String>] = []
+for (i, name) in zip(names.indices, names) {
+    if name.characters.count <= 5 {
+        shorterIndices.append(i)
+    }
+}
+
+for i in shorterIndices {
+    print(names[i])
+}
 //: ## Conforming to the Collection Protocol
 struct First10PrimeNumbers: Collection {
     
@@ -78,4 +95,5 @@ primeNumbers[9]
 //: ## A collection whose elements are all identical.
 let elements = repeatElement(1, count: 5)
 elements.count
+
 //: [Next](@next)

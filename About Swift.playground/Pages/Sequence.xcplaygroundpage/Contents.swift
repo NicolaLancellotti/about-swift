@@ -37,17 +37,42 @@ extension Countdown: Sequence {
     }
 }
 
+//: ### Iterate
 let threeTwoOne = Countdown(start: 3)
 for count in threeTwoOne {
 //    print(count)
 }
-//: Internally Swift rewrites
-var __g = threeTwoOne.makeIterator()
-while let count = __g.next() {
+
+var iterator = threeTwoOne.makeIterator()
+while let count = iterator.next() {
 //    print(count)
 }
 
-//: Some Methods
+iterator = threeTwoOne.makeIterator()
+for count in IteratorSequence(iterator) {
+//    print(count)
+}
+
+//: ### Enumerate
+let enumeratedSequence: EnumeratedSequence = threeTwoOne.enumerated()
+
+for (n, elem) in threeTwoOne.enumerated() {
+    print(n, elem)
+}
+
+/*:
+ ### Flat
+ A sequence that presents the elements of a base sequence of sequences concatenated.
+ */
+let flat: FlattenSequence = [1...2, 4...5].joined()
+Array(flat)
+/*: 
+ ### Join
+ A sequence that presents the elements of a base sequence of sequences concatenated using a given separator.
+ */
+let joined: JoinedSequence = [1...2, 4...5].joined(separator: [0])
+Array(joined)
+//: ### Other
 var aSequence = Array(0...5)
 aSequence.underestimatedCount
 aSequence.prefix(2)
@@ -92,31 +117,6 @@ sequenze123.sorted {
 }
 
 sequenze123.starts(with: [1, 2])
-
-
-for (n, c) in aSequence.enumerated() {
-    print("\(n): '\(c)'")
-}
-
-
-let joined = [1...2, 4...5].joined(separator: [3])
-Array(joined)
-/*:
- When enumerating a collection, the integer part of each pair is a counter for the enumeration, not necessarily the index of the paired value. These counters can only be used as indices in instances of zero-based, integer-indexed collections, such as Array and ContiguousArray
- 
- To iterate over the elements of a collection with its indices, use the zip(_:_:) function.
- */
-let names: Set = ["Sofia", "Camilla", "Martina", "Mateo", "Nicolás"]
-var shorterIndices: [SetIndex<String>] = []
-for (i, name) in zip(names.indices, names) {
-    if name.characters.count <= 5 {
-        shorterIndices.append(i)
-    }
-}
-
-for i in shorterIndices {
-    print(names[i])
-}
 //: ## Functions
 
 /*:
@@ -129,7 +129,7 @@ for i in shorterIndices {
 let words = ["one", "two", "three", "four"]
 let naturalNumbers = 1...Int.max
 
-let zipped = zip(words, naturalNumbers)
+let zipped: Zip2Sequence = zip(words, naturalNumbers)
 for (word, number) in zipped {
 //    print("\(word): \(number)")
 }
@@ -153,7 +153,9 @@ let root = Node(name: "root", parent: nil)
 let child = Node(name: "child", parent: root)
 
 // Walk the elements of a tree from a node up to the root
-for node in sequence(first: child, next: { $0.parent }) {
+let unfoldSequence1: UnfoldSequence = sequence(first: child, next: { $0.parent })
+
+for node in unfoldSequence1 {
 //    print(node.name)
 }
 
@@ -162,12 +164,12 @@ for node in sequence(first: child, next: { $0.parent }) {
  
  Returns a sequence formed from repeated lazy applications of next to a mutable state.
  */
-let seq0 = sequence(state: 10) { (value: inout Int) -> String? in
+let unfoldSequence2: UnfoldSequence = sequence(state: 10) { (value: inout Int) -> String? in
     value -= 1
     return value == 0 ? nil : "Value: \(value)"
 }
 
-for value in seq0 {
+for value in unfoldSequence2 {
     print(value, terminator: " ")
 }
 print("")
@@ -178,7 +180,7 @@ print("")
  */
 let start = 1.0, end = 2.0, offset = 0.5
 
-let seq1 = stride(from: start, to: end, by: offset)
+let seq1: StrideTo = stride(from: start, to: end, by: offset)
 for value in seq1  {
     print(value, terminator: " ")
 }
@@ -188,7 +190,7 @@ print("")
  
  Returns  (self, self + stride, self + 2 * stride, … last) where last <= end.
  */
-let seq2 = stride(from: start, through: end, by: offset)
+let seq2: StrideThrough = stride(from: start, through: end, by: offset)
 for value in seq2 {
     print(value, terminator: " ")
 }
