@@ -3,6 +3,14 @@
  # Collection
  A sequence whose elements can be traversed multiple times, nondestructively, and accessed by indexed subscript.
  
+ Collection Protocols:
+ * __Collection__ -  Supports forward traversal.
+ * __BidirectionalCollection__ - Supports backward and forward traversal.
+ * __RandomAccessCollection__ - A collection that supports efficient random-access index traversal.
+ 
+ 
+ * __MutableCollection__ - Supports subscript assignment.
+ * __RangeReplaceableCollection__ - Supports replacement of an arbitrary subrange of elements with the elements of another collection.
  */
 var collection = [1, 2, 3, 4]
 //: ## Some Collection's Methods
