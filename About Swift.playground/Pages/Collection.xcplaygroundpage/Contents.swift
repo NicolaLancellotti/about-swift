@@ -73,9 +73,8 @@ for (i, name) in zip(names.indices, names) {
 for i in shorterIndices {
     print(names[i])
 }
-
-//: ## A collection whose elements are all identical.
-let elements: Repeated = repeatElement(1, count: 5)
-elements.count
-
+//: ## Some Collections
+let allOne: Repeated = repeatElement(1, count: 5)
+let only10 = CollectionOfOne(10)
+let emptyCollection = EmptyCollection<Int>()
 //: [Next](@next)
