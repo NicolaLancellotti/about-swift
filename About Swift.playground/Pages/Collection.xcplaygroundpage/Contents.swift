@@ -6,7 +6,7 @@
  Collection Protocols:
  * __Collection__ -  Supports forward traversal.
  * __BidirectionalCollection__ - Supports backward and forward traversal.
- * __RandomAccessCollection__ - A collection that supports efficient random-access index traversal.
+ * __RandomAccessCollection__ - Supports efficient random-access index traversal.
  
  
  * __MutableCollection__ - Supports subscript assignment.
@@ -73,35 +73,9 @@ for (i, name) in zip(names.indices, names) {
 for i in shorterIndices {
     print(names[i])
 }
-//: ## Conforming to the Collection Protocol
-struct First10PrimeNumbers: Collection {
-    
-    private let primeNumbers = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29]
-    
-    // IndexableBase Conformance
-    
-    var startIndex: Int {
-        return 0
-    }
-    
-    var endIndex: Int {
-        return primeNumbers.count
-    }
-    
-    func index(after i: Int) -> Int {
-        return i + 1
-    }
-    
-    subscript(index: Int) -> Int {
-        return primeNumbers[index]
-    }
-}
-
-let primeNumbers = First10PrimeNumbers()
-primeNumbers[9]
 
 //: ## A collection whose elements are all identical.
-let elements = repeatElement(1, count: 5)
+let elements: Repeated = repeatElement(1, count: 5)
 elements.count
 
 //: [Next](@next)
