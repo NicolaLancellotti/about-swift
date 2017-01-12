@@ -33,6 +33,8 @@ String(reflecting: instance)
 /*:
  ## LosslessStringConvertible
  A type that can be represented as a string in a lossless, unambiguous way.
+ 
+ Inherits From CustomStringConvertible.
 */
 struct Person {
     let firstName: String
