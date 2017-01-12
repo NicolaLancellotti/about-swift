@@ -6,30 +6,59 @@
  */
 
 //: ## Example
-struct Countdown {
-    let start: Int
+struct FibonacciIterator: IteratorProtocol {
+    
+    private var previus = 0.0
+    private var current = 1.0
+    private var flag = false
+    
+    mutating func next() -> Double? {
+        guard flag else {
+            flag = true
+            return 1
+        }
+        
+        let value = current + previus
+        previus = current
+        current = value
+        return value
+        
+    }
 }
 
-struct CountdownIterator: IteratorProtocol {
-    let countdown: Countdown
-    var times = 0
-    
-    init(_ countdown: Countdown) {
-        self.countdown = countdown
+struct Fibonacci: Sequence {
+    func makeIterator() -> FibonacciIterator {
+        return FibonacciIterator()
     }
+}
+
+var fibonacci = Fibonacci()
+var fibonacciIter = fibonacci.makeIterator()
+fibonacciIter.next()
+fibonacciIter.next()
+fibonacciIter.next()
+
+fibonacciIter = fibonacci.makeIterator()
+fibonacciIter.next()
+fibonacciIter.next()
+fibonacciIter.next()
+//: Conform to both Sequence and IteratorProtocol
+struct Countdown: Sequence, IteratorProtocol {
+    var count: Int
     
     mutating func next() -> Int? {
-        let nextNumber = countdown.start - times
-        guard nextNumber > 0 else { return nil }
-        times += 1
-        return nextNumber
+        if count == 0 {
+            return nil
+        } else {
+            defer { count -= 1 }
+            return count
+        }
     }
 }
-extension Countdown: Sequence {
-    func makeIterator() -> CountdownIterator {
-        return CountdownIterator(self)
-    }
-}
+
+var countdown = Countdown(count: 10)
+countdown.next()
+countdown.next()
 //: ## Standard Library Functions for Make Sequences
 
 /*:
@@ -91,7 +120,7 @@ for (word, number) in zipped {
 }
 //: ## Methods
 //: ### Iterate
-let threeTwoOne = Countdown(start: 3)
+let threeTwoOne = Countdown(count: 3)
 for count in threeTwoOne {
 //    print(count)
 }
@@ -164,45 +193,19 @@ let greatestHue = hues.max { $0.value < $1.value }
  Lazy sequences can be used to avoid needless storage allocation and computation, because they use an underlying sequence for storage and compute their elements on demand.
  
  */
-struct FibonacciIterator: IteratorProtocol {
-    
-    private var previus = 0.0
-    private var current = 1.0
-    private var flag = false
-    
-    mutating func next() -> Double? {
-        guard flag else {
-            flag = true
-            return 1
-        }
-        
-        let value = current + previus
-        previus = current
-        current = value
-        return value
-        
-    }
-}
-
-struct Fibonacci: Sequence {
-    func makeIterator() -> FibonacciIterator {
-        return FibonacciIterator()
-    }
-}
-
 let intFibonacci: LazyMapSequence = Fibonacci().lazy.map(Int.init)
-var it1: LazyMapIterator = intFibonacci.makeIterator()
-it1.next()
-it1.next()
-it1.next()
-it1.next()
+var lazyMapIter: LazyMapIterator = intFibonacci.makeIterator()
+lazyMapIter.next()
+lazyMapIter.next()
+lazyMapIter.next()
+lazyMapIter.next()
 
 let evenIntFibonacci: LazyFilterSequence = intFibonacci.lazy.filter { $0 % 2 == 0}
-var it2: LazyFilterIterator = evenIntFibonacci.makeIterator()
-it2.next()
-it2.next()
-it2.next()
-it2.next()
+var lazyFilterIter: LazyFilterIterator = evenIntFibonacci.makeIterator()
+lazyFilterIter.next()
+lazyFilterIter.next()
+lazyFilterIter.next()
+lazyFilterIter.next()
 //: ### Add New Lazy Sequence Operation
 struct LazyEvenIterator<Base: IteratorProtocol>: IteratorProtocol where Base.Element == Int{
     
@@ -235,8 +238,8 @@ extension LazySequenceProtocol where Iterator.Element == Int{
 }
 
 
-var it3 = stride(from: 1, through: 100, by: 1).lazy.even().makeIterator()
-it3.next()
-it3.next()
-it3.next()
+var lazyEvenIter = stride(from: 1, through: 100, by: 1).lazy.even().makeIterator()
+lazyEvenIter.next()
+lazyEvenIter.next()
+lazyEvenIter.next()
 //: [Next](@next)
