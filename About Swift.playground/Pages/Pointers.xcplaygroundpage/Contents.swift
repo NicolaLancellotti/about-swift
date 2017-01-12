@@ -1,10 +1,11 @@
 //: [Previous](@previous)
 
-//: # UnsafeMutablePointer
+//: # Pointers
 
 /*:
- - note:
- See UnsafePointer for non mutating pointer.
+ ## Pointers for typed data
+ * UnsafeMutablePointer - mutating pointer
+ * UnsafePointer - non mutating pointer
  */
 
 //: ### Allocate
@@ -66,7 +67,7 @@ p.initialize(to: SomeStruct(someClass: SomeClass()),
 
 p.deinitialize(count: 1) // print "deinit SomeClass" in the console
 p.deallocate(capacity: 1)
-//: ## Rebinds memory
+//: ### Rebinds memory
 struct BaseStruct {
     var stringValue: String
     
@@ -87,5 +88,11 @@ let fooValue = subStructP.withMemoryRebound(to: BaseStruct.self,
                                             capacity: 1) {
                                                 return $0.pointee.foo()
 }
+
+/*:
+ ## Pointers for untyped data
+ * UnsafeMutableRawPointer - mutating pointer
+ * UnsafeRawPointer - non mutating pointer
+ */
 
 //: [Next](@next)
