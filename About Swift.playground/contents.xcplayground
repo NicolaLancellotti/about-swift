@@ -31,7 +31,7 @@
         <page name='String Convertible Protocols'/>
         <page name='Sequences'/>
         <page name='Collections'/>
-        <page name='Bit Mask'/>
+        <page name='SetAlgebra'/>
         <page name='Stream And Print'/>
         <page name='Reflection'/>
         <page name='Memory'/>
