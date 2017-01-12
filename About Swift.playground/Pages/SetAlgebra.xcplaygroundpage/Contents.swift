@@ -1,6 +1,31 @@
 //: [Previous](@previous)
 
-//: # OptionSet
+/*:
+ # SetAlgebra
+ A type that provides mathematical set operations.
+ */
+
+/*:
+ ## Set
+ An unordered collection of unique elements.
+ 
+ Implement SetAlgebra
+*/
+let set = Set(arrayLiteral: 1, 2, 3, 4)
+let anotherSet: Set = [5, 10]
+set.isEmpty
+
+set.isDisjoint(with: anotherSet)
+set.intersection(anotherSet)
+set.isSubset(of: anotherSet)
+set.isSubset(of: anotherSet)
+set.union(anotherSet)
+/*:
+ ## OptionSet
+ A type that presents a mathematical set interface to a bit mask
+ 
+ Inherits From SetAlgebra.
+ */
 struct MyFontStyle : OptionSet {
     let rawValue : Int // conforms to the BitwiseOperations protocol
     static let bold             = MyFontStyle(rawValue: 1 << 0)
@@ -18,4 +43,6 @@ style.formUnion([.bold, .italic])
 style.insert(.strikethrough)
 style.remove(.bold)
 style.contains(.italic)
+
+
 //: [Next](@next)

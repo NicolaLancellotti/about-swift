@@ -12,7 +12,7 @@
  - [String Convertible Protocols](String%20Convertible%20Protocols)
  - [Sequences](Sequences)
  - [Collections](Collections)
- - [Bit Mask](Bit%20Mask)
+ - [SetAlgebra](SetAlgebra)
  - [Stream And Print](Stream%20And%20Print)
  - [Reflection](Reflection)
  - [Memory](Memory)
