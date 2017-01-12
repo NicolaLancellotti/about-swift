@@ -164,5 +164,79 @@ let greatestHue = hues.max { $0.value < $1.value }
  Lazy sequences can be used to avoid needless storage allocation and computation, because they use an underlying sequence for storage and compute their elements on demand.
  
  */
-let lazySequence = [1, 2, 3].lazy.map { $0 * 2 }
+struct FibonacciIterator: IteratorProtocol {
+    
+    private var previus = 0.0
+    private var current = 1.0
+    private var flag = false
+    
+    mutating func next() -> Double? {
+        guard flag else {
+            flag = true
+            return 1
+        }
+        
+        let value = current + previus
+        previus = current
+        current = value
+        return value
+        
+    }
+}
+
+struct Fibonacci: Sequence {
+    func makeIterator() -> FibonacciIterator {
+        return FibonacciIterator()
+    }
+}
+
+let intFibonacci: LazyMapSequence = Fibonacci().lazy.map(Int.init)
+var it1: LazyMapIterator = intFibonacci.makeIterator()
+it1.next()
+it1.next()
+it1.next()
+it1.next()
+
+let evenIntFibonacci: LazyFilterSequence = intFibonacci.lazy.filter { $0 % 2 == 0}
+var it2: LazyFilterIterator = evenIntFibonacci.makeIterator()
+it2.next()
+it2.next()
+it2.next()
+it2.next()
+//: ### Add New Lazy Sequence Operation
+struct LazyEvenIterator<Base: IteratorProtocol>: IteratorProtocol where Base.Element == Int{
+    
+    var iterator: Base
+    
+    mutating func next() -> Int? {
+        guard let value = iterator.next() else {
+            return nil
+        }
+        return value % 2 == 0 ? value : iterator.next()
+    }
+    
+}
+
+struct LazyEvenSequence<Base: Sequence>: LazySequenceProtocol where Base.Iterator.Element == Int{
+    var sequence: Base
+    
+    func makeIterator() -> LazyEvenIterator<Base.Iterator> {
+        return LazyEvenIterator(iterator: sequence.makeIterator())
+    }
+    
+}
+
+extension LazySequenceProtocol where Iterator.Element == Int{
+    
+    /// **Complexity:** O(1)
+    func even() -> LazyEvenSequence<Self> {
+        return LazyEvenSequence(sequence: self)
+    }
+}
+
+
+var it3 = stride(from: 1, through: 100, by: 1).lazy.even().makeIterator()
+it3.next()
+it3.next()
+it3.next()
 //: [Next](@next)
