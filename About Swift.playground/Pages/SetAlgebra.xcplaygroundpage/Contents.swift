@@ -20,6 +20,10 @@ set.intersection(anotherSet)
 set.isSubset(of: anotherSet)
 set.isSubset(of: anotherSet)
 set.union(anotherSet)
+
+//: Set is complain to Collection
+var setIter = set.makeIterator()
+set.startIndex
 /*:
  ## OptionSet
  A type that presents a mathematical set interface to a bit mask
