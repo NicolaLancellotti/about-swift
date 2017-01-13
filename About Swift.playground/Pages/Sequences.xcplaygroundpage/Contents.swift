@@ -146,7 +146,8 @@ for (n, elem) in threeTwoOne.enumerated() {
  ### Flat
  A sequence that presents the elements of a base sequence of sequences concatenated.
  */
-let flat: FlattenSequence = [1...2, 4...5].joined()
+let s = stride(from: 1, to: 2, by: 1)
+let flat: FlattenSequence = [s, s].joined()
 Array(flat)
 /*: 
  ### Join
@@ -242,4 +243,8 @@ var lazyEvenIter = stride(from: 1, through: 100, by: 1).lazy.even().makeIterator
 lazyEvenIter.next()
 lazyEvenIter.next()
 lazyEvenIter.next()
+
+//: ## EmptyIterator
+var emptyIterator = EmptyIterator<Int>()
+emptyIterator.next()
 //: [Next](@next)
