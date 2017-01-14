@@ -3,7 +3,12 @@
 import Foundation
 
 //: # Strings
+let emptyString = String()
+let anotherEmptyString = ""
 
+let someString = "Some string literal value"
+let catCharacters: [Character] = ["C", "a", "t", "!", "🐱"]
+let catString = String(catCharacters)
 //: ## String Interpolation
 let apples = 4
 print("There are \(apples) apples")
