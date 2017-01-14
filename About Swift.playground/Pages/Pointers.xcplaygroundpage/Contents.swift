@@ -115,4 +115,106 @@ buffer.makeIterator()
 }
 
 buffer.reduce(0, +)
+
+/*:
+ ## Managed Buffer
+ 
+ A class whose instances contain a property of type Header and raw storage for an array of Element, whose size is determined at instance creation.
+ */
+class StackBuffer<Element> : ManagedBuffer<Int, Element> {
+    
+    func copy() -> StackBuffer<Element> {
+        
+        func makeBuffer(elements: UnsafeMutablePointer<Element>) -> StackBuffer<Element> {
+            let buffer =  StackBuffer.create(minimumCapacity: capacity) { newBuf in
+                newBuf.withUnsafeMutablePointerToElements { newElements in
+                    newElements.initialize(from: elements, count: header)
+                }
+                return header
+            }
+            return buffer as! StackBuffer<Element>
+        }
+        
+        return withUnsafeMutablePointerToElements { makeBuffer(elements: $0)}
+    }
+    
+    subscript(index: Int) -> Element {
+        get {
+            return withUnsafeMutablePointerToElements {
+                let value = $0[index]
+                $0.advanced(by: index).deinitialize()
+                return value
+            }
+        }
+        set {
+            withUnsafeMutablePointerToElements {
+                $0.advanced(by: index).initialize(to: newValue)
+            }
+        }
+    }
+    
+    deinit {
+        withUnsafeMutablePointerToElements {
+            $0.deinitialize(count: header)
+            return
+        }
+    }
+}
+
+struct Stack<Element> {
+    private var _buf: StackBuffer<Element>
+    
+    init(capacity: Int) {
+        precondition(capacity > 0)
+        _buf =  StackBuffer.create(minimumCapacity: capacity) { _ in 0 } as! StackBuffer<Element>
+    }
+    
+    var isEmpty: Bool {
+        return _buf.header == 0
+    }
+    
+    var isFull: Bool {
+        return _buf.header == _buf.capacity
+    }
+    
+    mutating func push(_ element: Element) {
+        if !isKnownUniquelyReferenced(&_buf) {
+            _buf = _buf.copy()
+        }
+        
+        let index = _buf.header
+        precondition(index != _buf.capacity)
+        _buf[index] = element
+        _buf.header = index + 1
+    }
+    
+    mutating func pop() -> Element {
+        if !isKnownUniquelyReferenced(&_buf) {
+            _buf = _buf.copy()
+        }
+        
+        let index = _buf.header - 1
+        precondition(index >= 0)
+        _buf.header = index
+        return _buf[index]
+    }
+}
+
+var stack = Stack<Int>(capacity: 4)
+
+stack.isEmpty
+stack.isFull
+
+stack.push(10)
+stack.push(11)
+
+var stack2 = stack
+stack2.push(12)
+
+stack.pop()
+stack.pop()
+
+stack2.pop()
+stack2.pop()
+stack2.pop()
 //: [Next](@next)
