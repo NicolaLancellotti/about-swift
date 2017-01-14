@@ -289,6 +289,53 @@ aCollection.suffix(10)
 Array(aMutableCollection[2..<4])
 aMutableCollection[2..<4].sorted()
 //: ## Standard Library Collections
+
+//: ### Array
+// Creating an Empty Array
+var array1 = Array<Int>()
+var array2 = [Int]() // Array Type Shorthand Syntax
+
+// Creating Array with a Default Value
+var array3 = [Int](repeating: 10, count: 2)
+
+// Creating Array by Adding Two Arrays Together
+var array4 = array3 + array3
+
+// Creating an Array with an Array Literal
+var array5 = [1, 2]
+
+// Remove all Elements
+array5 = [] // array5 is now an empty array
+//: ### Set
+// Creating an Empty Set
+var set1 = Set<Int>()
+// Creating a Set with an Array Literal
+var set2: Set = [1, 2, 3]
+// Remove all Elements
+set2 = [] // set2 is now an empty set
+/*:
+ - note:
+ See SetAlgebra for other set operations
+*/
+set1.startIndex
+set1.makeIterator()
+//: ### Dictionary
+// Creating an Empty Array
+var dictionary1 = Dictionary<Int, String>()
+var dictionary2 = [Int: String]() // Dictionary Type Shorthand Syntax
+
+// Creating a Dictionary with a Dictionary Literal
+var dictionary3 = [1 : "apple", 2 : "banana"]
+dictionary3[1]
+dictionary3[1] = nil
+dictionary3[1]
+
+// Remove all Elements
+dictionary2 = [:] // // array5 is now an empty dictionary
+
+dictionary1.startIndex
+dictionary1.makeIterator()
+//: ### Other
 let allOne: Repeated = repeatElement(1, count: 5)
 let only10 = CollectionOfOne(10)
 let emptyCollection = EmptyCollection<Int>()
@@ -296,7 +343,8 @@ let emptyCollection = EmptyCollection<Int>()
 let flattenBidirectionalCollection: FlattenBidirectionalCollection = [0..<3, 8..<10, 15..<17].joined()
 flattenBidirectionalCollection.startIndex
 
-
+// ArraySlice is a slice of an Array, ContiguousArray, or ArraySlice instance.
+array1.prefix(2)
 /*:
  ## Enumerate
  When enumerating a collection, the integer part of each pair is a counter for the enumeration, not necessarily the index of the paired value. These counters can only be used as indices in instances of zero-based, integer-indexed collections, such as Array and ContiguousArray
