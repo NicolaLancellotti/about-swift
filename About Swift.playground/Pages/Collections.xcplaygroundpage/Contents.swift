@@ -370,6 +370,24 @@ struct IntPairs {
 
 let pairs = IntPairs([1: 2, 1: 1, 3: 4, 2: 1])
 pairs.elements
+/*:
+ ### ContiguousArray
+ 
+ ContiguousArray always stores its elements in a contiguous region of memory.
+ 
+ Array store its elements in a
+ * contiguous region of memory - if its `Element` type is a value type
+ * NSArray - if its `Element` type is a class or @objc protocol
+ 
+ 
+ If your array's Element type is a class or @objc protocol and you do not need to bridge the array to NSArray or pass the array to Objective-C APIs, using ContiguousArray may be more efficient and have more predictable performance than Array.
+ 
+ */
+class SomeClass {
+    
+}
+
+let contiguousArray = ContiguousArray<SomeClass>()
 //: ### Other
 let allOne: Repeated = repeatElement(1, count: 5)
 let only10 = CollectionOfOne(10)
