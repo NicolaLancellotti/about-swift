@@ -9,21 +9,21 @@
  ## Set
  An unordered collection of unique elements.
  
- Implement SetAlgebra
+ Complain to SetAlgebra and Collection
 */
-let set = Set(arrayLiteral: 1, 2, 3, 4)
-let anotherSet: Set = [5, 10]
-set.isEmpty
 
-set.isDisjoint(with: anotherSet)
+let set: Set = [1, 2, 3]
+let anotherSet: Set = [1, 2, 3, 4, 5]
+
+//: ### Fundamental Set Operations
 set.intersection(anotherSet)
-set.isSubset(of: anotherSet)
-set.isSubset(of: anotherSet)
+set.symmetricDifference(anotherSet)
 set.union(anotherSet)
-
-//: Set is complain to Collection
-var setIter = set.makeIterator()
-set.startIndex
+set.subtracting(anotherSet)
+//: ### Set Membership and Equality
+set.isSubset(of: anotherSet)
+set.isSuperset(of: anotherSet)
+set.isDisjoint(with: anotherSet)
 /*:
  ## OptionSet
  A type that presents a mathematical set interface to a bit mask
