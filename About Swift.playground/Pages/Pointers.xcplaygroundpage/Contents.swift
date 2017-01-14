@@ -95,4 +95,24 @@ let fooValue = subStructP.withMemoryRebound(to: BaseStruct.self,
  * UnsafeRawPointer - non mutating pointer
  */
 
+/*:
+ ## Buffer Pointers
+ 
+ A non-owning pointer to a buffer of elements
+ stored contiguously in memory, presenting a collection interface to the underlying elements.
+ 
+ * UnsafeMutableBufferPointer - for mutating elements
+ * UnsafeBufferPointer - for non mutating elements
+ */
+let storage = UnsafeMutablePointer<Int>.allocate(capacity: 10)
+let buffer = UnsafeMutableBufferPointer(start: storage, count: 10)
+buffer.baseAddress
+
+buffer.makeIterator()
+
+(0..<buffer.count).map {
+    buffer[$0] = $0
+}
+
+buffer.reduce(0, +)
 //: [Next](@next)
