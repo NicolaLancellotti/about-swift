@@ -7,7 +7,7 @@
 
 /*:
  ## Set
- An unordered collection of unique elements.
+ An unordered collection of unique ***hashable*** elements.
  
  Complain to SetAlgebra and Collection
 */
