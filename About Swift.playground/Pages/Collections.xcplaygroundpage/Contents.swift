@@ -329,7 +329,7 @@ set1.startIndex
 set1.makeIterator()
 /*: 
  ### Dictionary
- A collection whose elements are key-value pairs.
+ An **unordered** collection whose elements are key-value pairs.
  
  The key mush be hashable.
  */
@@ -348,6 +348,28 @@ dictionary2 = [:] // // array5 is now an empty dictionary
 
 dictionary1.startIndex
 dictionary1.makeIterator()
+/*: 
+ ### DictionaryLiteral
+ An **ordered** collection whose elements are key-value pairs.
+ 
+ Some operations that are efficient on a dictionary are slower when using DictionaryLiteral
+ 
+ DictionaryLiteral also allows duplicates keys.
+ */
+let dictionaryLiteral: DictionaryLiteral = [1 : "a", 1 : "b"]
+dictionaryLiteral.first!.key
+dictionaryLiteral.first!.value
+//: When calling a function with a DictionaryLiteral parameter, you can pass a Swift dictionary literal without causing a Dictionary to be created
+struct IntPairs {
+    var elements: [(Int, Int)]
+    
+    init(_ elements: DictionaryLiteral<Int, Int>) {
+        self.elements = Array(elements)
+    }
+}
+
+let pairs = IntPairs([1: 2, 1: 1, 3: 4, 2: 1])
+pairs.elements
 //: ### Other
 let allOne: Repeated = repeatElement(1, count: 5)
 let only10 = CollectionOfOne(10)
