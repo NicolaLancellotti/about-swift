@@ -1,7 +1,5 @@
 //: [Previous](@previous)
 
-import Foundation
-
 //: # Stream And Print
 
 //: ## Print

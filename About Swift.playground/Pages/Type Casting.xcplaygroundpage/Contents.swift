@@ -1,22 +1,28 @@
 //: [Previous](@previous)
-import Foundation
+
 //: # Type Casting
 
 /*:
  ## Checking Type
  Use the type check operator (is) to check whether an instance is of a certain subclass type. The type check operator returns true if the instance is of that subclass type and false if it is not.
  */
-class ClassA: NSObject {
+class ClassA {
+
 }
 
 class ClassB: ClassA {
+
 }
 
-let objectAnyObject: Any = ClassB()
+class ClassC: ClassB {
 
-objectAnyObject is NSObject
+}
+
+let objectAnyObject: Any = ClassC()
+
 objectAnyObject is ClassA
 objectAnyObject is ClassB
+objectAnyObject is ClassC
 objectAnyObject is String
 /*:
  ## Casting
@@ -25,10 +31,10 @@ objectAnyObject is String
  
  * Use the forced form of the type cast operator (as!) only when you are sure that the downcast will always succeed. This form of the operator will trigger a runtime error if you try to downcast to an incorrect class type.
  */
-let objectClassA : ClassA = ClassB()
+let objectClassA : ClassB = ClassC()
 
-let o1 = objectClassA as NSObject // Guaranteed conversion
-let o2 = objectAnyObject as! ClassB // Forced conversion
+let o1 = objectClassA as ClassA // Guaranteed conversion
+let o2 = objectAnyObject as! ClassC // Forced conversion
 let o3 = objectAnyObject as? String
 /*:
  ## Type Casting for Any and AnyObject

@@ -5,7 +5,7 @@
  */
 
 /*:
- # Standard Library (In Developing)
+ # Standard Library
  
  - [Numbers](Numbers)
  - [Able Protocols](Able%20Protocols)

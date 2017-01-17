@@ -1,7 +1,5 @@
 //: [Previous](@previous)
-
 import Foundation
-
 //: # Strings
 let emptyString = String()
 let anotherEmptyString = ""

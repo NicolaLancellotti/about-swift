@@ -1,5 +1,5 @@
 //: [Previous](@previous)
-import Foundation
+
 //: # Functions
 
 //: ## Functions Without Parameters
@@ -165,9 +165,5 @@ func loop() -> Never  {
     while true {
         
     }
-}
-
-func terminateApp() -> Never  {
-    abort()
 }
 //: [Next](@next)
