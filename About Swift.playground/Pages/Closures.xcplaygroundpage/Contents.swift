@@ -1,5 +1,5 @@
 //: [Previous](@previous)
-import Foundation
+
 /*:
  # Closures
  
@@ -102,6 +102,9 @@ closure1()
 var closure2 = makeIncrementer(forIncrement: 50)
 closure2()
 closure2()
+//:A clousure that don't caputure values can be maked with @convention(c)
+let sum:  @convention(c) (Int, Int) -> Int = { $0 + $1 }
+sum(10, 5)
 /*:
  ## Escaping Closures
  
@@ -195,6 +198,8 @@ func someFunction(a: inout Int) -> () -> Int {
     return { [a] in return a + 1 }
 }
 //: If you need to capture and mutate an in-out parameter, use an explicit local copy, such as in multithreaded code that ensures all mutation has finished before the function returns.
+import Dispatch
+
 func multithreadedFunction(queue: DispatchQueue, x: inout Int) {
     func increment(_ x: inout Int) {
         x += 1

@@ -1,5 +1,5 @@
 //: [Previous](@previous)
-import Foundation
+
 /*:
  # Protocols
  

@@ -22,7 +22,6 @@
  - [Operators](Operators)
  - [Access Control](Access%20Control)
  - [Copying](Copying)
- - [Mix And Match](Mix%20And%20Match)
  - [Miscellaneous](Miscellaneous)
  - [Checking API Availability](Checking%20API%20Availability)
  

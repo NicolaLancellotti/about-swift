@@ -1,6 +1,5 @@
 //: [Previous](@previous)
 
-import Foundation
 //: # Checking API Availability
 if #available(iOS 9, macOS 10.10, *) {
     // Use iOS 9 APIs on iOS, and use macOS v10.10 APIs on macOS
