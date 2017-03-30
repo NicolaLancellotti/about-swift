@@ -17,6 +17,7 @@ The available attribute always appears with a list of two or more comma-separate
 * watchOSApplicationExtension
 * tvOS
 * tvOSApplicationExtension
+* swift
 
 You can also use an asterisk (*) to indicate the availability of the declaration on all of the platform names listed above.
 */
