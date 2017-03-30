@@ -12,8 +12,6 @@
 let intArray = UnsafeMutablePointer<Int>.allocate(capacity: 3)
 //: ### Initialize
 intArray.initialize(to: 10, count: 3)
-//intArray.initialize(from: [10, 10, 10])
-
 /*:
  - note:
  You can use `assign` and `moveAssign` methods to assign pointees of another pointer.
