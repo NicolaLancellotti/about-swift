@@ -156,19 +156,4 @@ let anotherInstace: AProtocol = AStructure()
 anotherInstace.foo()
 anotherInstace.fubar()
 anotherInstace.bar() // static dispaching
-/*:
- ### Adding Constraints to Protocol Extensions
- 
- When you define a protocol extension, you can specify constraints that conforming types must satisfy before the methods and properties of the extension are available.
- 
- If a conforming type satisfies the requirements for multiple constrained extensions that provide implementations for the same method or property, Swift will use the implementation corresponding to the most specialized constraints.
- 
- */
-extension Collection where Iterator.Element: SomeProtocol {
-    
-    var textualDescription: String {
-        return ""
-    }
-    
-}
 //: [Next](@next)

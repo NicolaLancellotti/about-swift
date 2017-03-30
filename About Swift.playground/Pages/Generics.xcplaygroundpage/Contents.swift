@@ -126,4 +126,30 @@ func allItemsMatch<C1: Container, C2: Container>(_ someContainer: C1, _ anotherC
     }
     return true
 }
+
+//: ## Extensions with a Generic Where Clause
+extension Stack where Element: Equatable {
+    func isTop(_ item: Element) -> Bool {
+        guard let topItem = items.last else {
+            return false
+        }
+        return topItem == item
+    }
+}
+
+
+extension Collection where Iterator.Element: Equatable {
+    func startsWith(_ item: Iterator.Element) -> Bool {
+        guard let first = first else {
+            return false
+        }
+        return first == first
+    }
+}
+
+extension Collection where Iterator.Element == Double {
+    func sum() -> Double {
+        return reduce(0.0, +)
+    }
+}
 //: [Next](@next)
