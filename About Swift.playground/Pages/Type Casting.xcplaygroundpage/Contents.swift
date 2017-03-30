@@ -50,10 +50,7 @@ let y: Any = x
 f(x) // prints "Function for Int"
 f(y) // prints "Function for Any"
 f(x as Any) // prints "Function for Any"
-/*:
- ### Switch
- In a switch statement, a value is cast to a type only when pattern matching with that type succeeds. For that reason, you use the as operator instead of the conditional as? or unconditional as! operators.
- */
+
 var things = [Any]()
 things.append(0)
 things.append(0.0)
@@ -64,7 +61,14 @@ things.append("hello")
 things.append((3.0, 5.0))
 things.append(ClassA())
 things.append({ (name: String) -> String in "Hello, \(name)" })
-
+//:The Any type represents values of any type, including optional types. Swift gives you a warning if you use an optional value where a value of type Any is expected.
+let optionalNumber: Int? = 3
+//things.append(optionalNumber)      // Warning
+things.append(optionalNumber as Any) // No warning
+/*:
+ ### Switch
+ In a switch statement, a value is cast to a type only when pattern matching with that type succeeds. For that reason, you use the as operator instead of the conditional as? or unconditional as! operators.
+ */
 for thing in things {
     switch thing {
     case 0 as Int:
@@ -89,6 +93,7 @@ for thing in things {
         print("something else")
     }
 }
+
 /*:
  - note:
  As a performance optimization, an unconditional downcast of a collection to a collection with a more specific type, such as NSArray as! [NSView], may defer type checking of each element until they are individually accessed. As a result, an unconditional downcast to an incompatible type may appear to succeed, until a type cast failure of an element triggers a runtime error.
