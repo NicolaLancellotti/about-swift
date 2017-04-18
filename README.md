@@ -1,9 +1,5 @@
 # About Swift
-
-[![Swift Version][swift-image]][swift-url]
-[swift-image]:https://img.shields.io/badge/swift-3.0-orange.svg
-[swift-url]: https://swift.org/
-
+[![Version](https://img.shields.io/badge/swift-3.0.1-orange.svg)](https://swift.org/)
 ![header](header.png)
 
 ### Contents
