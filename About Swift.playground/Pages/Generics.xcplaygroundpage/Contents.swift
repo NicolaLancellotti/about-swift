@@ -86,6 +86,21 @@ struct SomeStructure: Container {
     }
     
 }
+
+/*:
+ ## Nested Generic Types
+ 
+ Nested types may appear inside generic types, and nested types may have their own generic parameters.
+ */
+struct OuterNonGeneric {
+    struct InnerGeneric<T> {}
+}
+
+struct OuterGeneric<T> {
+    struct InnerNonGeneric {}
+    
+    struct InnerGeneric<T> {}
+}
 /*:
  ## Type Constraint
  
