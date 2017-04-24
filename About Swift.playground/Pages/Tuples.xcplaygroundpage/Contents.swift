@@ -68,8 +68,10 @@ for (x, _) in points {
 (3, "apple") < (3, "bird")    // true because 3 is equal to 3, and "apple" is less than "bird"
 (4, "dog") == (4, "dog")      // true because 4 is equal to 4, and "dog" is equal to "dog"
 /*:
- ## Functions can Return a Tuple.
+ # Functions and Tuples
  */
+
+//: ### Functions can Return a Tuple
 func funcReturnTuple() -> (par1: Bool, par2: Bool) {
     return (true, false)
 }
@@ -77,4 +79,10 @@ func funcReturnTuple() -> (par1: Bool, par2: Bool) {
 let value = funcReturnTuple()
 value.par1
 value.par2
+//: ### Functions with tuple parameter
+func functionWithTupleParameter(_: (Int, Int)) -> Void {
+    
+}
+
+functionWithTupleParameter((1, 2))
 //: [Next](@next)
