@@ -116,6 +116,26 @@ func someFunctionWithEscapingClosure(completionHandler: @escaping () -> Void) {
     completionHandlers.append(completionHandler)
 }
 /*:
+ ### Allows a nonescaping closure to temporarily be used as if it were allowed to escape
+ */
+import Dispatch
+
+func doSimultaneously(_ f: () -> (), and g: () -> (), on q: DispatchQueue) {
+    // DispatchQueue.async normally has to be able to escape its closure
+    // since it may be called at any point after the operation is queued.
+    // By using a barrier, we ensure it does not in practice escape.
+    withoutActuallyEscaping(f) { escapableF in
+        withoutActuallyEscaping(g) { escapableG in
+            q.async(execute: escapableF)
+            q.async(execute: escapableG)
+            q.sync(flags: .barrier) {}
+        }
+    }
+    // `escapableF` and `escapableG` must be dequeued by the point
+    // `withoutActuallyEscaping` returns.
+}
+
+/*:
  ## Autoclosures
  
  An autoclosure is a closure that is automatically created to wrap an expression that’s being passed as an argument to a function.
