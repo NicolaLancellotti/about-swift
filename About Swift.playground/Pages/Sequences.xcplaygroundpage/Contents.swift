@@ -164,12 +164,17 @@ split
 //: ### Subsequences
 var aSequence = stride(from: 0, through: 5, by: 1)
 Array(aSequence)
+
 Array(aSequence.prefix(2))
+Array(aSequence.prefix(while: {$0 < 3}))
+
+Array(aSequence.suffix(2))
+Array(aSequence.drop(while: {$0 < 3}))
+
 Array(aSequence.dropFirst(2))
 Array(aSequence.dropLast(2))
-Array(aSequence.suffix(2))
-aSequence.first { $0 > 2 }!
 
+aSequence.first { $0 > 2 }!
 //: ### Sort
 aSequence.sorted()
 aSequence.sorted { $0 > $1 }
