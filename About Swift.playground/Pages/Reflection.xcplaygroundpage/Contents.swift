@@ -19,6 +19,7 @@ mirror.displayStyle
 mirror.subjectType
 mirror.superclassMirror?.subjectType
 
+mirror.children.count
 let firstChildren = mirror.children.first!
 firstChildren.label
 firstChildren.value
