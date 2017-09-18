@@ -61,4 +61,25 @@ transcode(dogString.utf8.makeIterator(), from: UTF8.self, to: UTF32.self, stoppi
     codeUnits.append($0)
 }
 print("Numeric values: ", codeUnits);
+//: ## Multiline String Literals
+let quotation = """
+The White Rabbit put on his spectacles.  "Where shall I begin,
+please your Majesty?" he asked.
+
+"Begin at the beginning," the King said gravely, "and go on
+till you come to the end; then stop."
+"""
+//: Line break
+let softWrappedQuotation = """
+The White Rabbit put on his spectacles.  "Where shall I begin, \
+please your Majesty?" he asked.
+
+"Begin at the beginning," the King said gravely, "and go on \
+till you come to the end; then stop."
+"""
+//: Intendation
+let linesWithIndentation = """
+    ABCD
+        abcd
+    """
 //: [Next](@next)
