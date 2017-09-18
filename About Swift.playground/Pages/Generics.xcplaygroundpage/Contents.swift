@@ -58,20 +58,20 @@ stackOfStrings.push("Ciao")
 protocol Container {
     
     //  An associated type gives a placeholder name to a type that is used as part of the protocol.
-    associatedtype ItemType
+    associatedtype Item
     
-    mutating func append(_ item: ItemType)
+    mutating func append(_ item: Item)
     
     var count: Int { get }
     
-    subscript(i: Int) -> ItemType { get }
+    subscript(i: Int) -> Item { get }
 }
 
 struct SomeStructure: Container {
     
     var items = [Int]()
     
-    //    typealias ItemType = Int  // Infer from contex
+    //    typealias Item = Int  // Infer from contex
     
     mutating func append(_ item: Int) {
         items.append(item)
@@ -128,7 +128,7 @@ func findIndex<T: Equatable>(_ array: [T], _ valueToFind: T) -> Int? {
  A generic where clause enables you to require that an associated type must conform to a certain protocol, or that certain type parameters and associated types must be the same.
  */
 func allItemsMatch<C1: Container, C2: Container>(_ someContainer: C1, _ anotherContainer: C2) -> Bool
-    where C1.ItemType == C2.ItemType, C1.ItemType: Equatable {
+    where C1.Item == C2.Item, C1.Item: Equatable {
     
     if someContainer.count != anotherContainer.count {
         return false
@@ -165,6 +165,19 @@ extension Collection where Iterator.Element: Equatable {
 extension Collection where Iterator.Element == Double {
     func sum() -> Double {
         return reduce(0.0, +)
+    }
+}
+/*:
+ ### Generic Subscripts
+ */
+extension Container {
+    subscript<Indices: Sequence>(indices: Indices) -> [Item]
+        where Indices.Iterator.Element == Int {
+            var result = [Item]()
+            for index in indices {
+                result.append(self[index])
+            }
+            return result
     }
 }
 //: [Next](@next)
