@@ -7,7 +7,7 @@
 
 /*:
  - important:
- Assertions are disabled when your code is compiled with optimizations (target Release).
+ Assertions are checked only in debug builds
  */
 assert(true, "message")
 
@@ -37,7 +37,7 @@ default:
 
 /*:
  - important:
- Preconditions are not disabled when your code is compiled with optimizations (target Release).
+  Preconditions are checked in both debug and production builds
  */
 precondition(1 == 1)
 //preconditionFailure("some message")
