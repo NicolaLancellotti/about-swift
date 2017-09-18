@@ -141,7 +141,6 @@ func allItemsMatch<C1: Container, C2: Container>(_ someContainer: C1, _ anotherC
     }
     return true
 }
-
 //: ### Associated Types with a Generic Where Clause
 protocol Container2 {
     associatedtype Item
@@ -152,8 +151,10 @@ protocol Container2 {
     associatedtype Iterator: IteratorProtocol where Iterator.Element == Item
     func makeIterator() -> Iterator
 }
-
-
+//: ### Inherited Protocols with a Generic Where Clause
+protocol ComparableContainer: Container where Item: Comparable {
+    
+}
 //: ## Extensions with a Generic Where Clause
 extension Stack where Element: Equatable {
     func isTop(_ item: Element) -> Bool {
