@@ -254,6 +254,13 @@ var aMutableCollection = AMutableCollection()
 aMutableCollection[0]
 aMutableCollection[0] = 100
 aMutableCollection[0]
+
+aMutableCollection[0]
+aMutableCollection[1]
+aMutableCollection.swapAt(0, 1)
+aMutableCollection[0]
+aMutableCollection[1]
+
 /*:
  ## Slices
  * Slice
