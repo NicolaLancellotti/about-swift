@@ -348,6 +348,45 @@ dictionary2 = [:] // // array5 is now an empty dictionary
 
 dictionary1.startIndex
 dictionary1.makeIterator()
+
+// Creating a Dictionary with a Sequence
+let pairsWithoutDuplicateKeys = [(1, "Name1"), (2, "Name2")]
+Dictionary(uniqueKeysWithValues: pairsWithoutDuplicateKeys)
+
+// Grouping
+struct Item {
+    var key: Int
+    var data: String
+}
+
+let items = [
+    Item(key: 1, data: "Name1"),
+    Item(key: 1, data: "Name2"),
+    Item(key: 2, data: "Name3")
+]
+
+let itemsByKey = Dictionary(grouping: items) { $0.key }
+itemsByKey[1]
+itemsByKey[2]
+
+// Merging initializers and methods
+
+let pairsWithDuplicateKeys = [("a", 1), ("b", 2), ("a", 3), ("b", 4)]
+let firstValues = Dictionary(pairsWithDuplicateKeys,
+                             uniquingKeysWith: { (first, _) in first })
+
+var dictionary4 = ["a": 1, "b": 2]
+dictionary4.merge(["a": 3, "c": 4]) { (current, _) in current }
+
+// Key-based subscript with default value
+let dictionary5 = [Int: String]()
+dictionary5[1, default: "Hello"]
+
+
+// mapValues
+let keysCount = itemsByKey.mapValues {$0.count}
+keysCount[1]
+keysCount[2]
 /*: 
  ### DictionaryLiteral
  An **ordered** collection whose elements are key-value pairs.
