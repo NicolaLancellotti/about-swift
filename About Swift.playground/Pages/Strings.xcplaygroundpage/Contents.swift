@@ -22,21 +22,17 @@ let combinedEAcute: Character = "\u{65}\u{301}"
 let regionalIndicatorForIT: Character = "\u{1F1EE}\u{1F1F9}"
 //: Counting Characters
 var word = "cafe"
-word.characters.count
-word.utf16.count
-(word as NSString).length //UTF-16
+word.count
 
 word += "\u{301}" // acute accent
-word.characters.count
-word.utf16.count
-(word as NSString).length //UTF-16
+word.count
 /*:
  ## String Indices
  Swift strings cannot be indexed by integer values.
  */
 word[word.index(word.startIndex, offsetBy: 3)]
 
-for index in word.characters.indices {
+for index in word.indices {
     print("\(word[index]) ", terminator: "")
 }
 print("")
@@ -46,8 +42,6 @@ word.insert("!", at: word.endIndex)
 //: ## Views
 let dogString = "Dog‼🐶🇮🇳"
 print("________________ Views ________________")
-print("        string: ", dogString);
-print("    characters: ", Array(dogString.characters))
 print("          utf8: ", Array(dogString.utf8))
 print("         utf16: ", Array(dogString.utf16))
 
