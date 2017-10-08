@@ -13,7 +13,7 @@
  * **Open access** and **public access** enable entities to be used within any source file.
  * **Internal** access enables entities to be used within any source file from their defining module (default).
  * **File-private** access restricts the use of an entity to its own defining source file.
- * **Private access** restricts the use of an entity to the enclosing declaration.
+ * **Private access** restricts the use of an entity to the enclosing declaration, and to extensions of that declaration that are in the same file.
  */
 
 /*:
