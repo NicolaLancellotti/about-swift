@@ -63,4 +63,7 @@ let justOverOneMillion = 1_000_000.000_000_1
 
 //: ## Absolute Value
 abs(-10.1)
+//: ## Initialize with String
+Int("11", radix: 10)
+Int("11", radix: 2)
 //: [Next](@next)
