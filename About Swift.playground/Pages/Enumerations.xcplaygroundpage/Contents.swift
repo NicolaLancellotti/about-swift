@@ -62,10 +62,10 @@ var aShape = Shape.square(side: 10)
 aShape = .rectangle(base: 10, height: 11)
 //: Enumeration cases that store associated values can be used as functions that create instances of the enumeration with the specified associated values.
 let makeSquare = Shape.square
-makeSquare(side: 10)
+makeSquare(10)
 
 let makeRectangle = Shape.rectangle
-makeRectangle(base: 10, height: 22)
+makeRectangle(10, 22)
 /*:
  ## Raw Values
  Raw values can be:
