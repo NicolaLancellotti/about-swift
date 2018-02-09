@@ -116,23 +116,23 @@ let naturalNumbers = 1...Int.max
 
 let zipped: Zip2Sequence = zip(words, naturalNumbers)
 for (word, number) in zipped {
-    //    print("\(word): \(number)")
+        print("\(word): \(number)")
 }
 //: ## Methods
 //: ### Iterate
 let threeTwoOne = Countdown(count: 3)
 for count in threeTwoOne {
-//    print(count)
+    print(count)
 }
 
 var iterator = threeTwoOne.makeIterator()
 while let count = iterator.next() {
-//    print(count)
+    print(count)
 }
 
 iterator = threeTwoOne.makeIterator()
 for count in IteratorSequence(iterator) {
-//    print(count)
+    print(count)
 }
 
 //: ### Enumerate
