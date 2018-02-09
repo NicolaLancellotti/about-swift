@@ -24,6 +24,7 @@
         <page name='Copying'/>
         <page name='Miscellaneous'/>
         <page name='Checking API Availability'/>
+        <page name='Type Erasure'/>
         <page name='Standard Library'/>
         <page name='Numbers'/>
         <page name='Able Protocols'/>
@@ -38,7 +39,6 @@
         <page name='Stream And Print'/>
         <page name='Memory'/>
         <page name='Pointers'/>
-        <page name='Type Erasure'/>
         <page name='Codable'/>
         <page name='Created by'/>
     </pages>
