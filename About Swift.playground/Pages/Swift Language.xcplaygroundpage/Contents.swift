@@ -24,6 +24,7 @@
  - [Copying](Copying)
  - [Miscellaneous](Miscellaneous)
  - [Checking API Availability](Checking%20API%20Availability)
+ - [Type Erasure](Type%20Erasure)
  
  ****
  [Next](@next)

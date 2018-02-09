@@ -20,7 +20,6 @@
  - [Stream And Print](Stream%20And%20Print)
  - [Memory](Memory)
  - [Pointers](Pointers)
- - [Type Erasure](Type%20Erasure)
  - [Codable](Codable)
  ****
  [Next](@next)
