@@ -39,6 +39,7 @@
         <page name='Memory'/>
         <page name='Pointers'/>
         <page name='Type Erasure'/>
+        <page name='Codable'/>
         <page name='Created by'/>
     </pages>
 </playground>
