@@ -264,7 +264,7 @@ let maxAge = people.reduce(0) { max($0, $1.age) }
 maxAge
 
 var intOptArray = [1, 2, nil, 3]
-var intArray = intOptArray.flatMap { $0 }
+var intArray = intOptArray.compactMap { $0 }
 intArray
 //: Memoization
 func memoize<T: Hashable, U>( _ body: @escaping ((T)->U, T)->U ) -> (T)->U {
