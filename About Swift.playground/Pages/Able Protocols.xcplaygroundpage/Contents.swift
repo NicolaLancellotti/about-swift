@@ -17,6 +17,21 @@ extension SomeStructure: Equatable {
     }
 }
 /*:
+Swift provides synthesized implementations of the equivalence operators for the following kinds of custom types:
+
+* Structures that have only stored properties that conform to the Equatable protocol
+* Enumerations that have only associated types that conform to the Equatable protocol
+* Enumerations that have no associated types
+
+ Declare Equatable conformance as part of the type’s original declaration to receive these default implementations.
+*/
+struct Point: Equatable {
+    let x: Int
+    let y: Int
+}
+
+Point(x: 0, y: 1) == Point(x: 0, y: 1)
+/*:
  ## Hashable
  A type that provides an integer hash value.
  
