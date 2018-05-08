@@ -141,6 +141,19 @@ func allItemsMatch<C1: Container, C2: Container>(_ someContainer: C1, _ anotherC
     }
     return true
 }
+/*:
+ ### Generic Subscripts
+ */
+extension Container {
+    subscript<Indices: Sequence>(indices: Indices) -> [Item]
+        where Indices.Iterator.Element == Int {
+            var result = [Item]()
+            for index in indices {
+                result.append(self[index])
+            }
+            return result
+    }
+}
 //: ### Associated Types with a Generic Where Clause
 protocol Container2 {
     associatedtype Item
@@ -156,16 +169,6 @@ protocol ComparableContainer: Container where Item: Comparable {
     
 }
 //: ## Extensions with a Generic Where Clause
-extension Stack where Element: Equatable {
-    func isTop(_ item: Element) -> Bool {
-        guard let topItem = items.last else {
-            return false
-        }
-        return topItem == item
-    }
-}
-
-
 extension Collection where Iterator.Element: Equatable {
     func startsWith(_ item: Iterator.Element) -> Bool {
         guard let first = first else {
@@ -180,17 +183,20 @@ extension Collection where Iterator.Element == Double {
         return reduce(0.0, +)
     }
 }
-/*:
- ### Generic Subscripts
- */
-extension Container {
-    subscript<Indices: Sequence>(indices: Indices) -> [Item]
-        where Indices.Iterator.Element == Int {
-            var result = [Item]()
-            for index in indices {
-                result.append(self[index])
-            }
-            return result
+
+extension Stack where Element: Equatable {
+    func isTop(_ item: Element) -> Bool {
+        guard let topItem = items.last else {
+            return false
+        }
+        return topItem == item
     }
 }
+//: ### Conditionally Conforming to a Protocol
+extension Stack: Equatable where Element: Equatable {
+    static func == (lhs: Stack<Element>, rhs: Stack<Element>) -> Bool {
+        return lhs.items == rhs.items
+    }
+}
+
 //: [Next](@next)
