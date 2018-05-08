@@ -124,7 +124,7 @@ label3: if condition1 {
     // do something
 }
 /*:
- ## Build Configurations
+ ## Conditional Compilation Block
  
  Swift code can be conditionally compiled based on the evaluation of build configurations.
  
@@ -132,9 +132,11 @@ label3: if condition1 {
  * the literal true and false values.
  * command line flags.
  * the platform-testing functions.
- * os()      Valid arguments: macOS, iOS, watchOS, tvOS.
- * arch()    Valid arguments: x86_64, arm, arm64, i386.
- * swift()   Valid arguments: >= followed by a version number.
+ * os()                Valid arguments: macOS, iOS, watchOS, tvOS.
+ * arch()              Valid arguments: x86_64, arm, arm64, i386.
+ * swift()             Valid arguments: >= followed by a version number.
+ * canImport()         Valid arguments: A module name
+ * targetEnvironment() Valid arguments: simulator
  
  The arch(arm) build configuration does not return true for ARM 64 devices.
  The arch(i386) build configuration returns true when code is compiled for the 32–bit iOS simulator.
@@ -145,7 +147,7 @@ label3: if condition1 {
     // do something
 #elseif swift(>=2.1)
     // do something
-#elseif !condition1
+#elseif !FLAG
     // do something
 #else
     // do something
