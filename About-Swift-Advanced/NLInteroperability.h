@@ -40,6 +40,12 @@ typedef NS_ENUM(NSInteger, ABCRecordSide) {
 - (BOOL)removeItemWithName:(NSString *)name
                      error:(NSError **)error NS_SWIFT_NOTHROW;
 
+#pragma mark - Subscripts
+
+- (NSString*)objectForKeyedSubscript:(NSInteger)key;
+
+- (void)setObject:(NSString*)obj forKeyedSubscript:(NSInteger)key;
+
 @end
 
 NS_ASSUME_NONNULL_END

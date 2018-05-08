@@ -35,4 +35,15 @@
     return YES;
 }
 
+#pragma mark - Subscripts
+
+- (NSString*)objectForKeyedSubscript:(NSInteger)key
+{
+    return @"";
+}
+
+- (void)setObject:(NSString*)obj forKeyedSubscript:(NSInteger)key
+{
+    
+}
 @end
