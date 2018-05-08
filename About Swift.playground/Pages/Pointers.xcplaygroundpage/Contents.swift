@@ -83,8 +83,9 @@ var subStruct = SubStruct(stringValue: "Hello", intValue: 1)
 let subStructP = UnsafeMutablePointer(&subStruct)
 
 let fooValue = subStructP.withMemoryRebound(to: BaseStruct.self,
-                                            capacity: 1) {
-                                                return $0.pointee.foo()
+                                            capacity: 1)
+{
+    return $0.pointee.foo()
 }
 
 /*:
@@ -104,6 +105,10 @@ let fooValue = subStructP.withMemoryRebound(to: BaseStruct.self,
  */
 let storage = UnsafeMutablePointer<Int>.allocate(capacity: 10)
 let buffer = UnsafeMutableBufferPointer(start: storage, count: 10)
+defer {
+    buffer.baseAddress!.deallocate(capacity: buffer.count)
+}
+
 buffer.baseAddress
 
 buffer.makeIterator()
