@@ -11,7 +11,7 @@
 //: ### Allocate
 let intArray = UnsafeMutablePointer<Int>.allocate(capacity: 3)
 //: ### Initialize
-intArray.initialize(to: 10, count: 3)
+intArray.initialize(repeating: 10, count: 3)
 /*:
  - note:
  You can use `assign` and `moveAssign` methods to assign pointees of another pointer.
@@ -34,7 +34,7 @@ intArray.distance(to: intArray.successor())
 
 /*
  Equivalent to
- { defer { deinitialize() }; return pointee }()
+ { defer { p.deinitialize(count: 1) }; return pointee }()
  but more efficient.
  */
 intArray.move()
@@ -42,7 +42,7 @@ intArray.move()
 //: ### Deinitialize
 intArray.deinitialize(count: 3)
 //: ### Deallocate
-intArray.deallocate(capacity: 3)
+intArray.deallocate()
 //: ### Example Deinitialize
 class SomeClass {
     deinit {
@@ -60,11 +60,11 @@ struct SomeStruct {
 }
 
 let p = UnsafeMutablePointer<SomeStruct>.allocate(capacity: 1)
-p.initialize(to: SomeStruct(someClass: SomeClass()),
+p.initialize(repeating: SomeStruct(someClass: SomeClass()),
              count: 1)
 
 p.deinitialize(count: 1) // print "deinit SomeClass" in the console
-p.deallocate(capacity: 1)
+p.deallocate()
 //: ### Rebinds memory
 struct BaseStruct {
     var stringValue: String
@@ -106,7 +106,7 @@ let fooValue = subStructP.withMemoryRebound(to: BaseStruct.self,
 let storage = UnsafeMutablePointer<Int>.allocate(capacity: 10)
 let buffer = UnsafeMutableBufferPointer(start: storage, count: 10)
 defer {
-    buffer.baseAddress!.deallocate(capacity: buffer.count)
+    buffer.deallocate()
 }
 
 buffer.baseAddress
@@ -145,7 +145,7 @@ class StackBuffer<Element> : ManagedBuffer<Int, Element> {
         get {
             return withUnsafeMutablePointerToElements {
                 let value = $0[index]
-                $0.advanced(by: index).deinitialize()
+                $0.advanced(by: index).deinitialize(count: 1)
                 return value
             }
         }
