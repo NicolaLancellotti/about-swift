@@ -122,26 +122,41 @@ struct OuterGeneric<T> {
     struct InnerGeneric<T> {}
 }
 /*:
- - important:
- Swift generics have one implementation that is used for all types.
+ ## Dispaching
  */
 struct GenericStruct<T> {
-    func foo() -> String{
+    var foo: String {
         return "generic foo"
     }
 }
 
 extension GenericStruct where T == Int {
-    func foo() -> String{
+    var foo: String {
         return "int foo"
     }
 }
 
-func f<T>(_ x: GenericStruct<T>) -> String {
-    return x.foo()
+extension GenericStruct where T: Equatable {
+    var foo: String {
+        return "equatable foo"
+    }
+}
+
+func f1<T>(_ x: GenericStruct<T>) -> String {
+    return x.foo
+}
+
+func f2(_ x: GenericStruct<Int>) -> String {
+    return x.foo
+}
+
+func f3<T: Equatable>(_ x: GenericStruct<T>) -> String {
+    return x.foo
 }
 
 let value = GenericStruct<Int>()
-value.foo()
-f(value)
+value.foo
+f1(value)
+f2(value)
+f3(value)
 //: [Next](@next)
