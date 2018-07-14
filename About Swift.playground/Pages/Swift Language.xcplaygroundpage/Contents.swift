@@ -18,6 +18,7 @@
  - [Extensions](Extensions)
  - [Errors](Errors)
  - [Generics](Generics)
+ - [Associated Types](Associated%20Types)
  - [Metatype Type](Metatype%20Type)
  - [Operators](Operators)
  - [Access Control](Access%20Control)

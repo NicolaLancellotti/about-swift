@@ -1,92 +1,112 @@
 //: [Previous](@previous)
 
-/*:
- # Generics
- 
- Generic code enables you to write flexible, reusable functions and types that can work with any type, subject to requirements that you define.
- 
- */
+//: # Generics
 
 /*:
- ## Functions
+ ## Generic Functions
  
  The placeholder type T is an example of a type parameter.
  
  You can provide more than one type parameter by writing multiple type parameter names within the angle brackets, separated by commas.
  */
-func swapTwoValues<T>(_ a: inout T, _ b: inout T) {
-    let temporaryA = a
-    a = b
-    b = temporaryA
+func mySwap<T>(_ a: inout T, _ b: inout T) {
+    (a, b) = (b, a)
 }
 
 var a = "A"
 var b = "B"
-swapTwoValues(&a, &b)
+mySwap(&a, &b)
 b
 a
 
 swap(&a, &b) // Swap function in the Standard Library
-//: ## Structures and Classes
-struct Stack<Element> {
-    
-    var items = [Element]()
-    
-    mutating func push(_ item: Element) {
-        items.append(item)
-    }
-    
-    mutating func pop() -> Element {
-        return items.removeLast()
-    }
-    
-}
 
-extension Stack {
-    
-    var topItem: Element? {
-        return items.isEmpty ? nil : items[items.count - 1]
-    }
-    
-}
-
-var stackOfStrings = Stack<String>()
-stackOfStrings.push("Ciao")
 /*:
- ## Protocols
+ ## Type Constraint
+ 
+ Type constraints specify that a type parameter must inherit from a specific class, or conform to a particular protocol or protocol composition.
  */
-protocol Container {
+protocol P1 { }
+protocol P2 { }
+class C1 { }
+
+func foo1<P: P1 & P2, C: C1>(x: P, y: C) {}
+//: ## Generic Where Clauses
+func foo2<P, C>(x: P, y: C) where P: P1 & P2, C: C1 {}
+//: ## Generic Types
+enum LinkedList<Element> {
+    case empty
+    indirect case cons(Element, LinkedList<Element>)
     
-    //  An associated type gives a placeholder name to a type that is used as part of the protocol.
-    associatedtype Item
+    mutating func pushFront(_ elem: Element) {
+        self = .cons(elem, self)
+    }
     
-    mutating func append(_ item: Item)
+    subscript(index: Int) -> Element? {
+        switch self {
+        case .empty: return nil
+        case let .cons(elem, next): return index == 0 ? elem : next[index - 1]
+        }
+    }
     
-    var count: Int { get }
+    subscript<Indices: Sequence>(indices: Indices) -> [Element?]
+        where Indices.Iterator.Element == Int {
+            return indices.map {self[$0]}
+    }
     
-    subscript(i: Int) -> Item { get }
 }
 
-struct SomeStructure: Container {
+var list: LinkedList<Int> = .cons(0, .cons(1, .empty))
+list.pushFront(-1)
+list[0]
+list[1]
+list[2]
+list[3]
+list[1...3]
+//: ## Extensions of Generic Types
+extension LinkedList {
     
-    var items = [Int]()
-    
-    //    typealias Item = Int  // Infer from contex
-    
-    mutating func append(_ item: Int) {
-        items.append(item)
-    }
-    
-    var count: Int {
-        return items.count
-    }
-    
-    subscript(i: Int) -> Int {
-        return items[i]
+    var top: Element? {
+        switch self {
+        case .empty: return nil
+        case .cons(let elem, _): return elem
+        }
     }
     
 }
+list.top!
+//: ## Extensions with a Generic Where Clause
+extension LinkedList where Element: Equatable {
+    func isTop(_ item: Element) -> Bool {
+        switch self {
+        case .empty: return false
+        case .cons(let elem, _): return elem == item
+        }
+    }
+}
 
+extension LinkedList where Element == Int {
+    func sum() -> Int {
+        switch self {
+        case .empty: return 0
+        case let .cons(elem, next): return elem + next.sum()
+        }
+    }
+}
+//: ## Conditionally Conforming to a Protocol
+extension LinkedList: Equatable where Element: Equatable {
+    static func == (lhs: LinkedList<Element>, rhs: LinkedList<Element>) -> Bool {
+        switch (lhs, rhs) {
+        case (.empty, .empty): return true
+        case let (.cons(x, nextX), .cons(y, nextY)) where x == y: return nextX == nextY
+        default: return false
+        }
+    }
+}
+
+var list1: LinkedList<Int> = .cons(0, .cons(1, .empty))
+var list2: LinkedList<Int> = .cons(0, .cons(1, .empty))
+list1 == list2
 /*:
  ## Nested Generic Types
  
@@ -102,101 +122,26 @@ struct OuterGeneric<T> {
     struct InnerGeneric<T> {}
 }
 /*:
- ## Type Constraint
- 
- Type constraints specify that a type parameter must inherit from a specific class, or conform to a particular protocol or protocol composition.
+ - important:
+ Swift generics have one implementation that is used for all types.
  */
-class SomeClass {}
-protocol SomeProtocol{}
-
-func someFunction<T: SomeClass, U: SomeProtocol>(_ someT: T, someU: U) {
-    
-}
-
-func findIndex<T: Equatable>(_ array: [T], _ valueToFind: T) -> Int? {
-    for (index, value) in array.enumerated() {
-        if value == valueToFind {
-            return index
-        }
-    }
-    return nil
-}
-/*:
- ### Where Clauses
- 
- It can also be useful to define requirements for associated types. You do this by defining a generic where clause.
- A generic where clause enables you to require that an associated type must conform to a certain protocol, or that certain type parameters and associated types must be the same.
- */
-func allItemsMatch<C1: Container, C2: Container>(_ someContainer: C1, _ anotherContainer: C2) -> Bool
-    where C1.Item == C2.Item, C1.Item: Equatable {
-    
-    if someContainer.count != anotherContainer.count {
-        return false
-    }
-    
-    for i in 0..<someContainer.count {
-        if someContainer[i] != anotherContainer[i] {
-            return false
-        }
-    }
-    return true
-}
-/*:
- ### Generic Subscripts
- */
-extension Container {
-    subscript<Indices: Sequence>(indices: Indices) -> [Item]
-        where Indices.Iterator.Element == Int {
-            var result = [Item]()
-            for index in indices {
-                result.append(self[index])
-            }
-            return result
-    }
-}
-//: ### Associated Types with a Generic Where Clause
-protocol Container2 {
-    associatedtype Item
-    mutating func append(_ item: Item)
-    var count: Int { get }
-    subscript(i: Int) -> Item { get }
-    
-    associatedtype Iterator: IteratorProtocol where Iterator.Element == Item
-    func makeIterator() -> Iterator
-}
-//: ### Inherited Protocols with a Generic Where Clause
-protocol ComparableContainer: Container where Item: Comparable {
-    
-}
-//: ## Extensions with a Generic Where Clause
-extension Collection where Iterator.Element: Equatable {
-    func startsWith(_ item: Iterator.Element) -> Bool {
-        guard let first = first else {
-            return false
-        }
-        return first == first
+struct GenericStruct<T> {
+    func foo() -> String{
+        return "generic foo"
     }
 }
 
-extension Collection where Iterator.Element == Double {
-    func sum() -> Double {
-        return reduce(0.0, +)
+extension GenericStruct where T == Int {
+    func foo() -> String{
+        return "int foo"
     }
 }
 
-extension Stack where Element: Equatable {
-    func isTop(_ item: Element) -> Bool {
-        guard let topItem = items.last else {
-            return false
-        }
-        return topItem == item
-    }
-}
-//: ### Conditionally Conforming to a Protocol
-extension Stack: Equatable where Element: Equatable {
-    static func == (lhs: Stack<Element>, rhs: Stack<Element>) -> Bool {
-        return lhs.items == rhs.items
-    }
+func f<T>(_ x: GenericStruct<T>) -> String {
+    return x.foo()
 }
 
+let value = GenericStruct<Int>()
+value.foo()
+f(value)
 //: [Next](@next)
