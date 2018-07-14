@@ -18,6 +18,7 @@
         <page name='Extensions'/>
         <page name='Errors'/>
         <page name='Generics'/>
+        <page name='Associated Types'/>
         <page name='Metatype Type'/>
         <page name='Operators'/>
         <page name='Access Control'/>
