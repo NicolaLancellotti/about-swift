@@ -4,3 +4,5 @@
 
 #import "CFunctions.h"
 #import "NLInteroperability.h"
+#import "NLFoo.h"
+#import "NLBar.h"

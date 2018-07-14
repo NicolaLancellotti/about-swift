@@ -119,3 +119,24 @@ extension NLInteroperability {
         return (red: r, green: g, blue: b, alpha: a)
     }
 }
+
+// _____________________________________________________________________________
+// MARK: - Opaque data type
+
+let foo = NLFoo(value: 10)
+assert(foo.value == 10)
+foo.value = 11
+assert(foo.value == 11)
+
+
+// _____________________________________________________________________________
+// MARK: - Import as member
+
+var bar = NLBar(value: 10)
+assert(bar.value == 10)
+bar.value = 11
+assert(bar.value == 11)
+assert(bar.incremented(by: 2) == 13)
+
+let barDefault = NLBar.defaultValue;
+assert(barDefault.value == 10)
