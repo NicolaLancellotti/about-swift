@@ -85,8 +85,8 @@ for thing in things {
         print("a string value of \"\(someString)\"")
     case let (x, y) as (Double, Double):
         print("an (x, y) point at \(x), \(y)")
-    case let ClassA as ClassA:
-        print("ClassA")
+    case let x as ClassA:
+        print(x)
     case let stringConverter as (String) -> String:
         print(stringConverter("Michael"))
     default:
@@ -118,7 +118,14 @@ func g1(_ x: UInt64) {
  
  Returns the bits of x, interpreted as having type U.
  */
-let v: Double = 1024
-unsafeBitCast(v, to: UInt.self)
-let uint: UInt64 = 0b0100000010010000000000000000000000000000000000000000000000000000
+struct A {
+    var x = 10
+}
+struct B {
+    var y: Int
+}
+
+let a: A = A()
+let b = unsafeBitCast(a, to: B.self)
+b.y
 //: [Next](@next)

@@ -43,7 +43,7 @@ struct Person {
 
 extension Person: LosslessStringConvertible {
     init?(_ description: String) {
-        let array = description.characters.split(separator: "|").map{ String($0) }
+        let array = description.split(separator: "|").map{ String($0) }
         guard array.count == 2 else {
             return nil
         }
