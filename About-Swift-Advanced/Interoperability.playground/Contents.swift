@@ -174,3 +174,34 @@ defaultValue
  * The declaration has one of the following attributes: @IBAction, @IBOutlet, @IBInspectable, @GKInspectable, or @NSManaged
  */
 
+/*:
+ ## @NSCopying
+ This attribute causes the property’s setter to be synthesized with a copy of the property’s value.
+ 
+ Apply this attribute to a stored variable property of a class. This attribute causes the property’s setter to be synthesized with a copy of the property’s value—returned by the copyWithZone(_:) method—instead of the value of the property itself. The type of the property must conform to the NSCopying protocol.
+ 
+ */
+class ClassWithObjectMyType {
+    @NSCopying var objectMyType: MyType?
+}
+
+class MyType: NSObject, NSCopying {
+    var value = 0
+    
+    init(value: Int) {
+        self.value = value
+    }
+    
+    public func copy(with zone: NSZone? = nil) -> Any {
+        return MyType(value: value)
+    }
+}
+do {
+    let myType = MyType(value: 10)
+    let instance = ClassWithObjectMyType()
+    instance.objectMyType = myType
+    instance.objectMyType?.value
+    
+    myType.value = 11
+    instance.objectMyType?.value
+}

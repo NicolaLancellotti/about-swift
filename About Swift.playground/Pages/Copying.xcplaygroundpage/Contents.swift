@@ -1,6 +1,7 @@
 //: [Previous](@previous)
 import Foundation
-//: # Copying
+//: # Value Type with Referece Type property
+
 class MyType: NSObject, NSCopying {
     var value = 0
     
@@ -12,25 +13,7 @@ class MyType: NSObject, NSCopying {
         return MyType(value: value)
     }
 }
-/*:
- ## @NSCopying
- This attribute causes the property’s setter to be synthesized with a copy of the property’s value.
- 
- Apply this attribute to a stored variable property of a class. This attribute causes the property’s setter to be synthesized with a copy of the property’s value—returned by the copyWithZone(_:) method—instead of the value of the property itself. The type of the property must conform to the NSCopying protocol.
- 
- */
-class ClassWithObjectMyType {
-    @NSCopying var objectMyType: MyType?
-}
 
-let myType = MyType(value: 10)
-let instance = ClassWithObjectMyType()
-instance.objectMyType = myType
-instance.objectMyType?.value
-
-myType.value = 11
-instance.objectMyType?.value
-//: ## Value Type with Referece Type property
 struct Wrapper {
     private var object = MyType(value: 0)
     
