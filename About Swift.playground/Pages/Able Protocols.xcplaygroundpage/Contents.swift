@@ -31,6 +31,7 @@ struct Point: Equatable {
 }
 
 Point(x: 0, y: 1) == Point(x: 0, y: 1)
+Point(x: 0, y: 1) != Point(x: 0, y: 1)
 /*:
  ## Hashable
  A type that provides an integer hash value.
@@ -57,6 +58,11 @@ extension SomeStructure: Comparable {
 func <(lhs: SomeStructure, rhs: SomeStructure) -> Bool {
     return lhs.value < rhs.value
 }
+
+SomeStructure(value: 1) < SomeStructure(value: 2)
+SomeStructure(value: 1) <= SomeStructure(value: 2)
+SomeStructure(value: 1) > SomeStructure(value: 2)
+SomeStructure(value: 1) >= SomeStructure(value: 2)
 //: ### Function with comparable parameters
 max(1, 2, 3)
 min(1, 2, 3)

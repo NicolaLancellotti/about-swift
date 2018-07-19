@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<playground version='6.0' target-platform='osx' display-mode='raw' last-migration='0800'>
+<playground version='6.0' target-platform='osx' display-mode='rendered' last-migration='0800'>
     <pages>
         <page name='Contents'/>
-        <page name='Swift Language'/>
         <page name='Constants and Variables'/>
         <page name='Control Flow'/>
         <page name='Optionals'/>
@@ -20,15 +19,14 @@
         <page name='Generics'/>
         <page name='Associated Types'/>
         <page name='Metatype Type'/>
-        <page name='Operators'/>
         <page name='Access Control'/>
         <page name='Copy'/>
         <page name='Miscellaneous'/>
         <page name='Checking API Availability'/>
         <page name='Type Erasure'/>
-        <page name='Standard Library'/>
-        <page name='Numbers'/>
+        <page name='Numbers &amp; Bool'/>
         <page name='Able Protocols'/>
+        <page name='Operators'/>
         <page name='Expressible By Protocols'/>
         <page name='String Convertible Protocols'/>
         <page name='Sequences'/>
