@@ -1,6 +1,6 @@
 //: [Previous](@previous)
 import Foundation
-//: # Value Type with Referece Type property
+//: # Copy of Value Type with Referece Type properties
 
 class MyType: NSObject, NSCopying {
     var value = 0
