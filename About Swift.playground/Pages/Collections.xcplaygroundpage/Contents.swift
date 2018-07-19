@@ -34,13 +34,12 @@ aCollection.count
 aCollection.underestimatedCount
 aCollection.first
 aCollection[10]
-
 //: ### Indices
 /*:
  - important:
  A collection’s indices property can hold a strong reference to the collection itself, causing the collection to be non-uniquely referenced.
  */
-aCollection.indices
+let indices: DefaultIndices = aCollection.indices
 aCollection.startIndex
 aCollection.endIndex //the position one greater than the last valid subscript argument.
 aCollection.distance(from: 10, to: 15)
@@ -95,12 +94,14 @@ struct ABidirectionalCollection: BidirectionalCollection {
 let aBidirectionalCollection = ABidirectionalCollection()
 
 aBidirectionalCollection.last
-aBidirectionalCollection.reversed()
 
-aBidirectionalCollection.indices
-let lazyBidirectionalCollection: LazyBidirectionalCollection = aBidirectionalCollection.lazy
-lazyBidirectionalCollection.map {_ in }
-lazyBidirectionalCollection.filter { _ in false }
+let reversedCollection: ReversedCollection = aBidirectionalCollection.reversed()
+
+/*:
+ - note:
+ The reversed() method is always lazy when applied to a collection with bidirectional indices, but does not implicitly confer laziness on algorithms applied to its result.
+ */
+
 /*:
  ## RandomAccessCollection
  
@@ -149,11 +150,8 @@ struct ARandomAccessCollection: RandomAccessCollection {
 }
 
 let aRandomAccessCollection = ARandomAccessCollection()
-aRandomAccessCollection.indices
-aRandomAccessCollection.reversed()
 
-let lazyRandomAccessCollection: LazyRandomAccessCollection = aRandomAccessCollection.lazy
-lazyRandomAccessCollection.map {_ in }
+let randomReversedCollection: ReversedCollection = aRandomAccessCollection.reversed()
 /*:
  ## RangeReplaceableCollection
  Supports replacement of an arbitrary subrange of elements with the elements of another collection.
@@ -263,22 +261,6 @@ aMutableCollection[1]
 
 /*:
  ## Slices
- * Slice
- * BidirectionalSlice
- * RandomAccessSlice
- 
- 
- * RangeReplaceableSlice
- * RangeReplaceableBidirectionalSlice
- * RangeReplaceableRandomAccessSlice
- 
- 
- * MutableSlice
- * MutableBidirectionalSlice
- * MutableRandomAccessSlice
- * MutableRangeReplaceableSlice
- * MutableRangeReplaceableBidirectionalSlice
- * MutableRangeReplaceableRandomAccessSlice
  */
 
 /*:
@@ -453,7 +435,7 @@ array1.prefix(2)
 let names: Set = ["Sofia", "Camilla", "Martina", "Mateo", "Nicolás"]
 var shorterIndices: [SetIndex<String>] = []
 for (i, name) in zip(names.indices, names) {
-    if name.characters.count <= 5 {
+    if name.count <= 5 {
         shorterIndices.append(i)
     }
 }
