@@ -9,6 +9,7 @@ let condition3 = false
 //: 0 <= i <= 4
 for i in 0...4  {
     // do something
+    i
 }
 //: 0 <= i < 4
 for _ in 0..<4 {
@@ -116,7 +117,7 @@ label1: while condition1 {
     }
 }
 
-label2: for i in 1...4 {
+label2: for _ in 1...4 {
     // do something
 }
 
