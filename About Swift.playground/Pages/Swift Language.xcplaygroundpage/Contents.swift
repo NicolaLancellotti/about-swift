@@ -22,7 +22,7 @@
  - [Metatype Type](Metatype%20Type)
  - [Operators](Operators)
  - [Access Control](Access%20Control)
- - [Copying](Copying)
+ - [Copy](Copy)
  - [Miscellaneous](Miscellaneous)
  - [Checking API Availability](Checking%20API%20Availability)
  - [Type Erasure](Type%20Erasure)
