@@ -95,18 +95,18 @@ let someOptional: Int? = 42
 let arrayOfOptionalInts: [Int?] = [nil, 2, 3, nil, 5]
 //: Enumeration Case Pattern
 if case .some(let x)  = someOptional {
-    //   print("x: \(x)")
+    x
 }
 
 for case .some(let number) in arrayOfOptionalInts {
-    //    print("\(number)")
+    number
 }
 //: Optional Pattern
 if case let x? = someOptional {
-    //        print("x: \(x)")
+    x
 }
 
 for case let number? in arrayOfOptionalInts {
-    //        print("\(number)")
+    number
 }
 //: [Next](@next)
