@@ -63,6 +63,32 @@ func myFunction() {
 
 myFunction()
 /*:
+ ## Dynamic Member Lookup
+ 
+ Apply this attribute to a class, structure, enumeration, or protocol to enable members to be looked up by name at runtime.
+ 
+ In an explicit member expression, if there isn’t a corresponding declaration for the named member, the expression is understood as a call to the type’s subscript(dynamicMemberLookup:) subscript, passing a string literal that contains the member’s name as the argument. The subscript’s parameter type can be any type that conforms to the ExpressibleByStringLiteral protocol, and its return type can be any type.
+ */
+@dynamicMemberLookup
+class DynamicDictionary {
+    
+    private var dictionary = [String: String]()
+    
+    subscript(dynamicMember member: String) -> String? {
+        get {
+            return dictionary[member]
+        }
+        set {
+            dictionary[member] = newValue
+        }
+    }
+}
+
+let dic = DynamicDictionary()
+dic.name
+dic.name = "Nicola"
+dic[dynamicMember: "name"]
+/*:
  ## Discardable Result
  
  Apply this attribute to a function or method declaration to suppress the compiler warning when the function or method that returns a value is called without using its result.
@@ -118,3 +144,4 @@ for case let number? in arrayOfOptionalInts {
     number
 }
 //: [Next](@next)
+
