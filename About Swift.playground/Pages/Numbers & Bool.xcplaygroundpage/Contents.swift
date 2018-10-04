@@ -72,6 +72,9 @@ UInt8.max
  */
 true
 false
+
+var boolValue = true
+boolValue.toggle()
 //: ## Numeric Literals
 let decimalInteger =       17
 let binaryInteger =      0b10001  // 17 in binary notation
