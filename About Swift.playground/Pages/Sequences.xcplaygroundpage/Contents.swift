@@ -193,6 +193,8 @@ aSequence.max()
 
 let hues = ["Heliotrope": 296, "Coral": 16, "Aquamarine": 156]
 let greatestHue = hues.max { $0.value < $1.value }
+
+aSequence.allSatisfy { $0 > 0 }
 /*:
  ## LazySequenceProtocol
  
