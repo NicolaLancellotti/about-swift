@@ -39,10 +39,17 @@ Point(x: 0, y: 1) != Point(x: 0, y: 1)
  Inherits From Equatable
  */
 extension SomeStructure: Hashable {
-    var hashValue: Int {
-        return value.hashValue
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(value)
     }
 }
+
+SomeStructure().hashValue
+
+
+var hasher = Hasher()
+hasher.combine(0)
+print(hasher.finalize())
 /*:
  ## Comparable
  A type that can be compared using the relational operators <, <=, >=, and >.
@@ -52,11 +59,9 @@ extension SomeStructure: Hashable {
  A type conforming to Comparable need only supply the < and == operators; default implementations of <=, >, >=, and != are supplied by the standard library.
  */
 extension SomeStructure: Comparable {
-    
-}
-
-func <(lhs: SomeStructure, rhs: SomeStructure) -> Bool {
-    return lhs.value < rhs.value
+    static func <(lhs: SomeStructure, rhs: SomeStructure) -> Bool {
+        return lhs.value < rhs.value
+    }
 }
 
 SomeStructure(value: 1) < SomeStructure(value: 2)
