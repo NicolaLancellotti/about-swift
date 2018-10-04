@@ -24,6 +24,14 @@ do {
     }
 }
 /*:
+ ## Compile-Time Diagnostic Statement
+ ```
+ #error("error message")
+ #warning("warning message")
+ ```
+ */
+
+/*:
  ## Literal Expression
  
  ### Line Control Statement
