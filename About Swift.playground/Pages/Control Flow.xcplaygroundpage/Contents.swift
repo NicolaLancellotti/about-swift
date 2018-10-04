@@ -136,6 +136,7 @@ label3: if condition1 {
  * os()                Valid arguments: macOS, iOS, watchOS, tvOS.
  * arch()              Valid arguments: x86_64, arm, arm64, i386.
  * swift()             Valid arguments: >= followed by a version number.
+ * compile             Valid arguments: >= followed by a version number.
  * canImport()         Valid arguments: A module name
  * targetEnvironment() Valid arguments: simulator
  
