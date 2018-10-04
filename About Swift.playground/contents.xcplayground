@@ -33,6 +33,7 @@
         <page name='Collections'/>
         <page name='Ranges'/>
         <page name='Strings'/>
+        <page name='Random Number Generator'/>
         <page name='SetAlgebra'/>
         <page name='Reflection'/>
         <page name='Stream And Print'/>

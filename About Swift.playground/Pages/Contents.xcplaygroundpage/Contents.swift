@@ -32,6 +32,7 @@
  - [Collections](Collections)
  - [Ranges](Ranges)
  - [String](String)
+ - [Random Number Generator](Random%20Number%20Generator)
  - [SetAlgebra](SetAlgebra)
  - [Reflection](Reflection)
  - [Stream And Print](Stream%20And%20Print)
