@@ -421,7 +421,7 @@ let allOne: Repeated = repeatElement(1, count: 5)
 let only10 = CollectionOfOne(10)
 let emptyCollection = EmptyCollection<Int>()
 
-let flattenBidirectionalCollection: FlattenBidirectionalCollection = [0..<3, 8..<10, 15..<17].joined()
+let flattenBidirectionalCollection: FlattenCollection = [0..<3, 8..<10, 15..<17].joined()
 flattenBidirectionalCollection.startIndex
 
 // ArraySlice is a slice of an Array, ContiguousArray, or ArraySlice instance.
