@@ -167,4 +167,10 @@ let enumValues: [Shape] = [.square(side: 10), .square(side: 20), .rectangle(base
 for case .square(let side) in enumValues where side > 10 {
     print("A square with side: \(side)")
 }
+
+//: ## CaseIterable
+enum CompassDirection: CaseIterable {
+    case north, south, east, west
+}
+CompassDirection.allCases
 //: [Next](@next)
