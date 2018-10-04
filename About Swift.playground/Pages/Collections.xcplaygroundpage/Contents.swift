@@ -206,8 +206,8 @@ aRangeReplaceableCollection.replaceSubrange(0...2, with: [0])
 aRangeReplaceableCollection.removeFirst()
 aRangeReplaceableCollection.remove(at: 0)
 aRangeReplaceableCollection.removeSubrange(0...2)
+aRangeReplaceableCollection.removeAll { $0 > 10 }
 aRangeReplaceableCollection.removeAll()
-
 /*:
  - note:
  If the collection is also a BidirectionalCollection there is also removeLast() method.
