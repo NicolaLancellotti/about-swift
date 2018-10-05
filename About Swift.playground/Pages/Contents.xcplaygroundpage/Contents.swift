@@ -20,6 +20,7 @@
  - [Metatype Type](Metatype%20Type)
  - [Access Control](Access%20Control)
  - [Copy](Copy)
+ - [Attributes](Attributes)
  - [Miscellaneous](Miscellaneous)
  - [Checking API Availability](Checking%20API%20Availability)
  - [Type Erasure](Type%20Erasure)
