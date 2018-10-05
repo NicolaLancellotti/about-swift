@@ -101,6 +101,28 @@ struct Increaser {
         return value + 1
     }
 }
+
+
+/*:
+ ## Cross-module inlining and specialization
+ Apply *inlinable* attribute to a function, method, computed property, subscript, convenience initializer, or deinitializer declaration to expose that declaration’s implementation as part of the module’s public interface. The compiler is allowed to replace calls to an inlinable symbol with a copy of the symbol’s implementation at the call site.
+ 
+ Inlinable code can interact with public symbols declared in any module, and it can interact with internal symbols declared in the same module that are marked with the usableFromInline attribute.
+ 
+ 
+ Apply *usableFromInline* attribute to a function, method, computed property, subscript, initializer, or deinitializer declaration to allow that symbol to be used in inlinable code that’s defined in the same module as the declaration. The declaration must have the internal access level modifier.
+ 
+ Like the public access level modifier, *usableFromInline* attribute exposes the declaration as part of the module’s public interface. Unlike public, the compiler doesn’t allow declarations marked with *usableFromInline* to be referenced by name in code outside the module, even though the declaration’s symbol is exported.
+ */
+@inlinable
+public func foo() {
+    bar()
+}
+
+@usableFromInline
+internal func bar() {
+    
+}
 /*:
  ## Lazy One-Time Initialization
  
