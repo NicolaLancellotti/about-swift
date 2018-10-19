@@ -67,11 +67,11 @@ let selectorForMethodFooDouble = #selector(SomeClass.foo(_:) as (SomeClass) -> (
 let selectorForMethodBar2 = #selector(instance.bar)
 let selectorForMethodFooString2 = #selector(instance.foo(_:) as (String) -> Void)
 /*:
- ## Key-Path Expression
+ ## Key-Path String Expression
  
- A key-path expression lets you access the string used to refer to a property in Objective-C for use in key-value coding and key-value observing APIs.
+ A key-path string expression lets you access the string used to refer to a property in Objective-C for use in key-value coding and key-value observing APIs.
  */
-let keyPath = #keyPath(SomeClass.someProperty)
+let keyPath: String = #keyPath(SomeClass.someProperty)
 instance.value(forKey: keyPath)
 /*:
  ## Optional Protocol Requirements
