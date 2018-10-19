@@ -75,4 +75,18 @@ ObjectIdentifier(instanceA1) == ObjectIdentifier(instanceA2)
 ObjectIdentifier(instanceA1) == ObjectIdentifier(instanceA3)
 
 ObjectIdentifier(ClassA.self) == ObjectIdentifier(ClassB.self)
+
+/*:
+ ## Key-Path Expression
+ 
+ A key-path expressions lets you access properties or subscript of a type dynamically
+ 
+ */
+let dic: [String : [Int]] = ["key" : [1, 2]]
+let keyPath1 = \[String : [Int]].["key"]
+let keyPath2 = \[String : [Int]].["key"]?.count
+let keyPath3 = \[String : [Int]].["key"]?[0]
+dic[keyPath: keyPath1]
+dic[keyPath: keyPath2]
+dic[keyPath: keyPath3]
 //: [Next](@next)
