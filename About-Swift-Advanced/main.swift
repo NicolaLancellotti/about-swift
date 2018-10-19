@@ -140,3 +140,53 @@ assert(bar.incremented(by: 2) == 13)
 
 let barDefault = NLBar.defaultValue;
 assert(barDefault.value == 10)
+
+// _____________________________________________________________________________
+// MARK: - Unmanaged
+
+class SomeClass {
+    let text: Int
+    
+    init(text: Int) {
+        self.text = text
+    }
+    
+    deinit {
+        print("Deinit \(text)")
+    }
+}
+
+do {
+    let unmanaged = Unmanaged.passRetained(SomeClass(text: 0))
+    unmanaged.release()
+}
+
+do {
+    let _ = Unmanaged.passUnretained(SomeClass(text: 1))
+}
+
+do {
+    let unmanaged = Unmanaged.passRetained(SomeClass(text: 2))
+    
+    let _ = unmanaged.retain()
+    unmanaged.release()
+    
+    unmanaged.release()
+}
+
+do {
+    let opaque = Unmanaged.passRetained(SomeClass(text: 3)).toOpaque()
+    Unmanaged<SomeClass>.fromOpaque(opaque).release()
+}
+
+do {
+    let unmanaged = Unmanaged.passRetained(SomeClass(text: 4))
+    let _ = unmanaged.takeUnretainedValue()
+    unmanaged.release()
+}
+
+do {
+    let unmanaged = Unmanaged.passRetained(SomeClass(text: 5))
+    let _ = unmanaged.takeRetainedValue()
+}
+
