@@ -34,6 +34,19 @@ do {
     points[1].y
 }
 //: ## Encode and Decode Manually
+
+//: ### JSON
+"""
+{
+    "int_property":10,
+    "array_property":[10, 11],
+    "inner_property_containter":
+        {
+            "inner_property":"a"
+        }
+}
+"""
+//: ### Corresponding Structure
 struct Item {
     
     var intProperty: Int
@@ -71,7 +84,7 @@ extension Item: Encodable {
         //        try arrayProperty.forEach { try container2.encode($0) }
     }
 }
-
+//: ### Encode
 do {
     let item = Item(intProperty: 10,
                     arrayProperty: [1, 2],
@@ -101,12 +114,12 @@ extension Item: Decodable {
         //        }
     }
 }
-
+//: ### Decode
 do {
     let json = """
         {
-            "array_property" : [10, 11],
             "int_property":10,
+            "array_property":[10, 11],
             "inner_property_containter":
                 {
                     "inner_property":"a"
