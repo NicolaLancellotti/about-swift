@@ -3,6 +3,8 @@ import Foundation
 
 // _____________________________________________________________________________
 // MARK: - Command-line arguments for the current process
+print("______________________________________________________")
+print("Command-line arguments\n")
 
 print("argc: \(CommandLine.argc)")
 print("arguments: \(CommandLine.arguments)\n")
@@ -143,6 +145,8 @@ assert(barDefault.value == 10)
 
 // _____________________________________________________________________________
 // MARK: - Unmanaged
+print("______________________________________________________")
+print("Unmanaged\n")
 
 class SomeClass {
     let text: Int
@@ -190,3 +194,10 @@ do {
     let _ = unmanaged.takeRetainedValue()
 }
 
+
+// _____________________________________________________________________________
+// MARK: - Call Swift from C
+print("______________________________________________________")
+print("Call Swift from C\n")
+
+testCallSwiftFromC()
