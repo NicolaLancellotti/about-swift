@@ -6,3 +6,4 @@
 #import "NLInteroperability.h"
 #import "NLFoo.h"
 #import "NLBar.h"
+#import "testCallSwiftFromC.h"
