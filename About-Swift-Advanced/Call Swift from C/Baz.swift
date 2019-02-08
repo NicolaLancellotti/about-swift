@@ -1,9 +1,11 @@
 
 import Foundation
 
+// Baz
 class Baz {
     let aString: String
     let anInteger: Int32
+    var fooBar: FooBar?
     
     init(aString: String, anInteger: Int32) {
         self.aString = aString
@@ -12,7 +14,8 @@ class Baz {
     }
     
     func printBaz() {
-        print("aString: \(aString), anInteger: \(anInteger)")
+        print("aString: \(aString), anInteger: \(anInteger) anInteger2: \(String(describing: fooBar?.anInteger))")
+        
     }
     
     deinit {
@@ -20,3 +23,21 @@ class Baz {
     }
     
 }
+
+// FooBar
+class FooBar {
+    
+    let anInteger: Int32
+    
+    init(anInteger: Int32) {
+        self.anInteger = anInteger
+        print("FooBar created")
+    }
+    
+    deinit {
+        print("FooBar released")
+    }
+    
+}
+
+
