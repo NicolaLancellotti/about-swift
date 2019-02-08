@@ -4,14 +4,17 @@
 
 #include <stdint.h>
 
+typedef struct CBazType* CBazRef;
+typedef struct CFooBarType* CFooBarRef;
+
 // Baz
-void* _Nonnull NLBazCreate(const char* _Nonnull aString, int32_t anInteger);
-void NLBazRelease(void* _Nonnull bazRef);
-void NLBazPrint(void* _Nonnull bazRef);
-void NLBazSetFooBar(void* _Nonnull bazRef, void* _Nonnull foobarRef);
+CBazRef _Nonnull NLBazCreate(const char* _Nonnull aString, int32_t anInteger);
+void NLBazRelease(CBazRef _Nonnull bazRef);
+void NLBazPrint(CBazRef _Nonnull bazRef);
+void NLBazSetFooBar(CBazRef _Nonnull bazRef, CFooBarRef _Nonnull foobarRef);
 
 // FooBar
-void* _Nonnull NLFooBarCreate(int32_t anInteger);
-void NLFooBarRelease(void* _Nonnull foobarRef);
+CFooBarRef _Nonnull NLFooBarCreate(int32_t anInteger);
+void NLFooBarRelease(CFooBarRef _Nonnull foobarRef);
 
 #endif

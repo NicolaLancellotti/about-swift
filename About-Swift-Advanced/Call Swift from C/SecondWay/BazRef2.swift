@@ -4,35 +4,35 @@ import Foundation
 enum LibImpl {
     
     enum BazImpl {
-        static let create: @convention(c)(UnsafePointer<CChar>, Int32) -> UnsafeMutableRawPointer = { aString, anInteger in
+        static let create: @convention(c)(UnsafePointer<CChar>, Int32) -> OpaquePointer = { aString, anInteger in
             let baz = Baz(aString: aString.string, anInteger: anInteger)
             return CInterop.wrap(baz)
         }
         
-        static let setFooBar: @convention(c)(UnsafeMutableRawPointer, UnsafeMutableRawPointer) -> Void = { bazRef, fooBarRef in
+        static let setFooBar: @convention(c)(OpaquePointer, OpaquePointer) -> Void = { bazRef, fooBarRef in
             let baz: Baz = CInterop.unwrap(bazRef)
             let fooBar: FooBar = CInterop.unwrap(fooBarRef)
             baz.fooBar = fooBar
         }
         
-        static let print: @convention(c)(UnsafeMutableRawPointer) -> Void = { bazRef in
+        static let print: @convention(c)(OpaquePointer) -> Void = { bazRef in
             let baz: Baz = CInterop.unwrap(bazRef)
             baz.printBaz()
         }
         
-        static let release: @convention(c)(UnsafeMutableRawPointer) -> Void = { bazRef in
+        static let release: @convention(c)(OpaquePointer) -> Void = { bazRef in
             CInterop.release(bazRef, type: Baz.self)
         }
     }
     
     enum FooBarImpl {
     
-        static let create: @convention(c)(Int32) -> UnsafeMutableRawPointer = { anInteger in
+        static let create: @convention(c)(Int32) -> OpaquePointer = { anInteger in
             let foobar = FooBar(anInteger: anInteger)
             return CInterop.wrap(foobar)
         }
         
-        static let release: @convention(c)(UnsafeMutableRawPointer) -> Void = { foobarRef in
+        static let release: @convention(c)(OpaquePointer) -> Void = { foobarRef in
             CInterop.release(foobarRef, type: FooBar.self)
         }
     }
