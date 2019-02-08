@@ -26,7 +26,7 @@ enum LibImpl {
     }
     
     enum FooBarImpl {
-    
+        
         static let create: @convention(c)(Int32) -> OpaquePointer = { anInteger in
             let foobar = FooBar(anInteger: anInteger)
             return CInterop.wrap(foobar)
@@ -37,14 +37,13 @@ enum LibImpl {
         }
     }
     
+    static var lib = Lib(baz: CBaz(create: BazImpl.create,
+                                   release: BazImpl.release,
+                                   print: BazImpl.print,
+                                   setFooBar: BazImpl.setFooBar),
+                         fooBar: CFooBar(create: FooBarImpl.create,
+                                         release: FooBarImpl.release))
 }
-
-private var lib = Lib(baz: CBaz(create: LibImpl.BazImpl.create,
-                                 release: LibImpl.BazImpl.release,
-                                 print: LibImpl.BazImpl.print,
-                                 setFooBar: LibImpl.BazImpl.setFooBar),
-                      fooBar: CFooBar(create: LibImpl.FooBarImpl.create,
-                                       release: LibImpl.FooBarImpl.release))
 
 
 @_cdecl("getLib")
@@ -52,5 +51,5 @@ func getLib() -> UnsafePointer<Lib> {
     func getPointer(_ p: UnsafePointer<Lib>) -> UnsafePointer<Lib> {
         return p
     }
-    return getPointer(&lib)
+    return getPointer(&LibImpl.lib)
 }
