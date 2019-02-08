@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B3798387220D24F500FFB6BC /* BazRef2.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3798386220D24F500FFB6BC /* BazRef2.swift */; };
 		B3A268B1220CA31300098A54 /* Baz.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3A268B0220CA31300098A54 /* Baz.swift */; };
 		B3A268B3220CA32E00098A54 /* CInterop.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3A268B2220CA32E00098A54 /* CInterop.swift */; };
 		B3A268B5220CA34A00098A54 /* BazRef.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3A268B4220CA34A00098A54 /* BazRef.swift */; };
@@ -34,6 +35,8 @@
 
 /* Begin PBXFileReference section */
 		B3337B17202E315100C017C8 /* Interoperability.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; name = Interoperability.playground; path = "About-Swift-Advanced/Interoperability.playground"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		B3798385220D24E400FFB6BC /* BazRef2.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BazRef2.h; sourceTree = "<group>"; };
+		B3798386220D24F500FFB6BC /* BazRef2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BazRef2.swift; sourceTree = "<group>"; };
 		B3A268B0220CA31300098A54 /* Baz.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Baz.swift; sourceTree = "<group>"; };
 		B3A268B2220CA32E00098A54 /* CInterop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CInterop.swift; sourceTree = "<group>"; };
 		B3A268B4220CA34A00098A54 /* BazRef.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BazRef.swift; sourceTree = "<group>"; };
@@ -66,15 +69,33 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B3798388220D283400FFB6BC /* FirstWay */ = {
+			isa = PBXGroup;
+			children = (
+				B3A268B6220CA35F00098A54 /* BazRef.h */,
+				B3A268B4220CA34A00098A54 /* BazRef.swift */,
+			);
+			path = FirstWay;
+			sourceTree = "<group>";
+		};
+		B3798389220D286900FFB6BC /* SecondWay */ = {
+			isa = PBXGroup;
+			children = (
+				B3798385220D24E400FFB6BC /* BazRef2.h */,
+				B3798386220D24F500FFB6BC /* BazRef2.swift */,
+			);
+			path = SecondWay;
+			sourceTree = "<group>";
+		};
 		B3A268AF220CA2F700098A54 /* Call Swift from C */ = {
 			isa = PBXGroup;
 			children = (
 				B3A268B8220CA37F00098A54 /* testCallSwiftFromC.c */,
 				B3A268BA220CA52700098A54 /* testCallSwiftFromC.h */,
 				B3A268B0220CA31300098A54 /* Baz.swift */,
-				B3A268B4220CA34A00098A54 /* BazRef.swift */,
-				B3A268B6220CA35F00098A54 /* BazRef.h */,
 				B3A268B2220CA32E00098A54 /* CInterop.swift */,
+				B3798388220D283400FFB6BC /* FirstWay */,
+				B3798389220D286900FFB6BC /* SecondWay */,
 			);
 			path = "Call Swift from C";
 			sourceTree = "<group>";
@@ -200,6 +221,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B3798387220D24F500FFB6BC /* BazRef2.swift in Sources */,
 				B3A8775B20D9122100CA6A1B /* Utility.swift in Sources */,
 				B3BAC9221DAD2EB000DAA395 /* main.swift in Sources */,
 				B3A268B5220CA34A00098A54 /* BazRef.swift in Sources */,

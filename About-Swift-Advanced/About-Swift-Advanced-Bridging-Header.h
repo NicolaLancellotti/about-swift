@@ -7,3 +7,4 @@
 #import "NLFoo.h"
 #import "NLBar.h"
 #import "testCallSwiftFromC.h"
+#import "BazRef2.h"
