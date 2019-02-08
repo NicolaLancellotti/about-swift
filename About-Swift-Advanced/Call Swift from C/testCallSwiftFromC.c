@@ -9,12 +9,12 @@ void testCallSwiftFromC()
         // First Way
         printf("\nFirstWay\n");
         
-        void *fobar = NLFooBarCreate(2);
+        void *foobar = NLFooBarCreate(2);
         void *baz = NLBazCreate("Hello world!", 10);
-        NLBazSetFooBar(baz, fobar);
+        NLBazSetFooBar(baz, foobar);
         NLBazPrint(baz);
         NLBazRelease(baz);
-        NLFooBarRelease(fobar);
+        NLFooBarRelease(foobar);
     }
     
     {
@@ -22,12 +22,12 @@ void testCallSwiftFromC()
         printf("\nSecond Way\n");
         const Lib* lib = getLib();
         
-        void *fobar = lib->fooBar.create(2);
+        void *foobar = lib->fooBar.create(2);
         void *baz = lib->baz.create("Hello world!", 10);
-        lib->baz.setFooBar(baz, fobar);
+        lib->baz.setFooBar(baz, foobar);
         lib->baz.print(baz);
         lib->baz.release(baz);
-        lib->fooBar.release(fobar);
+        lib->fooBar.release(foobar);
     }
     
 }
