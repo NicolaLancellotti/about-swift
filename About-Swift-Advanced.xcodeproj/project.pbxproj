@@ -194,17 +194,18 @@
 					B3BAC91D1DAD2EB000DAA395 = {
 						CreatedOnToolsVersion = 8.0;
 						DevelopmentTeam = R87FT3UWA3;
-						LastSwiftMigration = "";
+						LastSwiftMigration = 1020;
 						ProvisioningStyle = Automatic;
 					};
 				};
 			};
 			buildConfigurationList = B3BAC9191DAD2EB000DAA395 /* Build configuration list for PBXProject "About-Swift-Advanced" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				Base,
 			);
 			mainGroup = B3BAC9151DAD2EB000DAA395;
 			productRefGroup = B3BAC91F1DAD2EB000DAA395 /* Products */;
@@ -355,7 +356,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "About-Swift-Advanced/About-Swift-Advanced-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -367,7 +368,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "About-Swift-Advanced/About-Swift-Advanced-Bridging-Header.h";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
