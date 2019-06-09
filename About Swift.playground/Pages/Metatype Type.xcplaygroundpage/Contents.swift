@@ -81,12 +81,24 @@ ObjectIdentifier(ClassA.self) == ObjectIdentifier(ClassB.self)
  
  A key-path expressions lets you access properties or subscript of a type dynamically
  
+ They have the following form: ```\type name.path```
+ 
+ The type name can be omitted in contexts where type inference can determine the implied type.
  */
-let dic: [String : [Int]] = ["key" : [1, 2]]
+var dic: [String : [Int]] = ["key" : [1, 2]]
 let keyPath1 = \[String : [Int]].["key"]
 let keyPath2 = \[String : [Int]].["key"]?.count
 let keyPath3 = \[String : [Int]].["key"]?[0]
 dic[keyPath: keyPath1]
 dic[keyPath: keyPath2]
 dic[keyPath: keyPath3]
+
+
+/*:
+  The path can refer to self to create the identity key path (\.self). The identity key path refers to a whole instance,
+  so you can use it to access and change all of the data stored in a variable in a single step
+ */
+
+dic[keyPath: \.self] = ["key2" : [3]]
+dic
 //: [Next](@next)
