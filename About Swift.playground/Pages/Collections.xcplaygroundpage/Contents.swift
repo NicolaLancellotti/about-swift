@@ -377,21 +377,21 @@ let keysCount = itemsByKey.mapValues {$0.count}
 keysCount[1]
 keysCount[2]
 /*: 
- ### DictionaryLiteral
+ ### KeyValuePairs
  An **ordered** collection whose elements are key-value pairs.
  
- Some operations that are efficient on a dictionary are slower when using DictionaryLiteral
+ Some operations that are efficient on a dictionary are slower when using KeyValuePairs
  
- DictionaryLiteral also allows duplicates keys.
+ KeyValuePairs also allows duplicates keys.
  */
-let dictionaryLiteral: DictionaryLiteral = [1 : "a", 1 : "b"]
-dictionaryLiteral.first!.key
-dictionaryLiteral.first!.value
-//: When calling a function with a DictionaryLiteral parameter, you can pass a Swift dictionary literal without causing a Dictionary to be created
+let keyValuePairs: KeyValuePairs = [1 : "a", 1 : "b"]
+keyValuePairs.first!.key
+keyValuePairs.first!.value
+//: When calling a function with a KeyValuePairs parameter, you can pass a Swift dictionary literal without causing a Dictionary to be created
 struct IntPairs {
     var elements: [(Int, Int)]
     
-    init(_ elements: DictionaryLiteral<Int, Int>) {
+    init(_ elements: KeyValuePairs<Int, Int>) {
         self.elements = Array(elements)
     }
 }
