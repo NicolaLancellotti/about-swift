@@ -201,3 +201,19 @@ print("______________________________________________________")
 print("Call Swift from C\n")
 
 testCallSwiftFromC()
+
+// _____________________________________________________________________________
+// MARK: - Enum
+
+// A nonfrozen enumeration is a special kind of enumeration that may gain new
+// enumeration cases in the future
+// Only the standard library, Swift overlays for Apple frameworks, and C and
+// Objective-C code can declare nonfrozen enumerations.
+switch NLNonFrozenEnum.case1 {
+case .case1, .case2: print("known cases")
+@unknown default: print("unknown case")
+}
+
+switch NLFrozenEnum.case1 {
+case .case1, .case2: print("known cases")
+}

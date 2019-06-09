@@ -48,5 +48,18 @@ typedef NS_ENUM(NSInteger, ABCRecordSide) {
 
 @end
 
+#pragma mark - Enum
+
+// Default
+typedef NS_ENUM(NSInteger, NLNonFrozenEnum) {
+    NLNonFrozenEnumCase1 = 1,
+    NLNonFrozenEnumCase2,
+} __attribute__((enum_extensibility(open)));;
+
+typedef NS_ENUM(NSInteger, NLFrozenEnum) {
+    NLFrozenEnumCase1 = 1,
+    NLFrozenEnumCase2
+} __attribute__((enum_extensibility(closed)));
+
 NS_ASSUME_NONNULL_END
 
