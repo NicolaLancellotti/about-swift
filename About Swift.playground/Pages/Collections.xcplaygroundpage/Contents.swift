@@ -51,12 +51,12 @@ aCollection.formIndex(&anIndex, offsetBy: 10, limitedBy: 100)
 aCollection.index(after: 10)
 aCollection.index(10, offsetBy: 5, limitedBy: aCollection.endIndex)
 
-aCollection.index(of: 10)
-aCollection.index {$0 % 10 == 0}
+aCollection.firstIndex(of: 10)
+aCollection.firstIndex {$0 % 10 == 0}
 //: ### Lazy
 let lazyCollection: LazyCollection = aCollection.lazy
 let lazyMapCollection: LazyMapCollection = lazyCollection.map {_ in }
-let lazyMapIterator: LazyMapIterator = lazyMapCollection.makeIterator()
+let lazyMapIterator = lazyMapCollection.makeIterator()
 let lazyFilterCollection: LazyFilterCollection = lazyCollection.filter { _ in false }
 lazyFilterCollection.startIndex
 /*:

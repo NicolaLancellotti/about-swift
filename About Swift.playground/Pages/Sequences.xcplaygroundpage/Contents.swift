@@ -202,14 +202,14 @@ aSequence.allSatisfy { $0 > 0 }
  
  */
 let intFibonacci: LazyMapSequence = Fibonacci().lazy.map(Int.init)
-var lazyMapIter: LazyMapIterator = intFibonacci.makeIterator()
+var lazyMapIter:  LazyMapSequence<Fibonacci, Int>.Iterator = intFibonacci.makeIterator()
 lazyMapIter.next()
 lazyMapIter.next()
 lazyMapIter.next()
 lazyMapIter.next()
 
-let evenIntFibonacci: LazyFilterSequence = intFibonacci.lazy.filter { $0 % 2 == 0}
-var lazyFilterIter: LazyFilterIterator = evenIntFibonacci.makeIterator()
+let evenIntFibonacci: LazyFilterSequence = Fibonacci().lazy.filter { Int($0) % 2 == 0}
+var lazyFilterIter: LazyFilterSequence<Fibonacci>.Iterator = evenIntFibonacci.makeIterator()
 lazyFilterIter.next()
 lazyFilterIter.next()
 lazyFilterIter.next()
@@ -251,7 +251,4 @@ lazyEvenIter.next()
 lazyEvenIter.next()
 lazyEvenIter.next()
 
-//: ## EmptyIterator
-var emptyIterator = EmptyIterator<Int>()
-emptyIterator.next()
 //: [Next](@next)

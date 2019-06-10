@@ -61,7 +61,7 @@ let assumedString: String! = "An implicitly unwrapped optional string."
 let implicitString: String = assumedString // no need for an exclamation mark
 
 if assumedString != nil {
-    print(assumedString)
+    print(assumedString as String)
 }
 
 if let definiteString = assumedString {

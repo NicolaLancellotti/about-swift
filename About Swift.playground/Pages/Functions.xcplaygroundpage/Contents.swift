@@ -151,6 +151,7 @@ func functionWithDefers() {
     defer {
         print("Second defer")
     }
+    print("end")
 }
 
 functionWithDefers()
