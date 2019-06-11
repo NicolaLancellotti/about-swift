@@ -12,7 +12,7 @@ struct Person {
     // Properties
     var name = "Nicola"
     var age = 23
-    let male = true
+    let gender = "male"
 }
 /*:
  ### Initialization
@@ -30,14 +30,14 @@ aPerson = Person(name: "Nicola", age: 23)
 struct Dog {
     var name: String
     var age: Int
-    let male: Bool
+    let gender: String
 }
 /*:
  ### Initialization
  
  Unlike a default initializer, the structure receives a memberwise initializer even if it has stored properties that do not have default values.
  */
-let aDog = Dog(name: "dogName", age: 5, male: true);
+let aDog = Dog(name: "dogName", age: 5, gender: "male");
 /*:
  ## Customizing Initialization
  
