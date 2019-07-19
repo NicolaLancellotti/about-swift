@@ -41,6 +41,10 @@ let eAcute: Character = "\u{E9}"
 let combinedEAcute: Character = "\u{65}\u{301}"
 
 let regionalIndicatorForIT: Character = "\u{1F1EE}\u{1F1F9}"
+//: ### Unicode Properties
+emoji.unicodeScalars.first!.properties.isEmoji
+sparklingHeart.unicodeScalars.first!.properties.isEmoji
+eAcute.unicodeScalars.first!.properties.isLowercase
 //: Counting Characters
 var word = "cafe"
 word.count
