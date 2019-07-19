@@ -93,6 +93,9 @@ let justOverOneMillion = 1_000_000.000_000_1
 3 * 2
 3 / 2
 -9 % 2
+
+3.isMultiple(of: 2)
+6.isMultiple(of: 2)
 /*:
  ### Logical Operators
  
