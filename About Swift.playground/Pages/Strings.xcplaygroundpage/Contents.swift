@@ -1,6 +1,27 @@
 //: [Previous](@previous)
 import Foundation
 //: # Strings
+
+/*:
+ ###  Characters
+ A single extended grapheme cluster that approximates a user-perceived character.
+ */
+let letter = Character("a")
+let emoji = "😋" as Character
+let number = "⅚" as Character
+
+letter.isASCII
+letter.asciiValue
+letter.isLetter
+letter.isLowercase
+
+emoji.isASCII
+
+number.isNumber
+/*:
+ ###  Strings
+A Unicode string value that is a collection of characters.
+ */
 let emptyString = String()
 let anotherEmptyString = ""
 
@@ -87,4 +108,5 @@ let linesWithIndentation = """
 ##"""
 \t abc \##t efg
 """##
+
 //: [Next](@next)
