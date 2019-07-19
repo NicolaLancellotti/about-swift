@@ -61,4 +61,28 @@ let dic = DynamicDictionary()
 dic.name
 dic.name = "Nicola"
 dic[dynamicMember: "name"]
+/*:
+ ## Dynamic Callable
+ Apply this attribute to a class, structure, enumeration, or protocol to treat instances of the type as callable functions.
+ 
+ The type must implement either a *dynamicallyCall(withArguments:)* method, a *dynamicallyCall(withKeywordArguments:)*   method, or both.
+ */
+@dynamicCallable
+struct DynamicCallableStruct {
+    
+    func dynamicallyCall(withArguments arguments: [Int]) -> String {
+        return "dynamically call with arguments: \(arguments)"
+    }
+    
+    func dynamicallyCall(withKeywordArguments pairs: KeyValuePairs<String, Int>) -> String {
+        return "dynamically call with keyword arguments: \(pairs)"
+    }
+}
+
+let callable = DynamicCallableStruct()
+callable(1, 2)
+callable(x: 1, y: 2)
+
+callable.dynamicallyCall(withArguments: [1, 2])
+callable.dynamicallyCall(withKeywordArguments: ["x": 1, "y": 2])
 //: [Next](@next)
