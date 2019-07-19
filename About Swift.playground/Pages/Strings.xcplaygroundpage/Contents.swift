@@ -76,4 +76,15 @@ let linesWithIndentation = """
     ABCD
         abcd
     """
+/*:
+ ##  Extended String Delimiters
+ A string delimited by extended delimiters is a sequence of characters surrounded by quotation marks and a balanced set of one or more number signs (#)
+ You can place a string literal within extended delimiters to include special characters in a string without invoking their effect.
+ If you need the special effects of a character in a string literal, match the number of number signs (#) within the string following the escape character (\\)
+ */
+#"\(1 + 2) = \#(1 + 2)"#
+
+##"""
+\t abc \##t efg
+"""##
 //: [Next](@next)
