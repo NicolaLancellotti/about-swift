@@ -6,6 +6,8 @@
  ## Numbers
  * Integers and floating-point numbers conform to the *Numeric* protocol.
  * Signed Integers and floating-point numbers conform to the *SignedNumeric* protocol.
+ 
+ *Numeric* protocol conforms to *AdditiveArithmetic* which values  support addition and subtraction.
  */
 
 /*:
