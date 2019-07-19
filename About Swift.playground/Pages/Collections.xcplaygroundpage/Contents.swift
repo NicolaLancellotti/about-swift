@@ -371,11 +371,15 @@ dictionary4.merge(["a": 3, "c": 4]) { (current, _) in current }
 let dictionary5 = [Int: String]()
 dictionary5[1, default: "Hello"]
 
-
-// mapValues
+// Map Values
 let keysCount = itemsByKey.mapValues {$0.count}
 keysCount[1]
 keysCount[2]
+
+// Compact Map Values
+let values = ["a": "1", "b": "Z"].compactMapValues(Int.init)
+values["a"]
+values["b"]
 /*: 
  ### KeyValuePairs
  An **ordered** collection whose elements are key-value pairs.
