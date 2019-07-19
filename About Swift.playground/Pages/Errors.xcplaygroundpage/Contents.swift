@@ -56,11 +56,11 @@ enum MyErrorType: Error {
  
  Only throwing functions can propagate errors.
  */
-func canThrowErrors(_ mustThrow: Bool = false) throws -> Int {
+func canThrowErrors(_ mustThrow: Bool = false) throws -> String {
     if mustThrow {
         throw MyErrorType.errorType1
     } else {
-        return 1
+        return "no error"
     }
 }
 /*:
@@ -82,7 +82,7 @@ do {
 let value1 = try? canThrowErrors()
 
 // Equivalent to
-let value2: Int?
+let value2: String?
 do {
     value2 = try canThrowErrors()
 } catch {
@@ -109,4 +109,45 @@ func functionWithCallback(_ callback: () throws -> Int) rethrows {
  # Fatal Error
  */
 //fatalError()
+/*:
+ # Result
+ 
+ A value that represents either a success or a failure, including an associated value in each case
+ */
+enum DivisionError: Error {
+    case divisionByZero
+}
+
+func safeDivision(_ x: Double, _ y: Double) -> Result<Double, DivisionError> {
+    if y != 0 {
+        return .success(x / y)
+    } else {
+        return .failure(.divisionByZero)
+    }
+}
+
+let result1 = safeDivision(1, 0)
+switch result1 {
+case .success(let value): value
+case .failure(let error): error
+}
+let mappedError = result1.mapError { _ in MyErrorType.errorType1}
+mappedError
+
+let result2 = safeDivision(10, 2)
+switch result2 {
+case .success(let value): value
+case .failure(let error): error
+}
+let stringValue = result2.map{String($0)}
+stringValue
+
+
+let result3 = Result {
+    try canThrowErrors(false)
+}
+switch result3 {
+case .success(let value): value
+case .failure(let error): error
+}
 //: [Next](@next)
