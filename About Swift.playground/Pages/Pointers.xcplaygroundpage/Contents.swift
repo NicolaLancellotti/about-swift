@@ -226,4 +226,24 @@ stack.pop()
 stack2.pop()
 stack2.pop()
 stack2.pop()
+/*:
+ ## Sequences and MutableCollections Contiguous Storage
+ */
+
+var numbers = [1, 2, 3, 4, 5]
+
+let sum = numbers.withContiguousStorageIfAvailable { buffer -> Int in
+    var result = 0
+    for i in stride(from: buffer.startIndex, to: buffer.endIndex, by: 2) {
+        result += buffer[i]
+    }
+    return result
+}
+
+numbers.withContiguousMutableStorageIfAvailable { buffer in
+    for i in stride(from: buffer.startIndex, to: buffer.endIndex - 1, by: 2) {
+        buffer.swapAt(i, i + 1)
+    }
+}
+numbers
 //: [Next](@next)
