@@ -120,6 +120,12 @@ buffer.makeIterator()
 buffer.reduce(0, +)
 
 /*:
+ ## Buffer Pointers for untyped data
+ * UnsafeMutableRawBufferPointer - mutating buffer pointer
+ * UnsafeRawBufferPointer - non mutating buffer pointer
+ */
+
+/*:
  ## Managed Buffer
  
  A class whose instances contain a property of type Header and raw storage for an array of Element, whose size is determined at instance creation.
