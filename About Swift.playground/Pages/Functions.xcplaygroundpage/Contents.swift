@@ -14,6 +14,12 @@ func funcWithReturnValue() -> Bool {
 }
 
 let aBool = funcWithReturnValue()
+//: If the entire body of the function is a single expression, the function implicitly returns that expression
+ func funcWithImplicitReturnValue() -> Bool {
+    false
+}
+
+let anotherBool = funcWithImplicitReturnValue()
 /*:
  ## Functions With Parameters
  

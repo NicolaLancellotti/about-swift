@@ -102,12 +102,18 @@ var km = 1.0
 
 // Computed Variable
 var miles: Double {
-    get {
-        return km * 0.621371
-    }
     set {
         km = newValue * 1.60934
     }
+    get {
+    // If the entire body of a getter is a single expression,
+    // the getter implicitly returns that expression
+        km * 0.621371
+    }
+    // The same as:
+    //    get {
+    //        return km * 0.621371
+    //    }
 }
 
 miles = 4
