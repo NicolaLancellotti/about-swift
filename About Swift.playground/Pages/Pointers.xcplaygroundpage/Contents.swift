@@ -246,4 +246,17 @@ numbers.withContiguousMutableStorageIfAvailable { buffer in
     }
 }
 numbers
+/*:
+## Array Initializer with Access to Uninitialized Storage
+ The memory in the range buffer[0..<initializedCount] must be initialized at the end of the closure’s execution, and the memory in the range buffer[initializedCount...] must be uninitialized. This postcondition must hold even if the initializer closure throws an error.
+*/
+let array = Array<Int>(unsafeUninitializedCapacity: 6) { (buffer, initializedCount) in
+  buffer[0] = 0
+  buffer[1] = 1
+  for i in 2...5 {
+    buffer[i] = buffer[i - 1] + buffer[i - 2]
+  }
+  initializedCount = 6
+}
+array
 //: [Next](@next)
