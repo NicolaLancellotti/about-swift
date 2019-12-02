@@ -8,24 +8,35 @@
  */
 
 //: ## Structures With Default Values
-struct Person {
-    // Properties
-    var name = "Nicola"
-    var age = 23
-    let gender = "male"
+struct Size {
+    var width = 0.0, height = 0.0
 }
 /*:
  ### Initialization
- 
  Swift provides a default initializer for any structure that provides default values for all of its properties and does not provide at least one initializer itself.
  */
-var aPerson = Person()
+let size0x0 = Size()
+// Get Properties
+size0x0.width
+size0x0.height
+
 /*:
  Structure types automatically receive a memberwise initializer if they do not define any of their own custom initializers.
- 
- Swift provides an automatic external name for every parameter in an initializer.
  */
-aPerson = Person(name: "Nicola", age: 23)
+let size10x10 = Size(width: 10, height: 10)
+size10x10.width
+size10x10.height
+
+var size10x0 = Size(width: 10)
+size10x0.width
+size10x0.height
+
+// Set Properties
+var size8x10 = size10x10
+size8x10.width = 8
+
+size8x10.width
+size8x10.height
 //: ## Structures Without Default values
 struct Dog {
     var name: String
@@ -69,10 +80,6 @@ Celsius(10)
  
  For value types, you use self.init to refer to other initializers from the same value type when writing your own custom initializers. You can call self.init only from within an initializer.
  */
-struct Size {
-    var width = 0.0, height = 0.0
-}
-
 struct Point {
     var x = 0.0, y = 0.0
 }
@@ -122,9 +129,7 @@ struct StructureWithFailableInitializers {
 }
 
 var aStructure = StructureWithFailableInitializers()
-//: ## Accessing Properties
-aPerson.name = "Nicola" // Set
-let name = aPerson.name // Get
+
 /*:
  ## Observers for Stored properties
  Like Observers for Stored Variables
@@ -142,7 +147,7 @@ let name = aPerson.name // Get
  If a lazy property has not yet been initialized and is accessed by more than one thread at the same time, there is no guarantee that the property will be initialized only once.
  */
 struct StructureWithLazyStoredProperty {
-    lazy var property = Person()
+    lazy var property = Size()
 }
 
 var aStructureWithLazyStoredProperty = StructureWithLazyStoredProperty()
