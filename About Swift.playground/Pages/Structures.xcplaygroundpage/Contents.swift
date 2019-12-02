@@ -175,7 +175,8 @@ struct StructureWithMethods {
     // Instance methods
     
     func instanceMethod() {
-        
+      // Self type refers to the type introduced by the innermost type declaration
+      Self.typeMethod()
     }
     
     // Mutating methods
@@ -196,7 +197,7 @@ struct StructureWithMethods {
     static func typeMethod() {
         
     }
-    
+  
 }
 /*:
  ## Subscripts
