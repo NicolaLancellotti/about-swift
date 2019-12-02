@@ -153,6 +153,17 @@ case .square(let side) where side == 10:
 default:
     print("A square with side != 10")
 }
+
+// Enumeration case pattern can match an optional value
+let x: CompassPoint? = .north
+
+switch x {
+case .north: print("north")
+case .south: print("south")
+case .east: print("east")
+case .west: print("west")
+case nil: print("nil")
+}
 //: If
 if case .rectangle(let base, let height) = anotherShape {
     print("A rectangle with base: \(base) and height: \(height)")
