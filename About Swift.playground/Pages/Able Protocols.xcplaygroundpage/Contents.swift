@@ -110,4 +110,22 @@ struct SomeStructure1: RawRepresentable {
 }
 
 SomeStructure1(rawValue: "123")?.rawValue
+/*:
+## Identifiable
+*/
+struct ContactStruct: Identifiable {
+    var id: Int
+    var name: String
+}
+
+class ContactClass: Identifiable {
+    var name: String
+    
+    init(name: String) {
+      self.name = name
+    }
+}
+
+ContactStruct(id: 1, name: "Nicola").id
+ContactClass(name: "Nicola").id
 //: [Next](@next)
