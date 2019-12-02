@@ -210,19 +210,32 @@ struct StructureWithMethods {
  * provide default parameter values.
  */
 struct StructureWithSubscripts {
-    
+  
+    //_____________________________________________
+    // Instance Subscripts
     subscript(index: Int) -> Int {
         get {
-            return 0
+            0
         }
         set {
             
         }
     }
     
-    //read-only subscripts.
+    //read-only Subscripts.
     subscript(index: String) -> Int {
         return 1
+    }
+  
+    //_____________________________________________
+    // Type Subscripts
+    static subscript(index: Int) -> Int {
+        get {
+            0
+        }
+        set {
+      
+        }
     }
     
 }

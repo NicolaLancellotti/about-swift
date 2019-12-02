@@ -20,11 +20,11 @@ class SomeSuperclass {
     }
     
     //_____________________________________________
-    // Subscripts
+    // Instance Subscripts
     
     subscript(index: Int) -> Int {
         get {
-            return 0
+            0
         }
         set {
             
@@ -45,6 +45,19 @@ class SomeSuperclass {
         set { }
         get { return 0 }
     }
+  
+    //_____________________________________________
+    // Type Subscripts
+  
+    class subscript(index: Int) -> Int {
+        get {
+            0
+        }
+        set {
+            
+        }
+    }
+   
     
     //_____________________________________________
     // Type Methods
@@ -122,8 +135,8 @@ class ClassWithMethodsAndPropertiesFinal {
     }
     
     //_____________________________________________
-    // Subscripts
-    
+    // Instance Subscripts
+
     final subscript(index: Int) -> Int {
         get {
             return 0
@@ -150,6 +163,18 @@ class ClassWithMethodsAndPropertiesFinal {
         set { }
         get { return 0 }
     }
+  
+     //_____________________________________________
+     // Type Subscripts
+   
+     static subscript(index: Int) -> Int {
+         get {
+             return 0
+         }
+         set {
+             
+         }
+     }
     
     //_____________________________________________
     // Type Methods
