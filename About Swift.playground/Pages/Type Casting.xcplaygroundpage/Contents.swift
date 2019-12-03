@@ -7,15 +7,15 @@
  Use the type check operator (is) to check whether an instance is of a certain subclass type. The type check operator returns true if the instance is of that subclass type and false if it is not.
  */
 class ClassA {
-
+  
 }
 
 class ClassB: ClassA {
-
+  
 }
 
 class ClassC: ClassB {
-
+  
 }
 
 let objectAnyObject: Any = ClassC()
@@ -70,28 +70,28 @@ things.append(optionalNumber as Any) // No warning
  In a switch statement, a value is cast to a type only when pattern matching with that type succeeds. For that reason, you use the as operator instead of the conditional as? or unconditional as! operators.
  */
 for thing in things {
-    switch thing {
+  switch thing {
     case 0 as Int:
-        print("zero as an Int")
+      print("zero as an Int")
     case 0 as Double:
-        print("zero as a Double")
+      print("zero as a Double")
     case let someInt as Int:
-        print("an integer value of \(someInt)")
+      print("an integer value of \(someInt)")
     case let someDouble as Double where someDouble > 0:
-        print("a positive double value of \(someDouble)")
+      print("a positive double value of \(someDouble)")
     case is Double:
-        print("some other double value that I don't want to print")
+      print("some other double value that I don't want to print")
     case let someString as String:
-        print("a string value of \"\(someString)\"")
+      print("a string value of \"\(someString)\"")
     case let (x, y) as (Double, Double):
-        print("an (x, y) point at \(x), \(y)")
+      print("an (x, y) point at \(x), \(y)")
     case let x as ClassA:
-        print(x)
+      print(x)
     case let stringConverter as (String) -> String:
-        print(stringConverter("Michael"))
+      print(stringConverter("Michael"))
     default:
-        print("something else")
-    }
+      print("something else")
+  }
 }
 
 /*:
@@ -111,7 +111,7 @@ func f1(_ x: Int32) {
 }
 
 func g1(_ x: UInt64) {
-    f1(numericCast(x))
+  f1(numericCast(x))
 }
 /*:
  ## Unsafe Bit Cast
@@ -119,10 +119,10 @@ func g1(_ x: UInt64) {
  Returns the bits of x, interpreted as having type U.
  */
 struct A {
-    var x = 10
+  var x = 10
 }
 struct B {
-    var y: Int
+  var y: Int
 }
 
 let a: A = A()

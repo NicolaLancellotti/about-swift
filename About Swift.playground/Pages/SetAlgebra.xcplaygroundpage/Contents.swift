@@ -10,7 +10,7 @@
  An unordered collection of unique ***hashable*** elements.
  
  Complain to SetAlgebra and Collection
-*/
+ */
 
 let set: Set = [1, 2, 3]
 let anotherSet: Set = [1, 2, 3, 4, 5]
@@ -31,11 +31,11 @@ set.isDisjoint(with: anotherSet)
  Inherits From SetAlgebra.
  */
 struct MyFontStyle : OptionSet {
-    let rawValue : Int // conforms to the BitwiseOperations protocol
-    static let bold             = MyFontStyle(rawValue: 1 << 0)
-    static let italic           = MyFontStyle(rawValue: 1 << 1)
-    static let underline        = MyFontStyle(rawValue: 1 << 2)
-    static let strikethrough    = MyFontStyle(rawValue: 1 << 3)
+  let rawValue : Int // conforms to the BitwiseOperations protocol
+  static let bold             = MyFontStyle(rawValue: 1 << 0)
+  static let italic           = MyFontStyle(rawValue: 1 << 1)
+  static let underline        = MyFontStyle(rawValue: 1 << 2)
+  static let strikethrough    = MyFontStyle(rawValue: 1 << 3)
 }
 
 var style: MyFontStyle

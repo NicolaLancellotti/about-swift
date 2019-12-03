@@ -17,47 +17,47 @@
  */
 
 extension Double {
-    var km: Double { return self * 1_000.0 }
-    var m: Double { return self }
-    var cm: Double { return self / 100.0 }
-    var mm: Double { return self / 1_000.0 }
-    var ft: Double { return self / 3.28084 }
+  var km: Double { return self * 1_000.0 }
+  var m: Double { return self }
+  var cm: Double { return self / 100.0 }
+  var mm: Double { return self / 1_000.0 }
+  var ft: Double { return self / 3.28084 }
 }
 
 let aMarathon = 42.km + 195.m
 //: * Provide new convenience initializers.
 class SomeClass {
-    init() {
-    }
+  init() {
+  }
 }
 
 extension SomeClass {
-    convenience init(value: Bool) {
-        self.init()
-    }
+  convenience init(value: Bool) {
+    self.init()
+  }
 }
 //: * Define instance methods and type methods.
 extension Int {
-    
-    func repetitions(_ task: () -> Void) {
-        for _ in 0..<self {
-            task()
-        }
+  
+  func repetitions(_ task: () -> Void) {
+    for _ in 0..<self {
+      task()
     }
-    
+  }
+  
 }
 3.repetitions {
-    print("Goodbye!")
+  print("Goodbye!")
 }
 //: * Define subscripts.
 extension Int {
-    subscript(digitIndex: Int) -> Int {
-        var decimalBase = 1
-        for _ in 0..<digitIndex {
-            decimalBase *= 10
-        }
-        return (self / decimalBase) % 10
+  subscript(digitIndex: Int) -> Int {
+    var decimalBase = 1
+    for _ in 0..<digitIndex {
+      decimalBase *= 10
     }
+    return (self / decimalBase) % 10
+  }
 }
 
 let value = 1983
@@ -67,22 +67,22 @@ value[2]
 value[3]
 //: * Define and use new nested types.
 extension Int {
-    
-    enum Kind {
-        case negative, zero, positive
+  
+  enum Kind {
+    case negative, zero, positive
+  }
+  
+  var kind: Kind {
+    switch self {
+      case 0:
+        return .zero
+      case let x where x > 0:
+        return .positive
+      default:
+        return .negative
     }
-    
-    var kind: Kind {
-        switch self {
-        case 0:
-            return .zero
-        case let x where x > 0:
-            return .positive
-        default:
-            return .negative
-        }
-    }
-    
+  }
+  
 }
 /*:
  * Make an existing type conform to a protocol
@@ -91,16 +91,16 @@ extension Int {
  
  */
 protocol SomeProtocol {
-    func foo()
+  func foo()
 }
 
 struct SomeType {
-    func foo() {
-    }
+  func foo() {
+  }
 }
 
 extension SomeType: SomeProtocol {
-    
+  
 }
 /*:
  ## Protocol Extensions
@@ -114,37 +114,37 @@ extension SomeType: SomeProtocol {
  For no required method or property, static dispaching is performed.
  */
 protocol AProtocol {
-    
-    func foo() -> String
-    func fubar() -> String
-    
+  
+  func foo() -> String
+  func fubar() -> String
+  
 }
 
 extension AProtocol {
-    
-    func foo() -> String {
-        return "AProtocol - foo"
-    }
-    
-    func fubar() -> String {
-        return "AProtocol - fubar"
-    }
-    
-    // No required method
-    func bar() -> String {
-        return "AProtocol - bar"
-    }
+  
+  func foo() -> String {
+    return "AProtocol - foo"
+  }
+  
+  func fubar() -> String {
+    return "AProtocol - fubar"
+  }
+  
+  // No required method
+  func bar() -> String {
+    return "AProtocol - bar"
+  }
 }
 
 struct AStructure: AProtocol {
-    
-    func foo() -> String {
-        return "AStructure - foo"
-    }
-    
-    func bar() -> String {
-        return "AStructure - bar"
-    }
+  
+  func foo() -> String {
+    return "AStructure - foo"
+  }
+  
+  func bar() -> String {
+    return "AStructure - bar"
+  }
 }
 
 let instace = AStructure()

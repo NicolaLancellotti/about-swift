@@ -9,102 +9,102 @@
 
 //: ## Inheritance
 class SomeSuperclass {
-    
-    //_____________________________________________
-    // Instance Property
-    
-    var storedProperty = ""
-    
-    var computedProperty: String {
-        return "SomeSuperclass"
-    }
-    
-    //_____________________________________________
-    // Instance Subscripts
-    
-    subscript(index: Int) -> Int {
-        get {
-            0
-        }
-        set {
-            
-        }
-    }
-    
-    //_____________________________________________
-    // Instance Methods
-    
-    func instanceMethod() {
-        
-    }
-    
-    //_____________________________________________
-    // Type Computed Property
-    
-    class var typeComputedProperty: Int {
-        set { }
-        get { return 0 }
-    }
   
-    //_____________________________________________
-    // Type Subscripts
+  //_____________________________________________
+  // Instance Property
   
-    class subscript(index: Int) -> Int {
-        get {
-            0
-        }
-        set {
-            
-        }
+  var storedProperty = ""
+  
+  var computedProperty: String {
+    return "SomeSuperclass"
+  }
+  
+  //_____________________________________________
+  // Instance Subscripts
+  
+  subscript(index: Int) -> Int {
+    get {
+      0
     }
-   
-    
-    //_____________________________________________
-    // Type Methods
-    
-    class func typeClassMethod() {
-        
+    set {
+      
     }
+  }
+  
+  //_____________________________________________
+  // Instance Methods
+  
+  func instanceMethod() {
     
+  }
+  
+  //_____________________________________________
+  // Type Computed Property
+  
+  class var typeComputedProperty: Int {
+    set { }
+    get { return 0 }
+  }
+  
+  //_____________________________________________
+  // Type Subscripts
+  
+  class subscript(index: Int) -> Int {
+    get {
+      0
+    }
+    set {
+      
+    }
+  }
+  
+  
+  //_____________________________________________
+  // Type Methods
+  
+  class func typeClassMethod() {
+    
+  }
+  
 }
 
 class SomeSubclass: SomeSuperclass {
-    // You must always state both the name and the type of the property you are overriding.
-    
-    
-    //_____________________________________________
-    // Overriding Property Getters and Setters
-    //
-    // You can present an inherited read-only property as a read-write property by providing both a
-    // getter and a setter but not the other way around.
-    override var computedProperty: String {
-        return super.computedProperty + "- SomeSubclass"
+  // You must always state both the name and the type of the property you are overriding.
+  
+  
+  //_____________________________________________
+  // Overriding Property Getters and Setters
+  //
+  // You can present an inherited read-only property as a read-write property by providing both a
+  // getter and a setter but not the other way around.
+  override var computedProperty: String {
+    return super.computedProperty + "- SomeSubclass"
+  }
+  
+  //_____________________________________________
+  // Overriding Property Observers
+  // Property observers can be added to any property (stored or computed property).
+  
+  // When you assign a default value to a stored property, or set its initial value within an
+  // initializer, the value of that property is set directly, without calling any property observers.
+  
+  // The willSet and didSet observers of superclass properties are called when a property is set in
+  // a subclass initializer.
+  
+  // You cannot add property observers to inherited constant stored properties or inherited read-only
+  // computed properties.
+  override var storedProperty: String {
+    didSet {
+      
     }
-    
-    //_____________________________________________
-    // Overriding Property Observers
-    // Property observers can be added to any property (stored or computed property).
-    
-    // When you assign a default value to a stored property, or set its initial value within an
-    // initializer, the value of that property is set directly, without calling any property observers.
-    
-    // The willSet and didSet observers of superclass properties are called when a property is set in
-    // a subclass initializer.
-    
-    // You cannot add property observers to inherited constant stored properties or inherited read-only
-    // computed properties.
-    override var storedProperty: String {
-        didSet {
-            
-        }
-    }
-    
-    //_____________________________________________
-    // Overriding Methods
-    override func instanceMethod() {
-        print("SomeSubclass - someMethod")
-    }
-    
+  }
+  
+  //_____________________________________________
+  // Overriding Methods
+  override func instanceMethod() {
+    print("SomeSubclass - someMethod")
+  }
+  
 }
 
 /*:
@@ -112,7 +112,7 @@ class SomeSubclass: SomeSuperclass {
  You cannot provide both an overriding setter and an overriding property observer for the same property.
  \
  \
-If you want to observe changes to a property’s value, and you are already providing a custom setter for that property, you can simply observe any value changes from within the custom setter.
+ If you want to observe changes to a property’s value, and you are already providing a custom setter for that property, you can simply observe any value changes from within the custom setter.
  */
 
 /*: 
@@ -120,69 +120,69 @@ If you want to observe changes to a property’s value, and you are already prov
  You can mark an entire class as final by writing the final modifier before the class keyword in its class definition (final class).
  */
 class ClassWithMethodsAndPropertiesFinal {
-    
-    //_____________________________________________
-    // Instance Property
-    
-    final var storedProperty = ""
-    
-    final var computedProperty: Int {
-        set {
-        }
-        get {
-            return 0
-        }
-    }
-    
-    //_____________________________________________
-    // Instance Subscripts
-
-    final subscript(index: Int) -> Int {
-        get {
-            return 0
-        }
-        set {
-            
-        }
-    }
-    
-    
-    //_____________________________________________
-    // Instance Methods
-    
-    final func instanceMethod() {
-        
-    }
-    
-    //_____________________________________________
-    // Type Property
-    
-    static var typeStoredProperty = 0
-    
-    static var typeComputedProperty: Int {
-        set { }
-        get { return 0 }
-    }
   
-     //_____________________________________________
-     // Type Subscripts
-   
-     static subscript(index: Int) -> Int {
-         get {
-             return 0
-         }
-         set {
-             
-         }
-     }
-    
-    //_____________________________________________
-    // Type Methods
-    
-    static func typeClassMethod() {
-        
+  //_____________________________________________
+  // Instance Property
+  
+  final var storedProperty = ""
+  
+  final var computedProperty: Int {
+    set {
     }
+    get {
+      return 0
+    }
+  }
+  
+  //_____________________________________________
+  // Instance Subscripts
+  
+  final subscript(index: Int) -> Int {
+    get {
+      return 0
+    }
+    set {
+      
+    }
+  }
+  
+  
+  //_____________________________________________
+  // Instance Methods
+  
+  final func instanceMethod() {
     
+  }
+  
+  //_____________________________________________
+  // Type Property
+  
+  static var typeStoredProperty = 0
+  
+  static var typeComputedProperty: Int {
+    set { }
+    get { return 0 }
+  }
+  
+  //_____________________________________________
+  // Type Subscripts
+  
+  static subscript(index: Int) -> Int {
+    get {
+      return 0
+    }
+    set {
+      
+    }
+  }
+  
+  //_____________________________________________
+  // Type Methods
+  
+  static func typeClassMethod() {
+    
+  }
+  
 }
 /*:
  ## Initialization
@@ -206,52 +206,52 @@ class ClassWithMethodsAndPropertiesFinal {
  
  */
 class SomeSuperClass {
-    
-    var propertySuperClass: Int = 0
-    
+  
+  var propertySuperClass: Int = 0
+  
 }
 
 class SomeSubClass: SomeSuperClass {
+  
+  var propertySubClass1: Int
+  var propertySubClass2: Int
+  
+  //_____________________________________________
+  // Designated Initializers
+  
+  init(propertySubClass1: Int, propertySubClass2: Int) {
+    // Fully initializes all properties.
+    self.propertySubClass1 = propertySubClass1
+    self.propertySubClass2 = propertySubClass2
     
-    var propertySubClass1: Int
-    var propertySubClass2: Int
+    // Delegates up to a superclass initializer.
+    super.init()
     
-    //_____________________________________________
-    // Designated Initializers
+    // Assigning a value to an inherited property.
+    propertySuperClass = 1
     
-    init(propertySubClass1: Int, propertySubClass2: Int) {
-        // Fully initializes all properties.
-        self.propertySubClass1 = propertySubClass1
-        self.propertySubClass2 = propertySubClass2
-        
-        // Delegates up to a superclass initializer.
-        super.init()
-        
-        // Assigning a value to an inherited property.
-        propertySuperClass = 1
-        
-    }
+  }
+  
+  override init() {
+    // Fully initializes all properties.
+    self.propertySubClass1 = 1
+    self.propertySubClass2 = 2
     
-    override init() {
-        // Fully initializes all properties.
-        self.propertySubClass1 = 1
-        self.propertySubClass2 = 2
-        
-        // Delegates up to a superclass initializer.
-        super.init()
-    }
+    // Delegates up to a superclass initializer.
+    super.init()
+  }
+  
+  //_____________________________________________
+  // Convenience Initializers
+  
+  convenience init(propertySubClass1: Int) {
+    //    Delegate across to another initializer.
+    self.init()
     
-    //_____________________________________________
-    // Convenience Initializers
-    
-    convenience init(propertySubClass1: Int) {
-        //    Delegate across to another initializer.
-        self.init()
-        
-        //    Assigning a value to any property (including properties defined by the same class).
-        self.propertySubClass1 = propertySubClass1
-    }
-    
+    //    Assigning a value to any property (including properties defined by the same class).
+    self.propertySubClass1 = propertySubClass1
+  }
+  
 }
 /*:
  ### Automatic Initializer Inheritance
@@ -274,52 +274,52 @@ class SomeSubClass: SomeSuperClass {
  Initialization failure propagates through initializer delegation. Specifically, if a failable initializer delegates to an initializer that fails and returns nil, then the initializer that delegated also fails and implicitly returns nil.
  */
 class ClassWithFailableInitializer {
-    var property: Int
-    
-    // Failable initializer
-    init?(property: Int) {
-        if property < 0 {
-            return nil
-        }
-        self.property = property
+  var property: Int
+  
+  // Failable initializer
+  init?(property: Int) {
+    if property < 0 {
+      return nil
     }
-    
-    init() {
-        self.property = 0;
-    }
+    self.property = property
+  }
+  
+  init() {
+    self.property = 0;
+  }
 }
 
 class SubClassWithFailableInitializer: ClassWithFailableInitializer {
-    
-    // Override a failable initializer with a nonfailable initializer
-    override init(property: Int) {
-        super.init()
-        if property < 0 {
-            self.property = 0
-        }
+  
+  // Override a failable initializer with a nonfailable initializer
+  override init(property: Int) {
+    super.init()
+    if property < 0 {
+      self.property = 0
     }
-    
+  }
+  
 }
 /*:
  ### Required Initializers
  */
 class ClassWithRequiredInitializer {
+  
+  // Every subclass of the class must implement that initializer
+  required init() {
     
-    // Every subclass of the class must implement that initializer
-    required init() {
-        
-    }
-    
+  }
+  
 }
 
 class SubClassWithRequiredInitializer: ClassWithRequiredInitializer {
-
-    // You must also write the required modifier before every subclass implementation of a required initializer
-    // You do not write the override modifier when overriding a required designated initializer
-    required init() {
-       
-    }
+  
+  // You must also write the required modifier before every subclass implementation of a required initializer
+  // You do not write the override modifier when overriding a required designated initializer
+  required init() {
     
+  }
+  
 }
 /*:
  ## Deinitialization
@@ -329,9 +329,9 @@ class SubClassWithRequiredInitializer: ClassWithRequiredInitializer {
  * The subclass object is not deallocated until all deinitializers in its inheritance chain have finished executing.
  */
 class ClassWithDeinit {
-    deinit {
-        
-    }
+  deinit {
+    
+  }
 }
 /*:
  ## Automatic Reference Counting
@@ -349,7 +349,7 @@ class ClassWithDeinit {
  * Not identical to !==
  */
 class ClassIdentityOperators {
-    
+  
 }
 
 let object1 = ClassIdentityOperators()
@@ -360,10 +360,10 @@ object1 === object2
 object1 === object3
 //: ## Distinguish between methods or initializers whose names differ only by the names of their arguments
 class SomeClass {
-    func someMethod(_ x: Int, y: Int) {}
-    func someMethod(_ x: Int, z: Int) {}
-    func overloadedMethod(_ x: Int, y: Int) {}
-    func overloadedMethod(_ x: Int, y: Bool) {}
+  func someMethod(_ x: Int, y: Int) {}
+  func someMethod(_ x: Int, z: Int) {}
+  func overloadedMethod(_ x: Int, y: Int) {}
+  func overloadedMethod(_ x: Int, y: Bool) {}
 }
 
 let instance = SomeClass()

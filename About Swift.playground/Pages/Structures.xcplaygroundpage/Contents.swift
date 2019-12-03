@@ -9,7 +9,7 @@
 
 //: ## Structures With Default Values
 struct Size {
-    var width = 0.0, height = 0.0
+  var width = 0.0, height = 0.0
 }
 /*:
  ### Initialization
@@ -39,9 +39,9 @@ size8x10.width
 size8x10.height
 //: ## Structures Without Default values
 struct Dog {
-    var name: String
-    var age: Int
-    let gender: String
+  var name: String
+  var age: Int
+  let gender: String
 }
 /*:
  ### Initialization
@@ -55,19 +55,19 @@ let aDog = Dog(name: "dogName", age: 5, gender: "male");
  An initializer cannot call any instance methods, read the values of any instance properties, or refer to self as a value until after the first phase of initialization is complete.
  */
 struct Celsius {
-    var temperatureInCelsius: Double
-    
-    init(fromFahrenheit fahrenheit: Double) {
-        temperatureInCelsius = (fahrenheit - 32.0) / 1.8
-    }
-    
-    init(fromKelvin kelvin: Double) {
-        temperatureInCelsius = kelvin - 273.15
-    }
-    
-    init(_ celsius: Double) {
-        temperatureInCelsius = celsius
-    }
+  var temperatureInCelsius: Double
+  
+  init(fromFahrenheit fahrenheit: Double) {
+    temperatureInCelsius = (fahrenheit - 32.0) / 1.8
+  }
+  
+  init(fromKelvin kelvin: Double) {
+    temperatureInCelsius = kelvin - 273.15
+  }
+  
+  init(_ celsius: Double) {
+    temperatureInCelsius = celsius
+  }
 }
 
 Celsius(fromFahrenheit: 10)
@@ -81,31 +81,31 @@ Celsius(10)
  For value types, you use self.init to refer to other initializers from the same value type when writing your own custom initializers. You can call self.init only from within an initializer.
  */
 struct Point {
-    var x = 0.0, y = 0.0
+  var x = 0.0, y = 0.0
 }
 
 struct Rect {
-    var origin = Point()
-    var size = Size()
+  var origin = Point()
+  var size = Size()
+  
+  //  Calling this initializer returns a Rect instance whose origin and size properties are both initialized with the default values of Point(x: 0.0, y: 0.0) and Size(width: 0.0, height: 0.0).
+  init() {}
+  
+  
+  //  This initializer simply assigns the origin and size argument values to the appropriate stored properties.
+  init(origin: Point, size: Size) {
+    self.origin = origin
+    self.size = size
+  }
+  
+  //  This initializer starts by calculating an appropriate origin point based on a center point and a size value. It then calls (or delegates) to the init(origin:size:) initializer, which stores the new origin and size values in the appropriate properties.
+  init(center: Point, size: Size) {
+    let originX = center.x - (size.width / 2)
+    let originY = center.y - (size.height / 2)
     
-    //  Calling this initializer returns a Rect instance whose origin and size properties are both initialized with the default values of Point(x: 0.0, y: 0.0) and Size(width: 0.0, height: 0.0).
-    init() {}
-    
-    
-    //  This initializer simply assigns the origin and size argument values to the appropriate stored properties.
-    init(origin: Point, size: Size) {
-        self.origin = origin
-        self.size = size
-    }
-    
-    //  This initializer starts by calculating an appropriate origin point based on a center point and a size value. It then calls (or delegates) to the init(origin:size:) initializer, which stores the new origin and size values in the appropriate properties.
-    init(center: Point, size: Size) {
-        let originX = center.x - (size.width / 2)
-        let originY = center.y - (size.height / 2)
-        
-        // Initializer Delegation
-        self.init(origin: Point(x: originX, y: originY), size: size)
-    }
+    // Initializer Delegation
+    self.init(origin: Point(x: originX, y: originY), size: size)
+  }
 }
 
 let aRect1 = Rect()
@@ -123,9 +123,9 @@ let aRect3 = Rect(origin: Point(x: 100, y: 90),
  A failable initializer can delegate across to another failable initializer.
  */
 struct StructureWithFailableInitializers {
-    init?() {
-        return nil
-    }
+  init?() {
+    return nil
+  }
 }
 
 var aStructure = StructureWithFailableInitializers()
@@ -147,7 +147,7 @@ var aStructure = StructureWithFailableInitializers()
  If a lazy property has not yet been initialized and is accessed by more than one thread at the same time, there is no guarantee that the property will be initialized only once.
  */
 struct StructureWithLazyStoredProperty {
-    lazy var property = Size()
+  lazy var property = Size()
 }
 
 var aStructureWithLazyStoredProperty = StructureWithLazyStoredProperty()
@@ -162,46 +162,46 @@ aStructureWithLazyStoredProperty.property // The instance of person has been cre
 
 //: ## Type Properties
 struct StructureWithTypeProperties {
-    static var typeProperty = 10
-    
-    static var computedTypeProperty: Int {
-        return typeProperty * 2
-    }
+  static var typeProperty = 10
+  
+  static var computedTypeProperty: Int {
+    return typeProperty * 2
+  }
 }
 
 StructureWithTypeProperties.typeProperty = 11
 StructureWithTypeProperties.computedTypeProperty
 //: ## Methods
 struct StructureWithMethods {
+  
+  var storedProperty = 1
+  
+  //_____________________________________________
+  // Instance methods
+  
+  func instanceMethod() {
+    // Self type refers to the type introduced by the innermost type declaration
+    Self.typeMethod()
+  }
+  
+  // Mutating methods
+  
+  // Properties can be modified from within mutating methods.
+  mutating func mutatingInstanceMethod2(_ value: Int) {
+    self.storedProperty = value
+  }
+  
+  // Mutating methods can assign an entirely new instance to the implicit self property.
+  mutating func mutatingInstanceMethod1() {
+    self = StructureWithMethods()
+  }
+  
+  //_____________________________________________
+  // Type methods
+  
+  static func typeMethod() {
     
-    var storedProperty = 1
-    
-    //_____________________________________________
-    // Instance methods
-    
-    func instanceMethod() {
-      // Self type refers to the type introduced by the innermost type declaration
-      Self.typeMethod()
-    }
-    
-    // Mutating methods
-    
-    // Properties can be modified from within mutating methods.
-    mutating func mutatingInstanceMethod2(_ value: Int) {
-        self.storedProperty = value
-    }
-    
-    // Mutating methods can assign an entirely new instance to the implicit self property.
-    mutating func mutatingInstanceMethod1() {
-        self = StructureWithMethods()
-    }
-    
-    //_____________________________________________
-    // Type methods
-    
-    static func typeMethod() {
-        
-    }
+  }
   
 }
 /*:
@@ -217,71 +217,71 @@ struct StructureWithMethods {
  */
 struct StructureWithSubscripts {
   
-    //_____________________________________________
-    // Instance Subscripts
-    subscript(index: Int) -> Int {
-        get {
-            0
-        }
-        set {
-            
-        }
+  //_____________________________________________
+  // Instance Subscripts
+  subscript(index: Int) -> Int {
+    get {
+      0
     }
-    
-    //read-only Subscripts.
-    subscript(index: String) -> Int {
-        return 1
-    }
-  
-    //_____________________________________________
-    // Type Subscripts
-    static subscript(index: Int) -> Int {
-        get {
-            0
-        }
-        set {
+    set {
       
-        }
     }
-    
+  }
+  
+  //read-only Subscripts.
+  subscript(index: String) -> Int {
+    return 1
+  }
+  
+  //_____________________________________________
+  // Type Subscripts
+  static subscript(index: Int) -> Int {
+    get {
+      0
+    }
+    set {
+      
+    }
+  }
+  
 }
 /*:
  - example: A struct Matrix with subscript.
  */
 struct Matrix {
-    
-    let rows: Int, columns: Int
-    var grid: [Int]
-    
-    init(rows: Int, columns: Int) {
-        self.rows = rows
-        self.columns = columns
-        grid = Array(repeating: 0, count: rows * columns)
+  
+  let rows: Int, columns: Int
+  var grid: [Int]
+  
+  init(rows: Int, columns: Int) {
+    self.rows = rows
+    self.columns = columns
+    grid = Array(repeating: 0, count: rows * columns)
+  }
+  
+  subscript(row: Int, column: Int) -> Int {
+    get {
+      return grid[(row * columns) + column]
     }
-    
-    subscript(row: Int, column: Int) -> Int {
-        get {
-            return grid[(row * columns) + column]
-        }
-        set {
-            grid[(row * columns) + column] = newValue
-        }
+    set {
+      grid[(row * columns) + column] = newValue
     }
-    
-    func printMatrix() {
-        for i in 0..<rows {
-            for j in 0..<columns {
-                print(self[i, j], separator: "", terminator: "\t")
-            }
-            print("")
-        }
+  }
+  
+  func printMatrix() {
+    for i in 0..<rows {
+      for j in 0..<columns {
+        print(self[i, j], separator: "", terminator: "\t")
+      }
+      print("")
     }
+  }
 }
 
 let value = 5
 var identityMatrix = Matrix(rows: value, columns: value)
 for i in 0..<value {
-    identityMatrix[i, i] = 1
+  identityMatrix[i, i] = 1
 }
 //identityMatrix.printMatrix()
 //: [Next](@next)

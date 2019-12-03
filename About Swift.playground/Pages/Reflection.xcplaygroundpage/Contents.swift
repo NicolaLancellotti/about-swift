@@ -2,12 +2,12 @@
 
 //: # Reflection
 class SomeSuperClass {
-    let intValue = 0
+  let intValue = 0
 }
 
 class SomeBaseClass: SomeSuperClass {
-    let stringValue = "A string"
-    let boolValue = true
+  let stringValue = "A string"
+  let boolValue = true
 }
 /*:
  ## Mirror
@@ -29,12 +29,12 @@ firstChildren.value
  A type that explicitly supplies its own mirror.
  */
 class ClassWithCustomMirror: CustomReflectable {
-    
-    let value = 10
-    
-    var customMirror: Mirror{
-        return Mirror(self, children: ["value": "*** \(value) ***"])
-    }
+  
+  let value = 10
+  
+  var customMirror: Mirror{
+    return Mirror(self, children: ["value": "*** \(value) ***"])
+  }
 }
 
 let customMirror = Mirror(reflecting: ClassWithCustomMirror())

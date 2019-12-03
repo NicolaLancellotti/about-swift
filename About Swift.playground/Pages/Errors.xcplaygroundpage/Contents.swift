@@ -13,17 +13,17 @@ assert(true, "message")
 
 let vowel = "a"
 switch vowel {
-case "a":
+  case "a":
     print("a")
-case "e":
+  case "e":
     print("e")
-case "i":
+  case "i":
     print("i")
-case "o":
+  case "o":
     print("o")
-case "u":
+  case "u":
     print("u")
-default:
+  default:
     assertionFailure()
 }
 
@@ -37,7 +37,7 @@ default:
 
 /*:
  - important:
-  Preconditions are checked in both debug and production builds
+ Preconditions are checked in both debug and production builds
  */
 precondition(1 == 1)
 //preconditionFailure("some message")
@@ -46,8 +46,8 @@ precondition(1 == 1)
  Errors are represented by values of types that conform to the ErrorProtocol.
  */
 enum MyErrorType: Error {
-    case errorType1
-    case errorType2(value: Int)
+  case errorType1
+  case errorType2(value: Int)
 }
 //: There are four ways to handle errors in Swift.
 
@@ -57,11 +57,11 @@ enum MyErrorType: Error {
  Only throwing functions can propagate errors.
  */
 func canThrowErrors(_ mustThrow: Bool = false) throws -> String {
-    if mustThrow {
-        throw MyErrorType.errorType1
-    } else {
-        return "no error"
-    }
+  if mustThrow {
+    throw MyErrorType.errorType1
+  } else {
+    return "no error"
+  }
 }
 /*:
  2 - Handle the error using a do-catch statement.
@@ -70,13 +70,13 @@ func canThrowErrors(_ mustThrow: Bool = false) throws -> String {
  constant named error.
  */
 do {
-    try canThrowErrors()
+  try canThrowErrors()
 } catch MyErrorType.errorType1 {
-    
+  
 } catch MyErrorType.errorType2(let value) where value > 3{
-    
+  
 } catch {
-    
+  
 }
 //: 3 - Handle the error as an optional value.
 let value1 = try? canThrowErrors()
@@ -84,9 +84,9 @@ let value1 = try? canThrowErrors()
 // Equivalent to
 let value2: String?
 do {
-    value2 = try canThrowErrors()
+  value2 = try canThrowErrors()
 } catch {
-    value2 = nil
+  value2 = nil
 }
 /*:
  4 - Assert that the error will not occur.
@@ -103,7 +103,7 @@ let value3 = try! canThrowErrors()
  A throwing method can’t override a rethrowing method, and a throwing method can’t satisfy a protocol requirement for a rethrowing method. That said, a rethrowing method can override a throwing method, and a rethrowing method can satisfy a protocol requirement for a throwing method.
  */
 func functionWithCallback(_ callback: () throws -> Int) rethrows {
-    try callback()
+  try callback()
 }
 /*:
  # Fatal Error
@@ -115,39 +115,39 @@ func functionWithCallback(_ callback: () throws -> Int) rethrows {
  A value that represents either a success or a failure, including an associated value in each case
  */
 enum DivisionError: Error {
-    case divisionByZero
+  case divisionByZero
 }
 
 func safeDivision(_ x: Double, _ y: Double) -> Result<Double, DivisionError> {
-    if y != 0 {
-        return .success(x / y)
-    } else {
-        return .failure(.divisionByZero)
-    }
+  if y != 0 {
+    return .success(x / y)
+  } else {
+    return .failure(.divisionByZero)
+  }
 }
 
 let result1 = safeDivision(1, 0)
 switch result1 {
-case .success(let value): value
-case .failure(let error): error
+  case .success(let value): value
+  case .failure(let error): error
 }
 let mappedError = result1.mapError { _ in MyErrorType.errorType1}
 mappedError
 
 let result2 = safeDivision(10, 2)
 switch result2 {
-case .success(let value): value
-case .failure(let error): error
+  case .success(let value): value
+  case .failure(let error): error
 }
 let stringValue = result2.map{String($0)}
 stringValue
 
 
 let result3 = Result {
-    try canThrowErrors(false)
+  try canThrowErrors(false)
 }
 switch result3 {
-case .success(let value): value
-case .failure(let error): error
+  case .success(let value): value
+  case .failure(let error): error
 }
 //: [Next](@next)

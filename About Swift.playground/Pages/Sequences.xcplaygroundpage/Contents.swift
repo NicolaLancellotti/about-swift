@@ -7,29 +7,29 @@
 
 //: ## Example
 struct FibonacciIterator: IteratorProtocol {
-    
-    private var previus = 0.0
-    private var current = 1.0
-    private var flag = false
-    
-    mutating func next() -> Double? {
-        guard flag else {
-            flag = true
-            return 1
-        }
-        
-        let value = current + previus
-        previus = current
-        current = value
-        return value
-        
+  
+  private var previus = 0.0
+  private var current = 1.0
+  private var flag = false
+  
+  mutating func next() -> Double? {
+    guard flag else {
+      flag = true
+      return 1
     }
+    
+    let value = current + previus
+    previus = current
+    current = value
+    return value
+    
+  }
 }
 
 struct Fibonacci: Sequence {
-    func makeIterator() -> FibonacciIterator {
-        return FibonacciIterator()
-    }
+  func makeIterator() -> FibonacciIterator {
+    return FibonacciIterator()
+  }
 }
 
 var fibonacci = Fibonacci()
@@ -44,16 +44,16 @@ fibonacciIter.next()
 fibonacciIter.next()
 //: Conform to both Sequence and IteratorProtocol
 struct Countdown: Sequence, IteratorProtocol {
-    var count: Int
-    
-    mutating func next() -> Int? {
-        if count == 0 {
-            return nil
-        } else {
-            defer { count -= 1 }
-            return count
-        }
+  var count: Int
+  
+  mutating func next() -> Int? {
+    if count == 0 {
+      return nil
+    } else {
+      defer { count -= 1 }
+      return count
     }
+  }
 }
 
 var countdown = Countdown(count: 10)
@@ -67,13 +67,13 @@ countdown.next()
  Returns a sequence formed from first and repeated lazy applications of next.
  */
 class Node {
-    var parent: Node?
-    let name: String
-    
-    init(name: String, parent: Node?) {
-        self.name = name
-        self.parent = parent
-    }
+  var parent: Node?
+  let name: String
+  
+  init(name: String, parent: Node?) {
+    self.name = name
+    self.parent = parent
+  }
 }
 
 let root = Node(name: "root", parent: nil)
@@ -87,8 +87,8 @@ let unfoldSequence1: UnfoldSequence = sequence(first: child, next: { $0.parent }
  Returns a sequence formed from repeated lazy applications of next to a mutable state.
  */
 let unfoldSequence2: UnfoldSequence = sequence(state: 10) { (value: inout Int) -> String? in
-    value -= 1
-    return value == 0 ? nil : "Value: \(value)"
+  value -= 1
+  return value == 0 ? nil : "Value: \(value)"
 }
 /*:
  ### stride(from:to:by:)
@@ -116,30 +116,30 @@ let naturalNumbers = 1...Int.max
 
 let zipped: Zip2Sequence = zip(words, naturalNumbers)
 for (word, number) in zipped {
-        print("\(word): \(number)")
+  print("\(word): \(number)")
 }
 //: ## Methods
 //: ### Iterate
 let threeTwoOne = Countdown(count: 3)
 for count in threeTwoOne {
-    print(count)
+  print(count)
 }
 
 var iterator = threeTwoOne.makeIterator()
 while let count = iterator.next() {
-    print(count)
+  print(count)
 }
 
 iterator = threeTwoOne.makeIterator()
 for count in IteratorSequence(iterator) {
-    print(count)
+  print(count)
 }
 
 //: ### Enumerate
 let enumeratedSequence: EnumeratedSequence = threeTwoOne.enumerated()
 
 for (n, elem) in threeTwoOne.enumerated() {
-    print(n, elem)
+  print(n, elem)
 }
 
 /*:
@@ -216,33 +216,33 @@ lazyFilterIter.next()
 lazyFilterIter.next()
 //: ### Add New Lazy Sequence Operation
 struct LazyEvenIterator<Base: IteratorProtocol>: IteratorProtocol where Base.Element == Int{
-    
-    var iterator: Base
-    
-    mutating func next() -> Int? {
-        guard let value = iterator.next() else {
-            return nil
-        }
-        return value % 2 == 0 ? value : iterator.next()
+  
+  var iterator: Base
+  
+  mutating func next() -> Int? {
+    guard let value = iterator.next() else {
+      return nil
     }
-    
+    return value % 2 == 0 ? value : iterator.next()
+  }
+  
 }
 
 struct LazyEvenSequence<Base: Sequence>: LazySequenceProtocol where Base.Iterator.Element == Int{
-    var sequence: Base
-    
-    func makeIterator() -> LazyEvenIterator<Base.Iterator> {
-        return LazyEvenIterator(iterator: sequence.makeIterator())
-    }
-    
+  var sequence: Base
+  
+  func makeIterator() -> LazyEvenIterator<Base.Iterator> {
+    return LazyEvenIterator(iterator: sequence.makeIterator())
+  }
+  
 }
 
 extension LazySequenceProtocol where Iterator.Element == Int{
-    
-    /// **Complexity:** O(1)
-    func even() -> LazyEvenSequence<Self> {
-        return LazyEvenSequence(sequence: self)
-    }
+  
+  /// **Complexity:** O(1)
+  func even() -> LazyEvenSequence<Self> {
+    return LazyEvenSequence(sequence: self)
+  }
 }
 
 

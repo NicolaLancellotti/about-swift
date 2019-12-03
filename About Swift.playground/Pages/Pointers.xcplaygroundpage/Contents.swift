@@ -45,18 +45,18 @@ intArray.deinitialize(count: 3)
 intArray.deallocate()
 //: ### Example Deinitialize
 class SomeClass {
-    deinit {
-        print("deinit SomeClass")
-    }
+  deinit {
+    print("deinit SomeClass")
+  }
 }
 
 struct SomeStruct {
-    var someClass: SomeClass
-    
-    init(someClass: SomeClass) {
-        self.someClass = someClass
-    }
-    
+  var someClass: SomeClass
+  
+  init(someClass: SomeClass) {
+    self.someClass = someClass
+  }
+  
 }
 
 let p = UnsafeMutablePointer<SomeStruct>.allocate(capacity: 1)
@@ -67,16 +67,16 @@ p.deinitialize(count: 1) // print "deinit SomeClass" in the console
 p.deallocate()
 //: ### Rebinds memory
 struct BaseStruct {
-    var stringValue: String
-    
-    func foo() -> String {
-        return stringValue
-    }
+  var stringValue: String
+  
+  func foo() -> String {
+    return stringValue
+  }
 }
 
 struct SubStruct {
-    var stringValue: String
-    var intValue: Int
+  var stringValue: String
+  var intValue: Int
 }
 
 var subStruct = SubStruct(stringValue: "Hello", intValue: 1)
@@ -85,7 +85,7 @@ let subStructP = UnsafeMutablePointer(&subStruct)
 let fooValue = subStructP.withMemoryRebound(to: BaseStruct.self,
                                             capacity: 1)
 {
-    return $0.pointee.foo()
+  return $0.pointee.foo()
 }
 
 /*:
@@ -106,7 +106,7 @@ let fooValue = subStructP.withMemoryRebound(to: BaseStruct.self,
 let storage = UnsafeMutablePointer<Int>.allocate(capacity: 10)
 let buffer = UnsafeMutableBufferPointer(start: storage, count: 10)
 defer {
-    buffer.deallocate()
+  buffer.deallocate()
 }
 
 buffer.baseAddress
@@ -114,7 +114,7 @@ buffer.baseAddress
 buffer.makeIterator()
 
 (0..<buffer.count).map {
-    buffer[$0] = $0
+  buffer[$0] = $0
 }
 
 buffer.reduce(0, +)
@@ -131,82 +131,82 @@ buffer.reduce(0, +)
  A class whose instances contain a property of type Header and raw storage for an array of Element, whose size is determined at instance creation.
  */
 class StackBuffer<Element> : ManagedBuffer<Int, Element> {
+  
+  func copy() -> StackBuffer<Element> {
     
-    func copy() -> StackBuffer<Element> {
-        
-        func makeBuffer(elements: UnsafeMutablePointer<Element>) -> StackBuffer<Element> {
-            let buffer =  StackBuffer.create(minimumCapacity: capacity) { newBuf in
-                newBuf.withUnsafeMutablePointerToElements { newElements in
-                    newElements.initialize(from: elements, count: header)
-                }
-                return header
-            }
-            return buffer as! StackBuffer<Element>
+    func makeBuffer(elements: UnsafeMutablePointer<Element>) -> StackBuffer<Element> {
+      let buffer =  StackBuffer.create(minimumCapacity: capacity) { newBuf in
+        newBuf.withUnsafeMutablePointerToElements { newElements in
+          newElements.initialize(from: elements, count: header)
         }
-        
-        return withUnsafeMutablePointerToElements { makeBuffer(elements: $0)}
+        return header
+      }
+      return buffer as! StackBuffer<Element>
     }
     
-    subscript(index: Int) -> Element {
-        get {
-            return withUnsafeMutablePointerToElements {
-                let value = $0[index]
-                $0.advanced(by: index).deinitialize(count: 1)
-                return value
-            }
-        }
-        set {
-            withUnsafeMutablePointerToElements {
-                $0.advanced(by: index).initialize(to: newValue)
-            }
-        }
+    return withUnsafeMutablePointerToElements { makeBuffer(elements: $0)}
+  }
+  
+  subscript(index: Int) -> Element {
+    get {
+      return withUnsafeMutablePointerToElements {
+        let value = $0[index]
+        $0.advanced(by: index).deinitialize(count: 1)
+        return value
+      }
     }
-    
-    deinit {
-        withUnsafeMutablePointerToElements {
-            $0.deinitialize(count: header)
-            return
-        }
+    set {
+      withUnsafeMutablePointerToElements {
+        $0.advanced(by: index).initialize(to: newValue)
+      }
     }
+  }
+  
+  deinit {
+    withUnsafeMutablePointerToElements {
+      $0.deinitialize(count: header)
+      return
+    }
+  }
 }
 
 struct Stack<Element> {
-    private var _buf: StackBuffer<Element>
-    
-    init(capacity: Int) {
-        precondition(capacity > 0)
-        _buf =  StackBuffer.create(minimumCapacity: capacity) { _ in 0 } as! StackBuffer<Element>
+  private var _buf: StackBuffer<Element>
+  
+  init(capacity: Int) {
+    precondition(capacity > 0)
+    _buf =  StackBuffer.create(minimumCapacity: capacity) { _ in 0 } as! StackBuffer<Element>
+  }
+  
+  var isEmpty: Bool {
+    return _buf.header == 0
+  }
+  
+  var isFull: Bool {
+    return _buf.header == _buf.capacity
+  }
+  
+  mutating func push(_ element: Element) {
+    if !isKnownUniquelyReferenced(&_buf) {
+      _buf = _buf.copy()
     }
     
-    var isEmpty: Bool {
-        return _buf.header == 0
+    let index = _buf.header
+    precondition(index != _buf.capacity)
+    _buf[index] = element
+    _buf.header = index + 1
+  }
+  
+  mutating func pop() -> Element {
+    if !isKnownUniquelyReferenced(&_buf) {
+      _buf = _buf.copy()
     }
     
-    var isFull: Bool {
-        return _buf.header == _buf.capacity
-    }
-    
-    mutating func push(_ element: Element) {
-        if !isKnownUniquelyReferenced(&_buf) {
-            _buf = _buf.copy()
-        }
-        
-        let index = _buf.header
-        precondition(index != _buf.capacity)
-        _buf[index] = element
-        _buf.header = index + 1
-    }
-    
-    mutating func pop() -> Element {
-        if !isKnownUniquelyReferenced(&_buf) {
-            _buf = _buf.copy()
-        }
-        
-        let index = _buf.header - 1
-        precondition(index >= 0)
-        _buf.header = index
-        return _buf[index]
-    }
+    let index = _buf.header - 1
+    precondition(index >= 0)
+    _buf.header = index
+    return _buf[index]
+  }
 }
 
 var stack = Stack<Int>(capacity: 4)
@@ -233,23 +233,23 @@ stack2.pop()
 var numbers = [1, 2, 3, 4, 5]
 
 let sum = numbers.withContiguousStorageIfAvailable { buffer -> Int in
-    var result = 0
-    for i in stride(from: buffer.startIndex, to: buffer.endIndex, by: 2) {
-        result += buffer[i]
-    }
-    return result
+  var result = 0
+  for i in stride(from: buffer.startIndex, to: buffer.endIndex, by: 2) {
+    result += buffer[i]
+  }
+  return result
 }
 
 numbers.withContiguousMutableStorageIfAvailable { buffer in
-    for i in stride(from: buffer.startIndex, to: buffer.endIndex - 1, by: 2) {
-        buffer.swapAt(i, i + 1)
-    }
+  for i in stride(from: buffer.startIndex, to: buffer.endIndex - 1, by: 2) {
+    buffer.swapAt(i, i + 1)
+  }
 }
 numbers
 /*:
-## Array Initializer with Access to Uninitialized Storage
+ ## Array Initializer with Access to Uninitialized Storage
  The memory in the range buffer[0..<initializedCount] must be initialized at the end of the closure’s execution, and the memory in the range buffer[initializedCount...] must be uninitialized. This postcondition must hold even if the initializer closure throws an error.
-*/
+ */
 let array = Array<Int>(unsafeUninitializedCapacity: 6) { (buffer, initializedCount) in
   buffer[0] = 0
   buffer[1] = 1

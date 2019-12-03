@@ -7,26 +7,26 @@ protocol ProtocolA {}
 ProtocolA.self // metatype type
 //: ## Class
 class ClassB {
-    
+  
 }
 
 class ClassA: ClassB {
- 
-    var data = 0
+  
+  var data = 0
+  
+  override init() {
     
-    override init() {
-        
-    }
+  }
+  
+  required init(data: Int) {
     
-    required init(data: Int) {
-        
-    }
-    
-    static func typeMethod() {
-    }
-    
-    func instanceMethod() {
-    }
+  }
+  
+  static func typeMethod() {
+  }
+  
+  func instanceMethod() {
+  }
 }
 let object = ClassA()
 //: ## Type
@@ -95,8 +95,8 @@ dic[keyPath: keyPath3]
 
 
 /*:
-  The path can refer to self to create the identity key path (\.self). The identity key path refers to a whole instance,
-  so you can use it to access and change all of the data stored in a variable in a single step
+ The path can refer to self to create the identity key path (\.self). The identity key path refers to a whole instance,
+ so you can use it to access and change all of the data stored in a variable in a single step
  */
 
 dic[keyPath: \.self] = ["key2" : [3]]

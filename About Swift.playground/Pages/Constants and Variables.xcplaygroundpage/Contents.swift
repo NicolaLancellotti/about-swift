@@ -75,23 +75,23 @@ var red: Int, green, blue: Double
  
  */
 var value = 10 {
-    willSet {
-        print("new: \(newValue) actual: \(value)")
-    }
-    didSet{
-        print("old: \(oldValue) actual: \(value)")
-    }
+  willSet {
+    print("new: \(newValue) actual: \(value)")
+  }
+  didSet{
+    print("old: \(oldValue) actual: \(value)")
+  }
 }
 
 value = 100
 
 var anInt = 10 {
-    willSet(newInt) {
-        print("new: \(newInt) actual: \(anInt)")
-    }
-    didSet(oldInt) {
-        print("old: \(oldInt) actual: \(anInt)")
-    }
+  willSet(newInt) {
+    print("new: \(newInt) actual: \(anInt)")
+  }
+  didSet(oldInt) {
+    print("old: \(oldInt) actual: \(anInt)")
+  }
 }
 /*:
  ## Computed Variables
@@ -102,18 +102,18 @@ var km = 1.0
 
 // Computed Variable
 var miles: Double {
-    set {
-        km = newValue * 1.60934
-    }
-    get {
+  set {
+    km = newValue * 1.60934
+  }
+  get {
     // If the entire body of a getter is a single expression,
     // the getter implicitly returns that expression
-        km * 0.621371
-    }
-    // The same as:
-    //    get {
-    //        return km * 0.621371
-    //    }
+    km * 0.621371
+  }
+  // The same as:
+  //    get {
+  //        return km * 0.621371
+  //    }
 }
 
 miles = 4
@@ -123,7 +123,7 @@ km = 2
 miles
 //: ### Read-only Computed Variables.
 var miles2: Double {
-    return km * 0.621371
+  return km * 0.621371
 }
 
 miles2

@@ -4,19 +4,19 @@
 
 //: ## Functions Without Parameters
 func functionWithoutParameters() {
-    
+  
 }
 
 functionWithoutParameters()
 //: ## Functions With Return Values
 func funcWithReturnValue() -> Bool {
-    return false
+  return false
 }
 
 let aBool = funcWithReturnValue()
 //: If the entire body of the function is a single expression, the function implicitly returns that expression
- func funcWithImplicitReturnValue() -> Bool {
-    false
+func funcWithImplicitReturnValue() -> Bool {
+  false
 }
 
 let anotherBool = funcWithImplicitReturnValue()
@@ -27,25 +27,25 @@ let anotherBool = funcWithImplicitReturnValue()
  
  */
 func difference(x: Int, y: Int) -> Int {
-    return x - y
+  return x - y
 }
 difference(x: 1, y: 2)
 //: Specifying Argument Labels
 func difference(of x: Int, less y: Int) -> Int {
-    return x - y
+  return x - y
 }
 
 difference(of: 1, less: 2)
 
 //: If you don’t want an argument label for a parameter, write an underscore (_) instead of an explicit argument label for that parameter.
 func difference(_ x: Int, _ y: Int) -> Int {
-    return x - y
+  return x - y
 }
 
 difference(1, 2)
 //: ## Functions With Default Parameter Values
 func funcWithDefaultParameterValue(param: Int = 12) {
-    print("Value: \(param)")
+  print("Value: \(param)")
 }
 
 funcWithDefaultParameterValue()
@@ -56,11 +56,11 @@ funcWithDefaultParameterValue(param: 1)
  A function may have at most one variadic parameter.
  */
 func sum(_ numbers: Double...) -> Double {
-    var sum = 0.0
-    for value in numbers {
-        sum += value
-    }
-    return sum
+  var sum = 0.0
+  for value in numbers {
+    sum += value
+  }
+  return sum
 }
 
 sum(1.0, 2.0, 3.0, 5)
@@ -75,9 +75,9 @@ max(1, 2, 3, 4, 5, 6)
  If you pass a property that has observers to a function as an in-out parameter, the willSet and didSet observers are always called. This is because of the copy-in copy-out memory model for in-out parameters: The value is always written back to the property at the end of the function.
  */
 func swapTwoInts(_ a: inout Int, _ b: inout Int) {
-    let temporaryA = a
-    a = b
-    b = temporaryA
+  let temporaryA = a
+  a = b
+  b = temporaryA
 }
 
 var a = 1
@@ -93,19 +93,19 @@ b
  If a function with the same name but a distinct signature already exists, it just defines a new overload. Keep in mind that Swift allows function overloading even when two signatures differ only in their return type.
  */
 func foo(_ value: String) {
-    print(value)
+  print(value)
 }
 
 func foo(_ value: Int) {
-    print(value)
+  print(value)
 }
 
 func foo() {
-    print("Foo!")
+  print("Foo!")
 }
 
 func foo() -> String {
-    return "Foo!"
+  return "Foo!"
 }
 
 foo("Hello, world!")
@@ -114,15 +114,15 @@ foo() as Void
 var value: String = foo()
 //: ## Nested Functions
 func globalFunction() {
-    var variable = 1
-    
-    func nestedFunction() {
-        // Nested functions can capture values from their enclosing function.
-        variable = 2
-        print("Variable: \(variable)")
-    }
-    
-    nestedFunction()
+  var variable = 1
+  
+  func nestedFunction() {
+    // Nested functions can capture values from their enclosing function.
+    variable = 2
+    print("Variable: \(variable)")
+  }
+  
+  nestedFunction()
 }
 
 globalFunction()
@@ -131,11 +131,11 @@ globalFunction()
  A guard statement is used to transfer program control out of a scope if one or more conditions aren’t met.
  */
 func doSomething(_ optionalValue: Int?) {
-    guard let value = optionalValue else {
-        print("*** Error **** value must not be nil")
-        return
-    }
-    print("value: \(value)")
+  guard let value = optionalValue else {
+    print("*** Error **** value must not be nil")
+    return
+  }
+  print("value: \(value)")
 }
 
 var optionalValue: Int? = nil
@@ -151,13 +151,13 @@ doSomething(optionalValue)
  
  */
 func functionWithDefers() {
-    defer {
-        print("First defer")
-    }
-    defer {
-        print("Second defer")
-    }
-    print("end")
+  defer {
+    print("First defer")
+  }
+  defer {
+    print("Second defer")
+  }
+  print("end")
 }
 
 functionWithDefers()
@@ -169,8 +169,8 @@ functionWithDefers()
  Throwing and rethrowing functions can transfer program control to an appropriate catch block, even when they are nonreturning.
  */
 func loop() -> Never  {
-    while true {
-        
-    }
+  while true {
+    
+  }
 }
 //: [Next](@next)

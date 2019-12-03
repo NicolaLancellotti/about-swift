@@ -8,12 +8,12 @@ let condition3 = false
 
 //: 0 <= i <= 4
 for i in 0...4  {
-    // do something
-    i
+  // do something
+  i
 }
 //: 0 <= i < 4
 for _ in 0..<4 {
-    // do something
+  // do something
 }
 /*:
  * callout(Wildcard Pattern):
@@ -22,31 +22,31 @@ for _ in 0..<4 {
 
 //: i = 0, 2, 4
 for i in 0...4 where i % 2 == 0  {
-    // do something
+  // do something
 }
 //: is the same of:
 for i in 0...4 {
-    if i % 2 == 0 {
-        // do something
-    }
+  if i % 2 == 0 {
+    // do something
+  }
 }
 
 //: ## While
 while condition1 {
-    // do something
+  // do something
 }
 //: ## Repeat-While
 repeat {
-    // do something
+  // do something
 } while condition1
 
 //: ## If
 if condition1 {
-   // do something
+  // do something
 } else if condition2 {
-    // do something
+  // do something
 } else {
-    // do something
+  // do something
 }
 /*:
  ## Switch
@@ -57,46 +57,46 @@ if condition1 {
 var number = 0
 
 switch number {
-case 0:
+  case 0:
     print("0")
-case 1:
+  case 1:
     print("1")
-default:
+  default:
     print("> 1")
 }
 //: ### Where & Value Bindings
 number = 12
 
 switch number {
-case 0:
+  case 0:
     print("0")
-case let x where x % 2 == 0:
+  case let x where x % 2 == 0:
     print("\(number) is even")
-default:
+  default:
     print("\(number) is odd")
 }
 //: ### Interval Matching
 number = 5
 switch number {
-case 0...5:
+  case 0...5:
     print("0 <= x <= 5")
-default:
+  default:
     print("x >= 6")
 }
 //: ### Compound Cases
 let someCharacter: Character = "e"
 switch someCharacter {
-case "a", "e", "i", "o", "u":
+  case "a", "e", "i", "o", "u":
     print("\(someCharacter) is a vowel")
-default:
+  default:
     print("\(someCharacter) is not a vowel")
 }
 //: ### Compound cases can also include value bindings
 let stillAnotherPoint = (9, 0)
 switch stillAnotherPoint {
-case (let distance, 0), (0, let distance):
+  case (let distance, 0), (0, let distance):
     print("On an axis, \(distance) from the origin")
-default:
+  default:
     print("Not on an axis")
 }
 /*:
@@ -108,21 +108,21 @@ default:
 
 //: ## Labeled Statements
 label1: while condition1 {
-    while condition2 {
-        if condition3 {
-            continue label1
-        }
-        // do something
-        
+  while condition2 {
+    if condition3 {
+      continue label1
     }
+    // do something
+    
+  }
 }
 
 label2: for _ in 1...4 {
-    // do something
+  // do something
 }
 
 label3: if condition1 {
-    // do something
+  // do something
 }
 /*:
  ## Conditional Compilation Block
@@ -144,14 +144,14 @@ label3: if condition1 {
  The arch(i386) build configuration returns true when code is compiled for the 32–bit iOS simulator.
  */
 #if os(macOS)
-    // do something
+// do something
 #elseif arch(arm)
-    // do something
+// do something
 #elseif swift(>=2.1)
-    // do something
+// do something
 #elseif !FLAG
-    // do something
+// do something
 #else
-    // do something
+// do something
 #endif
 //: [Next](@next)

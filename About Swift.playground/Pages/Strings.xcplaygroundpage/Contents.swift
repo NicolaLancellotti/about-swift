@@ -20,7 +20,7 @@ emoji.isASCII
 number.isNumber
 /*:
  ###  Strings
-A Unicode string value that is a collection of characters.
+ A Unicode string value that is a collection of characters.
  */
 let emptyString = String()
 let anotherEmptyString = ""
@@ -60,7 +60,7 @@ word.count
 word[word.index(word.startIndex, offsetBy: 3)]
 
 for index in word.indices {
-    print("\(word[index]) ", terminator: "")
+  print("\(word[index]) ", terminator: "")
 }
 print("")
 
@@ -79,7 +79,7 @@ print("Numeric values: ", dogString.unicodeScalars.map { $0.value });
 
 var codeUnits: [UTF32.CodeUnit] = []
 transcode(dogString.utf8.makeIterator(), from: UTF8.self, to: UTF32.self, stoppingOnError: false) {
-    codeUnits.append($0)
+  codeUnits.append($0)
 }
 print("Numeric values: ", codeUnits);
 
@@ -110,9 +110,9 @@ till you come to the end; then stop."
 """
 //: Intendation
 let linesWithIndentation = """
-    ABCD
-        abcd
-    """
+ABCD
+abcd
+"""
 /*:
  ##  Extended String Delimiters
  A string delimited by extended delimiters is a sequence of characters surrounded by quotation marks and a balanced set of one or more number signs (#)

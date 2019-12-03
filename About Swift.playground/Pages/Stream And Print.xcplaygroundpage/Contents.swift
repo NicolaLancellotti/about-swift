@@ -12,12 +12,12 @@ print("A", "B", "C", separator: "-", terminator: "|END\n")
  Dumps an object’s contents using its mirror to standard output.
  */
 class SomeClass {
-    var classValue0 = "a string"
-    var classValue1 = SomeStructure()
-    
-    struct SomeStructure {
-        var structValue0 =  10
-    }
+  var classValue0 = "a string"
+  var classValue1 = SomeStructure()
+  
+  struct SomeStructure {
+    var structValue0 =  10
+  }
 }
 
 let instance = SomeClass()

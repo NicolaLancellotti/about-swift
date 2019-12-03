@@ -30,38 +30,38 @@
  No entity can be defined in terms of another entity that has a lower (more restrictive) access level.
  */
 public class SomePublicClass {                   // explicitly public class
-    public var somePublicProperty = 0            // explicitly public class member
-    var someInternalProperty = 0                 // implicitly internal class member
-    fileprivate func someFilePrivateMethod() {}  // explicitly file-private class member
-    private func somePrivateMethod() {}          // explicitly private class member
+  public var somePublicProperty = 0            // explicitly public class member
+  var someInternalProperty = 0                 // implicitly internal class member
+  fileprivate func someFilePrivateMethod() {}  // explicitly file-private class member
+  private func somePrivateMethod() {}          // explicitly private class member
 }
 
 class SomeInternalClass {                        // implicitly internal class
-    var someInternalProperty = 0                 // implicitly internal class member
-    fileprivate func someFilePrivateMethod() {}  // explicitly file-private class member
-    private func somePrivateMethod() {}          // explicitly private class member
+  var someInternalProperty = 0                 // implicitly internal class member
+  fileprivate func someFilePrivateMethod() {}  // explicitly file-private class member
+  private func somePrivateMethod() {}          // explicitly private class member
 }
 
 fileprivate class SomeFilePrivateClass {         // explicitly file-private class
-    func someFilePrivateMethod() {}              // implicitly file-private class member
-    private func somePrivateMethod() {}          // explicitly private class member
+  func someFilePrivateMethod() {}              // implicitly file-private class member
+  private func somePrivateMethod() {}          // explicitly private class member
 }
 
 private class SomePrivateClass {                 // explicitly private class
-    func somePrivateMethod() {}                  // implicitly private class member
+  func somePrivateMethod() {}                  // implicitly private class member
 }
 
 //: ## Swift allows the get of a property to be more accessible than its set
 public struct TrackedString {
-    
-    public private(set) var numberOfEdits = 0
-    
-    public var value: String = "" {
-        didSet {
-            numberOfEdits += 1
-        }
+  
+  public private(set) var numberOfEdits = 0
+  
+  public var value: String = "" {
+    didSet {
+      numberOfEdits += 1
     }
-    
-    public init() {}
+  }
+  
+  public init() {}
 }
 //: [Next](@next)

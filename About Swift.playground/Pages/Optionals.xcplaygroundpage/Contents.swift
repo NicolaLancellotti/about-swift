@@ -20,7 +20,7 @@ possibleString = "Hello"
  Trying to use ! to access a non-existent optional value triggers a runtime error.
  */
 if possibleString != nil {
-    print(possibleString!)
+  print(possibleString!)
 }
 /*:
  ## Optional Binding
@@ -28,22 +28,22 @@ if possibleString != nil {
  You use optional binding to find out whether an optional contains a value, and if so, to make that value available as a temporary constant.
  */
 if let constantString = possibleString {
-    print("Value: \(constantString)")
+  print("Value: \(constantString)")
 }
 
 var possibleName: String? = "Nicola"
 var possibleAge: Int? = 23
 //: You can include as many optional bindings and Boolean conditions in a single if statement as you need to, separated by commas.
 if let name = possibleName, let age = possibleAge {
-    print("Name: \(name) Age: \(age)")
+  print("Name: \(name) Age: \(age)")
 } else {
-    print("possibleName is nil or possibleAge is nil")
+  print("possibleName is nil or possibleAge is nil")
 }
 
 if let name = possibleName, let age = possibleAge , age > 23 {
-    print("Name: \(name) Age: \(age)")
+  print("Name: \(name) Age: \(age)")
 } else {
-    print("possibleName is nil or possibleAge is nil or age isn't > 23")
+  print("possibleName is nil or possibleAge is nil or age isn't > 23")
 }
 /*:
  ## Implicitly Unwrapped Optionals
@@ -61,11 +61,11 @@ let assumedString: String! = "An implicitly unwrapped optional string."
 let implicitString: String = assumedString // no need for an exclamation mark
 
 if assumedString != nil {
-    print(assumedString as String)
+  print(assumedString as String)
 }
 
 if let definiteString = assumedString {
-    print(definiteString)
+  print(definiteString)
 }
 /*:
  ## Nil Coalescing Operator

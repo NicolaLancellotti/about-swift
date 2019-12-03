@@ -11,27 +11,27 @@
  
  */
 class Person {
-    var name = ""
-    
-    var children = [Person]()
-    
-    subscript(i: Int) -> Person {
-        get {
-            return children[i]
-        }
-        set {
-            children[i] = newValue
-        }
+  var name = ""
+  
+  var children = [Person]()
+  
+  subscript(i: Int) -> Person {
+    get {
+      return children[i]
     }
-    
-    func printName() {
-        print("The ownner's name is \(name)")
+    set {
+      children[i] = newValue
     }
-    
-    func funcReturnInt() -> Int {
-        return 42
-    }
-    
+  }
+  
+  func printName() {
+    print("The ownner's name is \(name)")
+  }
+  
+  func funcReturnInt() -> Int {
+    return 42
+  }
+  
 }
 
 var person: Person?
@@ -44,9 +44,9 @@ person?.name = "Nicola"
 
 
 if (person?.name = "Nicola") != nil {
-    true
+  true
 } else {
-    false
+  false
 }
 /*:
  ## Calling Methods Through Optional Chaining
@@ -59,9 +59,9 @@ let value = person?.funcReturnInt()
 person?.printName()
 
 if person?.printName() != nil {
-    true
+  true
 } else {
-    false
+  false
 }
 //: ## Accessing Subscripts Through Optional Chaining
 //person = Person()
@@ -71,9 +71,9 @@ let firstChilName = person?[0].name
 person?[0].name = "Ilenia"
 
 if (person?[0].name = "Ilenia") != nil {
-    true
+  true
 } else {
-    false
+  false
 }
 /*:
  ## Linking Multiple Levels of Chaining

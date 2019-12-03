@@ -8,12 +8,12 @@
  Apply this attribute to a function or method declaration to suppress the compiler warning when the function or method that returns a value is called without using its result.
  */
 struct Increaser {
-    var value = 0
-    
-    @discardableResult
-    func increased() -> Int {
-        return value + 1
-    }
+  var value = 0
+  
+  @discardableResult
+  func increased() -> Int {
+    return value + 1
+  }
 }
 /*:
  ## Cross-module inlining and specialization
@@ -28,12 +28,12 @@ struct Increaser {
  */
 @inlinable
 public func foo() {
-    bar()
+  bar()
 }
 
 @usableFromInline
 internal func bar() {
-    
+  
 }
 /*:
  ## Dynamic Member Lookup
@@ -44,17 +44,17 @@ internal func bar() {
  */
 @dynamicMemberLookup
 class DynamicDictionary {
-    
-    private var dictionary = [String: String]()
-    
-    subscript(dynamicMember member: String) -> String? {
-        get {
-            return dictionary[member]
-        }
-        set {
-            dictionary[member] = newValue
-        }
+  
+  private var dictionary = [String: String]()
+  
+  subscript(dynamicMember member: String) -> String? {
+    get {
+      return dictionary[member]
     }
+    set {
+      dictionary[member] = newValue
+    }
+  }
 }
 
 let dic = DynamicDictionary()
@@ -69,14 +69,14 @@ dic[dynamicMember: "name"]
  */
 @dynamicCallable
 struct DynamicCallableStruct {
-    
-    func dynamicallyCall(withArguments arguments: [Int]) -> String {
-        return "dynamically call with arguments: \(arguments)"
-    }
-    
-    func dynamicallyCall(withKeywordArguments pairs: KeyValuePairs<String, Int>) -> String {
-        return "dynamically call with keyword arguments: \(pairs)"
-    }
+  
+  func dynamicallyCall(withArguments arguments: [Int]) -> String {
+    return "dynamically call with arguments: \(arguments)"
+  }
+  
+  func dynamicallyCall(withKeywordArguments pairs: KeyValuePairs<String, Int>) -> String {
+    return "dynamically call with keyword arguments: \(pairs)"
+  }
 }
 
 let callable = DynamicCallableStruct()

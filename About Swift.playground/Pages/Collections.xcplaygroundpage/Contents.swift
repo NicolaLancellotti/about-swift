@@ -9,22 +9,22 @@
  Supports forward traversal.
  */
 struct ACollection: Collection {
-    
-    var startIndex: Int {
-        return 0
-    }
-    
-    var endIndex: Int {
-        return 100
-    }
-    
-    func index(after i: Int) -> Int {
-        return i + 1
-    }
-    
-    subscript(position: Int) -> Int {
-        return position
-    }
+  
+  var startIndex: Int {
+    return 0
+  }
+  
+  var endIndex: Int {
+    return 100
+  }
+  
+  func index(after i: Int) -> Int {
+    return i + 1
+  }
+  
+  subscript(position: Int) -> Int {
+    return position
+  }
 }
 
 let aCollection = ACollection()
@@ -66,29 +66,29 @@ lazyFilterCollection.startIndex
  Inherits From Collection.
  */
 struct ABidirectionalCollection: BidirectionalCollection {
-    
-    // Collection
-    var startIndex: Int {
-        return 0
-    }
-    
-    var endIndex: Int {
-        return 100
-    }
-    
-    func index(after i: Int) -> Int {
-        return i + 1
-    }
-    
-    subscript(position: Int) -> Int {
-        return position
-    }
-    
-    // BidirectionalCollection
-    
-    func index(before i: Int) -> Int {
-        return i - 1
-    }
+  
+  // Collection
+  var startIndex: Int {
+    return 0
+  }
+  
+  var endIndex: Int {
+    return 100
+  }
+  
+  func index(after i: Int) -> Int {
+    return i + 1
+  }
+  
+  subscript(position: Int) -> Int {
+    return position
+  }
+  
+  // BidirectionalCollection
+  
+  func index(before i: Int) -> Int {
+    return i - 1
+  }
 }
 
 let aBidirectionalCollection = ABidirectionalCollection()
@@ -110,43 +110,43 @@ let reversedCollection: ReversedCollection = aBidirectionalCollection.reversed()
  Inherits From RandomAccessCollection.
  */
 struct ARandomAccessCollection: RandomAccessCollection {
-    
-    // Collection
-    var startIndex: Int {
-        return 0
-    }
-    
-    var endIndex: Int {
-        return 100
-    }
-    
-    func index(after i: Int) -> Int {
-        return i + 1
-    }
-    
-    subscript(position: Int) -> Int {
-        return position
-    }
-    
-    // BidirectionalCollection
-    
-    func index(before i: Int) -> Int {
-        return i - 1
-    }
-    
-    // RandomAccessCollection
-    // Either index is conform to the Strideable
-    // or you must implement:
-    
-    func index(_ i: Int, offsetBy n: Int) -> Int {
-        return i + n
-    }
-    
-    func distance(from start: Int, to end: Int) -> Int {
-        return end - start
-    }
-    
-    // In this case index (Int) already complied to Strideable
+  
+  // Collection
+  var startIndex: Int {
+    return 0
+  }
+  
+  var endIndex: Int {
+    return 100
+  }
+  
+  func index(after i: Int) -> Int {
+    return i + 1
+  }
+  
+  subscript(position: Int) -> Int {
+    return position
+  }
+  
+  // BidirectionalCollection
+  
+  func index(before i: Int) -> Int {
+    return i - 1
+  }
+  
+  // RandomAccessCollection
+  // Either index is conform to the Strideable
+  // or you must implement:
+  
+  func index(_ i: Int, offsetBy n: Int) -> Int {
+    return i + n
+  }
+  
+  func distance(from start: Int, to end: Int) -> Int {
+    return end - start
+  }
+  
+  // In this case index (Int) already complied to Strideable
 }
 
 let aRandomAccessCollection = ARandomAccessCollection()
@@ -159,35 +159,35 @@ let randomReversedCollection: ReversedCollection = aRandomAccessCollection.rever
  Inherits From Collection.
  */
 struct ARangeReplaceableCollection: RangeReplaceableCollection {
+  
+  private var storage = [Int]()
+  
+  // Collection
+  var startIndex: Int {
+    return storage.startIndex
+  }
+  
+  var endIndex: Int {
+    return storage.endIndex
+  }
+  
+  func index(after i: Int) -> Int {
+    return i + 1
+  }
+  
+  subscript(position: Int) -> Int {
+    return storage[position]
+  }
+  
+  // RangeReplaceableCollection
+  
+  init() {
     
-    private var storage = [Int]()
-    
-    // Collection
-    var startIndex: Int {
-        return storage.startIndex
-    }
-    
-    var endIndex: Int {
-        return storage.endIndex
-    }
-    
-    func index(after i: Int) -> Int {
-        return i + 1
-    }
-    
-    subscript(position: Int) -> Int {
-        return storage[position]
-    }
-    
-    // RangeReplaceableCollection
-    
-    init() {
-        
-    }
-    
-    mutating func replaceSubrange<C>(_ subrange: Range<Int>, with newElements: C) where C : Collection, C.Iterator.Element == Int {
-        self.storage.replaceSubrange(subrange, with: newElements)
-    }
+  }
+  
+  mutating func replaceSubrange<C>(_ subrange: Range<Int>, with newElements: C) where C : Collection, C.Iterator.Element == Int {
+    self.storage.replaceSubrange(subrange, with: newElements)
+  }
 }
 
 var aRangeReplaceableCollection = ARangeReplaceableCollection()
@@ -220,32 +220,32 @@ aRangeReplaceableCollection.removeAll()
  Inherits From Collection.
  */
 struct AMutableCollection: MutableCollection {
-    
-    private var storage = [1, 3, 6, 2]
-    
-    // Collection
-    
-    var startIndex: Int {
-        return 0
+  
+  private var storage = [1, 3, 6, 2]
+  
+  // Collection
+  
+  var startIndex: Int {
+    return 0
+  }
+  
+  var endIndex: Int {
+    return 100
+  }
+  
+  func index(after i: Int) -> Int {
+    return i + 1
+  }
+  
+  subscript(position: Int) -> Int {
+    get {
+      return storage[position]
     }
-    
-    var endIndex: Int {
-        return 100
+    // MutableCollection
+    set {
+      storage[position] = newValue
     }
-    
-    func index(after i: Int) -> Int {
-        return i + 1
-    }
-    
-    subscript(position: Int) -> Int {
-        get {
-            return storage[position]
-        }
-        // MutableCollection
-        set {
-            storage[position] = newValue
-        }
-    }
+  }
 }
 
 var aMutableCollection = AMutableCollection()
@@ -313,7 +313,7 @@ set2 = [] // set2 is now an empty set
 /*:
  - note:
  See SetAlgebra for other set operations
-*/
+ */
 set1.startIndex
 set1.makeIterator()
 /*: 
@@ -344,14 +344,14 @@ Dictionary(uniqueKeysWithValues: pairsWithoutDuplicateKeys)
 
 // Grouping
 struct Item {
-    var key: Int
-    var data: String
+  var key: Int
+  var data: String
 }
 
 let items = [
-    Item(key: 1, data: "Name1"),
-    Item(key: 1, data: "Name2"),
-    Item(key: 2, data: "Name3")
+  Item(key: 1, data: "Name1"),
+  Item(key: 1, data: "Name2"),
+  Item(key: 2, data: "Name3")
 ]
 
 let itemsByKey = Dictionary(grouping: items) { $0.key }
@@ -393,11 +393,11 @@ keyValuePairs.first!.key
 keyValuePairs.first!.value
 //: When calling a function with a KeyValuePairs parameter, you can pass a Swift dictionary literal without causing a Dictionary to be created
 struct IntPairs {
-    var elements: [(Int, Int)]
-    
-    init(_ elements: KeyValuePairs<Int, Int>) {
-        self.elements = Array(elements)
-    }
+  var elements: [(Int, Int)]
+  
+  init(_ elements: KeyValuePairs<Int, Int>) {
+    self.elements = Array(elements)
+  }
 }
 
 let pairs = IntPairs([1: 2, 1: 1, 3: 4, 2: 1])
@@ -416,7 +416,7 @@ pairs.elements
  
  */
 class SomeClass {
-    
+  
 }
 
 let contiguousArray = ContiguousArray<SomeClass>()
@@ -439,9 +439,9 @@ array1.prefix(2)
 let names: Set = ["Sofia", "Camilla", "Martina", "Mateo", "Nicolás"]
 var shorterIndices: [SetIndex<String>] = []
 for (i, name) in zip(names.indices, names) {
-    if name.count <= 5 {
-        shorterIndices.append(i)
-    }
+  if name.count <= 5 {
+    shorterIndices.append(i)
+  }
 }
 
 names[shorterIndices[0]]

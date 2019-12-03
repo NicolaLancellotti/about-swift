@@ -2,7 +2,7 @@
 
 //: # Able Protocols
 struct SomeStructure {
-    var value: Int = 0
+  var value: Int = 0
 }
 let instance = SomeStructure()
 /*:
@@ -12,22 +12,22 @@ let instance = SomeStructure()
  When adopting Equatable, only the == operator is required to be implemented. The standard library provides an implementation for !=.
  */
 extension SomeStructure: Equatable {
-    static func ==(lhs: SomeStructure, rhs: SomeStructure) -> Bool {
-        return lhs.value == rhs.value
-    }
+  static func ==(lhs: SomeStructure, rhs: SomeStructure) -> Bool {
+    return lhs.value == rhs.value
+  }
 }
 /*:
-Swift provides synthesized implementations of the equivalence operators for the following kinds of custom types:
-
-* Structures that have only stored properties that conform to the Equatable protocol
-* Enumerations that have only associated types that conform to the Equatable protocol
-* Enumerations that have no associated types
-
+ Swift provides synthesized implementations of the equivalence operators for the following kinds of custom types:
+ 
+ * Structures that have only stored properties that conform to the Equatable protocol
+ * Enumerations that have only associated types that conform to the Equatable protocol
+ * Enumerations that have no associated types
+ 
  Declare Equatable conformance as part of the type’s original declaration to receive these default implementations.
-*/
+ */
 struct Point: Equatable {
-    let x: Int
-    let y: Int
+  let x: Int
+  let y: Int
 }
 
 Point(x: 0, y: 1) == Point(x: 0, y: 1)
@@ -39,9 +39,9 @@ Point(x: 0, y: 1) != Point(x: 0, y: 1)
  Inherits From Equatable
  */
 extension SomeStructure: Hashable {
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(value)
-    }
+  public func hash(into hasher: inout Hasher) {
+    hasher.combine(value)
+  }
 }
 
 SomeStructure().hashValue
@@ -59,9 +59,9 @@ print(hasher.finalize())
  A type conforming to Comparable need only supply the < and == operators; default implementations of <=, >, >=, and != are supplied by the standard library.
  */
 extension SomeStructure: Comparable {
-    static func <(lhs: SomeStructure, rhs: SomeStructure) -> Bool {
-        return lhs.value < rhs.value
-    }
+  static func <(lhs: SomeStructure, rhs: SomeStructure) -> Bool {
+    return lhs.value < rhs.value
+  }
 }
 
 SomeStructure(value: 1) < SomeStructure(value: 2)
@@ -78,13 +78,13 @@ min(1, 2, 3)
  Inherits From Comparable
  */
 extension SomeStructure: Strideable {
-    func advanced(by n: Int) -> SomeStructure {
-        return SomeStructure(value: self.value + n)
-    }
-    
-    func distance(to other: SomeStructure) -> Int {
-        return self.value - other.value
-    }
+  func advanced(by n: Int) -> SomeStructure {
+    return SomeStructure(value: self.value + n)
+  }
+  
+  func distance(to other: SomeStructure) -> Int {
+    return self.value - other.value
+  }
 }
 
 let instance1 = SomeStructure(value: 1)
@@ -96,34 +96,34 @@ instance1.distance(to: instance2)
  A type that can be converted to and from an associated raw value.
  */
 struct SomeStructure1: RawRepresentable {
-    var value: Int = 0
-    init?(rawValue: String) {
-        guard let value = Int(rawValue) else {
-            return nil
-        }
-        self.value = value
+  var value: Int = 0
+  init?(rawValue: String) {
+    guard let value = Int(rawValue) else {
+      return nil
     }
-    
-    var rawValue: String {
-        return String(value)
-    }
+    self.value = value
+  }
+  
+  var rawValue: String {
+    return String(value)
+  }
 }
 
 SomeStructure1(rawValue: "123")?.rawValue
 /*:
-## Identifiable
-*/
+ ## Identifiable
+ */
 struct ContactStruct: Identifiable {
-    var id: Int
-    var name: String
+  var id: Int
+  var name: String
 }
 
 class ContactClass: Identifiable {
-    var name: String
-    
-    init(name: String) {
-      self.name = name
-    }
+  var name: String
+  
+  init(name: String) {
+    self.name = name
+  }
 }
 
 ContactStruct(id: 1, name: "Nicola").id

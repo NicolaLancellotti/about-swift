@@ -18,10 +18,10 @@ typealias Handler2 = (_ token: Int) -> Void
 let cat = "?"; print(cat)
 //: ## Introduce new scopes
 do {
-    //new scope
-    do {
-        //another scope
-    }
+  //new scope
+  do {
+    //another scope
+  }
 }
 /*:
  ## Compile-Time Diagnostic Statement
@@ -50,15 +50,15 @@ file = #file
 line = #line
 
 //: ### The column number in which it begins.
-  #column
+#column
 //: ### The name of the declaration in which it appears.
 #function
 
 func logFunctionName(string: String = #function) {
-    print(string)
+  print(string)
 }
 func myFunction() {
-    logFunctionName() // Prints "myFunction()".
+  logFunctionName() // Prints "myFunction()".
 }
 
 myFunction()
@@ -91,19 +91,19 @@ let someOptional: Int? = 42
 let arrayOfOptionalInts: [Int?] = [nil, 2, 3, nil, 5]
 //: Enumeration Case Pattern
 if case .some(let x)  = someOptional {
-    x
+  x
 }
 
 for case .some(let number) in arrayOfOptionalInts {
-    number
+  number
 }
 //: Optional Pattern
 if case let x? = someOptional {
-    x
+  x
 }
 
 for case let number? in arrayOfOptionalInts {
-    number
+  number
 }
 //: [Next](@next)
 
