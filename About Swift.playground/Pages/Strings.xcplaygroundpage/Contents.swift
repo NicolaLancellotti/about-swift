@@ -28,6 +28,7 @@ let anotherEmptyString = ""
 let someString = "Some string literal value"
 let catCharacters: [Character] = ["C", "a", "t", "!", "🐱"]
 let catString = String(catCharacters)
+
 //: ## String Interpolation
 let apples = 4
 print("There are \(apples) apples")
@@ -51,6 +52,7 @@ word.count
 
 word += "\u{301}" // acute accent
 word.count
+
 /*:
  ## String Indices
  Swift strings cannot be indexed by integer values.
@@ -80,6 +82,16 @@ transcode(dogString.utf8.makeIterator(), from: UTF8.self, to: UTF32.self, stoppi
     codeUnits.append($0)
 }
 print("Numeric values: ", codeUnits);
+
+//: Contiguous Strings
+print("Contiguous Strings utf8: ", terminator: " ")
+var s = dogString
+s.isContiguousUTF8
+s.withUTF8 { buffer in
+  for char in buffer {
+    print(char, separator: " ", terminator: " ")
+  }
+}
 //: ## Multiline String Literals
 let quotation = """
 The White Rabbit put on his spectacles.  "Where shall I begin,
