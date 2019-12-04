@@ -430,6 +430,30 @@ flattenBidirectionalCollection.startIndex
 
 // ArraySlice is a slice of an Array, ContiguousArray, or ArraySlice instance.
 array1.prefix(2)
+
+//: CollectionDifference
+var old = [1, 2, 3, 0]
+let new = [0, 1, 2]
+var diff: CollectionDifference = new.difference(from: old).inferringMoves()
+let seq = Array(diff)
+seq[0]
+seq[1]
+seq[2]
+
+old.applying(diff) == new
+
+do {
+  var array = old
+  for c in diff {
+    switch c {
+      case .remove(offset: let o, element: _, associatedWith: _):
+        array.remove(at: o)
+      case .insert(offset: let o, element: let e, associatedWith: _):
+        array.insert(e, at: o)
+    }
+  }
+  array == new
+}
 /*:
  ## Enumerate
  When enumerating a collection, the integer part of each pair is a counter for the enumeration, not necessarily the index of the paired value. These counters can only be used as indices in instances of zero-based, integer-indexed collections, such as Array and ContiguousArray
