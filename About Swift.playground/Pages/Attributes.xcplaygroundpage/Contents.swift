@@ -40,7 +40,10 @@ internal func bar() {
  
  Apply this attribute to a class, structure, enumeration, or protocol to enable members to be looked up by name at runtime.
  
- In an explicit member expression, if there isn’t a corresponding declaration for the named member, the expression is understood as a call to the type’s subscript(dynamicMemberLookup:) subscript, passing a string literal that contains the member’s name as the argument. The subscript’s parameter type can be any type that conforms to the ExpressibleByStringLiteral protocol, and its return type can be any type.
+ In an explicit member expression, if there isn’t a corresponding declaration for the named member, the expression is understood as a call to the type’s subscript(dynamicMemberLookup:) subscript, passing information about the member as the argument. The subscript can accept a parameter that’s either a key path or a member name.
+ In case both string-based and keypath-based overloads match, keypath takes priority.
+ 
+ It can accept member names using an argument of a type that conforms to the ExpressibleByStringLiteral protocol—in most cases, String. The subscript’s return type can be any type.
  */
 @dynamicMemberLookup
 class DynamicDictionary {
@@ -61,6 +64,47 @@ let dic = DynamicDictionary()
 dic.name
 dic.name = "Nicola"
 dic[dynamicMember: "name"]
+
+//: Key Path Member Lookup
+@dynamicMemberLookup
+class Box<T> {
+  private let getter: () -> T
+  private let setter: (T) -> Void
+  
+  var value: T {
+    get { getter() }
+    set { setter(newValue) }
+  }
+  
+  private init(getter: @escaping () -> T,
+               setter: @escaping (T) -> Void) {
+    self.getter = getter
+    self.setter = setter
+  }
+  
+  convenience init(_ value: T) {
+    var v = value
+    self.init(getter: { v }, setter: { v = $0 })
+  }
+  
+  subscript<U>(dynamicMember keyPath: WritableKeyPath<T, U>) -> Box<U> {
+    return Box<U>(
+      getter: { self.value[keyPath: keyPath] },
+      setter: { self.value[keyPath: keyPath] = $0 })
+  }
+  
+}
+
+struct Point {
+  var x: Int
+  var y: Int
+}
+
+let box1 = Box(Point(x: 0, y: 1))
+let box2 = box1
+
+box1.x.value = 10
+box2.x.value
 /*:
  ## Dynamic Callable
  Apply this attribute to a class, structure, enumeration, or protocol to treat instances of the type as callable functions.
