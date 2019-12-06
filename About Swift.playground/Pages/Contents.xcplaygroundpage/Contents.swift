@@ -25,6 +25,7 @@
  - [Checking API Availability](Checking%20API%20Availability)
  - [Type Erasure](Type%20Erasure)
  - [Numbers & Bool](Numbers%20&%20Bool)
+ - [SIMD](SIMD)
  - [Able Protocols](Able%20Protocols)
  - [Operators](Operators)
  - [Expressible By Protocols](Expressible%20By%20Protocols)

@@ -26,6 +26,7 @@
         <page name='Checking API Availability'/>
         <page name='Type Erasure'/>
         <page name='Numbers &amp; Bool'/>
+        <page name='SIMD'/>
         <page name='Able Protocols'/>
         <page name='Operators'/>
         <page name='Expressible By Protocols'/>
