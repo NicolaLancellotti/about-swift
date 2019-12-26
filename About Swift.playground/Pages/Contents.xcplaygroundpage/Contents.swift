@@ -18,7 +18,7 @@
  - [Generics](Generics)
  - [Associated Types](Associated%20Types)
  - [Opaque Types](Opaque%20Types)
- - [Metatype Type](Metatype%20Type)
+ - [Metatypes](Metatypes)
  - [Access Control](Access%20Control)
  - [Copy](Copy)
  - [Attributes](Attributes)

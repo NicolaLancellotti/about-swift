@@ -1,6 +1,6 @@
 //: [Previous](@previous)
 
-//: # Metatype Type
+//: # Metatypes
 
 //: ## Protocol
 protocol ProtocolA {}
