@@ -77,6 +77,17 @@ protocol ProtocolWithInitializerRequirements {
 protocol InheritingProtocol: ProtocolWithInitializerRequirements, ProtocolWithMethodRequirements {
   
 }
+//: A Protocol can  constrain their conforming types to those that subclasses a given class.
+class SomeClass {}
+
+protocol SomeClassSubclassOnlyProtocol : SomeClass { }
+
+// The same as:
+//protocol SomeClassSubclassOnlyProtocol where Self : SomeClass { }
+
+
+class SomeSubclass: SomeClass, SomeClassSubclassOnlyProtocol {}
+//class SomeSubclass1: SomeClassSubclassOnlyProtocol{} // Error
 /*:
  ## Class-Only Protocols
  You can limit protocol adoption to class types (and not structures or enumerations) by adding the class keyword to a protocol’s inheritance list. The class keyword must always appear first in a protocol’s inheritance list, before any inherited protocols.
