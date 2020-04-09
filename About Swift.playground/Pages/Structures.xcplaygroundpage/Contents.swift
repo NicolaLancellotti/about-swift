@@ -207,13 +207,13 @@ struct StructureWithMethods {
 /*:
  ## Subscripts
  
- Subscripts can use:
- * variable parameters.
- * variadic parameters.
+ Subscripts can:
+ * use variable parameters.
+ * use variadic parameters.
+ * provide default parameter values.
  
  Subscripts cannot:
  * use in-out parameters.
- * provide default parameter values.
  */
 struct StructureWithSubscripts {
   
