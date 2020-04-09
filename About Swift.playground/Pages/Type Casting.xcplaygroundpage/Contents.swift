@@ -37,6 +37,15 @@ let o1 = objectClassA as ClassA // Guaranteed conversion
 let o2 = objectAnyObject as! ClassC // Forced conversion
 let o3 = objectAnyObject as? String
 /*:
+## Function Casting
+The compiler strips argument labels from function references used with the as operator in a function call.
+*/
+func foo(x: Int) {}
+func foo(x: UInt) {}
+
+(foo as (Int) -> Void)(5)
+(foo as (UInt) -> Void)(5)
+/*:
  ## Type Casting for Any and AnyObject
  * AnyObject can represent an instance of any class type.
  * Any can represent an instance of any type at all, including function types.
