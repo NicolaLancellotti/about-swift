@@ -19,7 +19,7 @@ class ClassA: ClassB {
   }
   
   required init(data: Int) {
-    
+    self.data = data
   }
   
   static func typeMethod() {
@@ -101,4 +101,17 @@ dic[keyPath: keyPath3]
 
 dic[keyPath: \.self] = ["key2" : [3]]
 dic
+
+
+/*: ### Key Path Expressions as Functions
+A ```\Root.value``` key path expression is now allowed wherever a ```(Root) -> Value``` function is allowed
+*/
+let array = [ClassA(data: 0), ClassA(data: 1)]
+var mapped = array.map(\.data)
+
+mapped = array.map { $0[keyPath: \ClassA.data]}
+mapped
+
+mapped = array.map { $0.data }
+mapped
 //: [Next](@next)
