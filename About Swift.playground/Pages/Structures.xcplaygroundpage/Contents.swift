@@ -284,4 +284,21 @@ for i in 0..<value {
   identityMatrix[i, i] = 1
 }
 //identityMatrix.printMatrix()
+/*:
+## Callable values
+Values of types that declare func callAsFunction methods can be called like functions
+*/
+struct Adder {
+  
+  var base: Int
+  
+  func callAsFunction(_ x: Int) -> Int {
+    return x + base
+  }
+  
+}
+
+var adder = Adder(base: 3)
+adder(10)
+adder.callAsFunction(10)
 //: [Next](@next)
