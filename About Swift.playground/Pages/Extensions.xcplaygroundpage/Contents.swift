@@ -156,4 +156,18 @@ let anotherInstace: AProtocol = AStructure()
 anotherInstace.foo()
 anotherInstace.fubar()
 anotherInstace.bar() // static dispaching
+//: Generic Where Clauses
+protocol Baz {
+  var baz: Int { get }
+}
+
+extension AProtocol where Self: Baz {
+  var indirectBaz: Int { baz }
+}
+
+extension AStructure: Baz {
+  var baz: Int { 10 }
+}
+
+AStructure().indirectBaz
 //: [Next](@next)
