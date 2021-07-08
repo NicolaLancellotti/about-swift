@@ -65,35 +65,43 @@ p.initialize(repeating: SomeStruct(someClass: SomeClass()),
 
 p.deinitialize(count: 1) // print "deinit SomeClass" in the console
 p.deallocate()
-//: ### Rebinds memory
-struct BaseStruct {
-  var stringValue: String
-  
-  func foo() -> String {
-    return stringValue
-  }
-}
-
-struct SubStruct {
-  var stringValue: String
-  var intValue: Int
-}
-
-var subStruct = SubStruct(stringValue: "Hello", intValue: 1)
-let subStructP = UnsafeMutablePointer(&subStruct)
-
-let fooValue = subStructP.withMemoryRebound(to: BaseStruct.self,
-                                            capacity: 1)
-{
-  return $0.pointee.foo()
-}
 
 /*:
  ## Pointers for untyped data
  * UnsafeMutableRawPointer - mutating pointer
  * UnsafeRawPointer - non mutating pointer
+ 
+ A memory location may only be bound to one type at a time
  */
+let rawPointer: UnsafeMutableRawPointer = {
+  let int16Pointer = UnsafeMutablePointer<Int16>.allocate(capacity: 1)
+  int16Pointer.initialize(to: 258) // 2 * 2^0 + 1 * 2^8
+  return UnsafeMutableRawPointer(int16Pointer)
+}()
 
+rawPointer.advanced(by: 0).load(as: UInt8.self) // 2 * 2^0 = 2
+rawPointer.advanced(by: 1).load(as: UInt8.self) // 1 * 2^8 = 256
+rawPointer.storeBytes(of: 3, as: UInt8.self)
+rawPointer.advanced(by: 0).load(as: UInt8.self) // 3 * 2^0 = 3
+rawPointer.advanced(by: 1).load(as: UInt8.self) // 1 * 2^8 = 256
+
+// Use this method when you have a raw pointer to memory that has already
+// been bound to the specified type.
+let int16Pointer = rawPointer.assumingMemoryBound(to: Int16.self)
+int16Pointer.pointee
+
+// Bind or rebind to the specified type
+let uint8Pointer = rawPointer.bindMemory(to: UInt8.self, capacity: 4)
+// Accessing int16Pointer is now undefined
+uint8Pointer.advanced(by: 0).pointee // 3 * 2^0 = 3
+uint8Pointer.advanced(by: 1).pointee // 1 * 2^8 = 256
+
+// Temporarily rebinds the memory
+uint8Pointer.withMemoryRebound(to: Int16.self, capacity: 1) {
+  $0.pointee
+}
+
+rawPointer.deallocate()
 /*:
  ## Buffer Pointers
  
@@ -259,4 +267,29 @@ let array = Array<Int>(unsafeUninitializedCapacity: 6) { (buffer, initializedCou
   initializedCount = 6
 }
 array
+/*:
+ ## Conversion to a Pointer Type
+ */
+func takeUnsafePointer<T>(_ pointer: UnsafePointer<T>) {}
+func takeunsafeMutablePointer<T>(_ pointer: UnsafeMutablePointer<T>) {}
+func takeUnsafePointerCChar(_ pointer: UnsafePointer<CChar>) {}
+//: ### Explicit Conversion
+var explicitValue = 1
+withUnsafePointer(to: explicitValue) { takeUnsafePointer($0)  }
+withUnsafeMutablePointer(to: &explicitValue) { takeunsafeMutablePointer($0) }
+/*:
+ ### Implicit Conversion
+ A pointer that’s created by these implicit conversions is valid only for the duration of the function call.
+ */
+var value = 1
+takeUnsafePointer(&value)
+takeunsafeMutablePointer(&value)
+
+var arrayValue = [1]
+takeUnsafePointer(&arrayValue)
+takeunsafeMutablePointer(&arrayValue)
+takeUnsafePointer(arrayValue)
+
+var stringValue = ""
+takeUnsafePointerCChar(stringValue)
 //: [Next](@next)
