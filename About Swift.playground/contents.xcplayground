@@ -24,6 +24,7 @@
         <page name='Copy'/>
         <page name='Attributes'/>
         <page name='Property Wrappers'/>
+        <page name='Result Builders'/>
         <page name='Miscellaneous'/>
         <page name='Checking API Availability'/>
         <page name='Type Erasure'/>
