@@ -73,6 +73,7 @@ var red: Int, green, blue: Double
  * willSet is called just before the value is stored.
  * didSet is called immediately after the new value is stored.
  
+ If the body of the didSet observer refers to the old value, the getter is called before the observer, to make the old value available.
  */
 var value = 10 {
   willSet {
