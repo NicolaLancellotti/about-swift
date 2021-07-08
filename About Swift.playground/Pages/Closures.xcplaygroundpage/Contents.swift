@@ -85,6 +85,15 @@ names.sorted() {
 names.sorted {
   $0 > $1
 }
+//: ### Multiple Trailing Closures
+func funcWithMultipleTrailingClosures(first: () -> Void,
+                                      second: () -> Void) {}
+
+funcWithMultipleTrailingClosures {
+  
+} second: {
+  
+}
 //: ## Capturing Values
 func makeIncrementer(forIncrement amount: Int) -> () -> Int {
   var runningTotal = 0
