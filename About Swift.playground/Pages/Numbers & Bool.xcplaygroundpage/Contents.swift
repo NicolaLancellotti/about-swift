@@ -64,9 +64,10 @@ UInt8.max
  Floating-Point Numbers conform to the *BinaryFloatingPoint* protocol
  which inherits from the *FloatingPoint* protocol.
  
- * Double represents a 64-bit floating-point number.
- * Float represents a 32-bit floating-point number.
- * Float80 represents a 30-bit floating-point number.
+ * Float16 represents a 16-bit floating-point number.
+ * Float32 (Float) represents a 32-bit floating-point number.
+ * Float64 (Double) represents a 64-bit floating-point number.
+ * Float80 represents a 80-bit floating-point number.
  */
 
 /*:
