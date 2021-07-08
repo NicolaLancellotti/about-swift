@@ -139,7 +139,6 @@ var aStructure = StructureWithFailableInitializers()
  ## Lazy Stored properties
  
  * Must be variables because constant properties must always have a value before initialization completes.
- * Can't have Property Observers.
  */
 
 /*:
