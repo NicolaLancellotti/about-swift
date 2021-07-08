@@ -68,6 +68,14 @@ SomeStructure(value: 1) < SomeStructure(value: 2)
 SomeStructure(value: 1) <= SomeStructure(value: 2)
 SomeStructure(value: 1) > SomeStructure(value: 2)
 SomeStructure(value: 1) >= SomeStructure(value: 2)
+//: ### Synthesized implementations of Comparable for enumerations
+enum ComparableEnumeration: Comparable {
+  case first
+  case second(Int)
+}
+
+ComparableEnumeration.first < ComparableEnumeration.second(1)
+ComparableEnumeration.second(1) < ComparableEnumeration.second(2)
 //: ### Function with comparable parameters
 max(1, 2, 3)
 min(1, 2, 3)
