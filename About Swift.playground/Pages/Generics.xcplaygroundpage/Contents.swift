@@ -54,6 +54,13 @@ enum LinkedList<Element> {
       return indices.map {self[$0]}
   }
   
+  func sum() -> Int where Element == Int {
+    switch self {
+      case .empty: return 0
+      case let .cons(elem, next): return elem + next.sum()
+    }
+  }
+
 }
 
 var list: LinkedList<Int> = .cons(0, .cons(1, .empty))
@@ -81,15 +88,6 @@ extension LinkedList where Element: Equatable {
     switch self {
       case .empty: return false
       case .cons(let elem, _): return elem == item
-    }
-  }
-}
-
-extension LinkedList where Element == Int {
-  func sum() -> Int {
-    switch self {
-      case .empty: return 0
-      case let .cons(elem, next): return elem + next.sum()
     }
   }
 }
