@@ -343,6 +343,43 @@ class ClassWithDeinit {
  - note: See ARC.pdf in Resources
  */
 
+//: ### Lifetime
+func lifetime() {
+  class WeakClass {
+    let value = 10
+  }
+
+  class LifetimeClass {
+    weak var weakInstance: WeakClass?
+    var value: Int { weakInstance!.value }
+  }
+  
+  let weakInstance = WeakClass()
+  let lifetime = LifetimeClass()
+  lifetime.weakInstance = weakInstance
+  
+  do {
+    withExtendedLifetime(weakInstance) {
+      assert(lifetime.value == 10)
+    }
+  }
+  
+  do {
+    assert(lifetime.value == 10)
+    withExtendedLifetime(weakInstance) {}
+  }
+  
+  do {
+    defer {withExtendedLifetime(weakInstance){}}
+    lifetime.weakInstance = weakInstance
+    assert(lifetime.value == 10)
+  }
+
+//  assert(lifetime.value == 10) // Error
+}
+
+lifetime()
+
 /*:
  ## Identity Operators
  * Identical to ===
