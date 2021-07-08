@@ -52,8 +52,7 @@ funcWithDefaultParameterValue()
 funcWithDefaultParameterValue(param: 1)
 /*:
  ## Functions With Variadic Parameters
- 
- A function may have at most one variadic parameter.
+ All parameters which follow variadic parameters must be labeled.
  */
 func sum(_ numbers: Double...) -> Double {
   var sum = 0.0
@@ -65,7 +64,9 @@ func sum(_ numbers: Double...) -> Double {
 
 sum(1.0, 2.0, 3.0, 5)
 
-max(1, 2, 3, 4, 5, 6)
+
+func multipleVariadicParameters(a: Int..., b: Bool...) { }
+multipleVariadicParameters(a: 1, 2, 3, b: false, true)
 /*:
  ## Functions With In-Out Parameters
  
