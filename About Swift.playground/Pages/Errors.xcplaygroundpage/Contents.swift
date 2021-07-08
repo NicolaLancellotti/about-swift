@@ -48,6 +48,7 @@ precondition(1 == 1)
 enum MyErrorType: Error {
   case errorType1
   case errorType2(value: Int)
+  case errorType3
 }
 //: There are four ways to handle errors in Swift.
 
@@ -71,7 +72,7 @@ func canThrowErrors(_ mustThrow: Bool = false) throws -> String {
  */
 do {
   try canThrowErrors()
-} catch MyErrorType.errorType1 {
+} catch MyErrorType.errorType1, MyErrorType.errorType3 {
   
 } catch MyErrorType.errorType2(let value) where value > 3{
   
