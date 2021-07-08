@@ -206,15 +206,14 @@ closure5() // Prints "10 10"
  - note:
  A strong reference cycle can occur if you assign a closure to a property of a class instance, and the body of that closure captures the instance. This capture might occur because the closure’s body accesses a property of the instance, or because the closure calls a method on the instance. In either case, these accesses cause the closure to “capture” self, creating a strong reference cycle.\
  \
- Swift requires you to write self.someProperty or self.someMethod() (rather than just someProperty or someMethod()) whenever you refer to a member of self within a closure. This helps you remember that it’s possible to capture self by accident.
+ If you want to capture self, write self explicitly when you use it, or include self in the closure’s capture list.
  */
 class ClassWithClosureCaptureList {
   
   var value = ""
   
-  lazy var someClosure: () -> () = {
-    [unowned self] in
-    print(self.value)
+  lazy var someClosure: () -> () = { [self] in
+    print(value)
   }
   
 }
