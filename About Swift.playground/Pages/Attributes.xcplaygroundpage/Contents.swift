@@ -129,4 +129,18 @@ callable(x: 1, y: 2)
 
 callable.dynamicallyCall(withArguments: [1, 2])
 callable.dynamicallyCall(withKeywordArguments: ["x": 1, "y": 2])
+
+/*:
+ ## Main
+ Apply this attribute to a structure, class, or enumeration declaration to indicate that it contains the top-level entry point for program flow
+ 
+ ```
+ @main
+ struct EntryPoint {
+   static func main() throws {
+     
+   }
+ }
+ ```
+ */
 //: [Next](@next)
