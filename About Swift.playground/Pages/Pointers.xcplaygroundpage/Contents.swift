@@ -1,13 +1,11 @@
 //: [Previous](@previous)
-
 //: # Pointers
-
 /*:
  ## Pointers for typed data
- * UnsafeMutablePointer - mutating pointer
- * UnsafePointer - non mutating pointer
+ 
+ * `UnsafeMutablePointer` - mutating pointer.
+ * `UnsafePointer` - non mutating pointer.
  */
-
 //: ### Allocate
 let intArray = UnsafeMutablePointer<Int>.allocate(capacity: 3)
 //: ### Initialize
@@ -16,7 +14,6 @@ intArray.initialize(repeating: 10, count: 3)
  - note:
  You can use `assign` and `moveAssign` methods to assign pointees of another pointer.
  */
-
 //: ### Work
 intArray[0]
 intArray[1]
@@ -31,7 +28,6 @@ intArray.advanced(by: 1).pointee
 intArray.advanced(by: 2).pointee
 
 intArray.distance(to: intArray.successor())
-
 /*
  Equivalent to
  { defer { p.deinitialize(count: 1) }; return pointee }()
@@ -65,11 +61,11 @@ p.initialize(repeating: SomeStruct(someClass: SomeClass()),
 
 p.deinitialize(count: 1) // print "deinit SomeClass" in the console
 p.deallocate()
-
 /*:
  ## Pointers for untyped data
- * UnsafeMutableRawPointer - mutating pointer
- * UnsafeRawPointer - non mutating pointer
+ 
+ * `UnsafeMutableRawPointer` - mutating pointer.
+ * `UnsafeRawPointer` - non mutating pointer.
  
  A memory location may only be bound to one type at a time
  */
@@ -108,8 +104,8 @@ rawPointer.deallocate()
  A non-owning pointer to a buffer of elements
  stored contiguously in memory, presenting a collection interface to the underlying elements.
  
- * UnsafeMutableBufferPointer - for mutating elements
- * UnsafeBufferPointer - for non mutating elements
+ * `UnsafeMutableBufferPointer` - for mutating elements.
+ * `UnsafeBufferPointer` - for non mutating elements.
  */
 let storage = UnsafeMutablePointer<Int>.allocate(capacity: 10)
 let buffer = UnsafeMutableBufferPointer(start: storage, count: 10)
@@ -126,13 +122,12 @@ buffer.makeIterator()
 }
 
 buffer.reduce(0, +)
-
 /*:
  ## Buffer Pointers for untyped data
- * UnsafeMutableRawBufferPointer - mutating buffer pointer
- * UnsafeRawBufferPointer - non mutating buffer pointer
+ 
+ * `UnsafeMutableRawBufferPointer` - mutating buffer pointer.
+ * `UnsafeRawBufferPointer` - non mutating buffer pointer.
  */
-
 /*:
  ## Managed Buffer
  
@@ -187,11 +182,11 @@ struct Stack<Element> {
   }
   
   var isEmpty: Bool {
-    return _buf.header == 0
+    _buf.header == 0
   }
   
   var isFull: Bool {
-    return _buf.header == _buf.capacity
+    _buf.header == _buf.capacity
   }
   
   mutating func push(_ element: Element) {
@@ -234,10 +229,7 @@ stack.pop()
 stack2.pop()
 stack2.pop()
 stack2.pop()
-/*:
- ## Sequences and MutableCollections Contiguous Storage
- */
-
+//: ## Sequences and MutableCollections Contiguous Storage
 var numbers = [1, 2, 3, 4, 5]
 
 let sum = numbers.withContiguousStorageIfAvailable { buffer -> Int in
@@ -256,6 +248,7 @@ numbers.withContiguousMutableStorageIfAvailable { buffer in
 numbers
 /*:
  ## Array Initializer with Access to Uninitialized Storage
+ 
  The memory in the range buffer[0..<initializedCount] must be initialized at the end of the closure’s execution, and the memory in the range buffer[initializedCount...] must be uninitialized. This postcondition must hold even if the initializer closure throws an error.
  */
 let array = Array<Int>(unsafeUninitializedCapacity: 6) { (buffer, initializedCount) in
@@ -267,18 +260,17 @@ let array = Array<Int>(unsafeUninitializedCapacity: 6) { (buffer, initializedCou
   initializedCount = 6
 }
 array
-/*:
- ## Conversion to a Pointer Type
- */
-func takeUnsafePointer<T>(_ pointer: UnsafePointer<T>) {}
-func takeunsafeMutablePointer<T>(_ pointer: UnsafeMutablePointer<T>) {}
-func takeUnsafePointerCChar(_ pointer: UnsafePointer<CChar>) {}
+//: ## Conversion to a Pointer Type
+func takeUnsafePointer<T>(_ pointer: UnsafePointer<T>) { }
+func takeunsafeMutablePointer<T>(_ pointer: UnsafeMutablePointer<T>) { }
+func takeUnsafePointerCChar(_ pointer: UnsafePointer<CChar>) { }
 //: ### Explicit Conversion
 var explicitValue = 1
 withUnsafePointer(to: explicitValue) { takeUnsafePointer($0)  }
 withUnsafeMutablePointer(to: &explicitValue) { takeunsafeMutablePointer($0) }
 /*:
  ### Implicit Conversion
+ 
  A pointer that’s created by these implicit conversions is valid only for the duration of the function call.
  */
 var value = 1

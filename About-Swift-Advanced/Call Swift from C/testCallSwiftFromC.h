@@ -1,4 +1,3 @@
-
 #ifndef testCallSwiftFromC_h
 #define testCallSwiftFromC_h
 

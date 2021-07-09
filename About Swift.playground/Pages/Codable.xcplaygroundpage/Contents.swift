@@ -1,7 +1,5 @@
 //: [Previous](@previous)
-
 //: # Codable
-
 //: ## Encode and Decode Automatically
 struct Point: Codable {
   var x: Double
@@ -26,7 +24,7 @@ do {
         }
     ]
     """
-    
+  
   let points: [Point] = fromJSON(json)!
   points[0].x
   points[0].y
@@ -34,7 +32,6 @@ do {
   points[1].y
 }
 //: ## Encode and Decode Manually
-
 //: ### JSON
 """
 {
@@ -80,8 +77,8 @@ extension Item: Encodable {
     
     try container.encode(arrayProperty, forKey: .arrayProperty)
     // The same as:
-    //        var container2 = container.nestedUnkeyedContainer(forKey: .arrayProperty)
-    //        try arrayProperty.forEach { try container2.encode($0) }
+    //  var container2 = container.nestedUnkeyedContainer(forKey: .arrayProperty)
+    //  try arrayProperty.forEach { try container2.encode($0) }
   }
 }
 //: ### Encode
@@ -103,15 +100,15 @@ extension Item: Decodable {
     
     arrayProperty = try values.decode([Int].self, forKey: .arrayProperty)
     // The same as:
-    //        var containter = try values.nestedUnkeyedContainer(forKey: .arrayProperty)
-    //        arrayProperty = [Int]()
-    //        if let count = containter.count {
-    //            arrayProperty.reserveCapacity(count)
-    //            for _ in 0..<count {
-    //                let value = try containter.decode(Int.self)
-    //                arrayProperty.append(value)
-    //            }
-    //        }
+    //  var containter = try values.nestedUnkeyedContainer(forKey: .arrayProperty)
+    //  arrayProperty = [Int]()
+    //  if let count = containter.count {
+    //    arrayProperty.reserveCapacity(count)
+    //    for _ in 0..<count {
+    //      let value = try containter.decode(Int.self)
+    //      arrayProperty.append(value)
+    //    }
+    //  }
   }
 }
 //: ### Decode

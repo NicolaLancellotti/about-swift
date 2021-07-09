@@ -1,7 +1,5 @@
 //: [Previous](@previous)
-
 //: # Enumeration
-
 /*:
  - note:
  Enumeration are Value Types
@@ -20,8 +18,7 @@ aCompassPoint = .east
  */
 enum OnOffSwitch {
   case on, off
-  
-  
+
   init?(symbol: String) {
     switch symbol {
       case "on":
@@ -41,7 +38,6 @@ enum OnOffSwitch {
         self = .off
     }
   }
-  
 }
 
 var anOnOffSwitch: OnOffSwitch = .on
@@ -77,7 +73,9 @@ makeRectangle(10, 22)
  Each raw value must be unique within its enumeration declaration.
  */
 enum Planet: Int {
-  //When integers are used for raw values, the implicit value for each case is one more than the previous case. If the first case doesn’t have a value set, its value is 0.
+  // When integers are used for raw values, the implicit value for each case is
+  // one more than the previous case. If the first case doesn’t have a value
+  // set, its value is 0.
   case mercury = 1, venus, earth, mars, jupiter , saturn, uranus, neptune
 }
 
@@ -91,7 +89,8 @@ enum ASCIIControlCharacter: Character {
 }
 
 enum Day: String {
-  // When strings are used for raw values, the implicit value for each case is the text of that case’s name.
+  // When strings are used for raw values, the implicit value for each case is
+  // the text of that case’s name.
   case sunday, monday, tuesday, wednesday, thursday, saturday
 }
 
@@ -123,7 +122,8 @@ indirect enum ArithmeticExpression2 {
 let five = ArithmeticExpression.number(5)
 let four = ArithmeticExpression.number(4)
 let sum = ArithmeticExpression.addition(five, four)
-let product = ArithmeticExpression.multiplication(sum, ArithmeticExpression.number(2))
+let product = ArithmeticExpression.multiplication(sum,
+                                                  ArithmeticExpression.number(2))
 
 func evaluate(_ expression: ArithmeticExpression) -> Int {
   switch expression {
@@ -136,10 +136,9 @@ func evaluate(_ expression: ArithmeticExpression) -> Int {
   }
 }
 
-print(evaluate(product))
+evaluate(product)
 //: ## Enumeration Case Pattern
-
-//: Switch
+//: ### Switch
 var anotherShape: Shape
 anotherShape = .rectangle(base: 10, height: 100)
 //anotherShape = .square(side: 10)
@@ -153,7 +152,6 @@ switch anotherShape {
   default:
     print("A square with side != 10")
 }
-
 // Enumeration case pattern can match an optional value
 let x: CompassPoint? = .north
 
@@ -164,7 +162,7 @@ switch x {
   case .west: print("west")
   case nil: print("nil")
 }
-//: If
+//: ### If
 if case .rectangle(let base, let height) = anotherShape {
   print("A rectangle with base: \(base) and height: \(height)")
 } else if case .square(let side) = anotherShape, side == 10 {
@@ -172,13 +170,16 @@ if case .rectangle(let base, let height) = anotherShape {
 } else if case .square(11) = anotherShape {
   print("A square with side: 11")
 }
-//: For
-let enumValues: [Shape] = [.square(side: 10), .square(side: 20), .rectangle(base: 10, height: 11)]
+//: ### For
+let enumValues: [Shape] = [
+  .square(side: 10),
+  .square(side: 20),
+  .rectangle(base: 10, height: 11)
+]
 
 for case .square(let side) in enumValues where side > 10 {
   print("A square with side: \(side)")
 }
-
 //: ## CaseIterable
 enum CompassDirection: CaseIterable {
   case north, south, east, west

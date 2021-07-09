@@ -1,20 +1,18 @@
 //: [Previous](@previous)
-
 /*:
  # SetAlgebra
+ 
  A type that provides mathematical set operations.
  */
-
 /*:
  ## Set
- An unordered collection of unique ***hashable*** elements.
  
- Complain to SetAlgebra and Collection
+ An unordered collection of unique `hashable` elements.
+ 
+ Complain to `SetAlgebra` and `Collection`.
  */
-
 let set: Set = [1, 2, 3]
 let anotherSet: Set = [1, 2, 3, 4, 5]
-
 //: ### Fundamental Set Operations
 set.intersection(anotherSet)
 set.symmetricDifference(anotherSet)
@@ -26,9 +24,10 @@ set.isSuperset(of: anotherSet)
 set.isDisjoint(with: anotherSet)
 /*:
  ## OptionSet
- A type that presents a mathematical set interface to a bit mask
  
- Inherits From SetAlgebra.
+ A type that presents a mathematical set interface to a bit mask.
+ 
+ Inherits From `SetAlgebra`.
  */
 struct MyFontStyle : OptionSet {
   let rawValue : Int // conforms to the BitwiseOperations protocol
@@ -47,6 +46,4 @@ style.formUnion([.bold, .italic])
 style.insert(.strikethrough)
 style.remove(.bold)
 style.contains(.italic)
-
-
 //: [Next](@next)

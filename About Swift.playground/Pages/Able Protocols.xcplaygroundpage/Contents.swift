@@ -1,5 +1,4 @@
 //: [Previous](@previous)
-
 //: # Able Protocols
 struct SomeStructure {
   var value: Int = 0
@@ -7,13 +6,14 @@ struct SomeStructure {
 let instance = SomeStructure()
 /*:
  ## Equatable
+ 
  A type that can be compared for value equality.
  
  When adopting Equatable, only the == operator is required to be implemented. The standard library provides an implementation for !=.
  */
 extension SomeStructure: Equatable {
   static func ==(lhs: SomeStructure, rhs: SomeStructure) -> Bool {
-    return lhs.value == rhs.value
+    lhs.value == rhs.value
   }
 }
 /*:
@@ -34,6 +34,7 @@ Point(x: 0, y: 1) == Point(x: 0, y: 1)
 Point(x: 0, y: 1) != Point(x: 0, y: 1)
 /*:
  ## Hashable
+ 
  A type that provides an integer hash value.
  
  Inherits From Equatable
@@ -46,12 +47,12 @@ extension SomeStructure: Hashable {
 
 SomeStructure().hashValue
 
-
 var hasher = Hasher()
 hasher.combine(0)
 print(hasher.finalize())
 /*:
  ## Comparable
+ 
  A type that can be compared using the relational operators <, <=, >=, and >.
  
  Inherits From Equatable
@@ -60,7 +61,7 @@ print(hasher.finalize())
  */
 extension SomeStructure: Comparable {
   static func <(lhs: SomeStructure, rhs: SomeStructure) -> Bool {
-    return lhs.value < rhs.value
+    lhs.value < rhs.value
   }
 }
 
@@ -81,17 +82,18 @@ max(1, 2, 3)
 min(1, 2, 3)
 /*:
  ## Strideable
+ 
  Conforming types are notionally continuous, one-dimensional values that can be offset and measured.
  
  Inherits From Comparable
  */
 extension SomeStructure: Strideable {
   func advanced(by n: Int) -> SomeStructure {
-    return SomeStructure(value: self.value + n)
+    SomeStructure(value: self.value + n)
   }
   
   func distance(to other: SomeStructure) -> Int {
-    return self.value - other.value
+    self.value - other.value
   }
 }
 
@@ -101,6 +103,7 @@ instance2.value
 instance1.distance(to: instance2)
 /*:
  ## RawRepresentable
+ 
  A type that can be converted to and from an associated raw value.
  */
 struct SomeStructure1: RawRepresentable {
@@ -113,14 +116,12 @@ struct SomeStructure1: RawRepresentable {
   }
   
   var rawValue: String {
-    return String(value)
+    String(value)
   }
 }
 
 SomeStructure1(rawValue: "123")?.rawValue
-/*:
- ## Identifiable
- */
+//: ## Identifiable
 struct ContactStruct: Identifiable {
   var id: Int
   var name: String

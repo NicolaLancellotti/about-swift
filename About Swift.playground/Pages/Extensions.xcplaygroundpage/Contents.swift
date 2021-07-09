@@ -1,5 +1,4 @@
 //: [Previous](@previous)
-
 /*:
  # Extensions
  
@@ -9,23 +8,18 @@
  * enumeration.
  * protocol.
  */
-
 //: ## Extensions in Swift can:
-
-/*:
- * Add computed properties and computed type properties.
- */
-
+//: ### Add computed properties and computed type properties
 extension Double {
-  var km: Double { return self * 1_000.0 }
-  var m: Double { return self }
-  var cm: Double { return self / 100.0 }
-  var mm: Double { return self / 1_000.0 }
-  var ft: Double { return self / 3.28084 }
+  var km: Double { self * 1_000.0 }
+  var m: Double { self }
+  var cm: Double { self / 100.0 }
+  var mm: Double { self / 1_000.0 }
+  var ft: Double { self / 3.28084 }
 }
 
 let aMarathon = 42.km + 195.m
-//: * Provide new convenience initializers.
+//: ### Provide new convenience initializers.
 class SomeClass {
   init() {
   }
@@ -36,7 +30,7 @@ extension SomeClass {
     self.init()
   }
 }
-//: * Define instance methods and type methods.
+//: ### Define instance methods and type methods
 extension Int {
   
   func repetitions(_ task: () -> Void) {
@@ -49,7 +43,7 @@ extension Int {
 3.repetitions {
   print("Goodbye!")
 }
-//: * Define subscripts.
+//: ### Define subscripts
 extension Int {
   subscript(digitIndex: Int) -> Int {
     var decimalBase = 1
@@ -65,7 +59,7 @@ value[0]
 value[1]
 value[2]
 value[3]
-//: * Define and use new nested types.
+//: ### Define and use new nested types
 extension Int {
   
   enum Kind {
@@ -85,10 +79,9 @@ extension Int {
   
 }
 /*:
- * Make an existing type conform to a protocol
+ ### Make an existing type conform to a protocol
  
  If a type already conforms to all of the requirements of a protocol, but has not yet stated that it adopts that protocol, you can make it adopt the protocol with an empty extension.
- 
  */
 protocol SomeProtocol {
   func foo()
@@ -106,8 +99,6 @@ extension SomeType: SomeProtocol {
  ## Protocol Extensions
  
  You can use protocol extensions to provide a default implementation to any method or property requirement of that protocol. If a conforming type provides its own implementation of a required method or property, that implementation will be used instead of the one provided by the extension.
- 
- 
  */
 /*:
  - important:
@@ -123,27 +114,27 @@ protocol AProtocol {
 extension AProtocol {
   
   func foo() -> String {
-    return "AProtocol - foo"
+    "AProtocol - foo"
   }
   
   func fubar() -> String {
-    return "AProtocol - fubar"
+    "AProtocol - fubar"
   }
   
   // No required method
   func bar() -> String {
-    return "AProtocol - bar"
+    "AProtocol - bar"
   }
 }
 
 struct AStructure: AProtocol {
   
   func foo() -> String {
-    return "AStructure - foo"
+    "AStructure - foo"
   }
   
   func bar() -> String {
-    return "AStructure - bar"
+    "AStructure - bar"
   }
 }
 
@@ -156,7 +147,7 @@ let anotherInstace: AProtocol = AStructure()
 anotherInstace.foo()
 anotherInstace.fubar()
 anotherInstace.bar() // static dispaching
-//: Generic Where Clauses
+//: ### Generic Where Clauses
 protocol Baz {
   var baz: Int { get }
 }

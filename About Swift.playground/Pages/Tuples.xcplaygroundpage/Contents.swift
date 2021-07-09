@@ -1,10 +1,9 @@
 //: [Previous](@previous)
-
 /*:
  # Tuples
+ 
  Tuples are useful for temporary groups of related values.
  */
-
 /*:
  - note:
  Tuples are Value Types
@@ -62,27 +61,28 @@ for (x, _) in points {
  Tuples are compared from left to right, one value at a time, until the comparison finds two values that aren’t equal. If all the elements are equal, then the tuples themselves are equal.
  
  The Swift standard library includes tuple comparison operators for tuples with less than seven elements. To compare tuples with seven or more elements, you must implement the comparison operators yourself.
- 
  */
-(1, "zebra") < (2, "apple")   // true because 1 is less than 2
-(3, "apple") < (3, "bird")    // true because 3 is equal to 3, and "apple" is less than "bird"
-(4, "dog") == (4, "dog")      // true because 4 is equal to 4, and "dog" is equal to "dog"
+// true because 1 is less than 2
+(1, "zebra") < (2, "apple")
+
+// true because 3 is equal to 3, and "apple" is less than "bird"
+(3, "apple") < (3, "bird")
+
+// true because 4 is equal to 4, and "dog" is equal to "dog"
+(4, "dog") == (4, "dog")
 /*:
  # Functions and Tuples
  */
-
 //: ### Functions can Return a Tuple
 func funcReturnTuple() -> (par1: Bool, par2: Bool) {
-  return (true, false)
+  (true, false)
 }
 
 let value = funcReturnTuple()
 value.par1
 value.par2
 //: ### Functions with tuple parameter
-func functionWithTupleParameter(_: (Int, Int)) -> Void {
-  
-}
+func functionWithTupleParameter(_: (Int, Int)) -> Void { }
 
 functionWithTupleParameter((1, 2))
 //: [Next](@next)

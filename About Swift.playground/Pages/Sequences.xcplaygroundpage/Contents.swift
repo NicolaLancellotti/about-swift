@@ -1,13 +1,11 @@
 //: [Previous](@previous)
-
 /*: 
  # Sequences
+ 
  A sequence is a list of values that you can step through one at a time.
  */
-
 //: ## Example
 struct FibonacciIterator: IteratorProtocol {
-  
   private var previus = 0.0
   private var current = 1.0
   private var flag = false
@@ -22,13 +20,12 @@ struct FibonacciIterator: IteratorProtocol {
     previus = current
     current = value
     return value
-    
   }
 }
 
 struct Fibonacci: Sequence {
   func makeIterator() -> FibonacciIterator {
-    return FibonacciIterator()
+    FibonacciIterator()
   }
 }
 
@@ -42,7 +39,7 @@ fibonacciIter = fibonacci.makeIterator()
 fibonacciIter.next()
 fibonacciIter.next()
 fibonacciIter.next()
-//: Conform to both Sequence and IteratorProtocol
+//: ### Conform to both Sequence and IteratorProtocol
 struct Countdown: Sequence, IteratorProtocol {
   var count: Int
   
@@ -60,7 +57,6 @@ var countdown = Countdown(count: 10)
 countdown.next()
 countdown.next()
 //: ## Standard Library Functions for Make Sequences
-
 /*:
  ### sequence(first:next:)
  
@@ -96,7 +92,6 @@ let unfoldSequence2: UnfoldSequence = sequence(state: 10) { (value: inout Int) -
  Returns (self, self + stride, self + 2 * stride, … last) where last < end.
  */
 let start = 1.0, end = 2.0, offset = 0.5
-
 let strideTo: StrideTo = stride(from: start, to: end, by: offset)
 /*:
  ### stride(from:through:by:)
@@ -134,14 +129,12 @@ iterator = threeTwoOne.makeIterator()
 for count in IteratorSequence(iterator) {
   print(count)
 }
-
 //: ### Enumerate
 let enumeratedSequence: EnumeratedSequence = threeTwoOne.enumerated()
 
 for (n, elem) in threeTwoOne.enumerated() {
   print(n, elem)
 }
-
 /*:
  ### Flat
  A sequence that presents the elements of a base sequence of sequences concatenated.
@@ -151,16 +144,15 @@ let flat: FlattenSequence = [s, s].joined()
 Array(flat)
 /*: 
  ### Join
+ 
  A sequence that presents the elements of a base sequence of sequences concatenated using a given separator.
  */
 let joined: JoinedSequence = [1...2, 4...5].joined(separator: [0])
 Array(joined)
-
 //: ### Split
 let aSequence2 = [0, 1, 0, 0, 2, 0, 0, 3, 0, 0, 4, 0, 0, 5]
 var split = aSequence2.split(maxSplits: 4, omittingEmptySubsequences: true) { $0 == 0 }
 split
-
 //: ### Subsequences
 var aSequence = stride(from: 0, through: 5, by: 1)
 Array(aSequence)
@@ -178,7 +170,6 @@ aSequence.first { $0 > 2 }!
 //: ### Sort
 aSequence.sorted()
 aSequence.sorted { $0 > $1 }
-
 aSequence.reversed()
 //: ### Queries
 aSequence.contains(10)
@@ -216,7 +207,6 @@ lazyFilterIter.next()
 lazyFilterIter.next()
 //: ### Add New Lazy Sequence Operation
 struct LazyEvenIterator<Base: IteratorProtocol>: IteratorProtocol where Base.Element == Int{
-  
   var iterator: Base
   
   mutating func next() -> Int? {
@@ -225,30 +215,25 @@ struct LazyEvenIterator<Base: IteratorProtocol>: IteratorProtocol where Base.Ele
     }
     return value % 2 == 0 ? value : iterator.next()
   }
-  
 }
 
 struct LazyEvenSequence<Base: Sequence>: LazySequenceProtocol where Base.Iterator.Element == Int{
   var sequence: Base
   
   func makeIterator() -> LazyEvenIterator<Base.Iterator> {
-    return LazyEvenIterator(iterator: sequence.makeIterator())
+    LazyEvenIterator(iterator: sequence.makeIterator())
   }
-  
 }
 
 extension LazySequenceProtocol where Iterator.Element == Int{
-  
   /// **Complexity:** O(1)
   func even() -> LazyEvenSequence<Self> {
-    return LazyEvenSequence(sequence: self)
+    LazyEvenSequence(sequence: self)
   }
 }
-
 
 var lazyEvenIter = stride(from: 1, through: 100, by: 1).lazy.even().makeIterator()
 lazyEvenIter.next()
 lazyEvenIter.next()
 lazyEvenIter.next()
-
 //: [Next](@next)

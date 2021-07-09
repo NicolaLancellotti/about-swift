@@ -1,7 +1,5 @@
 //: [Previous](@previous)
-
 //: # Generics
-
 /*:
  ## Generic Functions
  
@@ -20,7 +18,6 @@ b
 a
 
 swap(&a, &b) // Swap function in the Standard Library
-
 /*:
  ## Type Constraint
  
@@ -30,9 +27,9 @@ protocol P1 { }
 protocol P2 { }
 class C1 { }
 
-func foo1<P: P1 & P2, C: C1>(x: P, y: C) {}
+func foo1<P: P1 & P2, C: C1>(x: P, y: C) { }
 //: ## Generic Where Clauses
-func foo2<P, C>(x: P, y: C) where P: P1 & P2, C: C1 {}
+func foo2<P, C>(x: P, y: C) where P: P1 & P2, C: C1 { }
 //: ## Generic Types
 enum LinkedList<Element> {
   case empty
@@ -50,8 +47,8 @@ enum LinkedList<Element> {
   }
   
   subscript<Indices: Sequence>(indices: Indices) -> [Element?]
-    where Indices.Iterator.Element == Int {
-      return indices.map {self[$0]}
+  where Indices.Iterator.Element == Int {
+    return indices.map {self[$0]}
   }
   
   func sum() -> Int where Element == Int {
@@ -60,7 +57,7 @@ enum LinkedList<Element> {
       case let .cons(elem, next): return elem + next.sum()
     }
   }
-
+  
 }
 
 var list: LinkedList<Int> = .cons(0, .cons(1, .empty))
@@ -96,7 +93,8 @@ extension LinkedList: Equatable where Element: Equatable {
   static func == (lhs: LinkedList<Element>, rhs: LinkedList<Element>) -> Bool {
     switch (lhs, rhs) {
       case (.empty, .empty): return true
-      case let (.cons(x, nextX), .cons(y, nextY)) where x == y: return nextX == nextY
+      case let (.cons(x, nextX), .cons(y, nextY)) where x == y:
+        return nextX == nextY
       default: return false
     }
   }
@@ -111,17 +109,15 @@ list1 == list2
  Nested types may appear inside generic types, and nested types may have their own generic parameters.
  */
 struct OuterNonGeneric {
-  struct InnerGeneric<T> {}
+  struct InnerGeneric<T> { }
 }
 
 struct OuterGeneric<T> {
-  struct InnerNonGeneric {}
+  struct InnerNonGeneric { }
   
-  struct InnerGeneric<T> {}
+  struct InnerGeneric<T> { }
 }
-/*:
- ## Dispaching
- */
+//: ## Dispaching
 struct GenericStruct<T> {
   var foo: String {
     return "generic foo"
@@ -130,26 +126,26 @@ struct GenericStruct<T> {
 
 extension GenericStruct where T == Int {
   var foo: String {
-    return "int foo"
+    "int foo"
   }
 }
 
 extension GenericStruct where T: Equatable {
   var foo: String {
-    return "equatable foo"
+    "equatable foo"
   }
 }
 
 func f1<T>(_ x: GenericStruct<T>) -> String {
-  return x.foo
+  x.foo
 }
 
 func f2(_ x: GenericStruct<Int>) -> String {
-  return x.foo
+  x.foo
 }
 
 func f3<T: Equatable>(_ x: GenericStruct<T>) -> String {
-  return x.foo
+  x.foo
 }
 
 let value = GenericStruct<Int>()

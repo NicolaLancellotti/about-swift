@@ -6,7 +6,7 @@
 CF_ASSUME_NONNULL_BEGIN
 
 typedef struct {
-    int _value;
+  int _value;
 } NLBar;
 
 CF_SWIFT_NAME(NLBar.defaultValue)

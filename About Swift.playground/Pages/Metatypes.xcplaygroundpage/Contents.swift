@@ -1,33 +1,25 @@
 //: [Previous](@previous)
-
 //: # Metatypes
-
 //: ## Protocol
-protocol ProtocolA {}
+protocol ProtocolA { }
 ProtocolA.self // metatype type
 //: ## Class
-class ClassB {
-  
-}
+class ClassB { }
 
 class ClassA: ClassB {
-  
   var data = 0
   
-  override init() {
-    
-  }
+  override init() { }
   
   required init(data: Int) {
     self.data = data
   }
   
-  static func typeMethod() {
-  }
+  static func typeMethod() { }
   
-  func instanceMethod() {
-  }
+  func instanceMethod() { }
 }
+
 let object = ClassA()
 //: ## Type
 object.self
@@ -60,12 +52,11 @@ ClassA.init(data: 1)
 ClassA(data: 1)
 //: For class instances, the initializer that’s called must be marked with the required keyword or the entire class marked with the final keyword.
 type(of: object).init(data: 7)
-//object.dynamicType(data: 5)       // Error
-
+// type(of: object)(data: 5)       // Error
 /*:
  ## Object Identifier
  
- A unique identifier for a class instance or metatype
+ A unique identifier for a class instance or metatype.
  */
 let instanceA1 = ClassA()
 let instanceA2 = instanceA1
@@ -75,13 +66,12 @@ ObjectIdentifier(instanceA1) == ObjectIdentifier(instanceA2)
 ObjectIdentifier(instanceA1) == ObjectIdentifier(instanceA3)
 
 ObjectIdentifier(ClassA.self) == ObjectIdentifier(ClassB.self)
-
 /*:
  ## Key-Path Expression
  
- A key-path expressions lets you access properties or subscript of a type dynamically
+ A key-path expressions lets you access properties or subscript of a type dynamically.
  
- They have the following form: ```\type name.path```
+ They have the following form: `\type name.path`.
  
  The type name can be omitted in contexts where type inference can determine the implied type.
  */
@@ -92,20 +82,17 @@ let keyPath3 = \[String : [Int]].["key"]?[0]
 dic[keyPath: keyPath1]
 dic[keyPath: keyPath2]
 dic[keyPath: keyPath3]
-
-
 /*:
  The path can refer to self to create the identity key path (\.self). The identity key path refers to a whole instance,
- so you can use it to access and change all of the data stored in a variable in a single step
+ so you can use it to access and change all of the data stored in a variable in a single step.
  */
-
 dic[keyPath: \.self] = ["key2" : [3]]
 dic
-
-
-/*: ### Key Path Expressions as Functions
-A ```\Root.value``` key path expression is now allowed wherever a ```(Root) -> Value``` function is allowed
-*/
+/*:
+ ### Key Path Expressions as Functions
+ 
+ A `\Root.value` key path expression is now allowed wherever a `(Root) -> Value` function is allowed.
+ */
 let array = [ClassA(data: 0), ClassA(data: 1)]
 var mapped = array.map(\.data)
 

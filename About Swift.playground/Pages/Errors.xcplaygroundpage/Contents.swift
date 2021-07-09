@@ -1,13 +1,12 @@
 //: [Previous](@previous)
-
 /*:
  # Assertions
+ 
  If the condition evaluates to false, code execution ends, and your app is terminated.
  */
-
 /*:
  - important:
- Assertions are checked only in debug builds
+ Assertions are checked only in debug builds.
  */
 assert(true, "message")
 
@@ -26,7 +25,6 @@ switch vowel {
   default:
     assertionFailure()
 }
-
 /*:
  # Preconditions
  
@@ -34,15 +32,15 @@ switch vowel {
  
  If the condition evaluates to false, code execution ends, and your app is terminated.
  */
-
 /*:
  - important:
- Preconditions are checked in both debug and production builds
+ Preconditions are checked in both debug and production builds.
  */
 precondition(1 == 1)
-//preconditionFailure("some message")
+// preconditionFailure("some message")
 /*:
  # Error Handling
+ 
  Errors are represented by values of types that conform to the ErrorProtocol.
  */
 enum MyErrorType: Error {
@@ -50,10 +48,8 @@ enum MyErrorType: Error {
   case errorType2(value: Int)
   case errorType3
 }
-//: There are four ways to handle errors in Swift.
-
 /*:
- 1 - You can propagate the error from a function to the code that calls that function.
+ ### You can propagate the error from a function to the code that calls that function
  
  Only throwing functions can propagate errors.
  */
@@ -65,7 +61,7 @@ func canThrowErrors(_ mustThrow: Bool = false) throws -> String {
   }
 }
 /*:
- 2 - Handle the error using a do-catch statement.
+ ### Handle the error using a do-catch statement
  
  If a catch clause doesn’t have a pattern, the clause matches any error and binds the error to a local
  constant named error.
@@ -79,7 +75,7 @@ do {
 } catch {
   
 }
-//: 3 - Handle the error as an optional value.
+//: ### Handle the error as an optional value
 let value1 = try? canThrowErrors()
 
 // Equivalent to
@@ -90,7 +86,7 @@ do {
   value2 = nil
 }
 /*:
- 4 - Assert that the error will not occur.
+ ### Assert that the error will not occur
  
  If an error actually is thrown, you’ll get a runtime error.
  */
@@ -109,11 +105,11 @@ func functionWithCallback(_ callback: () throws -> Int) rethrows {
 /*:
  # Fatal Error
  */
-//fatalError()
+// fatalError()
 /*:
  # Result
  
- A value that represents either a success or a failure, including an associated value in each case
+ A value that represents either a success or a failure, including an associated value in each case.
  */
 enum DivisionError: Error {
   case divisionByZero
@@ -142,7 +138,6 @@ switch result2 {
 }
 let stringValue = result2.map{String($0)}
 stringValue
-
 
 let result3 = Result {
   try canThrowErrors(false)

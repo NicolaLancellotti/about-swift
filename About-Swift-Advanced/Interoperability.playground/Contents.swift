@@ -17,42 +17,26 @@ import Foundation
  * Typealiases defined in Swift.
  * Swift-style variadics.
  * Nested types.
- 
  */
-
 //: ## Selector Conflicts
 class SomeClass : NSObject {
-    
-    @objc var someProperty: String = "Hello"
-    
-    @objc func foo(_ value: Int){
-        
-    }
-    
-    @objc(fooWithStrig:)
-    func foo(_ value: String){
-        
-    }
-    
-    @nonobjc
-    func foo(_ value: Double){
-        
-    }
-    
+  @objc var someProperty: String = "Hello"
+  
+  @objc func foo(_ value: Int) { }
+  
+  @objc(fooWithStrig:)
+  func foo(_ value: String) { }
+  
+  @nonobjc
+  func foo(_ value: Double) { }
 }
-
 
 let instance = SomeClass()
 //: ## Selector Expression
 extension SomeClass {
-    @objc func bar() {
-        
-    }
-    
-    @objc func foobar(value: Int) {
-        
-    }
-    
+  @objc func bar() { }
+  
+  @objc func foobar(value: Int) { }
 }
 
 let selectorForPropertyGetter = #selector(getter: SomeClass.someProperty)
@@ -78,29 +62,28 @@ instance.value(forKey: keyPath)
  
  When you use a method or property in an optional requirement, its type automatically becomes an optional. For example, a method of type (Int) -> String becomes ((Int) -> String)?.
  
- 
  Optional protocol requirements can only be specified if your protocol is marked with the @objc attribute.
  Note also that @objc protocols can be adopted only by classes that inherit from Objective-C classes or other @objc classes. They can’t be adopted by structures or enumerations.
  */
 @objc protocol CounterDataSource {
-    @objc optional func increment(forCount count: Int) -> Int
-    @objc optional var fixedIncrement: Int { get }
+  @objc optional func increment(forCount count: Int) -> Int
+  @objc optional var fixedIncrement: Int { get }
 }
 
 class ThreeSource: NSObject, CounterDataSource {
-    let fixedIncrement = 3
+  let fixedIncrement = 3
 }
 
 class Counter {
-    var count = 0
-    var dataSource: CounterDataSource?
-    func increment() {
-        if let amount = dataSource?.increment?(forCount: count) {
-            count += amount
-        } else if let amount = dataSource?.fixedIncrement {
-            count += amount
-        }
+  var count = 0
+  var dataSource: CounterDataSource?
+  func increment() {
+    if let amount = dataSource?.increment?(forCount: count) {
+      count += amount
+    } else if let amount = dataSource?.fixedIncrement {
+      count += amount
     }
+  }
 }
 
 var counter = Counter()
@@ -116,12 +99,8 @@ counter.count
  You can use the **dynamic** modifier to require that access to members be dynamically dispatched through the Objective-C runtime.
  */
 class ClassWithRequiringDynamicDispatch: NSObject {
-    
-    @objc dynamic var variable: String = ""
-    
-    @objc dynamic func foo() {
-        
-    }
+  @objc dynamic var variable: String = ""
+  @objc dynamic func foo() { }
 }
 /*:
  ## Dynamic typing
@@ -131,20 +110,20 @@ class ClassWithRequiringDynamicDispatch: NSObject {
  These @objc symbols are available as implicitly unwrapped optional methods and properties, respectively.
  */
 class IntegerRef {
-    let value: Int
-    init(_ value: Int) {
-        self.value = value
-    }
-    
-    @objc func getIntegerValue() -> Int {
-        return value
-    }
-    
-    @objc class func getDefaultValue() -> Int {
-        return 42
-    }
+  let value: Int
+  
+  init(_ value: Int) {
+    self.value = value
+  }
+  
+  @objc func getIntegerValue() -> Int {
+    return value
+  }
+  
+  @objc class func getDefaultValue() -> Int {
+    return 42
+  }
 }
-
 
 let obj: AnyObject = IntegerRef(100)
 
@@ -154,13 +133,11 @@ possibleValue
 let certainValue = obj.getIntegerValue()
 certainValue
 
-
 if let f = obj.getIntegerValue {
-    print("The value of 'obj' is \(f())")
+  print("The value of 'obj' is \(f())")
 } else {
-    print("'obj' does not have a 'getIntegerValue()' method")
+  print("'obj' does not have a 'getIntegerValue()' method")
 }
-
 
 let someClass: AnyClass = IntegerRef.self
 var defaultValue: Int? = someClass.getDefaultValue?()
@@ -168,6 +145,7 @@ defaultValue
 
 /*:
  ## @objc
+ 
  @objc is inferred when:
  * The declaration is an override of an @objc declaration
  * The declaration satisfies a requirement in an @objc protocol
@@ -176,32 +154,34 @@ defaultValue
 
 /*:
  ## @NSCopying
+ 
  This attribute causes the property’s setter to be synthesized with a copy of the property’s value.
  
  Apply this attribute to a stored variable property of a class. This attribute causes the property’s setter to be synthesized with a copy of the property’s value—returned by the copyWithZone(_:) method—instead of the value of the property itself. The type of the property must conform to the NSCopying protocol.
  
  */
 class ClassWithObjectMyType {
-    @NSCopying var objectMyType: MyType?
+  @NSCopying var objectMyType: MyType?
 }
 
 class MyType: NSObject, NSCopying {
-    var value = 0
-    
-    init(value: Int) {
-        self.value = value
-    }
-    
-    public func copy(with zone: NSZone? = nil) -> Any {
-        return MyType(value: value)
-    }
+  var value = 0
+  
+  init(value: Int) {
+    self.value = value
+  }
+  
+  public func copy(with zone: NSZone? = nil) -> Any {
+    return MyType(value: value)
+  }
 }
+
 do {
-    let myType = MyType(value: 10)
-    let instance = ClassWithObjectMyType()
-    instance.objectMyType = myType
-    instance.objectMyType?.value
-    
-    myType.value = 11
-    instance.objectMyType?.value
+  let myType = MyType(value: 10)
+  let instance = ClassWithObjectMyType()
+  instance.objectMyType = myType
+  instance.objectMyType?.value
+  
+  myType.value = 11
+  instance.objectMyType?.value
 }

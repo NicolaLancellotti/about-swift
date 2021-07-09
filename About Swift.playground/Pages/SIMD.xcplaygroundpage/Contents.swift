@@ -1,7 +1,5 @@
 //: [Previous](@previous)
-
 //: # SIMD
-
 //: ## Initialization
 SIMD2<Int>()
 SIMD3<Int>()
@@ -22,7 +20,7 @@ SIMD4<Int>(lowHalf: SIMD2.one, highHalf: SIMD2.zero)
 
 SIMD2<Int8>(clamping: SIMD2(Int.max, 2))
 SIMD2.random(in: 1...10)
-//: ##  Properties & Subscripts
+//: ## Properties & Subscripts
 do {
   let simd = SIMD4<Int8>(1, 2, 3, 4)
   simd[0]
@@ -41,9 +39,8 @@ do {
   simd.lowHalf
   simd.highHalf
 }
-//: ##  Operations
-
-//: ###  Pointwise Operators
+//: ## Operations
+//: ### Pointwise Operators
 do {
   let simd1 = SIMD2(4.0, 2.0)
   let simd2 = SIMD2(repeating: 2.0)
@@ -81,15 +78,14 @@ do {
   simd | 4
   simd ^ 2
 }
-
-//: ##  Methods & Functions
+//: ## Methods & Functions
 do {
   let simd = SIMD3<Int8>(2, 4, 6)
   simd.max()
   simd.min()
   simd.wrappedSum()
   simd.replacing(with: 0, where: .init([true, false, false]))
-
+  
   simd.clamped(lowerBound: SIMD3(repeating: 3),
                upperBound: SIMD3(repeating: 5))
   

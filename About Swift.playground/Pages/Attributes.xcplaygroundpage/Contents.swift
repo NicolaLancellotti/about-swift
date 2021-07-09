@@ -1,7 +1,5 @@
 //: [Previous](@previous)
-
 //: # Attributes
-
 /*:
  ## Discardable Result
  
@@ -12,11 +10,12 @@ struct Increaser {
   
   @discardableResult
   func increased() -> Int {
-    return value + 1
+    value + 1
   }
 }
 /*:
  ## Cross-module inlining and specialization
+ 
  Apply *inlinable* attribute to a function, method, computed property, subscript, convenience initializer, or deinitializer declaration to expose that declaration’s implementation as part of the module’s public interface. The compiler is allowed to replace calls to an inlinable symbol with a copy of the symbol’s implementation at the call site.
  
  Inlinable code can interact with public symbols declared in any module, and it can interact with internal symbols declared in the same module that are marked with the usableFromInline attribute.
@@ -32,9 +31,7 @@ public func foo() {
 }
 
 @usableFromInline
-internal func bar() {
-  
-}
+internal func bar() { }
 /*:
  ## Dynamic Member Lookup
  
@@ -47,16 +44,11 @@ internal func bar() {
  */
 @dynamicMemberLookup
 class DynamicDictionary {
-  
   private var dictionary = [String: String]()
   
   subscript(dynamicMember member: String) -> String? {
-    get {
-      return dictionary[member]
-    }
-    set {
-      dictionary[member] = newValue
-    }
+    get { dictionary[member] }
+    set { dictionary[member] = newValue }
   }
 }
 
@@ -64,8 +56,7 @@ let dic = DynamicDictionary()
 dic.name
 dic.name = "Nicola"
 dic[dynamicMember: "name"]
-
-//: Key Path Member Lookup
+//: ### Key Path Member Lookup
 @dynamicMemberLookup
 class Box<T> {
   private let getter: () -> T
@@ -92,7 +83,6 @@ class Box<T> {
       getter: { self.value[keyPath: keyPath] },
       setter: { self.value[keyPath: keyPath] = $0 })
   }
-  
 }
 
 struct Point {
@@ -107,19 +97,19 @@ box1.x.value = 10
 box2.x.value
 /*:
  ## Dynamic Callable
+ 
  Apply this attribute to a class, structure, enumeration, or protocol to treat instances of the type as callable functions.
  
  The type must implement either a *dynamicallyCall(withArguments:)* method, a *dynamicallyCall(withKeywordArguments:)*   method, or both.
  */
 @dynamicCallable
 struct DynamicCallableStruct {
-  
   func dynamicallyCall(withArguments arguments: [Int]) -> String {
-    return "dynamically call with arguments: \(arguments)"
+    "dynamically call with arguments: \(arguments)"
   }
   
   func dynamicallyCall(withKeywordArguments pairs: KeyValuePairs<String, Int>) -> String {
-    return "dynamically call with keyword arguments: \(pairs)"
+    "dynamically call with keyword arguments: \(pairs)"
   }
 }
 
@@ -129,17 +119,15 @@ callable(x: 1, y: 2)
 
 callable.dynamicallyCall(withArguments: [1, 2])
 callable.dynamicallyCall(withKeywordArguments: ["x": 1, "y": 2])
-
 /*:
  ## Main
+ 
  Apply this attribute to a structure, class, or enumeration declaration to indicate that it contains the top-level entry point for program flow
  
  ```
  @main
  struct EntryPoint {
-   static func main() throws {
-     
-   }
+   static func main() throws { }
  }
  ```
  */

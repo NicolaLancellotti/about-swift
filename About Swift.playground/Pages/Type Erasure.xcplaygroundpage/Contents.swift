@@ -1,12 +1,7 @@
 //: [Previous](@previous)
-
 //: # Type Erasure
-
-/*:
- ## Example
- */
+//: ## Example
 protocol Incrementable {
-  
   associatedtype T
   var current: T { get }
   mutating func increment() -> T
@@ -14,28 +9,28 @@ protocol Incrementable {
 }
 
 struct IncrementerBy1: Incrementable {
-  
   private(set) var current: Int
   
   mutating func increment() -> Int {
     current += 1
     return current
   }
+  
   func incremented(by value: Int) -> IncrementerBy1 {
-    return IncrementerBy1(current: self.current + value)
+    IncrementerBy1(current: self.current + value)
   }
 }
 
 struct IncrementerBy2: Incrementable {
-  
   private(set) var current: Int
   
   mutating func increment() -> Int {
     current += 2
     return current
   }
+  
   func incremented(by value: Int) -> IncrementerBy2 {
-    return IncrementerBy2(current: self.current + value)
+    IncrementerBy2(current: self.current + value)
   }
 }
 /*:
@@ -44,7 +39,6 @@ struct IncrementerBy2: Incrementable {
  `var incrementer: Incrementable`
  */
 struct AnyIncrementable<T>: Incrementable {
-  
   private var _current: () -> T
   private let _increment: () -> T
   private let _incremented: (T) -> AnyIncrementable<T>
@@ -57,15 +51,15 @@ struct AnyIncrementable<T>: Incrementable {
   }
   
   var current: T {
-    return _current()
+    _current()
   }
   
   mutating func increment() -> T {
-    return _increment()
+    _increment()
   }
   
   func incremented(by current: T) -> AnyIncrementable<T> {
-    return _incremented(current)
+    _incremented(current)
   }
   
 }
@@ -81,9 +75,9 @@ incrementer = AnyIncrementable(IncrementerBy2(current: 0))
 incrementer.increment()
 incrementer.increment()
 incrementer.incremented(by: 10).current
-
 /*:
  ## Type-erased in Swift Standard Library
+ 
  * AnyHashable
  * AnyIndex
  * AnyIterator

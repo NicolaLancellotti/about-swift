@@ -1,6 +1,5 @@
 //: [Previous](@previous)
 //: # Result Builders
-
 //: ### Utility
 enum ToyLangError: Error {
   case variableNotFound(String)
@@ -156,7 +155,6 @@ enum ToyLangBuilder {
   }
 }
 //: ## Result-Builder Attributes
-
 //: ### Closure
 func eval(@ToyLangBuilder closure: () -> ToyLangBuilder.FinalResult) -> ToyLangBuilder.FinalResult {
   closure()
@@ -193,7 +191,6 @@ func eval(increase: Bool, flag: Bool) -> ToyLangBuilder.FinalResult {
 
 let value2  = eval(increase: true, flag: true)
 value2
-
 //: ### Variable or subscript declaration that includes a getter
 @ToyLangBuilder var value3: ToyLangBuilder.FinalResult {
   let x = Var("x")

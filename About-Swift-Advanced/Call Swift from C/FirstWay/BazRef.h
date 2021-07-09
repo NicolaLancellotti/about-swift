@@ -1,4 +1,3 @@
-
 #ifndef BazRef_h
 #define BazRef_h
 

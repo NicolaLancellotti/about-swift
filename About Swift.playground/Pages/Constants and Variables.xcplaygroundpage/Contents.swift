@@ -1,27 +1,23 @@
 //: [Previous](@previous)
-
-/*:
- # Constants and Variables
- */
-
+//: # Constants and Variables
 /*:
  ## Constants and Variables Keywords
- * let - constant.
- * var - variable.
+ 
+ * `let` - constant,
+ * `var` - variable.
  */
-
 /*:
  ## Naming Constants and Variables
+ 
  Constant and variable names can contain almost any character, including Unicode characters.
  
  Constant and variable names cannot:
- * begin with a number.
- * contain whitespace characters.
- * contain mathematical symbols.
+ * begin with a number,
+ * contain whitespace characters,
+ * contain mathematical symbols,
  * contain private-use (or invalid) Unicode code points.
  
  */
-
 /*:
  ## Type Annotations
  
@@ -46,7 +42,6 @@ let anotherPi = 3 + 0.14159
  - experiment:
  Press the option key and click on a variable or constant name to see the type inferred.
  */
-
 /*:
  ## Type Safety
  
@@ -56,10 +51,9 @@ let anotherPi = 3 + 0.14159
  * experiment:
  Try to uncomment the lines of code below.
  */
-//let aString: String = 1
-//let cannotBeNegative: UInt = -1
-//let tooBig: Int = Int.max + 1
-
+// let aString: String = 1
+// let cannotBeNegative: UInt = -1
+// let tooBig: Int = Int.max + 1
 //: Floating-point values are always truncated when used to initialize a new integer value. This means that 4.75 becomes 4, and -3.9 becomes -3.
 let integerPi: Int = Int(pi)
 //: ## Declare Multiple Constants/Variables on a Single Line
@@ -67,13 +61,13 @@ let x = 0.0, y = 0.0, z = 0.0
 var red: Int, green, blue: Double
 /*:
  ## Observers for Stored Variables
+ 
  The variables you have encountered have all been stored variables.
- 
  You have the option to define either or both of these observers on a variable:
- * willSet is called just before the value is stored.
- * didSet is called immediately after the new value is stored.
+ * `willSet` is called just before the value is stored,
+ * `didSet` is called immediately after the new value is stored.
  
- If the body of the didSet observer refers to the old value, the getter is called before the observer, to make the old value available.
+ If the body of the `didSet` observer refers to the old value, the getter is called before the observer, to make the old value available.
  */
 var value = 10 {
   willSet {
@@ -96,6 +90,7 @@ var anInt = 10 {
 }
 /*:
  ## Computed Variables
+ 
  They provide a getter and an optional setter to retrieve and set other properties and values indirectly.
  */
 // Stored Variable
@@ -112,9 +107,9 @@ var miles: Double {
     km * 0.621371
   }
   // The same as:
-  //    get {
-  //        return km * 0.621371
-  //    }
+  // get {
+  //   return km * 0.621371
+  // }
 }
 
 miles = 4
@@ -124,7 +119,7 @@ km = 2
 miles
 //: ### Read-only Computed Variables.
 var miles2: Double {
-  return km * 0.621371
+  km * 0.621371
 }
 
 miles2

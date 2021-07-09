@@ -1,12 +1,9 @@
 //: [Previous](@previous)
-
 //: # Ranges
-
 /*:
  - note:
- All ranges implement RangeExpression protocol
+ All ranges implement RangeExpression protocol.
  */
-
 //: ## Countable Ranges
 let countableRange: CountableRange = 0..<5
 countableRange.count

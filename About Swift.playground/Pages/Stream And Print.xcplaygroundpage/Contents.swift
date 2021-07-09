@@ -1,11 +1,9 @@
 //: [Previous](@previous)
-
 //: # Stream And Print
-
 //: ## Print
 print("A", "B", "C", separator: "-", terminator: "|END\n")
 //: ## ReadLine
-//let line  = readline()
+// let line  = readline()
 /*:
  ## Dump
  
@@ -24,6 +22,7 @@ let instance = SomeClass()
 dump(instance)
 /*:
  ## TextOutputStreamable
+ 
  A source of text-streaming operations.
  */
 var stream = String()
@@ -33,6 +32,7 @@ var stream = String()
 stream
 /*:
  ## TextOutputStream
+ 
  A type that can be the target of text-streaming operations.
  You can send the output of the standard library’s `print(_:to:)` and `dump(_:to:)` functions to an instance of a
  type that conforms to the TextOutputStream protocol instead of to standard output.

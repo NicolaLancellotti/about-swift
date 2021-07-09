@@ -1,7 +1,5 @@
 //: [Previous](@previous)
-
 //: # Functions
-
 //: ## Functions Without Parameters
 func functionWithoutParameters() {
   
@@ -14,7 +12,7 @@ func funcWithReturnValue() -> Bool {
 }
 
 let aBool = funcWithReturnValue()
-//: If the entire body of the function is a single expression, the function implicitly returns that expression
+//: If the entire body of the function is a single expression, the function implicitly returns that expression.
 func funcWithImplicitReturnValue() -> Bool {
   false
 }
@@ -24,22 +22,20 @@ let anotherBool = funcWithImplicitReturnValue()
  ## Functions With Parameters
  
  Each function parameter has both an argument label and a parameter name. The argument label is used when calling the function; each argument is written in the function call with its argument label before it. The parameter name is used in the implementation of the function. By default, parameters use their parameter name as their argument label.
- 
  */
 func difference(x: Int, y: Int) -> Int {
-  return x - y
+  x - y
 }
 difference(x: 1, y: 2)
-//: Specifying Argument Labels
+//: ### Specifying Argument Labels
 func difference(of x: Int, less y: Int) -> Int {
-  return x - y
+  x - y
 }
 
 difference(of: 1, less: 2)
-
 //: If you don’t want an argument label for a parameter, write an underscore (_) instead of an explicit argument label for that parameter.
 func difference(_ x: Int, _ y: Int) -> Int {
-  return x - y
+  x - y
 }
 
 difference(1, 2)
@@ -52,6 +48,7 @@ funcWithDefaultParameterValue()
 funcWithDefaultParameterValue(param: 1)
 /*:
  ## Functions With Variadic Parameters
+ 
  All parameters which follow variadic parameters must be labeled.
  */
 func sum(_ numbers: Double...) -> Double {
@@ -63,7 +60,6 @@ func sum(_ numbers: Double...) -> Double {
 }
 
 sum(1.0, 2.0, 3.0, 5)
-
 
 func multipleVariadicParameters(a: Int..., b: Bool...) { }
 multipleVariadicParameters(a: 1, 2, 3, b: false, true)
@@ -106,7 +102,7 @@ func foo() {
 }
 
 func foo() -> String {
-  return "Foo!"
+  "Foo!"
 }
 
 foo("Hello, world!")
@@ -129,6 +125,7 @@ func globalFunction() {
 globalFunction()
 /*:
  ## Early Exit
+ 
  A guard statement is used to transfer program control out of a scope if one or more conditions aren’t met.
  */
 func doSomething(_ optionalValue: Int?) {
@@ -145,11 +142,8 @@ doSomething(optionalValue)
  ## Cleanup Actions
  
  * This statement lets you do any necessary cleanup that should be performed regardless of how execution leaves the current block of code—whether it leaves because an error was thrown or because of a statement such as return or break.
- 
  * The deferred statements may not contain any code that would transfer control out of the statements, such as a break or a return statement, or by throwing an error.
- 
  * Deferred actions are executed in reverse order of how they are specified.
- 
  */
 func functionWithDefers() {
   defer {

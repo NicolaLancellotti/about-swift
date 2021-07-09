@@ -1,5 +1,4 @@
 //: [Previous](@previous)
-
 /*:
  # Expressible By Protocols
  * ExpressibleByIntegerLiteral
@@ -22,33 +21,27 @@ struct MyInt {
 var myInt: MyInt
 //: ## ExpressibleByIntegerLiteral
 extension MyInt: ExpressibleByIntegerLiteral {
-  
   init(integerLiteral value: Int) {
     self.value = value
   }
-  
 }
 
 myInt = 1
 myInt.value
 //: ## ExpressibleByNilLiteral
 extension MyInt: ExpressibleByNilLiteral {
-  
   init(nilLiteral: ()) {
     self.value = 0
   }
-  
 }
 
 myInt = nil
 myInt.value
 //: ## ExpressibleByUnicodeScalarLiteral
 extension MyInt: ExpressibleByUnicodeScalarLiteral {
-  
   init(unicodeScalarLiteral value: UnicodeScalar) {
     self.value = Int(String(value)) ?? 0
   }
-  
 }
 
 myInt = "1"
@@ -62,7 +55,6 @@ struct Text {
 }
 
 extension Text: ExpressibleByStringInterpolation {
-  
   init(stringLiteral value: String) {
     self.value = value
   }
@@ -93,7 +85,6 @@ extension Text: ExpressibleByStringInterpolation {
         self.value.append(value.description)
       }
     }
-    
   }
 }
 
@@ -101,11 +92,9 @@ let text = "oaic reversed: \(reversed: true, "oaic")" as Text
 text.value
 //: ### DefaultStringInterpolation
 extension DefaultStringInterpolation {
-  
   mutating func appendInterpolation(_ value: Date,formatter: DateFormatter) {
     self.appendInterpolation(formatter.string(from: value))
   }
-  
 }
 
 let dateFormatter = DateFormatter()

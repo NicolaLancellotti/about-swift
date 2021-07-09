@@ -1,4 +1,3 @@
-
 #ifndef NLFoo_h
 #define NLFoo_h
 

@@ -1,5 +1,4 @@
 //: [Previous](@previous)
-
 //: # Reflection
 class SomeSuperClass {
   let intValue = 0
@@ -11,6 +10,7 @@ class SomeBaseClass: SomeSuperClass {
 }
 /*:
  ## Mirror
+ 
  Describes the parts that make up a particular instance.
  */
 let mirror = Mirror(reflecting: SomeBaseClass())
@@ -33,12 +33,11 @@ class ClassWithCustomMirror: CustomReflectable {
   let value = 10
   
   var customMirror: Mirror{
-    return Mirror(self, children: ["value": "*** \(value) ***"])
+    Mirror(self, children: ["value": "*** \(value) ***"])
   }
 }
 
 let customMirror = Mirror(reflecting: ClassWithCustomMirror())
-
 customMirror.children.first?.label
 customMirror.children.first?.value
 //: [Next](@next)

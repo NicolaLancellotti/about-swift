@@ -1,34 +1,25 @@
 //: [Previous](@previous)
 /*:
  # Collections
+ 
  A collection is a sequence whose elements can be traversed multiple times, nondestructively, and accessed by indexed subscript.
  */
-
 /*: 
  ## Collection
+ 
  Supports forward traversal.
  */
 struct ACollection: Collection {
+  var startIndex: Int { 0 }
   
-  var startIndex: Int {
-    return 0
-  }
+  var endIndex: Int { 100 }
   
-  var endIndex: Int {
-    return 100
-  }
+  func index(after i: Int) -> Int { i + 1 }
   
-  func index(after i: Int) -> Int {
-    return i + 1
-  }
-  
-  subscript(position: Int) -> Int {
-    return position
-  }
+  subscript(position: Int) -> Int { position }
 }
 
 let aCollection = ACollection()
-
 aCollection.isEmpty
 aCollection.count
 aCollection.underestimatedCount
@@ -61,47 +52,33 @@ let lazyFilterCollection: LazyFilterCollection = lazyCollection.filter { _ in fa
 lazyFilterCollection.startIndex
 /*:
  ## BidirectionalCollection
+ 
  Supports backward and forward traversal.
  
  Inherits From Collection.
  */
 struct ABidirectionalCollection: BidirectionalCollection {
-  
   // Collection
-  var startIndex: Int {
-    return 0
-  }
+  var startIndex: Int { 0 }
   
-  var endIndex: Int {
-    return 100
-  }
+  var endIndex: Int { 100 }
   
-  func index(after i: Int) -> Int {
-    return i + 1
-  }
+  func index(after i: Int) -> Int { i + 1 }
   
-  subscript(position: Int) -> Int {
-    return position
-  }
+  subscript(position: Int) -> Int { position }
   
   // BidirectionalCollection
-  
-  func index(before i: Int) -> Int {
-    return i - 1
-  }
+  func index(before i: Int) -> Int { i - 1 }
 }
 
 let aBidirectionalCollection = ABidirectionalCollection()
-
 aBidirectionalCollection.last
 
 let reversedCollection: ReversedCollection = aBidirectionalCollection.reversed()
-
 /*:
  - note:
  The reversed() method is always lazy when applied to a collection with bidirectional indices, but does not implicitly confer laziness on algorithms applied to its result.
  */
-
 /*:
  ## RandomAccessCollection
  
@@ -110,41 +87,24 @@ let reversedCollection: ReversedCollection = aBidirectionalCollection.reversed()
  Inherits From RandomAccessCollection.
  */
 struct ARandomAccessCollection: RandomAccessCollection {
-  
   // Collection
-  var startIndex: Int {
-    return 0
-  }
+  var startIndex: Int { 0 }
   
-  var endIndex: Int {
-    return 100
-  }
+  var endIndex: Int { 100 }
   
-  func index(after i: Int) -> Int {
-    return i + 1
-  }
+  func index(after i: Int) -> Int { i + 1 }
   
-  subscript(position: Int) -> Int {
-    return position
-  }
+  subscript(position: Int) -> Int { position }
   
   // BidirectionalCollection
-  
-  func index(before i: Int) -> Int {
-    return i - 1
-  }
+  func index(before i: Int) -> Int { i - 1 }
   
   // RandomAccessCollection
   // Either index is conform to the Strideable
   // or you must implement:
+  func index(_ i: Int, offsetBy n: Int) -> Int { i + n }
   
-  func index(_ i: Int, offsetBy n: Int) -> Int {
-    return i + n
-  }
-  
-  func distance(from start: Int, to end: Int) -> Int {
-    return end - start
-  }
+  func distance(from start: Int, to end: Int) -> Int { end - start }
   
   // In this case index (Int) already complied to Strideable
 }
@@ -154,36 +114,25 @@ let aRandomAccessCollection = ARandomAccessCollection()
 let randomReversedCollection: ReversedCollection = aRandomAccessCollection.reversed()
 /*:
  ## RangeReplaceableCollection
+ 
  Supports replacement of an arbitrary subrange of elements with the elements of another collection.
  
  Inherits From Collection.
  */
 struct ARangeReplaceableCollection: RangeReplaceableCollection {
-  
   private var storage = [Int]()
   
   // Collection
-  var startIndex: Int {
-    return storage.startIndex
-  }
+  var startIndex: Int { storage.startIndex }
   
-  var endIndex: Int {
-    return storage.endIndex
-  }
+  var endIndex: Int { storage.endIndex }
   
-  func index(after i: Int) -> Int {
-    return i + 1
-  }
+  func index(after i: Int) -> Int { i + 1 }
   
-  subscript(position: Int) -> Int {
-    return storage[position]
-  }
+  subscript(position: Int) -> Int { storage[position] }
   
   // RangeReplaceableCollection
-  
-  init() {
-    
-  }
+  init() { }
   
   mutating func replaceSubrange<C>(_ subrange: Range<Int>, with newElements: C) where C : Collection, C.Iterator.Element == Int {
     self.storage.replaceSubrange(subrange, with: newElements)
@@ -200,7 +149,6 @@ aRangeReplaceableCollection.insert(contentsOf: [2, 3], at: 0)
 aRangeReplaceableCollection.insert(1, at: 0)
 Array(aRangeReplaceableCollection)
 
-
 aRangeReplaceableCollection.replaceSubrange(0...2, with: [0])
 
 aRangeReplaceableCollection.removeFirst()
@@ -212,39 +160,27 @@ aRangeReplaceableCollection.removeAll()
  - note:
  If the collection is also a BidirectionalCollection there is also removeLast() method.
  */
-
 /*:
  ## MutableCollection
+ 
  Supports subscript assignment.
  
  Inherits From Collection.
  */
 struct AMutableCollection: MutableCollection {
-  
   private var storage = [1, 3, 6, 2]
   
   // Collection
+  var startIndex: Int { 0 }
   
-  var startIndex: Int {
-    return 0
-  }
+  var endIndex: Int { 100 }
   
-  var endIndex: Int {
-    return 100
-  }
-  
-  func index(after i: Int) -> Int {
-    return i + 1
-  }
+  func index(after i: Int) -> Int { i + 1 }
   
   subscript(position: Int) -> Int {
-    get {
-      return storage[position]
-    }
+    get { storage[position] }
     // MutableCollection
-    set {
-      storage[position] = newValue
-    }
+    set { storage[position] = newValue }
   }
 }
 
@@ -258,11 +194,7 @@ aMutableCollection[1]
 aMutableCollection.swapAt(0, 1)
 aMutableCollection[0]
 aMutableCollection[1]
-
-/*:
- ## Slices
- */
-
+//: ## Slices
 /*:
  - important:
  The accessed slice uses the same indices for the same elements as the original collection uses.
@@ -278,9 +210,9 @@ aCollection.suffix(10)
 Array(aMutableCollection[2..<4])
 aMutableCollection[2..<4].sorted()
 //: ## Standard Library Collections
-
 /*: 
  ### Array
+ 
  An ordered, random-access collection.
  */
 // Creating an Empty Array
@@ -300,6 +232,7 @@ var array5 = [1, 2]
 array5 = [] // array5 is now an empty array
 /*: 
  ### Set
+ 
  An unordered collection of unique elements.
  
  The elements mush be hashable.
@@ -318,6 +251,7 @@ set1.startIndex
 set1.makeIterator()
 /*: 
  ### Dictionary
+ 
  An **unordered** collection whose elements are key-value pairs.
  
  The key mush be hashable.
@@ -358,8 +292,7 @@ let itemsByKey = Dictionary(grouping: items) { $0.key }
 itemsByKey[1]
 itemsByKey[2]
 
-// Merging initializers and methods
-
+// Merging initializers and method
 let pairsWithDuplicateKeys = [("a", 1), ("b", 2), ("a", 3), ("b", 4)]
 let firstValues = Dictionary(pairsWithDuplicateKeys,
                              uniquingKeysWith: { (first, _) in first })
@@ -382,16 +315,17 @@ values["a"]
 values["b"]
 /*: 
  ### KeyValuePairs
+ 
  An **ordered** collection whose elements are key-value pairs.
  
- Some operations that are efficient on a dictionary are slower when using KeyValuePairs
+ Some operations that are efficient on a dictionary are slower when using KeyValuePairs.
  
  KeyValuePairs also allows duplicates keys.
  */
 let keyValuePairs: KeyValuePairs = [1 : "a", 1 : "b"]
 keyValuePairs.first!.key
 keyValuePairs.first!.value
-//: When calling a function with a KeyValuePairs parameter, you can pass a Swift dictionary literal without causing a Dictionary to be created
+//: When calling a function with a KeyValuePairs parameter, you can pass a Swift dictionary literal without causing a Dictionary to be created.
 struct IntPairs {
   var elements: [(Int, Int)]
   
@@ -413,12 +347,8 @@ pairs.elements
  
  
  If your array's Element type is a class or @objc protocol and you do not need to bridge the array to NSArray or pass the array to Objective-C APIs, using ContiguousArray may be more efficient and have more predictable performance than Array.
- 
  */
-class SomeClass {
-  
-}
-
+class SomeClass { }
 let contiguousArray = ContiguousArray<SomeClass>()
 //: ### Other
 let allOne: Repeated = repeatElement(1, count: 5)
@@ -430,7 +360,6 @@ flattenBidirectionalCollection.startIndex
 
 // ArraySlice is a slice of an Array, ContiguousArray, or ArraySlice instance.
 array1.prefix(2)
-
 //: CollectionDifference
 var old = [1, 2, 3, 0]
 let new = [0, 1, 2]
@@ -456,7 +385,8 @@ do {
 }
 /*:
  ## Enumerate
- When enumerating a collection, the integer part of each pair is a counter for the enumeration, not necessarily the index of the paired value. These counters can only be used as indices in instances of zero-based, integer-indexed collections, such as Array and ContiguousArray
+ 
+ When enumerating a collection, the integer part of each pair is a counter for the enumeration, not necessarily the index of the paired value. These counters can only be used as indices in instances of zero-based, integer-indexed collections, such as Array and ContiguousArray.
  
  To iterate over the elements of a collection with its indices, use the zip(_:_:) function.
  */

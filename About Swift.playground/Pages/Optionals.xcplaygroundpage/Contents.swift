@@ -1,12 +1,11 @@
 //: [Previous](@previous)
-
 /*:
  # Optionals
  You use optionals in situations where a value may be absent.
  
  An optional says:
- * There is a value, and it equals x.
- * There isn’t a value at all.
+ * there is a value, and it equals x,
+ * there isn’t a value at all.
  */
 var possibleString: String?
 possibleString = "Ciao"
@@ -73,7 +72,6 @@ if let definiteString = assumedString {
  `let c = a ?? b`\
  is the same of \
  `let c = a != nil ? a! : b`
- 
  */
 let defaultColorName = "red"
 var userDefinedColorName: String?   // defaults to nil

@@ -10,7 +10,7 @@ class MyType: NSObject, NSCopying {
   }
   
   public func copy(with zone: NSZone? = nil) -> Any {
-    return MyType(value: value)
+    MyType(value: value)
   }
 }
 
@@ -18,7 +18,7 @@ struct Wrapper {
   private var object = MyType(value: 0)
   
   private var objectForReading: MyType {
-    return object
+    object
   }
   
   private var objectForWriting: MyType {
@@ -31,12 +31,8 @@ struct Wrapper {
   }
   
   var value: Int {
-    set {
-      objectForWriting.value = newValue
-    }
-    get {
-      return objectForReading.value
-    }
+    get { objectForReading.value }
+    set { objectForWriting.value = newValue }
   }
 }
 
@@ -50,7 +46,6 @@ aWrapper1.value // 10
 aWrapper2.value // 20
 /*:
  - important:
- if you use `objectForReading` in the set of the computed property `value` then `aWrapper1.value` and `aWrapper2.value` will be both equal to 20
+ if you use `objectForReading` in the set of the computed property `value` then `aWrapper1.value` and `aWrapper2.value` will be both equal to 20.
  */
-
 //: [Next](@next)

@@ -1,11 +1,8 @@
 //: [Previous](@previous)
-
 //: # Operators
-
 //: ## Ternary Conditional Operator
 let condition1 = true
 var value = condition1 ? 1 : 2
-
 /*:
  ## Operators Overload
  
@@ -17,7 +14,7 @@ struct Vector2D {
 
 extension Vector2D {
   static func + (left: Vector2D, right: Vector2D) -> Vector2D {
-    return Vector2D(x: left.x + right.x, y: left.y + right.y)
+    Vector2D(x: left.x + right.x, y: left.y + right.y)
   }
   
   static func += (left: inout Vector2D, right: Vector2D) {
@@ -32,9 +29,9 @@ myVector.y
 myVector += Vector2D(x: 1, y: 1)
 myVector.x
 myVector.y
-//: Pattern matching
+//: ### Pattern matching
 func ~=(pattern: String, value: Int) -> Bool {
-  return pattern == "\(value)"
+  pattern == "\(value)"
 }
 
 "1" ~= 1
@@ -47,14 +44,14 @@ switch point {
     print("The point is at (\(point.0), \(point.1)).")
 }
 /*:
- Prefix and Postfix Operators
+ ### Prefix and Postfix Operators
  
  You implement a prefix or postfix unary operator by writing the prefix or postfix modifier before the func keyword when declaring the operator function.
  */
 extension Vector2D {
   
   static prefix func - (vector: Vector2D) -> Vector2D {
-    return Vector2D(x: -vector.x, y: -vector.y)
+    Vector2D(x: -vector.x, y: -vector.y)
   }
   
   static prefix func ++ (vector: inout Vector2D) -> Vector2D {
@@ -74,12 +71,12 @@ vector++
 vector
 /*: 
  ## Custom Operators
+ 
  New operators are declared at a global level using the operator keyword, and are marked with the **prefix**, **infix** or **postfix** modifiers.
  */
 prefix operator +++
 
 extension Vector2D {
-  
   // It doubles the x and y values of a Vector2D instance
   static prefix func +++ (vector: inout Vector2D) -> Vector2D {
     vector += vector
@@ -91,7 +88,6 @@ var toBeDoubled = Vector2D(x: 1.0, y: 4.0)
 let afterDoubling = +++toBeDoubled
 afterDoubling.x
 afterDoubling.y
-
 /*: 
  ### Precedence for Custom Infix Operators
  
@@ -99,11 +95,10 @@ afterDoubling.y
  
  For a complete list of the operator precedence groups see [Swift Standard Library Operators.](https://developer.apple.com/reference/swift/1851035-swift_standard_library_operators)
  */
-
 infix operator +-: AdditionPrecedence
 extension Vector2D {
   static func +- (left: Vector2D, right: Vector2D) -> Vector2D {
-    return Vector2D(x: left.x + right.x, y: left.y - right.y)
+    Vector2D(x: left.x + right.x, y: left.y - right.y)
   }
 }
 
@@ -116,5 +111,4 @@ plusMinusVector.y
  - note:
  You do not specify a precedence when defining a prefix or postfix operator. However, if you apply both a prefix and a postfix operator to the same operand, the postfix operator is applied first.
  */
-
 //: [Next](@next)

@@ -1,34 +1,22 @@
 //: [Previous](@previous)
-
 /*:
  # Closures
  
  * Global functions are closures that have a name and do not capture any values.
- 
  * Nested functions are closures that have a name and can capture values from their enclosing function.
- 
  * Closure expressions are unnamed closures written in a lightweight syntax that can capture values from their surrounding context.
  */
-
 /*:
  - note:
  Closures are Reference Types
  */
-
 //: ### The type of a closure is a tuple
-func doSomething(_ par1: Int, par2: Bool) {
-  
-}
+func doSomething(_ par1: Int, par2: Bool) { }
 let func1: (Int, Bool) -> () = doSomething
 func1(1, true)
-
 //: ### Closure can have a closure as a parameter
-func funcWithFuncParam(_ closure: (Int, Bool) -> ()) {
-  
-}
+func funcWithFuncParam(_ closure: (Int, Bool) -> ()) { }
 funcWithFuncParam(func1)
-
-
 //: ### Closure can return a closure
 func funcWithFuncReturn(_ flag: Bool) -> ((Int) -> Int)? {
   if flag {
@@ -41,10 +29,8 @@ func funcWithFuncReturn(_ flag: Bool) -> ((Int) -> Int)? {
   }
 }
 //: # Closure Expression
-
 //: ## Function
 let names = ["Chris", "Alex", "Ewa", "Barry", "Daniella"]
-
 
 func backwards(_ s1: String, _ s2: String) -> Bool {
   return s1 > s2
@@ -57,7 +43,6 @@ let closure = { (s1: String, s2: String) -> Bool in
 }
 
 names.sorted(by: closure)
-
 
 names.sorted(by: { (s1: String, s2: String) -> Bool in
   return s1 > s2
@@ -80,14 +65,15 @@ names.sorted(by: >)
 names.sorted() {
   $0 > $1
 }
-//If a closure expression is the only argument you do not need to write a pair of parentheses ()
 
+// If a closure expression is the only argument you do not need to write a
+// pair of parentheses ()
 names.sorted {
   $0 > $1
 }
 //: ### Multiple Trailing Closures
 func funcWithMultipleTrailingClosures(first: () -> Void,
-                                      second: () -> Void) {}
+                                      second: () -> Void) { }
 
 funcWithMultipleTrailingClosures {
   
@@ -124,9 +110,7 @@ var completionHandlers: [() -> Void] = []
 func someFunctionWithEscapingClosure(completionHandler: @escaping () -> Void) {
   completionHandlers.append(completionHandler)
 }
-/*:
- ### Allows a nonescaping closure to temporarily be used as if it were allowed to escape
- */
+//: ### Allows a nonescaping closure to temporarily be used as if it were allowed to escape
 import Dispatch
 
 func doSimultaneously(_ f: () -> (), and g: () -> (), on q: DispatchQueue) {
@@ -137,13 +121,12 @@ func doSimultaneously(_ f: () -> (), and g: () -> (), on q: DispatchQueue) {
     withoutActuallyEscaping(g) { escapableG in
       q.async(execute: escapableF)
       q.async(execute: escapableG)
-      q.sync(flags: .barrier) {}
+      q.sync(flags: .barrier) { }
     }
   }
   // `escapableF` and `escapableG` must be dequeued by the point
   // `withoutActuallyEscaping` returns.
 }
-
 /*:
  ## Autoclosures
  
@@ -151,24 +134,16 @@ func doSimultaneously(_ f: () -> (), and g: () -> (), on q: DispatchQueue) {
  
  An autoclosure lets you delay evaluation, because the code inside isn’t run until you call the closure
  */
-func functionWithClosure(_ closure: () -> Bool) {
-}
-
+func functionWithClosure(_ closure: () -> Bool) { }
 functionWithClosure({ 2 > 1})
 
-
-func functionWithAutoclosure(_ closure: @autoclosure () -> Bool) {
-}
-
+func functionWithAutoclosure(_ closure: @autoclosure () -> Bool) { }
 functionWithAutoclosure(2 > 1)
 //: If you want an autoclosure that is allowed to escape, use both the @autoclosure and @escaping attributes.
-func functionWithEscapingAutoclosure(_ closure: @autoclosure @escaping () -> Bool) {
-  
-}
-
+func functionWithEscapingAutoclosure(_ closure: @autoclosure @escaping () -> Bool) { }
 functionWithEscapingAutoclosure(2 > 1)
 /*:
- ##  Closure capture list
+ ## Closure capture list
  
  You can use a capture list to explicitly control how values are captured in a closure.
  
@@ -177,7 +152,6 @@ functionWithEscapingAutoclosure(2 > 1)
  If the type of the expression’s value is a class, you can mark the expression in a capture list with `weak` or `unowned` to capture a weak or unowned reference to the expression’s value.
  
  If you use a capture list, you must also use the `in` keyword, even if you omit the parameter names, parameter types, and return type.
- 
  */
 var a = 0
 var b = 0
@@ -209,13 +183,11 @@ closure5() // Prints "10 10"
  If you want to capture self, write self explicitly when you use it, or include self in the closure’s capture list.
  */
 class ClassWithClosureCaptureList {
-  
   var value = ""
   
   lazy var someClosure: () -> () = { [self] in
     print(value)
   }
-  
 }
 /*: 
  ## A closure or nested function that captures an in-out parameter must be nonescaping
@@ -241,7 +213,7 @@ func multithreadedFunction(queue: DispatchQueue, x: inout Int) {
   queue.async {
     increment(&localX)
   }
-  queue.sync {}
+  queue.sync { }
 }
 //: ## Setting a Default Property Value with a Closure or Function
 class ClassWithSetPropertyWithClosure {
@@ -262,7 +234,7 @@ let people = [
   Person(name: "Angela", age: 10)
 ]
 
-let sortedChildrenNames = people.filter {$0.age < 10} .map {$0.name} .sorted {$0 < $1}
+let sortedChildrenNames = people.filter {$0.age < 10}.map {$0.name}.sorted {$0 < $1}
 sortedChildrenNames
 
 let averageAge = people.reduce(0.0) { $0 + $1.age } / Double(people.count)
@@ -274,8 +246,8 @@ maxAge
 var intOptArray = [1, 2, nil, 3]
 var intArray = intOptArray.compactMap { $0 }
 intArray
-//: Memoization
-func memoize<T: Hashable, U>( _ body: @escaping ((T)->U, T)->U ) -> (T)->U {
+//: ### Memoization
+func memoize<T: Hashable, U>( _ body: @escaping ((T) -> U, T) -> U ) -> (T) -> U {
   var memo = Dictionary<T, U>()
   
   func result(_ x: T) -> U {

@@ -1,4 +1,3 @@
-
 #import <Foundation/Foundation.h>
 
 NS_ASSUME_NONNULL_BEGIN
@@ -8,8 +7,8 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark - Overriding Swift Names for Objective-C Interfaces
 
 typedef NS_ENUM(NSInteger, ABCRecordSide) {
-    ABCRecordSideA,
-    ABCRecordSideB NS_SWIFT_NAME(FlipSide),
+  ABCRecordSideA,
+  ABCRecordSideB NS_SWIFT_NAME(FlipSide),
 };
 
 + (instancetype)objectWithInteger:(NSInteger)value NS_SWIFT_NAME(init(int:));
@@ -52,14 +51,13 @@ typedef NS_ENUM(NSInteger, ABCRecordSide) {
 
 // Default
 typedef NS_ENUM(NSInteger, NLNonFrozenEnum) {
-    NLNonFrozenEnumCase1 = 1,
-    NLNonFrozenEnumCase2,
+  NLNonFrozenEnumCase1 = 1,
+  NLNonFrozenEnumCase2,
 } __attribute__((enum_extensibility(open)));;
 
 typedef NS_ENUM(NSInteger, NLFrozenEnum) {
-    NLFrozenEnumCase1 = 1,
-    NLFrozenEnumCase2
+  NLFrozenEnumCase1 = 1,
+  NLFrozenEnumCase2
 } __attribute__((enum_extensibility(closed)));
 
 NS_ASSUME_NONNULL_END
-

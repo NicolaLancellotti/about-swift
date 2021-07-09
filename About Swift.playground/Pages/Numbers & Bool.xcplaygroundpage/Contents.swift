@@ -1,28 +1,27 @@
 //: [Previous](@previous)
-
 //: # Numbers & Bool
-
 /*:
  ## Numbers
- * Integers and floating-point numbers conform to the *Numeric* protocol.
- * Signed Integers and floating-point numbers conform to the *SignedNumeric* protocol.
  
- *Numeric* protocol conforms to *AdditiveArithmetic* which values  support addition and subtraction.
+ * Integers and floating-point numbers conform to the `Numeric` protocol.
+ * Signed Integers and floating-point numbers conform to the `SignedNumeric` protocol.
+ 
+ `Numeric` protocol conforms to `AdditiveArithmetic` which values  support addition and subtraction.
  */
-
 /*:
  ## Integers
- Integers conform to the *FixedWidthInteger* protocol
- which inherits from the *BinaryInteger* protocol.
  
- The *FixedWidthInteger* protocol adds binary bitwise operations, bit shifts, and overflow handling to the operations supported by the BinaryInteger protocol.
+ Integers conform to the `FixedWidthInteger` protocol
+ which inherits from the `BinaryInteger` protocol.
+ 
+ The `FixedWidthInteger` protocol adds binary bitwise operations, bit shifts, and overflow handling to the operations supported by the BinaryInteger protocol.
  */
-
 /*:
  ### Signed Integers
- Signed Integers conform to the *SignedInteger* protocol.
- * On a 32-bit platform, Int is the same size as Int32.
- * On a 64-bit platform, Int is the same size as Int64.
+ 
+ Signed Integers conform to the `SignedInteger` protocol.
+ * On a 32-bit platform, Int is the same size as `Int32`.
+ * On a 64-bit platform, Int is the same size as `Int64`.
  */
 Int.min
 Int.max
@@ -38,12 +37,12 @@ Int16.max
 
 Int8.min
 Int8.max
-
 /*:
  ### Unsigned Integers
- Unsigned Integers conform to the *UnsignedInteger* protocol.
- * On a 32-bit platform, UInt is the same size as UInt32.
- * On a 64-bit platform, UInt is the same size as UInt64.
+ 
+ Unsigned Integers conform to the `UnsignedInteger` protocol.
+ * On a 32-bit platform, UInt is the same size as `UInt32`.
+ * On a 64-bit platform, UInt is the same size as `UInt64`.
  */
 UInt.min
 UInt.max
@@ -61,18 +60,16 @@ UInt8.min
 UInt8.max
 /*:
  ### Floating-Point Numbers
- Floating-Point Numbers conform to the *BinaryFloatingPoint* protocol
- which inherits from the *FloatingPoint* protocol.
  
- * Float16 represents a 16-bit floating-point number.
- * Float32 (Float) represents a 32-bit floating-point number.
- * Float64 (Double) represents a 64-bit floating-point number.
- * Float80 represents a 80-bit floating-point number.
+ Floating-Point Numbers conform to the `BinaryFloatingPoint` protocol
+ which inherits from the `FloatingPoint` protocol.
+ 
+ * `Float16` represents a 16-bit floating-point number.
+ * `Float32` (`Float`) represents a 32-bit floating-point number.
+ * `Float64` (`Double`) represents a 64-bit floating-point number.
+ * `Float80` represents a 80-bit floating-point number.
  */
-
-/*:
- ## Bool
- */
+//: ## Bool
 true
 false
 
@@ -120,6 +117,7 @@ let orBits = initialBits | initialBits
 let xorBits = initialBits ^ initialBits
 /*:
  ### Logical shift (Unsigned Integers)
+ 
  * Existing bits are moved to the left or right by the requested number of places.
  * Any bits that are moved beyond the bounds of the integer’s storage are discarded.
  * Zeros are inserted in the spaces left behind after the original bits are moved to the left or right.
@@ -130,15 +128,14 @@ shiftBits << 2             // 00010000
 shiftBits >> 2             // 00000001
 /*:
  ### Arithmetic shift (Signed Integers)
+ 
  * When you shift signed integers to the right, apply the same rules as for unsigned integers, but fill any  empty bits on the left with the sign bit, rather than with a zero.
  */
 let shiftBitsSigned: Int8 = -4   // 11111100 in binary
 shiftBitsSigned << 1             // 11111000
 shiftBitsSigned << 2             // 11110000
 shiftBitsSigned >> 2             // 11111111
-/*:
- ### Overflow Operators
- */
+//: ### Overflow Operators
 UInt8.max
 UInt8.min
 Int8.min
