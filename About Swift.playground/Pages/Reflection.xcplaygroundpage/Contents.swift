@@ -28,16 +28,16 @@ firstChildren.value
  
  A type that explicitly supplies its own mirror.
  */
-class ClassWithCustomMirror: CustomReflectable {
-  
-  let value = 10
-  
-  var customMirror: Mirror{
-    Mirror(self, children: ["value": "*** \(value) ***"])
+struct Temperature: CustomReflectable {
+  var celsiusDegrees: Float
+
+  var customMirror: Mirror {
+    Mirror(self, children: [
+      "C" : celsiusDegrees,
+      "F" : 1.8 * celsiusDegrees + 32
+    ])
   }
 }
 
-let customMirror = Mirror(reflecting: ClassWithCustomMirror())
-customMirror.children.first?.label
-customMirror.children.first?.value
+let temperature = Temperature(celsiusDegrees: 20)
 //: [Next](@next)
