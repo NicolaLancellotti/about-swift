@@ -27,7 +27,7 @@ public struct SmallNumber {
   // ________________________________________________
   // PropertyWrapper properties
   public var wrappedValue: Int {
-    get { return number }
+    get { number }
     set { number = newValue }
   }
   
@@ -94,4 +94,68 @@ values.$x1     // true because 10 > maximum
 
 values.x1 = 5 // maximum: 5
 values.$x1    // false because 5 <= maximum
+/*:
+ ## Property wrappers on function parameters
+ */
+/*:
+ ### Implementation-detail property wrappers
+ By default, property wrappers are implementation detail.
+ */
+func foo(@SmallNumber(maximum: 5) value: Int) {
+  let backingStorage: SmallNumber = _value
+  let wrappedValue: Int = value // of the innermost property wrapper
+  let projectedValue: Bool = $value // of outermost property wrapper
+  
+  let _ = (backingStorage, wrappedValue, projectedValue)
+}
+
+foo(value: 6)
+/*:
+ ### API-level property wrappers
+ Property wrappers that declare an init(projectedValue:) initializer are inferred to be API-level wrappers. These
+ wrappers become part of the function signature, and the property wrapper is initialized at the call-site of the function.
+ */
+@propertyWrapper
+struct APILevelPropertyWrapper {
+  var wrappedValue: Int
+  var projectedValue: Self { self }
+  
+  init(wrappedValue: Int) {
+    self.wrappedValue = wrappedValue
+  }
+  
+  init(projectedValue: Self) {
+    self = projectedValue
+  }
+}
+
+func bar(@APILevelPropertyWrapper value: Int) {
+/*:
+ The compiler generates:
+ 
+ `func bar(value _value: APILevelPropertyWrapper)`
+ */
+  let wrappedValue = value // of the innermost property wrapper
+  let projectedValue = $value // of outermost property wrapper
+  
+  let _ = (wrappedValue, projectedValue)
+}
+
+bar(value: 10) // init(wrappedValue:)
+bar($value: APILevelPropertyWrapper(wrappedValue: 10)) // init(projectedValue:)
+//: Unapplied function references
+let _: (Int) -> () = bar
+let _: (APILevelPropertyWrapper) -> () = bar($value:)
+/*:
+ ## Property wrappers on closure parameters
+ */
+//: ### Pass a wrapped value
+let _: (Int) -> Void = { (@APILevelPropertyWrapper value) in
+}
+//: ### Pass a projected value
+let _: (APILevelPropertyWrapper) -> Void = { (@APILevelPropertyWrapper $value) in
+}
+//: The property-wrapper attribute is not necessary if the backing property wrapper and the projected value have the same type
+let _: (APILevelPropertyWrapper) -> Void = { $value in
+}
 //: [Next](@next)
