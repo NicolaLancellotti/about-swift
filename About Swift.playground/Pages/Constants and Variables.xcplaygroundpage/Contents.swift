@@ -36,12 +36,17 @@ constantInt = 0      // Initialization
  */
 let pi = 3.14159        // Double
 let booleanValue = true // Bool
+let dictionary = [0: "0", 1: "1"] // [Int : String]
 //: If you combine integer and floating-point literals in an expression, a type of Double will be inferred from the context.
 let anotherPi = 3 + 0.14159
 /*:
  - experiment:
  Press the option key and click on a variable or constant name to see the type inferred.
  */
+/*:
+ ## Type placeholders
+ */
+let dictionary2: [Int: _] = [0: "0", 1: "1"] // [Int : String]
 /*:
  ## Type Safety
  
