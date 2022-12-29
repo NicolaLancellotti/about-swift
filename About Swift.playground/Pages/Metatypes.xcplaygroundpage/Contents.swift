@@ -1,71 +1,59 @@
 //: [Previous](@previous)
 //: # Metatypes
-//: ## Protocol
-protocol ProtocolA { }
-ProtocolA.self // metatype type
-//: ## Class
-class ClassB { }
+protocol AProtocol {}
+protocol AProtocol2 {}
 
-class ClassA: ClassB {
-  var data = 0
-  
-  override init() { }
-  
-  required init(data: Int) {
-    self.data = data
-  }
-  
-  static func typeMethod() { }
-  
-  func instanceMethod() { }
+class AClass: AProtocol, AProtocol2 {
+  required init(x: Int = 0) {}
+  static func staticMethod() {}
+  func instanceMethod(flag: Bool) -> Bool { !flag }
 }
 
-let object = ClassA()
-//: ## Type
-object.self
-//: ## Metatype
-ClassA.self 
-type(of: object)
+struct AStruct {}
 
-let someInstance: ClassB = ClassA()
+enum AnEnum {}
 /*:
- ## Dynamic Type Expression
- 
- The type(of:) expression evaluates to the value of the runtime type of the expression.
+ You can use the postfix postfix `self` expression to access a type as a value.
  */
-type(of: someInstance) === ClassB.self
-type(of: someInstance) === ClassA.self
-//: ## Call Type Methods
-ClassA.self.typeMethod()
-ClassA.typeMethod()
+let _: AClass.Type          /* class metatype       */ = AClass.self
+let _: AStruct.Type         /* struct metatype      */ = AStruct.self
+let _: AnEnum.Type          /* enum metatype        */ = AnEnum.self
 
-type(of: object).typeMethod()
-//: ## Call Instance Methods
-object.self.instanceMethod()
-object.instanceMethod()
+let _: any AProtocol.Type   /* existential metatype */ = AClass.self
+let _: any (AProtocol & AProtocol2).Type               = AClass.self
 
-var function = ClassA.self.instanceMethod(object)
-function =  ClassA.instanceMethod(object)
-function()
-//: ## Initializers
-ClassA.init(data: 1)
-ClassA(data: 1)
-//: For class instances, the initializer that’s called must be marked with the required keyword or the entire class marked with the final keyword.
-type(of: object).init(data: 7)
-// type(of: object)(data: 5)       // Error
+let _: (any AProtocol).Type /* protocol metatype    */ = (any AProtocol).self
+let _: AProtocol.Protocol   /* protocol metatype    */ = AProtocol.self
+//: Call Instance Methods
+let aClass: AClass.Type = AClass.self
+// The initializer must be marked with the required keyword or the entire class marked with the final keyword.
+aClass.init(x: 10)
+
+aClass.instanceMethod(AClass(x: 10))(flag: true)
+aClass.staticMethod()
+//: Access that instance’s dynamic, runtime type as a value.
+let instance: AClass = AClass(x: 0)
+let aClass2: AClass.Type = type(of: instance)
+
+let existential: any AProtocol = instance
+let _: any AProtocol.Type = type(of: existential)
+//: Any & AnyType
+let _: /* any */ Any      /* existential type     */ = 1
+let _: /* any */ Any.Type /* existential metatype */ = Int.self
+let _: (any Any).Type     /* protocol metatype    */ = Any.self
 /*:
  ## Object Identifier
  
  A unique identifier for a class instance or metatype.
  */
-let instanceA1 = ClassA()
+let instanceA1 = AClass()
 let instanceA2 = instanceA1
-let instanceA3 = ClassA()
+let instanceA3 = AClass()
 
 ObjectIdentifier(instanceA1) == ObjectIdentifier(instanceA2)
 ObjectIdentifier(instanceA1) == ObjectIdentifier(instanceA3)
 
-ObjectIdentifier(ClassA.self) == ObjectIdentifier(ClassB.self)
+ObjectIdentifier(AClass.self) == ObjectIdentifier(AClass.self)
 /*:
  ## Key-Path Expression
  
@@ -93,10 +81,14 @@ dic
  
  A `\Root.value` key path expression is now allowed wherever a `(Root) -> Value` function is allowed.
  */
-let array = [ClassA(data: 0), ClassA(data: 1)]
+struct AnotherStruct {
+  let data: Int
+}
+
+let array = [AnotherStruct(data: 0), AnotherStruct(data: 1)]
 var mapped = array.map(\.data)
 
-mapped = array.map { $0[keyPath: \ClassA.data]}
+mapped = array.map { $0[keyPath: \AnotherStruct.data]}
 mapped
 
 mapped = array.map { $0.data }

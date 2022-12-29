@@ -91,7 +91,7 @@ protocol SomeClassOnlyProtocol: AnyObject, ProtocolWithInitializerRequirements {
  */
 protocol SomeProtocol { }
 
-let object1: SomeProtocol
+let object1: any SomeProtocol
 
-let object2: SomeProtocol & SomeClassOnlyProtocol
+let object2: any SomeProtocol & SomeClassOnlyProtocol
 //: [Next](@next)

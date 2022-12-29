@@ -143,7 +143,7 @@ instace.foo()
 instace.fubar()
 instace.bar()
 
-let anotherInstace: AProtocol = AStructure()
+let anotherInstace: any AProtocol = AStructure()
 anotherInstace.foo()
 anotherInstace.fubar()
 anotherInstace.bar() // static dispaching

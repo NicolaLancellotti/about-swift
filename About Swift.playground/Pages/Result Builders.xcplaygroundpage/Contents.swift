@@ -53,9 +53,9 @@ struct Var: Expr {
 
 struct Set: Expr {
   let variable: Var
-  let expression: Expr
+  let expression: any Expr
   
-  init(_ variable: Var, to expression: Expr) {
+  init(_ variable: Var, to expression: any Expr) {
     self.variable = variable
     self.expression = expression
   }
@@ -73,11 +73,11 @@ struct BinaryOp: Expr {
     case minus
   }
   
-  let lhs: Expr
+  let lhs: any Expr
   let op: Operator
-  let rhs: Expr
+  let rhs: any Expr
   
-  init(_ lhs: Expr, _ op: Operator, _ rhs: Expr) {
+  init(_ lhs: any Expr, _ op: Operator, _ rhs: any Expr) {
     self.lhs = lhs
     self.op = op
     self.rhs = rhs
@@ -189,7 +189,7 @@ func eval(increase: Bool, flag: Bool) -> ToyLangBuilder.FinalResult {
   Eval(x)
 }
 
-let value2  = eval(increase: true, flag: true)
+let value2 = eval(increase: true, flag: true)
 value2
 //: ### Variable or subscript declaration that includes a getter
 @ToyLangBuilder var value3: ToyLangBuilder.FinalResult {
