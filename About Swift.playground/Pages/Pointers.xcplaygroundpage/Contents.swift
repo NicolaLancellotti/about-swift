@@ -122,6 +122,10 @@ buffer.makeIterator()
 }
 
 buffer.reduce(0, +)
+//: Efficient temporarily allocation which will be optimized to use stack allocation when possible
+withUnsafeTemporaryAllocation(of: Int.self, capacity: 10) {
+  (buffer: UnsafeMutableBufferPointer<Int>) in
+}
 /*:
  ## Buffer Pointers for untyped data
  
