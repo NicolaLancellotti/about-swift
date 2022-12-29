@@ -96,5 +96,21 @@ if case let x? = someOptional {
 for case let number? in arrayOfOptionalInts {
   number
 }
+/*:
+ ## Static Member Lookup in Generic Contexts
+ It is possible to use leading-dot syntax in generic contexts to access static
+ members of protocol extensions where Self is constrained to a fully concrete type.
+ */
+public protocol AProtocol {  }
+
+public struct AStruct: AProtocol { }
+
+extension AProtocol where Self == AStruct {
+  public static var aStruct: Self { .init() }
+}
+
+func foo<T: AProtocol>(_ value: T) { }
+
+foo(.aStruct) // Static Member Lookup
 //: [Next](@next)
 
