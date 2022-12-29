@@ -150,4 +150,13 @@ label3: if condition1 {
 #else
 // do something
 #endif
+//: ### Surround postfix member expressions
+let value = [1, 2, 3]
+#if true
+  .count
+#else
+  .first
+#endif
+
+value
 //: [Next](@next)
