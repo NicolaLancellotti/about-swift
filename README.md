@@ -1,5 +1,5 @@
 # About Swift
-[![Version](https://img.shields.io/badge/swift-5.6-orange.svg)](https://swift.org/)
+[![Version](https://img.shields.io/badge/swift-5.7-orange.svg)](https://swift.org/)
 ![header](header.png)
 
 ### Contents
