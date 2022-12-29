@@ -2,8 +2,16 @@
 //: # Checking API Availability
 if #available(iOS 9, macOS 10.10, *) {
   // Use iOS 9 APIs on iOS, and use macOS v10.10 APIs on macOS
+  print("available")
 } else {
   // Fall back to earlier iOS and macOS APIs
+  print("unavailable")
+}
+
+if #unavailable(iOS 9, macOS 10.10) {
+  print("unavailable")
+} else {
+  print("available")
 }
 /*:
  The available attribute always appears with a list of two or more comma-separated attribute arguments. These arguments begin with one of the following platform names:
