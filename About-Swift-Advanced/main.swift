@@ -112,10 +112,10 @@ assert(result == 10)
 
 extension NLInteroperability {
   var RGBA: (red: CGFloat, green: CGFloat, blue: CGFloat, alpha: CGFloat) {
-    var r: CGFloat = 0.0
-    var g: CGFloat = 0.0
-    var b: CGFloat = 0.0
-    var a: CGFloat = 0.0
+    var r = 0.0
+    var g = 0.0
+    var b = 0.0
+    var a = 0.0
     __getRed(&r, green: &g, blue: &b, alpha: &a)
     return (red: r, green: g, blue: b, alpha: a)
   }
