@@ -13,18 +13,21 @@
  */
 protocol MyProtocol: Equatable { }
 
-protocol AnotherProtocol { }
+protocol AnotherProtocol<A> {
+  associatedtype A
+}
 
 struct MyType<T: Equatable>: MyProtocol, AnotherProtocol {
+  typealias A = Bool
   var value: T
 }
 //: ### Result type of a function
-func makeOpaque<T: Equatable>(value: T) -> some MyProtocol & AnotherProtocol {
+func makeOpaque<T: Equatable>(value: T) -> some MyProtocol & AnotherProtocol<Bool> {
   MyType(value: value)
 }
 //: ### Type of a variable
 do {
-  let opaqueValue: some MyProtocol & AnotherProtocol = makeOpaque(value: 10)
+  let opaqueValue: some MyProtocol & AnotherProtocol<Bool> = makeOpaque(value: 10)
   opaqueValue is MyType<Int> // Check at runtime
 }
 //: ### Result type of a method, type of a variable and result type of a subscript
