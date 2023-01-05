@@ -4,11 +4,11 @@
  
  An opaque type hides its value’s type information.
  
- Opaque return types cannot be used in the requirements of a protocol and for a non-final declaration within a class.
+ Opaque result types cannot be used in the requirements of a protocol and for a non-final declaration within a class.
  
  An opaque type refers to one specific type, although the caller of the function isn’t able to see which type.
  
- If a function with an opaque return type returns from multiple places, all of the possible return values must have the same type.
+ If a function with an opaque result type returns from multiple places, all of the possible return values must have the same type.
  */
 protocol MyProtocol: Equatable { }
 
@@ -17,7 +17,7 @@ protocol AnotherProtocol { }
 struct MyType<T: Equatable>: MyProtocol, AnotherProtocol {
   var value: T
 }
-//: ### Return type of a function
+//: ### Result type of a function
 func makeOpaque<T: Equatable>(value: T) -> some MyProtocol & AnotherProtocol {
   MyType(value: value)
 }
@@ -26,7 +26,7 @@ do {
   let opaqueValue: some MyProtocol & AnotherProtocol = makeOpaque(value: 10)
   opaqueValue is MyType<Int> // Check at runtime
 }
-//: ### Return type of a method, type of a variable and return type of a subscript
+//: ### Result type of a method, type of a variable and result type of a subscript
 struct MyCollection1 {
   var storage = [MyType<Int>]()
   
@@ -62,6 +62,20 @@ do {
   // Error
   // firstWithProperty == firstWithSubscript
 }
+/*: ### Structural opaque result types
+ Opaque result types are allowed in structural positions in the result type of a function, the type of a variable, or the result type of a subscript.
+ 
+ If the result type of a function, the type of a variable, or the result type of a subscript is a function type, that function type can only contain structural opaque types in return position.
+ */
+func makeOptionalOpaque<T: Equatable>(value: T, flag: Bool) -> (some MyProtocol & AnotherProtocol)? {
+  if flag {
+    return MyType(value: value)
+  } else {
+    return Optional<MyType<T>>.none
+  }
+}
+makeOptionalOpaque(value: 10, flag: true)
+makeOptionalOpaque(value: 10, flag: false)
 /*:
  ## Differences with returning a Protocol Type
  
