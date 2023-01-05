@@ -1,9 +1,10 @@
 //: [Previous](@previous)
 /*:
  # Opaque Types
- 
+ */
+/*:
+ ## Opaque Result Types
  An opaque type hides its value’s type information.
- 
  Opaque result types cannot be used in the requirements of a protocol and for a non-final declaration within a class.
  
  An opaque type refers to one specific type, although the caller of the function isn’t able to see which type.
@@ -171,4 +172,16 @@ struct AType: AProtocol {
 }
 
 AType().value == AType().value
+/*:
+ ## Opaque Parameter Declarations
+ Opaque parameter types can only be used in parameters of a function, initializer, or subscript declaration.
+ 
+ The caller determines the type of the opaque type via type inference.
+ */
+func f1(x: some Collection, y: some Collection) { }
+//: is equivalent to
+func f2<T: Collection, U: Collection>(x: T, y: U) { }
+
+f1(x: [1, 2], y: [1 : "1", 2 : "2"])
+f2(x: [1, 2], y: [1 : "1", 2 : "2"])
 //: [Next](@next)
