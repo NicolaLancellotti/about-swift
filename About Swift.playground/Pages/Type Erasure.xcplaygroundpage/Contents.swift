@@ -33,11 +33,17 @@ struct IncrementerBy2: Incrementable {
     IncrementerBy2(current: self.current + value)
   }
 }
-/*:
- - note:
- You cannot write: \
- `var incrementer: Incrementable`
- */
+
+var incrementer: any Incrementable
+incrementer = IncrementerBy1(current: 0)
+incrementer.increment()
+incrementer.increment()
+// incrementer.incremented(by: 10) // error
+
+incrementer = IncrementerBy2(current: 0)
+incrementer.increment()
+incrementer.increment()
+
 struct AnyIncrementable<T>: Incrementable {
   private var _current: () -> T
   private let _increment: () -> T
@@ -64,17 +70,17 @@ struct AnyIncrementable<T>: Incrementable {
   
 }
 
-var incrementer: AnyIncrementable<Int>
+var anyIncrementer: AnyIncrementable<Int>
 
-incrementer = AnyIncrementable(IncrementerBy1(current: 0))
-incrementer.increment()
-incrementer.increment()
-incrementer.incremented(by: 10).current
+anyIncrementer = AnyIncrementable(IncrementerBy1(current: 0))
+anyIncrementer.increment()
+anyIncrementer.increment()
+anyIncrementer.incremented(by: 10).current
 
-incrementer = AnyIncrementable(IncrementerBy2(current: 0))
-incrementer.increment()
-incrementer.increment()
-incrementer.incremented(by: 10).current
+anyIncrementer = AnyIncrementable(IncrementerBy2(current: 0))
+anyIncrementer.increment()
+anyIncrementer.increment()
+anyIncrementer.incremented(by: 10).current
 /*:
  ## Type-erased in Swift Standard Library
  
