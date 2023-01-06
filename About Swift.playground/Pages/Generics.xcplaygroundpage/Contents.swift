@@ -153,4 +153,23 @@ value.foo
 f1(value)
 f2(value)
 f3(value)
+/*:
+ ## Implicitly Opened Existentials
+ This operates by "opening" the value of protocol type and passing the underlying type directly to the generic function.
+ */
+struct AType: P1 {}
+
+func f<T: P1>(_ value: T) -> String {
+  "f<T: P1>"
+}
+
+func f<T>(_ value: T) -> String {
+  "f<T>"
+}
+
+let x: any P1 = AType()
+
+f(x) == "f<T: P1>"
+f(x as any P1) == "f<T>" // suppresses opening
+f((x as any P1)) == "f<T: P1>" // parentheses disable the suppression mechanism
 //: [Next](@next)
