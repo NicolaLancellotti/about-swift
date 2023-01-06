@@ -69,16 +69,22 @@ list[3]
 list[1...3]
 //: ## Extensions of Generic Types
 extension LinkedList {
-  
   var top: Element? {
     switch self {
       case .empty: return nil
       case .cons(let elem, _): return elem
     }
   }
-  
 }
-list.top!
+//: ## Extensions on Bound Generic Types
+extension LinkedList<String> {
+  func topReversed() -> String? {
+    switch self {
+      case .empty: return nil
+      case .cons(let elem, _): return String(elem.reversed())
+    }
+  }
+}
 //: ## Extensions with a Generic Where Clause
 extension LinkedList where Element: Equatable {
   func isTop(_ item: Element) -> Bool {
