@@ -27,7 +27,7 @@
         <page name='Result Builders'/>
         <page name='Miscellaneous'/>
         <page name='Checking API Availability'/>
-        <page name='Type Erasure'/>
+        <page name='Type-erasing wrappers'/>
         <page name='Numbers &amp; Bool'/>
         <page name='SIMD'/>
         <page name='Able Protocols'/>

@@ -19,6 +19,12 @@ struct SomeStructure: ProtocolWithAssociatedType {
   
   func foo() -> A { 0 }
 }
+
+let x1: any ProtocolWithAssociatedType = SomeStructure()
+let _: Any = x1.foo()
+//: ### Constrained Existential Types
+let x2: any ProtocolWithAssociatedType<Int, Bool> = SomeStructure()
+let _: Int = x2.foo()
 /*:
  ## Where Clauses
  

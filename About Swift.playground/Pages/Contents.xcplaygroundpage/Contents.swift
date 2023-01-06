@@ -26,7 +26,7 @@
  - [Result Builders](Result%20Builders)
  - [Miscellaneous](Miscellaneous)
  - [Checking API Availability](Checking%20API%20Availability)
- - [Type Erasure](Type%20Erasure)
+ - [Type-erasing wrappers](Type-erasing%20wrappers)
  - [Numbers & Bool](Numbers%20&%20Bool)
  - [SIMD](SIMD)
  - [Able Protocols](Able%20Protocols)
