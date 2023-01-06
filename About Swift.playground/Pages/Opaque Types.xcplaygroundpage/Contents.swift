@@ -6,59 +6,81 @@
  ## Opaque Result Types
  An opaque type hides its value’s type information.
  Opaque result types cannot be used in the requirements of a protocol and for a non-final declaration within a class.
- 
- An opaque type refers to one specific type, although the caller of the function isn’t able to see which type.
- 
- If a function with an opaque result type returns from multiple places, all of the possible return values must have the same type.
  */
-protocol MyProtocol: Equatable { }
+protocol AProtocol: Equatable { }
 
 protocol AnotherProtocol<A> {
   associatedtype A
 }
 
-struct MyType<T: Equatable>: MyProtocol, AnotherProtocol {
+struct AType<T: Equatable>: AProtocol, AnotherProtocol {
   typealias A = Bool
-  var value: T
+  var value: T?
 }
-//: ### Result type of a function
-func makeOpaque<T: Equatable>(value: T) -> some MyProtocol & AnotherProtocol<Bool> {
-  MyType(value: value)
+/*:
+ ### Result type of a function
+ 
+ An opaque type refers to one specific type, although the caller of the function isn’t able to see which type.
+ 
+ If a function with an opaque result type returns from multiple places,
+ all of the possible return values must have the same type.
+ 
+ The same-type restriction for functions with `if #available` conditions is relaxed:
+ if an `if #available` condition is always executed, it can return a different type
+ than the type returned by the rest of the function.
+ */
+
+@available(macOS 15, *)
+struct AnotherType<T: Equatable>: AProtocol, AnotherProtocol {
+  typealias A = Bool
+  var value: [T]
+}
+
+func makeOpaque<T: Equatable>(value: T, flag: Bool = true) -> some AProtocol & AnotherProtocol<Bool> {
+  if #available(macOS 15, *) {
+    return AnotherType(value: [value])
+  }
+  
+  if flag {
+    return AType(value: value)
+  } else {
+    return AType<T>(value: nil)
+  }
 }
 //: ### Type of a variable
 do {
-  let opaqueValue: some MyProtocol & AnotherProtocol<Bool> = makeOpaque(value: 10)
-  opaqueValue is MyType<Int> // Check at runtime
+  let opaqueValue: some AProtocol & AnotherProtocol<Bool> = makeOpaque(value: 10)
+  opaqueValue is AType<Int> // Check at runtime
 }
 //: ### Result type of a method, type of a variable and result type of a subscript
-struct MyCollection1 {
-  var storage = [MyType<Int>]()
+struct ACollection {
+  var storage = [AType<Int>]()
   
   init(values: Int...) {
-    storage = values.map(MyType.init)
+    storage = values.map(AType.init)
   }
   
-  var first: some MyProtocol {
+  var first: some AProtocol {
     get { storage[0] }
     // set { storage[0] = newValue }
   }
   
-  subscript(index: Int) -> some MyProtocol {
+  subscript(index: Int) -> some AProtocol {
     get { return storage[index] }
     // set (newValue) { storage[index] = newValue }
   }
   
-  func random() -> some MyProtocol {
+  func random() -> some AProtocol {
     storage.randomElement()!
   }
 }
 
 do {
-  let collection = MyCollection1(values: 1, 2)
+  let collection = ACollection(values: 1, 2)
   collection.random()
   
-  let firstWithSubscript: some MyProtocol = collection[0]
-  let firstWithProperty: some MyProtocol = collection.first
+  let firstWithSubscript: some AProtocol = collection[0]
+  let firstWithProperty: some AProtocol = collection.first
   
   firstWithSubscript == firstWithSubscript
   firstWithProperty == firstWithProperty
@@ -71,11 +93,11 @@ do {
  
  If the result type of a function, the type of a variable, or the result type of a subscript is a function type, that function type can only contain structural opaque types in return position.
  */
-func makeOptionalOpaque<T: Equatable>(value: T, flag: Bool) -> (some MyProtocol & AnotherProtocol)? {
+func makeOptionalOpaque<T: Equatable>(value: T, flag: Bool) -> (some AProtocol & AnotherProtocol)? {
   if flag {
-    return MyType(value: value)
+    return AType(value: value)
   } else {
-    return Optional<MyType<T>>.none
+    return Optional<AType<T>>.none
   }
 }
 makeOptionalOpaque(value: 10, flag: true)
@@ -94,14 +116,14 @@ func genericFunction<T: AnotherProtocol>(value: T) -> some Collection {
 }
 
 do {
-  let opaqueValue: some AnotherProtocol = MyType(value: 10)
+  let opaqueValue: some AnotherProtocol = AType(value: 10)
   let collection: some Collection = genericFunction(value: opaqueValue)
   print(collection)
 }
 
 do {
   // Error
-  // let value: AnotherProtocol = MyType(value: 10)
+  // let value: AnotherProtocol = AType(value: 10)
   // let collection = genericFunction(value: value)
 }
 //: ### Opaque types preserves type identity
@@ -124,18 +146,18 @@ protocol MyCollection2Protocol: Equatable {
 }
 
 struct MyCollection2: MyCollection2Protocol, Equatable {
-  var storage = [MyType<Int>]()
+  var storage = [AType<Int>]()
   
   init(values: Int...) {
-    storage = values.map(MyType.init)
+    storage = values.map(AType.init)
   }
   
-  var first: MyType<Int> {
+  var first: AType<Int> {
     get { storage[0] }
     set { storage[0] = newValue }
   }
   
-  subscript(index: Int) -> MyType<Int> {
+  subscript(index: Int) -> AType<Int> {
     get { storage[index] }
     set (newValue) { storage[index] = newValue }
   }
@@ -161,20 +183,20 @@ do {
   firstWithProperty == firstWithSubscript
 }
 //: ### Special case
-protocol AProtocol {
+protocol AProtocol2 {
   associatedtype Element: SignedInteger
   
   var value: Element {get}
   // var otherValue: Element {get }
 }
 
-struct AType: AProtocol {
+struct AType2: AProtocol2 {
   
   var value: some SignedInteger = 1
   // var otherValue: some SignedInteger = 1
 }
 
-AType().value == AType().value
+AType2().value == AType2().value
 /*:
  ## Opaque Parameter Declarations
  Opaque parameter types can only be used in parameters of a function, initializer, or subscript declaration.
