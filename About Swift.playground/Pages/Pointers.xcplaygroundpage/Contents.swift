@@ -61,6 +61,18 @@ p.initialize(repeating: SomeStruct(someClass: SomeClass()),
 
 p.deinitialize(count: 1) // print "deinit SomeClass" in the console
 p.deallocate()
+//: ### Obtain a pointer to the stored property referred to by a key path
+struct AStruct {
+  var bool: Bool = true
+  var float: Float = 1.1
+}
+var aStruct = AStruct()
+
+withUnsafeMutablePointer(to: &aStruct) {
+  let pointer = $0.pointer(to: \.bool)!
+  pointer.pointee = false
+}
+aStruct.bool
 /*:
  ## Pointers for untyped data
  
@@ -98,6 +110,9 @@ uint8Pointer.withMemoryRebound(to: Int16.self, capacity: 1) {
 }
 
 rawPointer.deallocate()
+/*: ### You can obtain the next/preceding pointer properly aligned with
+ `alignedUp(for:)` and `alignedDown(for:)`
+ */
 /*:
  ## Buffer Pointers
  
