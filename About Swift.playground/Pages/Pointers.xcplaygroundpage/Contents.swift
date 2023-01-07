@@ -132,6 +132,17 @@ withUnsafeTemporaryAllocation(of: Int.self, capacity: 10) {
  * `UnsafeMutableRawBufferPointer` - mutating buffer pointer.
  * `UnsafeRawBufferPointer` - non mutating buffer pointer.
  */
+//: ### Unaligned Loads and Stores
+import Foundation
+let data = Data([0x0, 0x0, 0x0, 0xff, 0xff, 0xff, 0xff, 0x0])
+let unalignedData = data.dropFirst(3)
+
+unalignedData.withUnsafeBytes { (buffer: UnsafeRawBufferPointer) in
+  buffer.loadUnaligned(as: UInt32.self)
+}
+
+// Fatal error: load from misaligned raw pointer
+// unalignedData.withUnsafeBytes { $0.load(as: UInt32.self) }
 /*:
  ## Managed Buffer
  
