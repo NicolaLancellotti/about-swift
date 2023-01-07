@@ -73,6 +73,15 @@ withUnsafeMutablePointer(to: &aStruct) {
   pointer.pointee = false
 }
 aStruct.bool
+//: ### Temporarily rebinds the memory
+var tuple = (false, true)
+withUnsafeMutablePointer(to: &tuple) {
+  $0.withMemoryRebound(to: Bool.self, capacity: 2) { pointer in
+    pointer[0] = !pointer[0]
+    pointer[1] = !pointer[1]
+  }
+}
+tuple
 /*:
  ## Pointers for untyped data
  
@@ -103,11 +112,6 @@ let uint8Pointer = rawPointer.bindMemory(to: UInt8.self, capacity: 4)
 // Accessing int16Pointer is now undefined
 uint8Pointer.advanced(by: 0).pointee // 3 * 2^0 = 3
 uint8Pointer.advanced(by: 1).pointee // 1 * 2^8 = 256
-
-// Temporarily rebinds the memory
-uint8Pointer.withMemoryRebound(to: Int16.self, capacity: 1) {
-  $0.pointee
-}
 
 rawPointer.deallocate()
 /*: ### You can obtain the next/preceding pointer properly aligned with
