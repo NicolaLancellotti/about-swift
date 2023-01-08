@@ -135,14 +135,27 @@ enum ToyLangBuilder {
   static func buildArray(_ components: [Component]) -> Component {
     components.flatMap { $0 }
   }
+/*:
+ A Result Builder is required to have either at least one static buildBlock
+  method, or both buildPartialBlock(first:) and buildPartialBlock(accumulated:next:)
+ */
+//  static func buildBlock(_ components: Component...) -> Component {
+//    components.flatMap { $0 }
+//  }
   
-  static func buildBlock(_ components: Component...) -> Component {
-    components.flatMap { $0 }
+  static func buildPartialBlock(first: Component) -> Component {
+    first
+  }
+  
+  static func buildPartialBlock(accumulated: Component, next: Component) -> Component {
+    var accumulated = accumulated
+    accumulated.append(contentsOf: next)
+    return accumulated
   }
   
   static func buildFinalResult(_ component: Component)  -> FinalResult {
     Result {
-      guard let eval = component.last as? Eval else {
+      guard let result = component.last as? Eval else {
         throw ToyLangError.evaluateNotFound
       }
       
@@ -150,7 +163,7 @@ enum ToyLangBuilder {
       for expr in component {
         try expr.eval(environment)
       }
-      return try environment.get(eval.variable.name)
+      return try result.eval(environment)
     }.mapError { $0 as! ToyLangError}
   }
 }
