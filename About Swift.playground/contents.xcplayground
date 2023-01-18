@@ -45,6 +45,5 @@
         <page name='Memory'/>
         <page name='Pointers'/>
         <page name='Codable'/>
-        <page name='Created by'/>
     </pages>
 </playground>

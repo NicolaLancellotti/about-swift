@@ -44,9 +44,7 @@
  - [Memory](Memory)
  - [Pointers](Pointers)
  - [Codable](Codable)
- 
- - [Created by](Created%20by)
- 
+
  ****
  [Next](@next)
  */
