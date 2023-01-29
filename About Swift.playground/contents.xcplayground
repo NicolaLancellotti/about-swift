@@ -45,5 +45,7 @@
         <page name='Memory'/>
         <page name='Pointers'/>
         <page name='Codable'/>
+        <page name='Regex'/>
+        <page name='Regex Syntax Examples'/>
     </pages>
 </playground>
