@@ -1,128 +1,103 @@
 //: [Previous](@previous)
 //: # Strings
-import Foundation
-/*:
- ### Characters
- 
- A single extended grapheme cluster that approximates a user-perceived character.
- */
-let letter = Character("a")
-letter.isASCII
-letter.asciiValue
-letter.isLetter
-letter.isLowercase
-
-let emoji = "😋" as Character
-emoji.isASCII
-
-let number = "⅚" as Character
-number.isNumber
-/*:
- ### Strings
- 
- A Unicode string value that is a collection of characters.
- */
-let emptyString = String()
-let anotherEmptyString = ""
-
-let someString = "Some string literal value"
-let catCharacters: [Character] = ["C", "a", "t", "!", "🐱"]
-let catString = String(catCharacters)
+let stringLiteral: String = "Hello, world!"
 //: ## String Interpolation
-let apples = 4
-print("There are \(apples) apples")
+"1 + 2 = \(1 + 2)"
 /*:
- ## Unicode
+ ## Multiline String Literals
+ The string begins on the first line after the opening quotation marks (`"""`) and ends on the line before the closing quotation marks.
  
- Character  represents a single extended grapheme cluster. (sequence of one or more Unicode scalars)
- */
-let sparklingHeart = "\u{1F496}"
-
-let eAcute: Character = "\u{E9}"
-let combinedEAcute: Character = "\u{65}\u{301}"
-
-let regionalIndicatorForIT: Character = "\u{1F1EE}\u{1F1F9}"
-//: ### Unicode Properties
-emoji.unicodeScalars.first!.properties.isEmoji
-sparklingHeart.unicodeScalars.first!.properties.isEmoji
-eAcute.unicodeScalars.first!.properties.isLowercase
-//: Counting Characters
-var word = "cafe"
-word.count
-
-word += "\u{301}" // acute accent
-word.count
-/*:
- ## String Indices
+ A multiline string can be indented to match the surrounding code. The whitespace before the closing quotation marks (""") tells Swift what whitespace to ignore before all of the other lines.
  
- Swift strings cannot be indexed by integer values.
+ When your source code includes a line break inside of a multiline string literal, that line break also appears in the string’s value. If you want to use line breaks to make your source code easier to read, but you don’t want the line breaks to be part of the string’s value, write a backslash (\) at the end of those lines.
  */
-word[word.index(word.startIndex, offsetBy: 3)]
-
-for index in word.indices {
-  print("\(word[index]) ", terminator: "")
-}
-print("")
-
-word.insert("!", at: word.endIndex)
-//: ## Views
-let dogString = "Dog‼🐶🇮🇳"
-print("________________ Views ________________")
-print("          utf8: ", Array(dogString.utf8))
-print("         utf16: ", Array(dogString.utf16))
-
-// 21-bit // equivalent to a UTF-32 code unit.
-print("UnicodeScalars: ", Array(dogString.unicodeScalars));
-print("Numeric values: ", dogString.unicodeScalars.map { $0.value });
-
-var codeUnits: [UTF32.CodeUnit] = []
-transcode(dogString.utf8.makeIterator(),
-          from: UTF8.self,
-          to: UTF32.self,
-          stoppingOnError: false) {
-  codeUnits.append($0)
-}
-print("Numeric values: ", codeUnits);
-//: Contiguous Strings
-print("Contiguous Strings utf8: ", terminator: " ")
-var s = dogString
-s.isContiguousUTF8
-s.withUTF8 { buffer in
-  for char in buffer {
-    print(char, separator: " ", terminator: " ")
-  }
-}
-//: ## Multiline String Literals
-let quotation = """
-The White Rabbit put on his spectacles.  "Where shall I begin,
-please your Majesty?" he asked.
-
-"Begin at the beginning," the King said gravely, "and go on
-till you come to the end; then stop."
-"""
-//: Line break
-let softWrappedQuotation = """
-The White Rabbit put on his spectacles.  "Where shall I begin, \
-please your Majesty?" he asked.
-
-"Begin at the beginning," the King said gravely, "and go on \
-till you come to the end; then stop."
-"""
-//: Intendation
-let linesWithIndentation = """
-ABCD
-abcd
-"""
+let multilineStringLiteral = """
+  "Hello,\
+   world!"
+  1 + 2 = \(1 + 2)
+  """ // ignore 2 spaces
 /*:
  ## Extended String Delimiters
  
- A string delimited by extended delimiters is a sequence of characters surrounded by quotation marks and a balanced set of one or more number signs (#)
- You can place a string literal within extended delimiters to include special characters in a string without invoking their effect.
- If you need the special effects of a character in a string literal, match the number of number signs (#) within the string following the escape character (\\).
+ You can place a string literal within extended delimiters to include special characters in a string without invoking their effect. You place your string within quotation marks `"` and surround that with number signs `#`.
+ 
+ If you need the special effects of a character in a string literal, match the number of number signs within the string following the escape character `\`.
  */
-#"\(1 + 2) = \#(1 + 2)"#
-
 ##"""
-  \t abc \##t efg
+\t\##t|
+"\(1 + 2) = \##(1 + 2)
 """##
+/*:
+ ## Unicode
+ 
+ Swift’s native String type is built from Unicode scalar values.
+ 
+ A Unicode scalar value is a unique 21-bit number for a character or modifier.
+ 
+ An extended grapheme cluster is a sequence of one or more Unicode scalars that (when combined) produce a single human-readable character.
+ 
+ Every instance of Swift’s Character type represents a single extended grapheme cluster.
+ */
+let flag: Character = "\u{1F1EE}\u{1F1F9}"
+
+let eGrave: Character = "\u{E8}"
+let combinedEGrave: Character = "\u{65}\u{300}"
+
+combinedEGrave.isASCII
+combinedEGrave.isLetter
+combinedEGrave.isCased
+/*:
+ ### Counting Characters
+ */
+let caffè1: String = "caffè"
+caffè1.count
+
+let caffè2: String = "caff\(eGrave)"
+caffè2.count
+
+let caffè3: String = "caff\(combinedEGrave)"
+caffè3.count
+/*:
+ ### String Indices
+ */
+var caffè4 = "caff\(combinedEGrave)"
+let index = caffè4.index(caffè4.startIndex, offsetBy: 4)
+let char: Character = caffè4[index]
+caffè4.insert("!", at: caffè4.endIndex)
+//: ### Views
+func printViews(_ string: String) {
+  print("________________ Views ________________")
+  print("           String: \(string)")
+  print("   UnicodeScalars:", Array(string.unicodeScalars));
+  print("UTF-32 code units:", string.unicodeScalars.map { $0.value });
+  print("UTF-16 code units:", Array(string.utf16))
+  print(" UTF-8 code units:", Array(string.utf8))
+}
+
+printViews(caffè2)
+printViews(caffè3)
+printViews("‼😋")
+//: ### Transcode
+var codeUnits: [Unicode.UTF32.CodeUnit] = []
+transcode("‼😋".utf8.makeIterator(),
+          from: Unicode.UTF8.self,
+          to: Unicode.UTF32.self,
+          stoppingOnError: false) {
+  codeUnits.append($0)
+}
+codeUnits
+//: ### Contiguous Strings
+print("________________ Contiguous String ________________")
+var s = "‼😋"
+print("           String: \(s)")
+print(" UTF-8 code units: ", terminator: "")
+s.isContiguousUTF8
+s.withUTF8 { buffer in
+  print(Array(buffer))
+}
+//: ### Unicode Properties
+let properties = "😋".unicodeScalars.first!.properties
+properties.generalCategory
+properties.isEmoji
+properties.name
 //: [Next](@next)
