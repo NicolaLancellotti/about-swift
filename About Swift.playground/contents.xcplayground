@@ -28,7 +28,7 @@
         <page name='Miscellaneous'/>
         <page name='Checking API Availability'/>
         <page name='Type-erasing wrappers'/>
-        <page name='Numbers &amp; Bool'/>
+        <page name='Numbers, Bool and Time'/>
         <page name='SIMD'/>
         <page name='Able Protocols'/>
         <page name='Operators'/>

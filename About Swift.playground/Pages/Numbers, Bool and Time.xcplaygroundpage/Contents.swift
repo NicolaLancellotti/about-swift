@@ -1,20 +1,23 @@
 //: [Previous](@previous)
-//: # Numbers & Bool
+//: # Numbers, Bool and Time
 /*:
  ## Numbers
  
  * Integers and floating-point numbers conform to the `Numeric` protocol.
- * Signed Integers and floating-point numbers conform to the `SignedNumeric` protocol.
+ * Signed Integers and floating-point numbers conform to the `SignedNumeric`
+ protocol.
  
- `Numeric` protocol conforms to `AdditiveArithmetic` which values  support addition and subtraction.
+ `Numeric` protocol conforms to `AdditiveArithmetic` which values  support
+ addition and subtraction.
  */
 /*:
- ## Integers
+ ### Integers
  
  Integers conform to the `FixedWidthInteger` protocol
  which inherits from the `BinaryInteger` protocol.
  
- The `FixedWidthInteger` protocol adds binary bitwise operations, bit shifts, and overflow handling to the operations supported by the BinaryInteger protocol.
+ The `FixedWidthInteger` protocol adds binary bitwise operations, bit shifts,
+ and overflow handling to the operations supported by the BinaryInteger protocol.
  */
 /*:
  ### Signed Integers
@@ -69,13 +72,7 @@ UInt8.max
  * `Float64` (`Double`) represents a 64-bit floating-point number.
  * `Float80` represents a 80-bit floating-point number.
  */
-//: ## Bool
-true
-false
-
-var boolValue = true
-boolValue.toggle()
-//: ## Numeric Literals
+//: ### Numeric Literals
 let decimalInteger =       17
 let binaryInteger =      0b10001  // 17 in binary notation
 let octalInteger =       0o21     // 17 in octal notation
@@ -87,7 +84,7 @@ let hexadecimalFloat = 0xFp-2 // 15 * 2^-2
 let paddedDouble = 000123.456
 let oneMillion = 1_000_000
 let justOverOneMillion = 1_000_000.000_000_1
-//: ## Operators
+//: ### Operators
 3 + 2
 3 - 2
 3 * 2
@@ -99,7 +96,9 @@ let justOverOneMillion = 1_000_000.000_000_1
 /*:
  ### Logical Operators
  
- The Swift logical operators && and || are left-associative, meaning that compound expressions with multiple logical operators evaluate the leftmost subexpression first.
+ The Swift logical operators && and || are left-associative, meaning that
+ compound expressions with multiple logical operators evaluate the leftmost
+ subexpression first.
  */
 !true
 true && false
@@ -120,7 +119,8 @@ let xorBits = initialBits ^ initialBits
  
  * Existing bits are moved to the left or right by the requested number of places.
  * Any bits that are moved beyond the bounds of the integer’s storage are discarded.
- * Zeros are inserted in the spaces left behind after the original bits are moved to the left or right.
+ * Zeros are inserted in the spaces left behind after the original bits are moved
+ to the left or right.
  */
 let shiftBits: UInt8 = 4   // 00000100 in binary
 shiftBits << 1             // 00001000
@@ -129,7 +129,9 @@ shiftBits >> 2             // 00000001
 /*:
  ### Arithmetic shift (Signed Integers)
  
- * When you shift signed integers to the right, apply the same rules as for unsigned integers, but fill any  empty bits on the left with the sign bit, rather than with a zero.
+ * When you shift signed integers to the right, apply the same rules as for
+ unsigned integers, but fill any  empty bits on the left with the sign bit,
+ rather than with a zero.
  */
 let shiftBitsSigned: Int8 = -4   // 11111100 in binary
 shiftBitsSigned << 1             // 11111000
@@ -153,10 +155,33 @@ a -= 6
 a *= 2
 a /= 2
 // etc...
-//: ## Functions
+//: ### Functions
 abs(-10.1)
-
-//: ## Initialize with String
+//: ### Initialize with String
 Int("11", radix: 10)
 Int("11", radix: 2)
+//: ## Bool
+true
+false
+
+var boolValue = true
+boolValue.toggle()
+/*:
+ ## Time
+ - `ContinuousClock`: a clock that measures time that always increments but does
+ not stop incrementing while the system is asleep.
+ - `SuspendingClock`: a clock that measures time that always increments but
+ stops incrementing while the system is asleep.
+ */
+
+let clock = ContinuousClock()
+let now: ContinuousClock.Instant = clock.now
+let minimumResolution: Duration = clock.minimumResolution
+
+let duration: Duration = clock.measure {
+  for _ in 0...100 {
+    
+  }
+}
+duration.components
 //: [Next](@next)

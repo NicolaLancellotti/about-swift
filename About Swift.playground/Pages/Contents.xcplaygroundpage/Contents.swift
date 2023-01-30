@@ -27,7 +27,7 @@
  - [Miscellaneous](Miscellaneous)
  - [Checking API Availability](Checking%20API%20Availability)
  - [Type-erasing wrappers](Type-erasing%20wrappers)
- - [Numbers & Bool](Numbers%20&%20Bool)
+ - [Numbers, Bool and Time](Numbers,%20Bool%20and%20Time)
  - [SIMD](SIMD)
  - [Able Protocols](Able%20Protocols)
  - [Operators](Operators)
