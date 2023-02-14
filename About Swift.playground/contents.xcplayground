@@ -27,6 +27,7 @@
         <page name='Result Builders'/>
         <page name='Miscellaneous'/>
         <page name='Checking API Availability'/>
+        <page name='Concurrency'/>
         <page name='Type-erasing wrappers'/>
         <page name='Numbers, Bool and Time'/>
         <page name='SIMD'/>

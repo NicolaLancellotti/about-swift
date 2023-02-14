@@ -26,6 +26,7 @@
  - [Result Builders](Result%20Builders)
  - [Miscellaneous](Miscellaneous)
  - [Checking API Availability](Checking%20API%20Availability)
+ - [Concurrency](Concurrency)
  - [Type-erasing wrappers](Type-erasing%20wrappers)
  - [Numbers, Bool and Time](Numbers,%20Bool%20and%20Time)
  - [SIMD](SIMD)
