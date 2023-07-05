@@ -154,6 +154,13 @@ label3: if condition1 {
 #if hasFeature(ConciseMagicFile)
 
 #endif
+//: ### Conditional compilation for attributes
+#if hasAttribute(preconcurrency)
+@preconcurrency
+#endif
+protocol P: Sendable {
+  func f()
+}
 //: ### Surround postfix member expressions
 let value = [1, 2, 3]
 #if true
