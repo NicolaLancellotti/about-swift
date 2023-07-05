@@ -44,6 +44,7 @@ do {
 #filePath
 //: ### The name of the file and module in which it appears
 #fileID
+#file // upcoming feature
 //: ### The column number in which it begins
 #column
 //: ### The name of the declaration in which it appears
