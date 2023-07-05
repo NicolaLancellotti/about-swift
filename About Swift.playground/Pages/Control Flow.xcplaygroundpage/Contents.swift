@@ -150,6 +150,10 @@ label3: if condition1 {
 #else
 // do something
 #endif
+//: ### Features detection
+#if hasFeature(ConciseMagicFile)
+
+#endif
 //: ### Surround postfix member expressions
 let value = [1, 2, 3]
 #if true
