@@ -3,7 +3,7 @@
 #include "BazRef2.h"
 #include <stdio.h>
 
-void testCallSwiftFromC()
+void testCallSwiftFromC(void)
 {
   {
     // First Way
