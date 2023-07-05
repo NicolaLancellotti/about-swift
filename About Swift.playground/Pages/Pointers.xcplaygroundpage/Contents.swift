@@ -7,25 +7,20 @@
  * `UnsafePointer` - non mutating pointer.
  */
 //: ### Allocate
-let intArray = UnsafeMutablePointer<Int>.allocate(capacity: 3)
+let intArray = UnsafeMutablePointer<Int>.allocate(capacity: 2)
 //: ### Initialize
-intArray.initialize(repeating: 10, count: 3)
-/*:
- - note:
- You can use `assign` and `moveAssign` methods to assign pointees of another pointer.
- */
+intArray.initialize(repeating: 10, count: 2)
 //: ### Work
 intArray[0]
 intArray[1]
-intArray[2]
+
+intArray.update(repeating: 11, count: 2)
 
 intArray.pointee
 intArray.successor().pointee
-intArray.successor().successor().pointee
 
 intArray.advanced(by: 0).pointee
 intArray.advanced(by: 1).pointee
-intArray.advanced(by: 2).pointee
 
 intArray.distance(to: intArray.successor())
 /*
@@ -34,9 +29,8 @@ intArray.distance(to: intArray.successor())
  but more efficient.
  */
 intArray.move()
-
 //: ### Deinitialize
-intArray.deinitialize(count: 3)
+intArray.deinitialize(count: 2)
 //: ### Deallocate
 intArray.deallocate()
 //: ### Example Deinitialize
