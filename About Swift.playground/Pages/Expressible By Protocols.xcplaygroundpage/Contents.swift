@@ -19,8 +19,16 @@ struct MyInt {
 }
 
 var myInt: MyInt
-//: ## ExpressibleByIntegerLiteral
+/*:
+ ## ExpressibleByIntegerLiteral
+ 
+ If you need an arbitrary-precision signed integer,
+ you can use `StaticBigInt` as the associated type.
+ */
 extension MyInt: ExpressibleByIntegerLiteral {
+  
+  typealias IntegerLiteralType = Int
+  
   init(integerLiteral value: Int) {
     self.value = value
   }
