@@ -438,7 +438,7 @@ func continuation() async throws -> Int {
  - `AsyncThrowingStream`
  */
 func asyncStream() async {
-  final class Stream: Sendable {
+  final class EventGenerator: Sendable {
     func start() {}
     func stop() {}
     private let handler: @Sendable (Int) -> Void
@@ -448,18 +448,21 @@ func asyncStream() async {
     }
   }
   
-  let asyncStream = AsyncStream(Int.self) { continuation in
-    let stream = Stream() {
-      continuation.yield($0)
+  do {
+    let stream = AsyncStream(Int.self) { continuation in
+      let generator = EventGenerator() { continuation.yield($0) }
+      continuation.onTermination = {  _ in generator.stop() }
+      generator.start()
     }
-    
-    continuation.onTermination = {  _ in stream.stop() }
-    
-    stream.start()
+    for await _ in stream { }
   }
   
-  for await _ in asyncStream {
-    
+  do {
+    let (stream, continuation) = AsyncStream.makeStream(of: Int.self)
+    let generator = EventGenerator { continuation.yield($0) }
+    continuation.onTermination = {  _ in generator.stop() }
+    generator.start()
+    for await _ in stream { }
   }
 }
 /*:
