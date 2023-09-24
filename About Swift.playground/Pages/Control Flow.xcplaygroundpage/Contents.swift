@@ -44,6 +44,12 @@ if condition1 {
 } else {
   // do something
 }
+//: ### If expression
+let greeting = if condition1 {
+  "Hello!"
+} else {
+  "Ciao!"
+}
 /*:
  ## Switch
  
@@ -95,6 +101,11 @@ switch stillAnotherPoint {
     print("On an axis, \(distance) from the origin")
   default:
     print("Not on an axis")
+}
+//: ### Switch expression
+let anotherGreeting = switch condition1 {
+  case true: "Hello!"
+  case false:"Ciao!"
 }
 /*:
  ## Control Transfer Statements
