@@ -121,8 +121,38 @@ struct OuterNonGeneric {
 struct OuterGeneric<T> {
   struct InnerNonGeneric { }
   
-  struct InnerGeneric<T> { }
+  struct InnerGeneric<P> { }
 }
+/*:
+ ## Value and Type Parameter Packs
+ */
+/*
+ Nomenclature
+ 
+ repeat (each T, each U)
+ _______________________
+ pack expansion type
+        ________________
+        repetition pattern
+         ______  ______
+         captured type parameter packs
+ */
+func zip< /* type parameter pack: */ each T, /* type parameter pack: */ each U>
+(
+  /* value parameter pack: */ values: /* pack expansion type: */ repeat each T,
+                              tuple: /* abstract tuple type: */ (repeat each U)
+) -> (repeat (each T, each U)) {
+  return /* pack expansion expression: */ (repeat (each values, each tuple))
+}
+
+zip(values: /* value pack: */ 1, "a", tuple: /* abstract tuple value: */ ("a", 1))
+//: ### Variadic Types
+struct VariadicType< /* generic parameter pack: */ each T, U> {
+  var values: /* tuple type of pack expansion type: */ (repeat each T)
+  var value: U
+}
+
+VariadicType(values: (1, "a"), value: true)
 //: ## Dispaching
 struct GenericStruct<T> {
   var foo: String {
