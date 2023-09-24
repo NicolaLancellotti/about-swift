@@ -21,7 +21,7 @@
         <page name='Metatypes'/>
         <page name='Opaque Types'/>
         <page name='Access Control'/>
-        <page name='Copy'/>
+        <page name='Copy-on-write'/>
         <page name='Ownership'/>
         <page name='Attributes'/>
         <page name='Property Wrappers'/>
