@@ -21,6 +21,7 @@
  - [Metatypes](Metatypes)
  - [Access Control](Access%20Control)
  - [Copy](Copy)
+ - [Ownership](Ownership)
  - [Attributes](Attributes)
  - [Property Wrappers](Property%20Wrappers)
  - [Result Builders](Result%20Builders)

@@ -22,6 +22,7 @@
         <page name='Opaque Types'/>
         <page name='Access Control'/>
         <page name='Copy'/>
+        <page name='Ownership'/>
         <page name='Attributes'/>
         <page name='Property Wrappers'/>
         <page name='Result Builders'/>
