@@ -203,6 +203,29 @@ struct StructureWithMethods {
     
   }
 }
+//: ## Init Accessors
+struct StructureWithInitAccessor  {
+  var x: Int
+  
+  var y: Int
+
+  var z: Int {
+    @storageRestrictions(initializes: y, accesses: x)
+    init(newValue) {
+      y = newValue
+    }
+
+    get { y }
+    set { y = newValue }
+  }
+}
+
+do {
+  let value = StructureWithInitAccessor(x: 1, z: 2)
+  value.x
+  value.y
+  value.z
+}
 /*:
  ## Subscripts
  
