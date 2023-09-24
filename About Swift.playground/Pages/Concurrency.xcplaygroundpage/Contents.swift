@@ -273,6 +273,16 @@ let result = try await withThrowingTaskGroup(of: Int.self) { group in
   return sum
 }
 /*:
+ ### DiscardingTaskGroup
+ - `[Throwing]DiscardingTaskGroup` automatically cleans up its child `Task`s when those `Task`s complete.
+ - `[Throwing]DiscardingTaskGroup` do not have a `next()` method, nor do they conform to `AsyncSequence`.
+ 
+ A failure of a single child task, immediately causes cancellation of the group and its siblings.
+ */
+await withDiscardingTaskGroup { group in
+  
+}
+/*:
  ## Unstructured Concurrency
  
  An unstructured task doesn’t have a parent task.
