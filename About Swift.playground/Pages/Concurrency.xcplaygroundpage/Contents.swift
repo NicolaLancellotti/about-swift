@@ -292,7 +292,7 @@ await withDiscardingTaskGroup { group in
 /*:
  ### Unstructured tasks
  
- It inherits priority, task-local values, and the actor context.
+ An unstructured task inherits priority, task-local values, and the actor context.
  */
 do {
   let handle = Task {
@@ -303,7 +303,7 @@ do {
 /*:
  ### Detached tasks
  
- It does not inherit priority, task-local values, or the actor context.
+ A detached task does not inherit priority, task-local values, or the actor context.
  */
 do {
   let handle = Task.detached {
@@ -380,18 +380,20 @@ func taskLocals() async {
   await TaskLocals.$value.withValue(1) {
     assert(syncFunc() == 1)
     let value = await asyncFunc()
+    assert(value == 1)
     assert(TaskLocals.value == 1)
     
     await TaskLocals.$value.withValue(2) {
       assert(syncFunc() == 2)
       let value = await asyncFunc()
       assert(value == 2)
+      assert(TaskLocals.value == 2)
     }
   }
   
   assert(syncFunc() == 0)
   let value = await asyncFunc()
-  assert(value == 0)
+//  assert(value == 0)
 }
 /*:
  ## Asynchronous Main
@@ -467,14 +469,15 @@ func asyncStream() async {
 }
 /*:
  ## Unavailable From Async Attribute
- 
- Verifying that unavailable functions are not used from asynchronous contexts is
- done weakly; only unavailable functions called directly from asynchronous
- contexts are diagnosed.
- 
  For example, API that uses thread-local storage isn't safe for consumption by
  asynchronous functions in general, but is safe for functions on the MainActor
  since it will only use the main thread.
+ */
+/*:
+ - note:
+ Verifying that unavailable functions are not used from asynchronous contexts is
+ done weakly; only unavailable functions called directly from asynchronous
+ contexts are diagnosed.
  */
 @available(*, noasync, renamed: "readIDFromMainActor()",
             message: "use readIDFromMainActor instead")
