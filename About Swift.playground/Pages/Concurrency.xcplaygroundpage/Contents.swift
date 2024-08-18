@@ -83,7 +83,14 @@ func asyncSequence() async {
  All actor types implicitly conform to a the protocol `Actor`.
  */
 actor AnActor {
-  init() {}
+  init(value: Int) {
+    self.actorIsolatedVar = value
+  }
+  
+  // Delegating Initializer
+  init() {
+    self.init(value: 0)
+  }
   
   func actorIsolatedFunc() {}
   
@@ -93,7 +100,7 @@ actor AnActor {
     actorIsolatedFunc()
   }
   
-  var actorIsolatedVar: Int = 0
+  var actorIsolatedVar: Int
   
   let constant = 1
   
@@ -158,6 +165,31 @@ class AnActorIsolatedClass {
     value = 1
   }
 }
+/*:
+ ### Non-delegating Initializers
+ - **An initializer**
+    - has a nonisolated self reference if it is:
+        - non-async
+        - or global-actor isolated
+        - or nonisolated
+    - has an isolated self reference if it is:
+        - an asynchronous actor initializer
+ - **Actors**
+    - *Initializers with isolated self*
+        - An implicitly hop to the actor's executor will be performed immediately after self becomes fully-initialized.
+    - *Initializers with nonisolated self*
+        - Accesses to the stored properties of self is required to bootstrap an instance of an actor.
+        - Such accesses are considered to be a weaker form of isolation that relies on having exclusive access to the reference self.
+        - The isolation of self decays to nonisolated during any use of self that is not a direct stored-property access.
+- **Global-actor isolated types**
+  - *Isolated initializers*
+     - No data races because they gain actor-isolation prior to calling the initializer itself.
+  - *Non-isolated initializer*
+      - The isolation of self decays to nonisolated during any use of self that is not a direct stored-property access.
+ ### Deinitializers
+  - The isolation of self decays to nonisolated during any use of self that is not a direct stored-property access.
+  - deinit can only access the stored properties of self that are Sendable.
+ */
 /*:
  ## Sendable
  
@@ -384,7 +416,7 @@ func taskLocals() async {
   func asyncFunc() async -> Int {
     TaskLocals.value
   }
-  
+    
   func syncFunc() -> Int {
     TaskLocals.value
   }
