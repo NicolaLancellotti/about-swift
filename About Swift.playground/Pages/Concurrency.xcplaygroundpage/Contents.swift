@@ -158,8 +158,6 @@ class AnActorIsolatedClass {
     value = 1
   }
 }
-//: Top-level global variables are implicitly assigned a `@MainActor`
-var globalVariable: Int = 0
 /*:
  ## Sendable
  
@@ -244,6 +242,20 @@ let sendableClosure =  { @Sendable [varString] in
   // let _ = pointer
   // let _ = \Dictionary<AClass, Int>[aClass]
 }
+/*:
+ ## Global and Static Variables
+ Global and Static Variables must either be
+ - isolated to a global actor, or
+ - immutable and of Sendable type.
+ 
+ Top-level global variables are implicitly assigned a `@MainActor`.
+ */
+/*:
+ ## nonisolated(unsafe)
+ - The `nonisolated(unsafe)` modifier can be used to annotate  any form of storage to suppress data isolation violations when manual synchronization is provided.
+ - It can be used as a more granular opt out for `Sendable` checking, eliminating the need for `@unchecked Sendable`.
+ */
+nonisolated(unsafe) var nonisolatedUnsageGlobal: Int!
 /*:
  ## Structured concurrency
  A task is a unit of work that can be run asynchronously as part of your program.
