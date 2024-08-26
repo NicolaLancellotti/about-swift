@@ -49,8 +49,8 @@ do {
       wrapped.increment()
     }
     
-    func incremented(by current: T) -> AnyIncrementable<T> {
-      AnyIncrementable(wrapped.incremented(by: current))
+    func incremented(by value: T) -> AnyIncrementable<T> {
+      AnyIncrementable(wrapped.incremented(by: value))
     }
   }
   
@@ -88,8 +88,8 @@ do {
       _increment()
     }
     
-    func incremented(by current: T) -> AnyIncrementable<T> {
-      _incremented(current)
+    func incremented(by value: T) -> AnyIncrementable<T> {
+      _incremented(value)
     }
   }
   

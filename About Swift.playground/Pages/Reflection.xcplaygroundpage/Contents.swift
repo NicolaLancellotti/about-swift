@@ -1,10 +1,10 @@
 //: [Previous](@previous)
 //: # Reflection
-class SomeSuperClass {
+class Superclass {
   let intValue = 0
 }
 
-class SomeBaseClass: SomeSuperClass {
+class Class: Superclass {
   let stringValue = "A string"
   let boolValue = true
 }
@@ -13,16 +13,13 @@ class SomeBaseClass: SomeSuperClass {
  
  Describes the parts that make up a particular instance.
  */
-let mirror = Mirror(reflecting: SomeBaseClass())
-
+let mirror = Mirror(reflecting: Class())
+mirror.subjectType == Class.self
 mirror.displayStyle
-mirror.subjectType
-mirror.superclassMirror?.subjectType
-
-mirror.children.count
-let firstChildren = mirror.children.first!
-firstChildren.label
-firstChildren.value
+let children = Array(mirror.children)
+mirror.superclassMirror?.children.first
+children[0]
+children[1]
 /*:
  ## CustomReflectable
  
@@ -40,4 +37,5 @@ struct Temperature: CustomReflectable {
 }
 
 let temperature = Temperature(celsiusDegrees: 20)
+dump(temperature)
 //: [Next](@next)

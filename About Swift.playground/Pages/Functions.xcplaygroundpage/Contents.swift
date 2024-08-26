@@ -1,53 +1,63 @@
 //: [Previous](@previous)
 //: # Functions
-//: ## Functions Without Parameters
+//: ## Functions without parameters
 func functionWithoutParameters() {
   
 }
 
 functionWithoutParameters()
-//: ## Functions With Return Values
-func funcWithReturnValue() -> Bool {
+//: ## Functions with return values
+func functionWithReturnValue() -> Bool {
   return false
 }
 
-let aBool = funcWithReturnValue()
-//: If the entire body of the function is a single expression, the function implicitly returns that expression.
-func funcWithImplicitReturnValue() -> Bool {
+let boolValue1 = functionWithReturnValue()
+/*:
+ If the entire body of the function is a single expression, the function
+ implicitly returns that expression.
+ */
+func functionWithImplicitReturnValue() -> Bool {
   false
 }
 
-let anotherBool = funcWithImplicitReturnValue()
+let boolValue2 = functionWithImplicitReturnValue()
 /*:
- ## Functions With Parameters
+ ## Functions with parameters
  
- Each function parameter has both an argument label and a parameter name. The argument label is used when calling the function; each argument is written in the function call with its argument label before it. The parameter name is used in the implementation of the function. By default, parameters use their parameter name as their argument label.
+ Each function parameter has both an argument label and a parameter name. The
+ argument label is used when calling the function; each argument is written in
+ the function call with its argument label before it. The parameter name is used
+ in the implementation of the function. By default, parameters use their
+ parameter name as their argument label.
  */
 func difference(x: Int, y: Int) -> Int {
   x - y
 }
 difference(x: 1, y: 2)
-//: ### Specifying Argument Labels
+//: ### Specifying argument labels
 func difference(of x: Int, less y: Int) -> Int {
   x - y
 }
 
 difference(of: 1, less: 2)
-//: If you don’t want an argument label for a parameter, write an underscore (_) instead of an explicit argument label for that parameter.
+/*:
+ If you don’t want an argument label for a parameter, write an underscore (`_`)
+ instead of an explicit argument label for that parameter.
+ */
 func difference(_ x: Int, _ y: Int) -> Int {
   x - y
 }
 
 difference(1, 2)
-//: ## Functions With Default Parameter Values
-func funcWithDefaultParameterValue(param: Int = 12) {
-  print("Value: \(param)")
+//: ## Functions with default parameter values
+func functionWithDefaultParameterValue(value: Int = 12) -> Int {
+  value
 }
 
-funcWithDefaultParameterValue()
-funcWithDefaultParameterValue(param: 1)
+functionWithDefaultParameterValue()
+functionWithDefaultParameterValue(value: 1)
 /*:
- ## Functions With Variadic Parameters
+ ## Functions with variadic parameters
  
  All parameters which follow variadic parameters must be labeled.
  */
@@ -64,85 +74,72 @@ sum(1.0, 2.0, 3.0, 5)
 func multipleVariadicParameters(a: Int..., b: Bool...) { }
 multipleVariadicParameters(a: 1, 2, 3, b: false, true)
 /*:
- ## Functions With In-Out Parameters
+ ## Functions with in-out parameters
  
  * In-out parameters cannot have default values.
  * Variadic parameters cannot be marked as inout.
  
- If you pass a property that has observers to a function as an in-out parameter, the willSet and didSet observers are always called. This is because of the copy-in copy-out memory model for in-out parameters: The value is always written back to the property at the end of the function.
+ If you pass a property that has observers to a function as an in-out parameter,
+ the willSet and didSet observers are always called. This is because of the
+ copy-in copy-out memory model for in-out parameters: The value is always
+ written back to the property at the end of the function.
  */
-func swapTwoInts(_ a: inout Int, _ b: inout Int) {
-  let temporaryA = a
-  a = b
-  b = temporaryA
+func swapTwoInts(_ x: inout Int, _ y: inout Int) {
+  (x, y) = (y, x)
 }
 
-var a = 1
-var b = 2
-
-swapTwoInts(&a, &b)
-
-a
-b
+var x = 1
+var y = 2
+swapTwoInts(&x, &y)
+x
+y
 /*:
  ## Function overloading
  
- If a function with the same name but a distinct signature already exists, it just defines a new overload. Keep in mind that Swift allows function overloading even when two signatures differ only in their return type.
+ If a function with the same name but a distinct signature already exists, it
+ just defines a new overload. Keep in mind that Swift allows function
+ overloading even when two signatures differ only in their return type.
  */
-func foo(_ value: String) {
-  print(value)
+func overloading(_ value: String) -> String {
+  "String -> String"
 }
 
-func foo(_ value: Int) {
-  print(value)
+func overloading(_ value: Int) -> String {
+  "Int -> String"
 }
 
-func foo() {
-  print("Foo!")
+func overloading() -> String {
+  "Void -> String"
 }
+func overloading() -> Void {}
 
-func foo() -> String {
-  "Foo!"
-}
-
-foo("Hello, world!")
-foo(1)
-foo() as Void
-var value: String = foo()
-//: ## Nested Functions
-func globalFunction() {
-  var variable = 1
-  
-  func nestedFunction() {
-    // Nested functions can capture values from their enclosing function.
-    variable = 2
-    print("Variable: \(variable)")
-  }
-  
-  nestedFunction()
-}
-
-globalFunction()
+overloading("String")
+overloading(1)
+overloading() as String
 /*:
- ## Early Exit
+ ## Early exit
  
- A guard statement is used to transfer program control out of a scope if one or more conditions aren’t met.
+ A guard statement is used to transfer program control out of a scope if one or
+ more conditions aren’t met.
  */
-func doSomething(_ optionalValue: Int?) {
+func functionWithGuard(_ optionalValue: Int?) {
   guard let value = optionalValue else {
-    print("*** Error **** value must not be nil")
+    print("error: value must not be nil")
     return
   }
   print("value: \(value)")
 }
-
-var optionalValue: Int? = nil
-doSomething(optionalValue)
+functionWithGuard(nil)
 /*:
- ## Cleanup Actions
+ ## Cleanup actions
  
- * This statement lets you do any necessary cleanup that should be performed regardless of how execution leaves the current block of code—whether it leaves because an error was thrown or because of a statement such as return or break.
- * The deferred statements may not contain any code that would transfer control out of the statements, such as a break or a return statement, or by throwing an error.
+ * The deferred statements lets you do any necessary cleanup that should be
+ performed regardless of how execution leaves the current block of code whether
+ it leaves because an error was thrown or because of a statement such as return
+ or break.
+ * The deferred statements may not contain any code that would transfer control
+ out of the statements, such as a break or a return statement, or by throwing an
+ error.
  * Deferred actions are executed in reverse order of how they are specified.
  */
 func functionWithDefers() {
@@ -157,11 +154,14 @@ func functionWithDefers() {
 
 functionWithDefers()
 /*:
- ## Functions that Never Return
+ ## Functions that never return
  
- Swift defines a Never type, which indicates that a function or method doesn’t return to its caller. Functions and methods with the Never return type are called nonreturning. 
+ Swift defines a `Never` type, which indicates that a function or method doesn’t
+ return to its caller. Functions and methods with the Never return type are
+ called nonreturning.
  
- Throwing and rethrowing functions can transfer program control to an appropriate catch block, even when they are nonreturning.
+ Throwing and rethrowing functions can transfer program control to an
+ appropriate catch block, even when they are nonreturning.
  */
 func loop() -> Never  {
   while true {

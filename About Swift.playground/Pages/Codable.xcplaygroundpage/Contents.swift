@@ -1,6 +1,6 @@
 //: [Previous](@previous)
 //: # Codable
-//: ## Encode and Decode Automatically
+//: ## Encode and decode automatically
 struct Point: Codable {
   var x: Double
   var y: Double
@@ -31,9 +31,9 @@ do {
   points[1].x
   points[1].y
 }
-//: ## Encode and Decode Manually
+//: ## Encode and decode manually
 //: ### JSON
-"""
+let json = """
 {
     "int_property":10,
     "array_property":[10, 11],
@@ -43,7 +43,7 @@ do {
         }
 }
 """
-//: ### Corresponding Structure
+//: ### Corresponding structure
 struct Item {
   
   var intProperty: Int
@@ -66,19 +66,19 @@ struct Item {
 //: ### Encodable
 extension Item: Encodable {
   func encode(to encoder: Encoder) throws {
-    
     var container = encoder.container(keyedBy: CodingKeys.self)
+    
     try container.encode(intProperty, forKey: .intProperty)
     
-    var innerPropertyContainter = container.nestedContainer(keyedBy: InnerPropertyContainterKeys.self,
-                                                            forKey: .innerPropertyContainter)
-    try innerPropertyContainter.encode(innerProperty, forKey: .innerProperty)
-    
+    var innerContainter = container
+      .nestedContainer(keyedBy: InnerPropertyContainterKeys.self,
+                       forKey: .innerPropertyContainter)
+    try innerContainter.encode(innerProperty, forKey: .innerProperty)
     
     try container.encode(arrayProperty, forKey: .arrayProperty)
     // The same as:
-    //  var container2 = container.nestedUnkeyedContainer(forKey: .arrayProperty)
-    //  try arrayProperty.forEach { try container2.encode($0) }
+    //  var arrayContainer = container.nestedUnkeyedContainer(forKey: .arrayProperty)
+    //  try arrayProperty.forEach { try arrayContainer.encode($0) }
   }
 }
 //: ### Encode
@@ -92,38 +92,30 @@ do {
 //: ### Decodable
 extension Item: Decodable {
   init(from decoder: Decoder) throws {
-    let values = try decoder.container(keyedBy: CodingKeys.self)
-    intProperty = try values.decode(Int.self, forKey: .intProperty)
+    let container = try decoder.container(keyedBy: CodingKeys.self)
     
-    let innerPropertyContainter = try values.nestedContainer(keyedBy: InnerPropertyContainterKeys.self, forKey: .innerPropertyContainter)
-    innerProperty = try innerPropertyContainter.decode(String.self, forKey: .innerProperty)
+    self.intProperty = try container.decode(Int.self, forKey: .intProperty)
     
-    arrayProperty = try values.decode([Int].self, forKey: .arrayProperty)
+    let innerContainter = try container
+      .nestedContainer(keyedBy: InnerPropertyContainterKeys.self,
+                       forKey: .innerPropertyContainter)
+    self.innerProperty = try innerContainter.decode(String.self,
+                                                    forKey: .innerProperty)
+    
+    arrayProperty = try container.decode([Int].self, forKey: .arrayProperty)
     // The same as:
-    //  var containter = try values.nestedUnkeyedContainer(forKey: .arrayProperty)
-    //  arrayProperty = [Int]()
+    //  var arrayContainer = try container.nestedUnkeyedContainer(forKey: .arrayProperty)
+    //  self.arrayProperty = [Int]()
     //  if let count = containter.count {
     //    arrayProperty.reserveCapacity(count)
     //    for _ in 0..<count {
-    //      let value = try containter.decode(Int.self)
-    //      arrayProperty.append(value)
+    //      arrayProperty.append(try arrayContainer.decode(Int.self))
     //    }
     //  }
   }
 }
 //: ### Decode
 do {
-  let json = """
-        {
-            "int_property":10,
-            "array_property":[10, 11],
-            "inner_property_containter":
-                {
-                    "inner_property":"a"
-                }
-        }
-    """
-  
   let item: Item = fromJSON(json)!
   item.intProperty
   item.innerProperty

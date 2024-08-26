@@ -1,15 +1,16 @@
 //: [Previous](@previous)
 //: # Constants and Variables
 /*:
- ## Constants and Variables Keywords
+ ## Constants and variables keywords
  
  * `let` - constant,
  * `var` - variable.
  */
 /*:
- ## Naming Constants and Variables
+ ## Naming constants and variables
  
- Constant and variable names can contain almost any character, including Unicode characters.
+ Constant and variable names can contain almost any character, including Unicode
+ characters.
  
  Constant and variable names cannot:
  * begin with a number,
@@ -19,67 +20,78 @@
  
  */
 /*:
- ## Type Annotations
+ ## Type annotations
  
- You can provide a type annotation when you declare a constant or variable, to be clear about the kind of values the constant or variable can store.
+ You can provide a type annotation when you declare a constant or variable, to
+ be clear about the kind of values the constant or variable can store.
  */
-var variableString: String
-variableString = "Hello"
-variableString = "Ciao"
-variableString = "Privet"
+var variable: String
+variable = "Hello"
+variable = "Ciao"
 
-let constantInt: Int // Declaration
-constantInt = 0      // Initialization
+let constant: Int // Declaration
+constant = 0      // Initialization
 /*:
- ## Type Inference
- Type inference enables a compiler to deduce the type of a particular expression automatically when it compiles your code, simply by examining the values you provide.
+ ## Type inference
+ Type inference enables a compiler to deduce the type of a particular expression
+ automatically when it compiles your code, simply by examining the values you
+ provide.
  */
-let pi = 3.14159        // Double
-let booleanValue = true // Bool
+let pi = 3.14159 // Double
+let boolean = true  // Bool
 let dictionary = [0: "0", 1: "1"] // [Int : String]
-//: If you combine integer and floating-point literals in an expression, a type of Double will be inferred from the context.
+/*
+ If you combine integer and floating-point literals in an expression, a type of
+ Double will be inferred from the context.
+ */
 let anotherPi = 3 + 0.14159
 /*:
  - experiment:
- Press the option key and click on a variable or constant name to see the type inferred.
+ Press the option key and click on a variable or constant name to see the type
+ inferred.
  */
 /*:
  ## Type placeholders
  */
-let dictionary2: [Int: _] = [0: "0", 1: "1"] // [Int : String]
+let anotherDictionary: [Int: _] = [0: "0", 1: "1"] // [Int : String]
 /*:
- ## Type Safety
+ ## Type safety
  
- Swift is a type-safe language, which means the language helps you to be clear about the types of values your code can work with.
+ Swift is a type-safe language, which means the language helps you to be clear
+ about the types of values your code can work with.
  */
 /*:
  * experiment:
  Try to uncomment the lines of code below.
  */
-// let aString: String = 1
+// let string: String = 1
 // let cannotBeNegative: UInt = -1
 // let tooBig: Int = Int.max + 1
-//: Floating-point values are always truncated when used to initialize a new integer value. This means that 4.75 becomes 4, and -3.9 becomes -3.
+/*:
+ Floating-point values are always truncated when used to initialize a new
+ integer value. This means that 4.75 becomes 4, and -3.9 becomes -3.
+ */
 let integerPi: Int = Int(pi)
-//: ## Declare Multiple Constants/Variables on a Single Line
+//: ## Declare multiple constants/variables on a single line
 let x = 0.0, y = 0.0, z = 0.0
 var red: Int, green, blue: Double
 /*:
- ## Observers for Stored Variables
+ ## Observers for stored variables
  
  The variables you have encountered have all been stored variables.
  You have the option to define either or both of these observers on a variable:
  * `willSet` is called just before the value is stored,
  * `didSet` is called immediately after the new value is stored.
  
- If the body of the `didSet` observer refers to the old value, the getter is called before the observer, to make the old value available.
+ If the body of the `didSet` observer refers to the old value, the getter is
+ called before the observer, to make the old value available.
  */
 var value = 10 {
   willSet {
-    print("new: \(newValue) actual: \(value)")
+    print("new: \(newValue) current: \(value)")
   }
   didSet{
-    print("old: \(oldValue) actual: \(value)")
+    print("old: \(oldValue) current: \(value)")
   }
 }
 
@@ -87,16 +99,17 @@ value = 100
 
 var anInt = 10 {
   willSet(newInt) {
-    print("new: \(newInt) actual: \(anInt)")
+    print("new: \(newInt) current: \(anInt)")
   }
   didSet(oldInt) {
-    print("old: \(oldInt) actual: \(anInt)")
+    print("old: \(oldInt) current: \(anInt)")
   }
 }
 /*:
- ## Computed Variables
+ ## Computed variables
  
- They provide a getter and an optional setter to retrieve and set other properties and values indirectly.
+ They provide a getter and an optional setter to retrieve and set other
+ properties and values indirectly.
  */
 // Stored Variable
 var km = 1.0
@@ -122,10 +135,10 @@ km
 
 km = 2
 miles
-//: ### Read-only Computed Variables.
-var miles2: Double {
+//: ### Read-only computed variables.
+var milesReadOnly: Double {
   km * 0.621371
 }
 
-miles2
+milesReadOnly
 //: [Next](@next)

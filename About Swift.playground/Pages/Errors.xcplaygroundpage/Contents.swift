@@ -2,75 +2,68 @@
 /*:
  # Assertions
  
- If the condition evaluates to false, code execution ends, and your app is terminated.
+ If the condition evaluates to false, code execution ends, and your app is
+ terminated.
  */
 /*:
  - important:
  Assertions are checked only in debug builds.
  */
-assert(true, "message")
+assert(true)
 
-let vowel = "a"
-switch vowel {
-  case "a":
-    print("a")
-  case "e":
-    print("e")
-  case "i":
-    print("i")
-  case "o":
-    print("o")
-  case "u":
-    print("u")
-  default:
-    assertionFailure()
+if false {
+  assertionFailure()
 }
 /*:
  # Preconditions
  
- Use this function to detect conditions that must prevent the program from proceeding.
+ Use this function to detect conditions that must prevent the program from
+ proceeding.
  
- If the condition evaluates to false, code execution ends, and your app is terminated.
+ If the condition evaluates to false, code execution ends, and your app is
+ terminated.
  */
 /*:
  - important:
  Preconditions are checked in both debug and production builds.
  */
-precondition(1 == 1)
-// preconditionFailure("some message")
+precondition(true)
+if false {
+  preconditionFailure()
+}
 /*:
  # Error Handling
  
- Errors are represented by values of types that conform to the ErrorProtocol.
+ Errors are represented by values of types that conform to the `ErrorProtocol`.
  */
 enum MyErrorType: Error {
-  case errorType1
-  case errorType2(value: Int)
-  case errorType3
+  case error1
+  case error2(value: Int)
+  case error3
 }
 /*:
- ### You can propagate the error from a function to the code that calls that function
+ ### Propagate the error from a function to the code that calls that function
  
  Only throwing functions can propagate errors.
  */
-func canThrowErrors(_ mustThrow: Bool = false) throws -> String {
+func canThrowErrors(_ mustThrow: Bool = false) throws -> Int {
   if mustThrow {
-    throw MyErrorType.errorType1
-  } else {
-    return "no error"
+    throw MyErrorType.error1
   }
+  return 0
 }
 /*:
  ### Handle the error using a do-catch statement
  
- If a catch clause doesn’t have a pattern, the clause matches any error and binds the error to a local
+ If a catch clause doesn’t have a pattern, the clause matches any error and
+ binds the error to a local
  constant named error.
  */
 do {
   try canThrowErrors()
-} catch MyErrorType.errorType1, MyErrorType.errorType3 {
+} catch MyErrorType.error1, MyErrorType.error3 {
   
-} catch MyErrorType.errorType2(let value) where value > 3{
+} catch MyErrorType.error2(let value) where value > 3{
   
 } catch {
   
@@ -79,7 +72,7 @@ do {
 let value1 = try? canThrowErrors()
 
 // Equivalent to
-let value2: String?
+let value2: Int?
 do {
   value2 = try canThrowErrors()
 } catch {
@@ -92,12 +85,17 @@ do {
  */
 let value3 = try! canThrowErrors()
 /*:
- ## Rethrowing Functions and Methods
+ ## Rethrowing functions and methods
  
- A function or method can be declared with the rethrows keyword to indicate that it throws an error only if one of its function parameters throws an error
- Rethrowing functions and methods must have at least one throwing function parameter.
+ A function or method can be declared with the `rethrows` keyword to indicate
+ that it throws an error only if one of its function parameters throws an error
+ Rethrowing functions and methods must have at least one throwing function
+ parameter.
  
- A throwing method can’t override a rethrowing method, and a throwing method can’t satisfy a protocol requirement for a rethrowing method. That said, a rethrowing method can override a throwing method, and a rethrowing method can satisfy a protocol requirement for a throwing method.
+ A throwing method can’t override a rethrowing method, and a throwing method
+ can’t satisfy a protocol requirement for a rethrowing method. That said, a
+ rethrowing method can override a throwing method, and a rethrowing method can
+ satisfy a protocol requirement for a throwing method.
  */
 func functionWithCallback(_ callback: () throws -> Int) rethrows {
   try callback()
@@ -105,44 +103,38 @@ func functionWithCallback(_ callback: () throws -> Int) rethrows {
 /*:
  # Fatal Error
  */
-// fatalError()
+if false {
+  fatalError()
+}
 /*:
  # Result
  
- A value that represents either a success or a failure, including an associated value in each case.
+ A value that represents either a success or a failure, including an associated
+ value in each case.
  */
 enum DivisionError: Error {
   case divisionByZero
 }
 
 func safeDivision(_ x: Double, _ y: Double) -> Result<Double, DivisionError> {
-  if y != 0 {
-    return .success(x / y)
-  } else {
-    return .failure(.divisionByZero)
+  switch y != 0 {
+  case true: .success(x / y)
+  case false: .failure(.divisionByZero)
   }
 }
 
-let result1 = safeDivision(1, 0)
-switch result1 {
+let quotient  = safeDivision(1, 0)
+switch quotient {
   case .success(let value): value
   case .failure(let error): error
 }
-let mappedError = result1.mapError { _ in MyErrorType.errorType1}
-mappedError
-
-let result2 = safeDivision(10, 2)
-switch result2 {
-  case .success(let value): value
-  case .failure(let error): error
-}
-let stringValue = result2.map{String($0)}
-stringValue
-
-let result3 = Result {
+let mappedError = quotient.mapError { _ in MyErrorType.error1}
+let stringValue = quotient.map{String($0)}
+//: ### Create a new result by evaluating a throwing closure
+let value = Result {
   try canThrowErrors(false)
 }
-switch result3 {
+switch value {
   case .success(let value): value
   case .failure(let error): error
 }

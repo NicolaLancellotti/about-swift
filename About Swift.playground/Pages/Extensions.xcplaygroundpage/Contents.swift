@@ -3,13 +3,13 @@
  # Extensions
  
  Extensions add new functionality to an existing:
- * class.
- * structure.
- * enumeration.
+ * class,
+ * structure,
+ * enumeration,
  * protocol.
  */
-//: ## Extensions in Swift can:
-//: ### Add computed properties and computed type properties
+//: ## Extensions can:
+//: Add computed properties and computed type properties
 extension Double {
   var km: Double { self * 1_000.0 }
   var m: Double { self }
@@ -18,32 +18,31 @@ extension Double {
   var ft: Double { self / 3.28084 }
 }
 
-let aMarathon = 42.km + 195.m
-//: ### Provide new convenience initializers.
-class SomeClass {
+let marathon = 42.km + 195.m
+//: Provide new convenience initializers
+class Class {
   init() {
   }
 }
 
-extension SomeClass {
+extension Class {
   convenience init(value: Bool) {
     self.init()
   }
 }
-//: ### Define instance methods and type methods
+//: Define instance methods and type methods
 extension Int {
-  
   func repetitions(_ task: () -> Void) {
     for _ in 0..<self {
       task()
     }
   }
-  
 }
+
 3.repetitions {
   print("Goodbye!")
 }
-//: ### Define subscripts
+//: Define subscripts
 extension Int {
   subscript(digitIndex: Int) -> Int {
     var decimalBase = 1
@@ -59,106 +58,89 @@ value[0]
 value[1]
 value[2]
 value[3]
-//: ### Define and use new nested types
+//: Define and use new nested types
 extension Int {
-  
   enum Kind {
     case negative, zero, positive
   }
   
   var kind: Kind {
     switch self {
-      case 0:
-        return .zero
-      case let x where x > 0:
-        return .positive
-      default:
-        return .negative
+      case 0: .zero
+      case let x where x > 0: .positive
+      default: .negative
     }
   }
-  
 }
 /*:
  ### Make an existing type conform to a protocol
  
- If a type already conforms to all of the requirements of a protocol, but has not yet stated that it adopts that protocol, you can make it adopt the protocol with an empty extension.
+ If a type already conforms to all of the requirements of a protocol, but has
+ not yet stated that it adopts that protocol, you can make it adopt the protocol
+ with an empty extension.
  */
-protocol SomeProtocol {
-  func foo()
+protocol FooProtocol {
+  func foo() -> String
 }
 
-struct SomeType {
-  func foo() {
-  }
+struct Struct {
+  func foo() -> String { "" }
 }
 
-extension SomeType: SomeProtocol {
-  
-}
+extension Struct: FooProtocol {}
 /*:
- ## Protocol Extensions
+ ## Protocol extensions
  
- You can use protocol extensions to provide a default implementation to any method or property requirement of that protocol. If a conforming type provides its own implementation of a required method or property, that implementation will be used instead of the one provided by the extension.
+ You can use protocol extensions to provide a default implementation to any
+ method or property requirement of that protocol. If a conforming type provides
+ its own implementation of a required method or property, that implementation
+ will be used instead of the one provided by the extension.
  */
 /*:
  - important:
- For no required method or property, static dispaching is performed.
+ For non-required methods or properties, static dispaching is performed.
  */
-protocol AProtocol {
-  
-  func foo() -> String
-  func fubar() -> String
-  
+protocol ProtocolWithExtension {
+  func requiredMethod1() -> String
+  func requiredMethod2() -> String
 }
 
-extension AProtocol {
+extension ProtocolWithExtension {
+  func requiredMethod1() -> String { "ProtocolWithExtension - requiredMethod1" }
+  func requiredMethod2() -> String { "ProtocolWithExtension - requiredMethod2" }
   
-  func foo() -> String {
-    "AProtocol - foo"
+  // Non-required method
+  func  nonRequiredMethod() -> String { "ProtocolWithExtension - bar" }
+}
+
+struct Structure: ProtocolWithExtension {
+  func requiredMethod1() -> String { "Structure - requiredMethod1" }
+  func nonRequiredMethod() -> String { "Structure - nonRequiredMethod" }
+}
+
+do {
+  let instance = Structure()
+  instance.requiredMethod1()
+  instance.requiredMethod2()
+  instance.nonRequiredMethod()
+}
+
+do {
+  let instance: any ProtocolWithExtension = Structure()
+  instance.requiredMethod1()
+  instance.requiredMethod2()
+  instance.nonRequiredMethod() // static dispaching
+}
+//: ### Generic where clauses
+extension ProtocolWithExtension where Self: FooProtocol {
+  var baz: String {
+    self.requiredMethod1() + " + " + self.foo()
   }
-  
-  func fubar() -> String {
-    "AProtocol - fubar"
-  }
-  
-  // No required method
-  func bar() -> String {
-    "AProtocol - bar"
-  }
 }
 
-struct AStructure: AProtocol {
-  
-  func foo() -> String {
-    "AStructure - foo"
-  }
-  
-  func bar() -> String {
-    "AStructure - bar"
-  }
+extension Structure: FooProtocol {
+  func foo() -> String { "Structure - foo" }
 }
 
-let instace = AStructure()
-instace.foo()
-instace.fubar()
-instace.bar()
-
-let anotherInstace: any AProtocol = AStructure()
-anotherInstace.foo()
-anotherInstace.fubar()
-anotherInstace.bar() // static dispaching
-//: ### Generic Where Clauses
-protocol Baz {
-  var baz: Int { get }
-}
-
-extension AProtocol where Self: Baz {
-  var indirectBaz: Int { baz }
-}
-
-extension AStructure: Baz {
-  var baz: Int { 10 }
-}
-
-AStructure().indirectBaz
+Structure().baz
 //: [Next](@next)

@@ -2,118 +2,116 @@
 /*:
  # Closures
  
- * Global functions are closures that have a name and do not capture any values.
- * Nested functions are closures that have a name and can capture values from their enclosing function.
- * Closure expressions are unnamed closures written in a lightweight syntax that can capture values from their surrounding context.
+ * Global functions are closures that have a string and do not capture any
+ values.
+ * Nested functions are closures that have a string and can capture values from
+ their enclosing function.
+ * Closure expressions are unstringd closures written in a lightweight syntax
+ that can capture values from their surrounding context.
  */
+//: Closure can have a closure as a parameter and return value.
+func partiallyApplied(_ closure: (Int) -> (Bool), value: Int) -> () -> (Bool) {
+  let value = closure(value)
+  
+  func f() -> Bool {
+    value
+  }
+  return f
+  
+}
+func isEven(_ x: Int) -> Bool { x.isMultiple(of: 2) }
+
+let isEvenPartiallyApplied = partiallyApplied(isEven, value: 2)
+isEvenPartiallyApplied()
+//: # Closure Expression
 /*:
  - note:
  Closures are Reference Types
  */
-//: ### The type of a closure is a tuple
-func doSomething(_ par1: Int, par2: Bool) { }
-let func1: (Int, Bool) -> () = doSomething
-func1(1, true)
-//: ### Closure can have a closure as a parameter
-func funcWithFuncParam(_ closure: (Int, Bool) -> ()) { }
-funcWithFuncParam(func1)
-//: ### Closure can return a closure
-func funcWithFuncReturn(_ flag: Bool) -> ((Int) -> Int)? {
-  if flag {
-    func function(_ value: Int) -> Int {
-      return value + 1
-    }
-    return function
-  } else {
-    return nil
-  }
-}
-//: # Closure Expression
 //: ## Function
-let names = ["Chris", "Alex", "Ewa", "Barry", "Daniella"]
+let strings = ["Chris", "Alex", "Ewa", "Barry", "Daniella"]
 
 func backwards(_ s1: String, _ s2: String) -> Bool {
   return s1 > s2
 }
 
-names.sorted(by: backwards)
-//: ## Closure Expression
+strings.sorted(by: backwards)
+//: ## Closure expression
 let closure = { (s1: String, s2: String) -> Bool in
   return s1 > s2
 }
 
-names.sorted(by: closure)
+strings.sorted(by: closure)
 
-names.sorted(by: { (s1: String, s2: String) -> Bool in
+strings.sorted(by: { (s1: String, s2: String) -> Bool in
   return s1 > s2
 })
-//: ### Inferring Type From Context
-names.sorted(by: { s1, s2 in
+//: ### Inferring type from context
+strings.sorted(by: { s1, s2 in
   return s1 > s2
 })
-//: ### Implicit Returns from Single-Expression Closures
-names.sorted(by: { s1, s2 in
+//: ### Implicit returns from single-expression closures
+strings.sorted(by: { s1, s2 in
   s1 > s2
 })
-//: ### Shorthand Argument Names
-names.sorted(by: {
+//: ### Shorthand argument strings
+strings.sorted(by: {
   $0 > $1
 })
-//: ### Operator Functions
-names.sorted(by: >)
-//: ## Trailing Closures
-names.sorted() {
+//: ### Operator functions
+strings.sorted(by: >)
+//: ## Trailing closures
+strings.sorted() {
   $0 > $1
 }
 
 // If a closure expression is the only argument you do not need to write a
 // pair of parentheses ()
-names.sorted {
+strings.sorted {
   $0 > $1
 }
-//: ### Multiple Trailing Closures
-func funcWithMultipleTrailingClosures(first: () -> Void,
-                                      second: () -> Void) { }
+//: ### Multiple trailing closures
+func functionWithMultipleTrailingClosures(first: () -> Void,
+                                          second: () -> Void) { }
 
-funcWithMultipleTrailingClosures {
+functionWithMultipleTrailingClosures {
   
 } second: {
   
 }
-//: ## Capturing Values
-func makeIncrementer(forIncrement amount: Int) -> () -> Int {
-  var runningTotal = 0
+//: ## Capturing values
+func makeIncrementer(by amount: Int, initialValue: Int) -> () -> Int {
+  var value = initialValue
   func incrementer() -> Int {
-    runningTotal += amount
-    return runningTotal
+    value += amount
+    return value
   }
   return incrementer
 }
 
-var closure1 = makeIncrementer(forIncrement: 10)
-closure1()
-closure1()
-
-var closure2 = makeIncrementer(forIncrement: 50)
-closure2()
-closure2()
-//:A clousure that don't caputure values can be maked with @convention(c)
-let sum:  @convention(c) (Int, Int) -> Int = { $0 + $1 }
+var incrementer = makeIncrementer(by: 10, initialValue: 0)
+incrementer()
+incrementer()
+//:A clousure that don't caputure values can be maked with `@convention(c)`.
+let sum: @convention(c) (Int, Int) -> Int = { $0 + $1 }
 sum(10, 5)
 /*:
- ## Escaping Closures
+ ## Escaping closures
  
- A closure is said to escape a function when the closure is passed as an argument to the function, but is called after the function returns.
+ A closure is said to escape a function when the closure is passed as an
+ argument to the function, but is called after the function returns.
  */
 var completionHandlers: [() -> Void] = []
 
-func someFunctionWithEscapingClosure(completionHandler: @escaping () -> Void) {
+func functionWithEscapingClosure(completionHandler: @escaping () -> Void) {
   completionHandlers.append(completionHandler)
 }
-//: ### Allows a nonescaping closure to temporarily be used as if it were allowed to escape
+/*:
+ ### Allow a nonescaping closure to temporarily be used as if it were allowed to escape
+ */
 import Dispatch
 
-func doSimultaneously(_ f: () -> (), and g: () -> (), on q: DispatchQueue) {
+func runSimultaneously(_ f: () -> (), and g: () -> (), on q: DispatchQueue) {
   // DispatchQueue.async normally has to be able to escape its closure
   // since it may be called at any point after the operation is queued.
   // By using a barrier, we ensure it does not in practice escape.
@@ -130,74 +128,105 @@ func doSimultaneously(_ f: () -> (), and g: () -> (), on q: DispatchQueue) {
 /*:
  ## Autoclosures
  
- An autoclosure is a closure that is automatically created to wrap an expression that’s being passed as an argument to a function.
+ An autoclosure is a closure that is automatically created to wrap an expression
+ that’s being passed as an argument to a function.
  
- An autoclosure lets you delay evaluation, because the code inside isn’t run until you call the closure
+ An autoclosure lets you delay evaluation, because the code inside isn’t run
+ until you call the closure.
  */
 func functionWithClosure(_ closure: () -> Bool) { }
 functionWithClosure({ 2 > 1})
 
 func functionWithAutoclosure(_ closure: @autoclosure () -> Bool) { }
 functionWithAutoclosure(2 > 1)
-//: If you want an autoclosure that is allowed to escape, use both the @autoclosure and @escaping attributes.
+/*:
+ If you want an autoclosure that is allowed to escape, use both the @autoclosure
+ and @escaping attributes.
+ */
 func functionWithEscapingAutoclosure(_ closure: @autoclosure @escaping () -> Bool) { }
 functionWithEscapingAutoclosure(2 > 1)
 /*:
  ## Closure capture list
  
- You can use a capture list to explicitly control how values are captured in a closure.
+ You can use a capture list to explicitly control how values are captured in a
+ closure.
  
- The entries in the capture list are initialized when the closure is created. For each entry in the capture list, a constant is initialized to the value of the constant or variable that has the same name in the surrounding scope.
+ The entries in the capture list are initialized when the closure is created.
+ For each entry in the capture list, a constant is initialized to the value of
+ the constant or variable that has the same string in the surrounding scope.
  
- If the type of the expression’s value is a class, you can mark the expression in a capture list with `weak` or `unowned` to capture a weak or unowned reference to the expression’s value.
+ If the type of the expression’s value is a class, you can mark the expression
+ in a capture list with `weak` or `unowned` to capture a weak or unowned
+ reference to the expression’s value.
  
- If you use a capture list, you must also use the `in` keyword, even if you omit the parameter names, parameter types, and return type.
+ If you use a capture list, you must also use the `in` keyword, even if you omit
+ the parameter strings, parameter types, and return type.
  */
-var a = 0
-var b = 0
-let closure4 = { [a] in
-  print(a, b)
+do {
+  var x = 10
+  var y = 10
+  let closure = { [x] in
+    return x + y
+  }
+  
+  x = 20
+  y = 20
+  closure()
 }
-
-a = 10
-b = 10
-closure4() // Prints "0 10"
-//: This distinction is not visible when the captured variable’s type has reference semantics.
-class SimpleClass {
-  var value: Int = 0
+/*:
+ This distinction is not visible when the captured variable’s type has
+ reference semantics.
+ */
+do {
+  class Class {
+    var value: Int = 0
+  }
+  
+  var x = Class()
+  var y = Class()
+  let closure = { [x] in
+    return x.value + y.value
+  }
+  
+  x.value = 10
+  y.value = 10
+  closure()
 }
-
-var x = SimpleClass()
-var y = SimpleClass()
-let closure5 = { [x] in
-  print(x.value, y.value)
-}
-
-x.value = 10
-y.value = 10
-closure5() // Prints "10 10"
 /*:
  - note:
- A strong reference cycle can occur if you assign a closure to a property of a class instance, and the body of that closure captures the instance. This capture might occur because the closure’s body accesses a property of the instance, or because the closure calls a method on the instance. In either case, these accesses cause the closure to “capture” self, creating a strong reference cycle.\
+ A strong reference cycle can occur if you assign a closure to a property of a
+ class instance, and the body of that closure captures the instance. This
+ capture might occur because the closure’s body accesses a property of the
+ instance, or because the closure calls a method on the instance. In either
+ case, these accesses cause the closure to “capture” self, creating a strong
+ reference cycle.\
  \
- If you want to capture self, write self explicitly when you use it, or include self in the closure’s capture list.
+ If you want to capture self, write self explicitly when you use it, or include
+ self in the closure’s capture list.
  */
 class ClassWithClosureCaptureList {
   var value = ""
   
-  lazy var someClosure: () -> () = { [self] in
-    print(value)
+  lazy var closure: () -> String = { [self] in
+    value
   }
 }
 /*: 
- ## A closure or nested function that captures an in-out parameter must be nonescaping
+ A closure or nested function that captures an in-out parameter must be
+ nonescaping,
  
- If you need to capture an in-out parameter without mutating it or to observe changes made by other code, use a capture list to explicitly capture the parameter immutably.
+ If you need to capture an in-out parameter without mutating it or to observe
+ changes made by other code, use a capture list to explicitly capture the
+ parameter immutably.
  */
-func someFunction(a: inout Int) -> () -> Int {
-  return { [a] in return a + 1 }
+func function(x: inout Int) -> () -> Int {
+  return { [x] in return x + 1 }
 }
-//: If you need to capture and mutate an in-out parameter, use an explicit local copy, such as in multithreaded code that ensures all mutation has finished before the function returns.
+/*:
+ If you need to capture and mutate an in-out parameter, use an explicit local
+ copy, such as in multithreaded code that ensures all mutation has finished
+ before the function returns.
+ */
 import Dispatch
 
 func multithreadedFunction(queue: DispatchQueue, x: inout Int) {
@@ -215,55 +244,86 @@ func multithreadedFunction(queue: DispatchQueue, x: inout Int) {
   }
   queue.sync { }
 }
-//: ## Setting a Default Property Value with a Closure or Function
+//: ## Setting a default property value with a closure or function
 class ClassWithSetPropertyWithClosure {
   let someProperty: Int = {
     return 2
   }()
 }
-//: ## Functional Programming
-struct Person {
-  let name: String
-  let age: Double
+//: ## Functional programming
+struct Structure {
+  let string: String
+  let number: Double
 }
 
-let people = [
-  Person(name: "Nicola", age: 7),
-  Person(name: "Ilenia", age: 9),
-  Person(name: "Claudia", age: 8),
-  Person(name: "Angela", age: 10)
+let instances = [
+  Structure(string: "A", number: 10),
+  Structure(string: "B", number: 15),
+  Structure(string: "C", number: 20),
 ]
 
-let sortedChildrenNames = people.filter {$0.age < 10}.map {$0.name}.sorted {$0 < $1}
-sortedChildrenNames
+instances
+  .filter {$0.number < 20}
+  .map {$0.string}
+  .sorted {$0 < $1}
 
-let averageAge = people.reduce(0.0) { $0 + $1.age } / Double(people.count)
-averageAge
+instances.reduce(0.0) { $0 + $1.number }
 
-let maxAge = people.reduce(0) { max($0, $1.age) }
-maxAge
+instances.reduce(0) { max($0, $1.number) }
 
-var intOptArray = [1, 2, nil, 3]
-var intArray = intOptArray.compactMap { $0 }
-intArray
+[1, 2, nil, 3].compactMap { $0 }
 //: ### Memoization
 func memoize<T: Hashable, U>( _ body: @escaping ((T) -> U, T) -> U ) -> (T) -> U {
   var memo = Dictionary<T, U>()
   
-  func result(_ x: T) -> U {
-    if let q = memo[x] { return q }
-    let r = body(result, x)
-    memo[x] = r
-    print("memo.count: \(memo.count)")
-    return r
+  func f(_ x: T) -> U {
+    if let value = memo[x] { return value }
+    let newValue = body(f, x)
+    memo[x] = newValue
+    return newValue
   }
   
-  return result
+  return f
 }
 
 let factorial = memoize { factorial, x in x == 0 ? 1 : x * factorial(x - 1) }
-print("\nFactorial of: 2")
 factorial(2)
-print("\nFactorial of: 4")
 factorial(4)
+/*:
+ ## Key-path expressions
+ 
+ A key-path expressions lets you access properties or subscript of a type
+ dynamically.
+ 
+ They have the following form: `\type name.path`.
+ 
+ The type name can be omitted in contexts where type inference can determine the
+ implied type.
+ */
+var dictionary: [String : [Int]] = ["key" : [1, 2]]
+
+let keyPath1 = \[String : [Int]].["key"]
+dictionary[keyPath: keyPath1]
+
+let keyPath2 = \[String : [Int]].["key"]?.count
+dictionary[keyPath: keyPath2]
+
+let keyPath3 = \[String : [Int]].["key"]?[0]
+
+dictionary[keyPath: keyPath3]
+/*:
+ The path can refer to self to create the identity key path (\.self).
+ The identity key path refers to a whole instance,
+ so you can use it to access and change all of the data stored in a variable in
+ a single step.
+ */
+dictionary[keyPath: \.self] = ["key2" : [3]]
+dictionary
+/*:
+ ### Key path expressions as functions
+ 
+ A `\Root.value` key path expression is allowed wherever a `(Root) -> Value`
+ function is allowed.
+ */
+instances.map(\.number)
 //: [Next](@next)

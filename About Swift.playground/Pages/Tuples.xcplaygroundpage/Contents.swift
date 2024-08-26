@@ -18,28 +18,30 @@ whiteRGB.0
 whiteRGB.1
 whiteRGB.2
 
-let (redColor, _, blueColor) = yellowRGB
-redColor
-blueColor
+let (red, _, blue) = yellowRGB
+red
+blue
 
 let (a, _, (b, c)) = ("test", 9.45, (12, 3))
-//: ## Switch
-let somePoint = (1, 1)
-switch somePoint {
+a
+b
+c
+
+let point = (1, 1)
+switch point {
   case (0, 0):
     print("(0, 0) is at the origin")
   case (_, 0):
-    print("(\(somePoint.0), 0) is on the x-axis")
+    print("(\(point.0), 0) is on the x-axis")
   case (0, _):
-    print("(0, \(somePoint.1)) is on the y-axis")
+    print("(0, \(point.1)) is on the y-axis")
   case (-2...2, -2...2):
-    print("(\(somePoint.0), \(somePoint.1)) is inside the box")
+    print("(\(point.0), \(point.1)) is inside the box")
   default:
-    print("(\(somePoint.0), \(somePoint.1)) is outside of the box")
+    print("(\(point.0), \(point.1)) is outside of the box")
 }
-//: ### Value Bindings
-let anotherPoint = (2, 0)
-switch anotherPoint {
+//: ### Value bindings
+switch point {
   case (let x, 0):
     print("on the x-axis with an x value of \(x)")
   case (0, let y):
@@ -47,20 +49,25 @@ switch anotherPoint {
   case let (x, y):
     print("somewhere else at (\(x), \(y))")
 }
-//: # Tuple Pattern
+//: ## Tuple pattern
 let points = [(0, 0), (1, 0), (1, 1), (2, 0), (2, 1)]
 
 for (x, _) in points {
   x
 }
 /*:
- # Comparison Operators
+ ## Comparison operators
  
- You can also compare tuples that have the same number of values, as long as each of the values in the tuple can be compared.
+ You can also compare tuples that have the same number of values, as long as
+ each of the values in the tuple can be compared.
  
- Tuples are compared from left to right, one value at a time, until the comparison finds two values that aren’t equal. If all the elements are equal, then the tuples themselves are equal.
+ Tuples are compared from left to right, one value at a time, until the
+ comparison finds two values that aren’t equal. If all the elements are equal,
+ then the tuples themselves are equal.
  
- The Swift standard library includes tuple comparison operators for tuples with less than seven elements. To compare tuples with seven or more elements, you must implement the comparison operators yourself.
+ The Swift standard library includes tuple comparison operators for tuples with
+ less than seven elements. To compare tuples with seven or more elements, you
+ must implement the comparison operators yourself.
  */
 // true because 1 is less than 2
 (1, "zebra") < (2, "apple")
@@ -71,18 +78,11 @@ for (x, _) in points {
 // true because 4 is equal to 4, and "dog" is equal to "dog"
 (4, "dog") == (4, "dog")
 /*:
- # Functions and Tuples
+ ## Functions and tuples
  */
-//: ### Functions can Return a Tuple
-func funcReturnTuple() -> (par1: Bool, par2: Bool) {
-  (true, false)
+func function(_ tuple: (Int, Int)) -> (x: Int, y: Int) {
+  (x: tuple.0, y: tuple.1)
 }
 
-let value = funcReturnTuple()
-value.par1
-value.par2
-//: ### Functions with tuple parameter
-func functionWithTupleParameter(_: (Int, Int)) -> Void { }
-
-functionWithTupleParameter((1, 2))
+function((1, 2))
 //: [Next](@next)

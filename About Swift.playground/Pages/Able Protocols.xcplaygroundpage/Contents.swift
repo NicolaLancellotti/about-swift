@@ -1,29 +1,33 @@
 //: [Previous](@previous)
 //: # Able Protocols
-struct SomeStructure {
+struct Structure {
   var value: Int = 0
 }
-let instance = SomeStructure()
+let instance = Structure()
 /*:
  ## Equatable
  
  A type that can be compared for value equality.
  
- When adopting Equatable, only the == operator is required to be implemented. The standard library provides an implementation for !=.
+ When adopting Equatable, only the `==` operator is required to be implemented.
+ The standard library provides an implementation for `!=`.
  */
-extension SomeStructure: Equatable {
-  static func ==(lhs: SomeStructure, rhs: SomeStructure) -> Bool {
+extension Structure: Equatable {
+  static func ==(lhs: Structure, rhs: Structure) -> Bool {
     lhs.value == rhs.value
   }
 }
 /*:
- Swift provides synthesized implementations of the equivalence operators for the following kinds of custom types:
+ Swift provides synthesized implementations of the equivalence operators for the
+ following kinds of custom types:
+ * structures that have only stored properties that conform to the Equatable
+ protocol,
+ * enumerations that have only associated types that conform to the Equatable
+ protocol,
+ * enumerations that have no associated types.
  
- * Structures that have only stored properties that conform to the Equatable protocol
- * Enumerations that have only associated types that conform to the Equatable protocol
- * Enumerations that have no associated types
- 
- Declare Equatable conformance as part of the type’s original declaration to receive these default implementations.
+ Declare Equatable conformance as part of the type’s original declaration to
+ receive these default implementations.
  */
 struct Point: Equatable {
   let x: Int
@@ -37,39 +41,42 @@ Point(x: 0, y: 1) != Point(x: 0, y: 1)
  
  A type that provides an integer hash value.
  
- Inherits From Equatable
+ Inherits from `Equatable`.
  */
-extension SomeStructure: Hashable {
+extension Structure: Hashable {
   public func hash(into hasher: inout Hasher) {
     hasher.combine(value)
   }
 }
 
-SomeStructure().hashValue
+Structure().hashValue
 
 var hasher = Hasher()
 hasher.combine(0)
-print(hasher.finalize())
+hasher.finalize()
 /*:
  ## Comparable
  
- A type that can be compared using the relational operators <, <=, >=, and >.
+ A type that can be compared using the relational operators `<`, `<=`, `>=`,
+ and `>`.
  
- Inherits From Equatable
+ Inherits from `Equatable`.
  
- A type conforming to Comparable need only supply the < and == operators; default implementations of <=, >, >=, and != are supplied by the standard library.
+ A type conforming to Comparable need only supply the `<` and `==` operators;
+ default implementations of `<=`, `>`, `>=`, and `!=` are supplied by the
+ standard library.
  */
-extension SomeStructure: Comparable {
-  static func <(lhs: SomeStructure, rhs: SomeStructure) -> Bool {
+extension Structure: Comparable {
+  static func <(lhs: Structure, rhs: Structure) -> Bool {
     lhs.value < rhs.value
   }
 }
 
-SomeStructure(value: 1) < SomeStructure(value: 2)
-SomeStructure(value: 1) <= SomeStructure(value: 2)
-SomeStructure(value: 1) > SomeStructure(value: 2)
-SomeStructure(value: 1) >= SomeStructure(value: 2)
-//: ### Synthesized implementations of Comparable for enumerations
+Structure(value: 1) < Structure(value: 2)
+Structure(value: 1) <= Structure(value: 2)
+Structure(value: 1) > Structure(value: 2)
+Structure(value: 1) >= Structure(value: 2)
+//: ### Synthesized implementations of comparable for enumerations
 enum ComparableEnumeration: Comparable {
   case first
   case second(Int)
@@ -83,21 +90,22 @@ min(1, 2, 3)
 /*:
  ## Strideable
  
- Conforming types are notionally continuous, one-dimensional values that can be offset and measured.
+ Conforming types are notionally continuous, one-dimensional values that can be
+ offset and measured.
  
- Inherits From Comparable
+ Inherits from `Comparable`.
  */
-extension SomeStructure: Strideable {
-  func advanced(by n: Int) -> SomeStructure {
-    SomeStructure(value: self.value + n)
+extension Structure: Strideable {
+  func advanced(by n: Int) -> Structure {
+    Structure(value: self.value + n)
   }
   
-  func distance(to other: SomeStructure) -> Int {
+  func distance(to other: Structure) -> Int {
     self.value - other.value
   }
 }
 
-let instance1 = SomeStructure(value: 1)
+let instance1 = Structure(value: 1)
 let instance2 = instance1.advanced(by: 1)
 instance2.value
 instance1.distance(to: instance2)
@@ -106,8 +114,9 @@ instance1.distance(to: instance2)
  
  A type that can be converted to and from an associated raw value.
  */
-struct SomeStructure1: RawRepresentable {
+struct Structure1: RawRepresentable {
   var value: Int = 0
+  
   init?(rawValue: String) {
     guard let value = Int(rawValue) else {
       return nil
@@ -120,21 +129,14 @@ struct SomeStructure1: RawRepresentable {
   }
 }
 
-SomeStructure1(rawValue: "123")?.rawValue
+Structure1(rawValue: "123")?.rawValue
 //: ## Identifiable
-struct ContactStruct: Identifiable {
-  var id: Int
-  var name: String
+extension Structure: Identifiable {
+  var id: Int { value }
 }
 
-class ContactClass: Identifiable {
-  var name: String
-  
-  init(name: String) {
-    self.name = name
-  }
-}
+instance.id
 
-ContactStruct(id: 1, name: "Nicola").id
-ContactClass(name: "Nicola").id
+class Class: Identifiable { }
+Class().id
 //: [Next](@next)

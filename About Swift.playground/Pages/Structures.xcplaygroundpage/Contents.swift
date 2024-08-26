@@ -4,21 +4,23 @@
  - note:
  Structures are Value Types
  */
-//: ## Structures With Default Values
+//: ## Structures with default values
 struct Size {
   var width = 0.0, height = 0.0
 }
 /*:
  ### Initialization
  
- Swift provides a default initializer for any structure that provides default values for all of its properties and does not provide at least one initializer itself.
+ Swift provides a default initializer for any structure that provides default
+ values for all of its properties and does not provide at least one initializer
+ itself.
  */
 let size0x0 = Size()
-// Get Properties
 size0x0.width
 size0x0.height
 /*:
- Structure types automatically receive a memberwise initializer if they do not define any of their own custom initializers.
+ Structure types automatically receive a memberwise initializer if they do not
+ define any of their own custom initializers.
  */
 let size10x10 = Size(width: 10, height: 10)
 size10x10.width
@@ -28,64 +30,68 @@ var size10x0 = Size(width: 10)
 size10x0.width
 size10x0.height
 
-// Set Properties
 var size8x10 = size10x10
 size8x10.width = 8
 
 size8x10.width
 size8x10.height
-//: ## Structures Without Default values
+//: ## Structures without default values
 struct Dog {
   var name: String
   var age: Int
-  let gender: String
 }
 /*:
  ### Initialization
  
- Unlike a default initializer, the structure receives a memberwise initializer even if it has stored properties that do not have default values.
+ Unlike a default initializer, the structure receives a memberwise initializer
+ even if it has stored properties that do not have default values.
  */
-let aDog = Dog(name: "dogName", age: 5, gender: "male");
+let dog = Dog(name: "dogName", age: 5);
 /*:
- ## Customizing Initialization
+ ## Customizing initialization
  
- An initializer cannot call any instance methods, read the values of any instance properties, or refer to self as a value until after the first phase of initialization is complete.
+ An initializer cannot call any instance methods, read the values of any
+ instance properties, or refer to self as a value until after the first phase of
+ initialization is complete.
  */
-struct Celsius {
-  var temperatureInCelsius: Double
+struct Temperature {
+  var celsius: Double
   
-  init(fromFahrenheit fahrenheit: Double) {
-    temperatureInCelsius = (fahrenheit - 32.0) / 1.8
+  init(fahrenheit: Double) {
+    self.celsius = (fahrenheit - 32.0) / 1.8
   }
   
-  init(fromKelvin kelvin: Double) {
-    temperatureInCelsius = kelvin - 273.15
+  init(kelvin: Double) {
+    self.celsius = kelvin - 273.15
   }
   
-  init(_ celsius: Double) {
-    temperatureInCelsius = celsius
+  init(celsius: Double) {
+    self.celsius = celsius
   }
 }
 
-Celsius(fromFahrenheit: 10)
-Celsius(fromKelvin: 10)
-Celsius(10)
+Temperature(fahrenheit: 10)
+Temperature(kelvin: 10)
+Temperature(celsius: 10)
 /*:
- ## Initializer Delegation for Value Types
+ ## Initializer delegation for value types
  
- Initializers can call other initializers to perform part of an instance’s initialization.
+ Initializers can call other initializers to perform part of an instance’s
+ initialization.
  
- For value types, you use self.init to refer to other initializers from the same value type when writing your own custom initializers. You can call self.init only from within an initializer.
+ For value types, you use `self.init` to refer to other initializers from the
+ same value type when writing your own custom initializers. You can call
+ `self.init` only from within an initializer.
  */
 struct Point {
   var x = 0.0, y = 0.0
 }
 
-struct Rect {
+struct Rectangle {
   var origin = Point()
   var size = Size()
   
-  // Calling this initializer returns a Rect instance whose origin and size
+  // Calling this initializer returns a Rectangle instance whose origin and size
   // properties are both initialized with the default values of
   // Point(x: 0.0, y: 0.0) and Size(width: 0.0, height: 0.0).
   init() { }
@@ -110,57 +116,58 @@ struct Rect {
   }
 }
 
-let aRect1 = Rect()
+let rectangle1 = Rectangle()
 
-let aRect2 = Rect(center: Point(x: 1, y: 10),
-                  size: Size(width: 100, height: 80))
+let rectangle2 = Rectangle(center: Point(x: 1, y: 10),
+                           size: Size(width: 100, height: 80))
 
-let aRect3 = Rect(origin: Point(x: 100, y: 90),
-                  size: Size(width: 90, height: 90))
+let rectangle3 = Rectangle(origin: Point(x: 100, y: 90),
+                           size: Size(width: 90, height: 90))
 /*:
- ## Failable Initializers
- 
- You can define a failable initializer that creates an implicitly unwrapped optional instance of the appropriate type. Do this by placing an exclamation mark after the init keyword (init!) instead of a question mark.
- 
- A failable initializer can delegate across to another failable initializer.
+ ## Failable initializers
  */
 struct StructureWithFailableInitializers {
-  init?() {
+  init?(value: Bool) {
+    nil
+  }
+  init!(value: Int) {
     nil
   }
 }
 
-var aStructure = StructureWithFailableInitializers()
+StructureWithFailableInitializers(value: true)
+StructureWithFailableInitializers(value: 1)
 /*:
- ## Observers for Stored properties
+ ## Observers for stored properties
  
- Like Observers for Stored Variables
+ Like Observers for Stored Properties
  */
 /*:
- ## Lazy Stored properties
+ ## Lazy stored properties
  
- * Must be variables because constant properties must always have a value before initialization completes.
+ * Lazy Stored Properties must be variables because constant properties must
+ always have a value before initialization completes.
  */
 /*:
  - important:
- If a lazy property has not yet been initialized and is accessed by more than one thread at the same time, there is no guarantee that the property will be initialized only once.
+ If a lazy property has not yet been initialized and is accessed by more than
+ one thread at the same time, there is no guarantee that the property will be
+ initialized only once.
  */
 struct StructureWithLazyStoredProperty {
   lazy var property = Size()
 }
 
-var aStructureWithLazyStoredProperty = StructureWithLazyStoredProperty()
-
-aStructureWithLazyStoredProperty.property
-// The instance of person has been created
+var value = StructureWithLazyStoredProperty()
+value.property
 /*:
- ## Computed Properties
+ ## Computed properties
  
  Like Computed Variables.
  
  Computed properties can't have Property Observers.
  */
-//: ## Type Properties
+//: ## Type properties
 struct StructureWithTypeProperties {
   static var typeProperty = 10
   
@@ -186,13 +193,13 @@ struct StructureWithMethods {
   // Mutating methods
   
   // Properties can be modified from within mutating methods.
-  mutating func mutatingInstanceMethod2(_ value: Int) {
+  mutating func mutatingInstanceMethod1(_ value: Int) {
     self.storedProperty = value
   }
   
   // Mutating methods can assign an entirely new instance to the implicit
   // self property.
-  mutating func mutatingInstanceMethod1() {
+  mutating func mutatingInstanceMethod2() {
     self = StructureWithMethods()
   }
   
@@ -203,7 +210,7 @@ struct StructureWithMethods {
     
   }
 }
-//: ## Init Accessors
+//: ## Init accessors
 struct StructureWithInitAccessor  {
   var x: Int
   
@@ -212,7 +219,7 @@ struct StructureWithInitAccessor  {
   var z: Int {
     @storageRestrictions(initializes: y, accesses: x)
     init(newValue) {
-      y = newValue
+      y = newValue + x
     }
 
     get { y }
@@ -220,18 +227,16 @@ struct StructureWithInitAccessor  {
   }
 }
 
-do {
-  let value = StructureWithInitAccessor(x: 1, z: 2)
-  value.x
-  value.y
-  value.z
-}
+let value1 = StructureWithInitAccessor(x: 1, z: 2)
+value1.x
+value1.y
+value1.z
 /*:
  ## Subscripts
  
  Subscripts can:
- * use variable parameters.
- * use variadic parameters.
+ * use variable parameters,
+ * use variadic parameters,
  * provide default parameter values.
  
  Subscripts cannot:
@@ -287,27 +292,30 @@ struct Matrix {
   }
 }
 
-let value = 5
-var identityMatrix = Matrix(rows: value, columns: value)
-for i in 0..<value {
-  identityMatrix[i, i] = 1
-}
-// identityMatrix.printMatrix()
-/*:
- ## Callable values
- Values of types that declare func callAsFunction methods can be called like functions.
- */
-struct Adder {
-  
-  var base: Int
-  
-  func callAsFunction(_ x: Int) -> Int {
-    x + base
+do {
+  let value = 5
+  var identityMatrix = Matrix(rows: value, columns: value)
+  for i in 0..<value {
+    identityMatrix[i, i] = 1
   }
-  
+  identityMatrix.printMatrix()
+}
+/*:
+ ## Distinguish between methods or initializers whose names differ only by the names of their arguments
+ */
+struct StructWithMethods {
+  func method1(_ x: Int, y: Int) { }
+  func method1(_ x: Int, z: Int) { }
+  func method2(_ x: Int, y: Int) { }
+  func method2(_ x: Int, y: Bool) { }
 }
 
-var adder = Adder(base: 3)
-adder(10)
-adder.callAsFunction(10)
+let instance = StructWithMethods()
+
+// let f1 = instance.method1    // Ambiguous
+let f2 = instance.method1(_:y:) // Unambiguous
+
+// let f3 = instance.method2        // Ambiguous
+// let f4 = instance.method2(_:y:)  // Still ambiguous
+let f4: (Int, Bool) -> Void  = instance.method2(_:y:)  // Unambiguous
 //: [Next](@next)

@@ -33,7 +33,8 @@ class Model {
 }
 /*:
  ## withObservationTracking
- - Any access to a tracked property within the apply closure will flag the property.
+ - Any access to a tracked property within the apply closure will flag the
+ property.
  - Any change to a flagged property will trigger a call to the onChange closure.
  */
 var model = Model()

@@ -12,20 +12,18 @@
  * ExpressibleByArrayLiteral
  * ExpressibleByDictionaryLiteral
  */
-import Foundation
-
-struct MyInt {
+struct Wrapper {
   var value: Int = 0
 }
 
-var myInt: MyInt
+var wrapper: Wrapper
 /*:
  ## ExpressibleByIntegerLiteral
  
  If you need an arbitrary-precision signed integer,
  you can use `StaticBigInt` as the associated type.
  */
-extension MyInt: ExpressibleByIntegerLiteral {
+extension Wrapper: ExpressibleByIntegerLiteral {
   
   typealias IntegerLiteralType = Int
   
@@ -34,29 +32,29 @@ extension MyInt: ExpressibleByIntegerLiteral {
   }
 }
 
-myInt = 1
-myInt.value
+wrapper = 1
+wrapper.value
 //: ## ExpressibleByNilLiteral
-extension MyInt: ExpressibleByNilLiteral {
+extension Wrapper: ExpressibleByNilLiteral {
   init(nilLiteral: ()) {
     self.value = 0
   }
 }
 
-myInt = nil
-myInt.value
+wrapper = nil
+wrapper.value
 //: ## ExpressibleByUnicodeScalarLiteral
-extension MyInt: ExpressibleByUnicodeScalarLiteral {
+extension Wrapper: ExpressibleByUnicodeScalarLiteral {
   init(unicodeScalarLiteral value: UnicodeScalar) {
     self.value = Int(String(value)) ?? 0
   }
 }
 
-myInt = "1"
-myInt.value
+wrapper = "1"
+wrapper.value
 
-myInt = "a"
-myInt.value
+wrapper = "a"
+wrapper.value
 //: ## ExpressibleByStringInterpolation
 struct Text {
   let value: String
@@ -86,7 +84,7 @@ extension Text: ExpressibleByStringInterpolation {
       self.value.append(value.description)
     }
     
-    mutating func appendInterpolation<T>(reversed: Bool, _ value: T) where T: CustomStringConvertible {
+    mutating func appendInterpolation<T>(_ value: T, reversed: Bool) where T: CustomStringConvertible {
       if reversed {
         self.value.append(String(value.description.reversed()))
       } else {
@@ -96,15 +94,16 @@ extension Text: ExpressibleByStringInterpolation {
   }
 }
 
-let text = "oaic reversed: \(reversed: true, "oaic")" as Text
+let text = "oaic reversed: \("oaic", reversed: true)" as Text
 text.value
 //: ### DefaultStringInterpolation
 extension DefaultStringInterpolation {
-  mutating func appendInterpolation(_ value: Date,formatter: DateFormatter) {
+  mutating func appendInterpolation(_ value: Date, formatter: DateFormatter) {
     self.appendInterpolation(formatter.string(from: value))
   }
 }
 
+import Foundation
 let dateFormatter = DateFormatter()
 dateFormatter.timeStyle = .medium
 let now = Date()

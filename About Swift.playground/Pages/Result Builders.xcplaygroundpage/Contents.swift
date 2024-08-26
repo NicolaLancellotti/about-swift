@@ -51,7 +51,7 @@ struct Var: Expr {
   }
 }
 
-struct Set: Expr {
+struct SetVar: Expr {
   let variable: Var
   let expression: any Expr
   
@@ -86,9 +86,9 @@ struct BinaryOp: Expr {
   func eval(_ environment: Environment) throws -> Int {
     let lhsValue = try lhs.eval(environment)
     let rhsValue = try rhs.eval(environment)
-    switch op {
-      case .minus: return lhsValue - rhsValue
-      case .plus: return lhsValue + rhsValue
+    return switch op {
+      case .minus: lhsValue - rhsValue
+      case .plus: lhsValue + rhsValue
     }
   }
 }
@@ -104,7 +104,7 @@ struct Eval: Expr {
     try environment.get(variable.name)
   }
 }
-//: ## Result Builder
+//: ## Result builder
 @resultBuilder
 enum ToyLangBuilder {
   typealias Expression = Expr
@@ -120,8 +120,7 @@ enum ToyLangBuilder {
   }
   
   static func buildOptional(_ component: Component?) -> Component {
-    guard let component = component else { return [] }
-    return component
+    component ?? []
   }
   
   static func buildEither(first component: Component) -> Component {
@@ -148,9 +147,7 @@ enum ToyLangBuilder {
   }
   
   static func buildPartialBlock(accumulated: Component, next: Component) -> Component {
-    var accumulated = accumulated
-    accumulated.append(contentsOf: next)
-    return accumulated
+    accumulated + next
   }
   
   static func buildFinalResult(_ component: Component)  -> FinalResult {
@@ -167,47 +164,47 @@ enum ToyLangBuilder {
     }.mapError { $0 as! ToyLangError}
   }
 }
-//: ## Result-Builder Attributes
-//: ### Closure
+//: ## Result-builder attributes
+//: ### On closures
 func eval(@ToyLangBuilder closure: () -> ToyLangBuilder.FinalResult) -> ToyLangBuilder.FinalResult {
   closure()
 }
 
 let value1 = eval {
   let x = Var("x")
-  Set(x, to: Number(0))
+  SetVar(x, to: Number(0))
   for i in 1...2 {
-    Set(x, to: BinaryOp(x, .plus, Number(i)))
+    SetVar(x, to: BinaryOp(x, .plus, Number(i)))
   }
   Eval(x)
 }
 value1
-//: ### Function declaration
+//: ### On functions
 @ToyLangBuilder
-func eval(increase: Bool, flag: Bool) -> ToyLangBuilder.FinalResult {
+func eval(increase: Bool, minus: Bool) -> ToyLangBuilder.FinalResult {
   let x = Var("x")
-  Set(x, to: Number(0))
+  SetVar(x, to: Number(0))
   
   if increase {
-    Set(x, to: BinaryOp(x, .plus, Number(1)))
+    SetVar(x, to: BinaryOp(x, .plus, Number(1)))
   }
   
-  if flag {
-    Set(x, to: BinaryOp(x, .minus, Number(2)))
+  if minus {
+    SetVar(x, to: BinaryOp(x, .minus, Number(2)))
   } else {
-    Set(x, to: BinaryOp(x, .plus, Number(2)))
-    print("not flag")
+    SetVar(x, to: BinaryOp(x, .plus, Number(2)))
   }
   
   Eval(x)
 }
 
-let value2 = eval(increase: true, flag: true)
+let value2 = eval(increase: true, minus: true)
 value2
 //: ### Variable or subscript declaration that includes a getter
-@ToyLangBuilder var value3: ToyLangBuilder.FinalResult {
+@ToyLangBuilder
+var value3: ToyLangBuilder.FinalResult {
   let x = Var("x")
-  Set(x, to: Number(1))
+  SetVar(x, to: Number(1))
   Eval(x)
 }
 value3

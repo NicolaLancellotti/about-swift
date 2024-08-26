@@ -1,13 +1,16 @@
 //: [Previous](@previous)
 //: # Convertible Protocols
-struct SomeStructure { }
-let instance = SomeStructure()
+struct Structure {
+  let value: Int
+}
+let instance = Structure(value: 10)
 /*:
  ## CustomStringConvertible
  
- Accessing a type's description property directly or using CustomStringConvertible as a generic constraint is discouraged.
+ Accessing a type's description property directly or using
+ `CustomStringConvertible` as a generic constraint is discouraged.
  */
-extension SomeStructure: CustomStringConvertible {
+extension Structure: CustomStringConvertible {
   var description: String { "my description" }
 }
 
@@ -16,9 +19,10 @@ String(describing: instance)
 /*:
  ## CustomDebugStringConvertible
  
- Accessing a type's debugDescription property directly or using CustomDebugStringConvertible as a generic constraint is discouraged.
+ Accessing a type's debugDescription property directly or using
+ `CustomDebugStringConvertible` as a generic constraint is discouraged.
  */
-extension SomeStructure: CustomDebugStringConvertible {
+extension Structure: CustomDebugStringConvertible {
   var debugDescription: String { "my debug description" }
 }
 
@@ -29,29 +33,14 @@ String(reflecting: instance)
  
  A type that can be represented as a string in a lossless, unambiguous way.
  
- Inherits From CustomStringConvertible.
+ Inherits from `CustomStringConvertible`.
  */
-struct Person {
-  let firstName: String
-  let secondName: String
-}
-
-extension Person: LosslessStringConvertible {
+extension Structure: LosslessStringConvertible {
   init?(_ description: String) {
-    let array = description.split(separator: "|").map{ String($0) }
-    guard array.count == 2 else {
-      return nil
-    }
-    firstName = array[0]
-    secondName = array[1]
-  }
-  
-  var description: String {
-    firstName + "|" + secondName
+    guard let value = Int(description) else { return nil }
+    self.value = value
   }
 }
 
-let nicola = Person(firstName: "Nicola", secondName: "Lancellotti")
-let description = nicola.description
-let anotherNicola = Person(description)
+Structure("10")?.value
 //: [Next](@next)

@@ -1,9 +1,10 @@
 //: [Previous](@previous)
 //: # Concurrency
 /*:
- ## Async/Await
+ ## Async/await
  
- An asynchronous function is a special kind of function that can be suspended while it's partway through execution.
+ An asynchronous function is a special kind of function that can be suspended
+ while it's partway through execution.
  
  You write `await` in front of the call to mark the possible suspension point.
  */
@@ -34,7 +35,7 @@ func asyncFunc2() async throws -> Int {
   async let second = asyncFunc(2)
   return try await first + second
 }
-//: ## Async Sequences
+//: ## Async sequences
 struct Counter : AsyncSequence {
   let howHigh: Int
   
@@ -166,7 +167,7 @@ class AnActorIsolatedClass {
   }
 }
 /*:
- ### Non-delegating Initializers
+ ### Non-delegating initializers
  - **An initializer**
     - has a nonisolated self reference if it is:
         - non-async
@@ -176,18 +177,25 @@ class AnActorIsolatedClass {
         - an asynchronous actor initializer
  - **Actors**
     - *Initializers with isolated self*
-        - An implicitly hop to the actor's executor will be performed immediately after self becomes fully-initialized.
+        - An implicitly hop to the actor's executor will be performed
+ immediately after self becomes fully-initialized.
     - *Initializers with nonisolated self*
-        - Accesses to the stored properties of self is required to bootstrap an instance of an actor.
-        - Such accesses are considered to be a weaker form of isolation that relies on having exclusive access to the reference self.
-        - The isolation of self decays to nonisolated during any use of self that is not a direct stored-property access.
+        - Accesses to the stored properties of self is required to bootstrap an
+ instance of an actor.
+        - Such accesses are considered to be a weaker form of isolation that
+ relies on having exclusive access to the reference self.
+        - The isolation of self decays to nonisolated during any use of self
+ that is not a direct stored-property access.
 - **Global-actor isolated types**
   - *Isolated initializers*
-     - No data races because they gain actor-isolation prior to calling the initializer itself.
+     - No data races because they gain actor-isolation prior to calling the
+ initializer itself.
   - *Non-isolated initializer*
-      - The isolation of self decays to nonisolated during any use of self that is not a direct stored-property access.
+      - The isolation of self decays to nonisolated during any use of self that
+ is not a direct stored-property access.
  ### Deinitializers
-  - The isolation of self decays to nonisolated during any use of self that is not a direct stored-property access.
+  - The isolation of self decays to nonisolated during any use of self that is
+ not a direct stored-property access.
   - deinit can only access the stored properties of self that are Sendable.
  */
 /*:
@@ -199,7 +207,7 @@ class AnActorIsolatedClass {
  To declare conformance to Sendable without any compiler enforcement, write
  `@unchecked Sendable`.
  
- ### Sendable Structures and Enumerations
+ ### Sendable structures and enumerations
  To satisfy the requirements of the Sendable protocol, an enumeration or
  structure must have only sendable members and associated values.
  
@@ -208,10 +216,10 @@ class AnActorIsolatedClass {
  - Structures and enumerations that aren’t `public` and aren’t marked
  `@usableFromInline`
  
- ### Sendable Actors
+ ### Sendable actors
  Actors implicitly conform to Sendable.
  
- ### Sendable Classes
+ ### Sendable classes
  To satisfy the requirements of the Sendable protocol, a class must:
  - Be marked final
  - Contain only stored properties that are immutable and sendable
@@ -220,7 +228,8 @@ class AnActorIsolatedClass {
  Classes marked with `@MainActor` are implicitly sendable.
  
  ### Tuples
- Tuples, whose elements are sendable, implicitly conform to the Sendable protocol.
+ Tuples, whose elements are sendable, implicitly conform to the Sendable
+ protocol.
  
  ### Metatypes
  Metatypes such as `Int.Type` implicitly conform to the Sendable protocol.
@@ -231,7 +240,7 @@ class AnActorIsolatedClass {
  types that conform to the Sendable protocol. This affects uses of subscripts in
  key paths.
  
- ### Sendable Functions and Closures
+ ### Sendable functions and closures
  Any values that the function or closure captures must be sendable.
  
  Sendable closures must use only by-value captures, and the
@@ -245,7 +254,8 @@ class AnActorIsolatedClass {
  requirements implicitly conforms to `Sendable`.
  
  A closure formed within an actor-isolated context is
- - actor-isolated if it is non-@Sendable (it cannot escape the concurrency domain)
+ - actor-isolated if it is non-@Sendable (it cannot escape the concurrency
+ domain)
  - non-isolated if it is @Sendable
  */
 let letString: String = ""
@@ -254,17 +264,17 @@ var varString: String = ""
 let pointer = UnsafeMutablePointer<Int>.allocate(capacity: 1);
 pointer.pointee = 10;
 
-class AClass: Hashable, Equatable {
+class Class: Hashable, Equatable {
   var value: Int = 0
   
   func hash(into hasher: inout Hasher) {
     hasher.combine(value)
   }
-  static func ==(lhs: AClass, rhs: AClass) -> Bool {
+  static func ==(lhs: Class, rhs: Class) -> Bool {
     lhs.value == rhs.value
   }
 }
-let aClass = AClass()
+let instance = Class()
 
 let sendableClosure =  { @Sendable [varString] in
   let _ = letString
@@ -272,10 +282,10 @@ let sendableClosure =  { @Sendable [varString] in
   
   // Errors
   // let _ = pointer
-  // let _ = \Dictionary<AClass, Int>[aClass]
+  // let _ = \Dictionary<Class, Int>[Class]
 }
 /*:
- ## Global and Static Variables
+ ## Global and static variables
  Global and Static Variables must either be
  - isolated to a global actor, or
  - immutable and of Sendable type.
@@ -284,13 +294,17 @@ let sendableClosure =  { @Sendable [varString] in
  */
 /*:
  ## nonisolated(unsafe)
- - The `nonisolated(unsafe)` modifier can be used to annotate  any form of storage to suppress data isolation violations when manual synchronization is provided.
- - It can be used as a more granular opt out for `Sendable` checking, eliminating the need for `@unchecked Sendable`.
+ - The `nonisolated(unsafe)` modifier can be used to annotate  any form of
+ storage to suppress data isolation violations when manual synchronization is
+ provided.
+ - It can be used as a more granular opt out for `Sendable` checking,
+ eliminating the need for `@unchecked Sendable`.
  */
 nonisolated(unsafe) var nonisolatedUnsageGlobal: Int!
 /*:
  ## Structured concurrency
- A task is a unit of work that can be run asynchronously as part of your program.
+ A task is a unit of work that can be run asynchronously as part of your
+ program.
  
  All asynchronous code runs as part of some task.
  
@@ -318,25 +332,30 @@ let result = try await withThrowingTaskGroup(of: Int.self) { group in
 }
 /*:
  ### DiscardingTaskGroup
- - `[Throwing]DiscardingTaskGroup` automatically cleans up its child `Task`s when those `Task`s complete.
- - `[Throwing]DiscardingTaskGroup` do not have a `next()` method, nor do they conform to `AsyncSequence`.
+ - `[Throwing]DiscardingTaskGroup` automatically cleans up its child `Task`s
+ when those `Task`s complete.
+ - `[Throwing]DiscardingTaskGroup` do not have a `next()` method, nor do they
+ conform to `AsyncSequence`.
  
- A failure of a single child task, immediately causes cancellation of the group and its siblings.
+ A failure of a single child task, immediately causes cancellation of the group
+ and its siblings.
  */
 await withDiscardingTaskGroup { group in
   
 }
 /*:
- ## Unstructured Concurrency
+ ## Unstructured concurrency
  
  An unstructured task doesn’t have a parent task.
  
- Tasks run to completion even if there are no remaining uses of their task handle.
+ Tasks run to completion even if there are no remaining uses of their task
+ handle.
  */
 /*:
  ### Unstructured tasks
  
- An unstructured task inherits priority, task-local values, and the actor context.
+ An unstructured task inherits priority, task-local values, and the actor
+ context.
  */
 do {
   let handle = Task {
@@ -347,7 +366,8 @@ do {
 /*:
  ### Detached tasks
  
- A detached task does not inherit priority, task-local values, or the actor context.
+ A detached task does not inherit priority, task-local values, or the actor
+ context.
  */
 do {
   let handle = Task.detached {
@@ -357,7 +377,7 @@ do {
 }
 
 /*:
- ## Task Cancellation
+ ## Task cancellation
  
  Cancellation propagates recursively through the task hierarchy from parent to
  child tasks.
@@ -388,7 +408,7 @@ func cancellationHandler() async {
     
   }
 }
-//: ## Suspending Execution
+//: ## Suspending execution
 func SuspendingFunc() async throws {
   await Task.yield()
   
@@ -406,7 +426,7 @@ func SuspendingFunc() async throws {
 withUnsafeCurrentTask { unsafeCurrentTask in
   
 }
-//: ## Task Local Values
+//: ## Task local values
 func taskLocals() async {
   enum TaskLocals {
     @TaskLocal
@@ -440,7 +460,7 @@ func taskLocals() async {
 //  assert(value == 0)
 }
 /*:
- ## Asynchronous Main
+ ## Asynchronous main
  
  Semantically, Swift will create a new task that will execute main(). Once that
  task completes, the program terminates.
@@ -460,12 +480,12 @@ func taskLocals() async {
  - `withUnsafeThrowingContinuation`
  */
 func continuation() async throws -> Int {
-  func funcWithClosure(_ closure: (Result<Int, Error>) -> Void) {
+  func functionWithClosure(_ closure: (Result<Int, Error>) -> Void) {
     closure(.success(1))
   }
   
   let value = try await withCheckedThrowingContinuation{ continuation in
-    funcWithClosure { value in
+    functionWithClosure { value in
       switch value {
       case .success(let v):
         continuation.resume(returning: v)
@@ -512,7 +532,7 @@ func asyncStream() async {
   }
 }
 /*:
- ## Unavailable From Async Attribute
+ ## Unavailable from async attribute
  For example, API that uses thread-local storage isn't safe for consumption by
  asynchronous functions in general, but is safe for functions on the MainActor
  since it will only use the main thread.
@@ -530,7 +550,7 @@ func readIDFromThreadLocal() -> Int { 0 }
 @MainActor
 func readIDFromMainActor() -> Int { readIDFromThreadLocal() }
 /*:
- ## Distributed Actors
+ ## Distributed actors
  
  A distributed actor is used to represent an actor which may be either local or
  remote.
@@ -540,8 +560,8 @@ func readIDFromMainActor() -> Int { readIDFromThreadLocal() }
  
  Distributed actors implicitly conform to the `DistributedActor` protocol.
  
- `Distributed methods` can be called on "remote" references of distributed actors,
- turning those invocations into remote procedure calls.
+ `Distributed methods` can be called on "remote" references of distributed
+ actors, turning those invocations into remote procedure calls.
  All parameter types and return type of such methods must be or conform to
  the `SerializationRequirement` type.
  

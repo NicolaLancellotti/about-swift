@@ -3,7 +3,7 @@
  # Regex
  */
 /*:
- ## Regex Literals
+ ## Regex literals
  A regex literal may not start or end with a space or tab.
  */
 do {
@@ -62,7 +62,7 @@ do {
     match.number
   }
 }
-//: ## Run-time Construction
+//: ## Run-time construction
 do {
   let pattern = #"(\w)-(?<number>\d)"#
   
@@ -482,8 +482,8 @@ do {
  
  Regex quantifiers (`+`, `*`, and `?`) match eagerly by default when they
  repeat, such that they match the longest possible substring. Appending `?` to a
- quantifier makes it reluctant, instead, so that it matches the shortest possible
- substring.
+ quantifier makes it reluctant, instead, so that it matches the shortest
+ possible substring.
  
  Regex syntax: `(?U)...`
  

@@ -99,7 +99,7 @@ $   # Matches at the very end of the input string, or the end of a line when in
 \x          # Matches the NUL character (U+00)
 /#
 //: ## Character properties
-//: ### The full range of Unicode character properties
+//: ### The full range of unicode character properties
 #/
 \p{generalCategory=uppercaseLetter}
 \p{uppercaseLetter}

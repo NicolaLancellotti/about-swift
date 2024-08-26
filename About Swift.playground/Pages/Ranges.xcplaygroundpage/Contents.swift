@@ -4,7 +4,7 @@
  - note:
  All ranges implement RangeExpression protocol.
  */
-//: ## Countable Ranges
+//: ## Countable ranges
 let countableRange: CountableRange = 0..<5
 countableRange.count
 
@@ -15,7 +15,7 @@ let countablePartialRangeFrom: CountablePartialRangeFrom = 5...
 var iterator = countablePartialRangeFrom.makeIterator()
 iterator.next()
 iterator.next()
-//: ## Uncountable Ranges
+//: ## Uncountable ranges
 let range: Range = 0.0..<5.0
 range.contains(1)
 

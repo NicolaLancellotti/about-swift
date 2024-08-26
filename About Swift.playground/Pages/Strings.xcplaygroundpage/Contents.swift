@@ -1,15 +1,22 @@
 //: [Previous](@previous)
 //: # Strings
 let stringLiteral: String = "Hello, world!"
-//: ## String Interpolation
+//: ## String interpolation
 "1 + 2 = \(1 + 2)"
 /*:
- ## Multiline String Literals
- The string begins on the first line after the opening quotation marks (`"""`) and ends on the line before the closing quotation marks.
+ ## Multiline string literals
+ The string begins on the first line after the opening quotation marks (`"""`)
+ and ends on the line before the closing quotation marks.
  
- A multiline string can be indented to match the surrounding code. The whitespace before the closing quotation marks (""") tells Swift what whitespace to ignore before all of the other lines.
+ A multiline string can be indented to match the surrounding code. The
+ whitespace before the closing quotation marks (""") tells Swift what whitespace
+ to ignore before all of the other lines.
  
- When your source code includes a line break inside of a multiline string literal, that line break also appears in the string’s value. If you want to use line breaks to make your source code easier to read, but you don’t want the line breaks to be part of the string’s value, write a backslash (\) at the end of those lines.
+ When your source code includes a line break inside of a multiline string
+ literal, that line break also appears in the string’s value. If you want to use
+ line breaks to make your source code easier to read, but you don’t want the
+ line breaks to be part of the string’s value, write a backslash (`\`) at the end
+ of those lines.
  */
 let multilineStringLiteral = """
   "Hello,\
@@ -17,16 +24,16 @@ let multilineStringLiteral = """
   1 + 2 = \(1 + 2)
   """ // ignore 2 spaces
 /*:
- ## Extended String Delimiters
+ ## Extended string delimiters
  
- You can place a string literal within extended delimiters to include special characters in a string without invoking their effect. You place your string within quotation marks `"` and surround that with number signs `#`.
+ You can place a string literal within extended delimiters to include special
+ characters in a string without invoking their effect. You place your string
+ within quotation marks `"` and surround that with number signs `#`.
  
- If you need the special effects of a character in a string literal, match the number of number signs within the string following the escape character `\`.
+ If you need the special effects of a character in a string literal, match the
+ number of number signs within the string following the escape character `\`.
  */
-##"""
-\t\##t|
-"\(1 + 2) = \##(1 + 2)
-"""##
+##"1+2=\##(1 + 2)\t"## == "1+2=3\\t"
 /*:
  ## Unicode
  
@@ -34,9 +41,11 @@ let multilineStringLiteral = """
  
  A Unicode scalar value is a unique 21-bit number for a character or modifier.
  
- An extended grapheme cluster is a sequence of one or more Unicode scalars that (when combined) produce a single human-readable character.
+ An extended grapheme cluster is a sequence of one or more Unicode scalars that
+ (when combined) produce a single human-readable character.
  
- Every instance of Swift’s Character type represents a single extended grapheme cluster.
+ Every instance of Swift’s Character type represents a single extended grapheme
+ cluster.
  */
 let flag: Character = "\u{1F1EE}\u{1F1F9}"
 
@@ -47,7 +56,7 @@ combinedEGrave.isASCII
 combinedEGrave.isLetter
 combinedEGrave.isCased
 /*:
- ### Counting Characters
+ ### Counting characters
  */
 let caffè1: String = "caffè"
 caffè1.count
@@ -58,7 +67,7 @@ caffè2.count
 let caffè3: String = "caff\(combinedEGrave)"
 caffè3.count
 /*:
- ### String Indices
+ ### String indices
  */
 var caffè4 = "caff\(combinedEGrave)"
 let index = caffè4.index(caffè4.startIndex, offsetBy: 4)
@@ -86,7 +95,7 @@ transcode("‼😋".utf8.makeIterator(),
   codeUnits.append($0)
 }
 codeUnits
-//: ### Contiguous Strings
+//: ### Contiguous strings
 print("________________ Contiguous String ________________")
 var s = "‼😋"
 print("           String: \(s)")
@@ -95,7 +104,7 @@ s.isContiguousUTF8
 s.withUTF8 { buffer in
   print(Array(buffer))
 }
-//: ### Unicode Properties
+//: ### Unicode properties
 let properties = "😋".unicodeScalars.first!.properties
 properties.generalCategory
 properties.isEmoji

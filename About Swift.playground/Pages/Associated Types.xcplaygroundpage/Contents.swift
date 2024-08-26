@@ -1,8 +1,9 @@
 //: [Previous](@previous)
 /*:
- # Associated types
+ # Associated Types
  
- An associated type gives a placeholder name to a type that is used as part of the protocol.
+ An associated type gives a placeholder name to a type that is used as part of
+ the protocol.
  */
 protocol ProtocolWithAssociatedType<A, B /*Primary Associated Types*/> {
   associatedtype A
@@ -12,23 +13,25 @@ protocol ProtocolWithAssociatedType<A, B /*Primary Associated Types*/> {
   func foo() -> A
 }
 
-struct SomeStructure: ProtocolWithAssociatedType {
-  typealias A = Int  // Infer from context
+struct Structure: ProtocolWithAssociatedType {
+  // typealias A = Int  // Infer from context
   typealias B = Bool
   typealias C = Double
   
-  func foo() -> A { 0 }
+  func foo() -> Int { 0 }
 }
 
-let x1: any ProtocolWithAssociatedType = SomeStructure()
+let x1: any ProtocolWithAssociatedType = Structure()
 let _: Any = x1.foo()
-//: ### Constrained Existential Types
-let x2: any ProtocolWithAssociatedType<Int, Bool> = SomeStructure()
+//: ### Constrained existential types
+let x2: any ProtocolWithAssociatedType<Int, Bool> = Structure()
 let _: Int = x2.foo()
 /*:
- ## Where Clauses
+ ## Where clauses
  
- A generic where clause enables you to require that an associated type must conform to a certain protocol, or that certain type parameters and associated types must be the same.
+ A generic where clause enables you to require that an associated type must
+ conform to a certain protocol, or that certain type parameters and associated
+ types must be the same.
  */
 func bar1<P1, P2, T>(x: P1, y: P2, z: T)
 where P1: ProtocolWithAssociatedType,
@@ -43,7 +46,7 @@ where P1: ProtocolWithAssociatedType,
 func bar2<T>(x: any ProtocolWithAssociatedType<any Sequence<T>, Bool>,
              y: any ProtocolWithAssociatedType<any Sequence<T>, Bool>,
              z: T) { }
-//: ## Protocol Extensions
+//: ## Protocol extensions
 extension ProtocolWithAssociatedType where A == Int, B == Bool { }
 // is the same of
 extension ProtocolWithAssociatedType<Int, Bool> {}
@@ -52,7 +55,7 @@ extension ProtocolWithAssociatedType<Int, Bool> {}
 extension ProtocolWithAssociatedType where A: Equatable, B == Bool { }
 // is the same of
 extension ProtocolWithAssociatedType<Equatable, Bool> {}
-//: ## Inherited Protocols
+//: ## Inherited protocols
 protocol InheritedProtocol1: ProtocolWithAssociatedType where A: Comparable, B == Bool {}
 // is the same of
 protocol InheritedProtocol2: ProtocolWithAssociatedType<Comparable, Bool> {}

@@ -5,13 +5,13 @@
  Classes are Reference Types
  */
 //: ## Inheritance
-class SomeSuperclass {
+class Superclass {
   //_____________________________________________
-  // Instance Property
+  // Instance Properties
   
   var storedProperty = ""
   
-  var computedProperty: String { "SomeSuperclass" }
+  var computedProperty: String { "Superclass" }
   
   //_____________________________________________
   // Instance Subscripts
@@ -26,7 +26,7 @@ class SomeSuperclass {
   func instanceMethod() { }
   
   //_____________________________________________
-  // Type Computed Property
+  // Type Computed Properties
   class var typeComputedProperty: Int {
     get { 0 }
     set { }
@@ -44,7 +44,7 @@ class SomeSuperclass {
   class func typeClassMethod() { }
 }
 
-class SomeSubclass: SomeSuperclass {
+class Subclass: Superclass {
   // You must always state both the name and the type of the property you are
   // overriding.
   
@@ -54,7 +54,7 @@ class SomeSubclass: SomeSuperclass {
   // You can present an inherited read-only property as a read-write property by
   // providing both a getter and a setter but not the other way around.
   override var computedProperty: String {
-    super.computedProperty + "- SomeSubclass"
+    super.computedProperty + "- Subclass"
   }
   
   //_____________________________________________
@@ -78,24 +78,28 @@ class SomeSubclass: SomeSuperclass {
   //_____________________________________________
   // Overriding Methods
   override func instanceMethod() {
-    print("SomeSubclass - someMethod")
+    print("Subclass - instanceMethod")
   }
 }
 /*:
  - note:
- You cannot provide both an overriding setter and an overriding property observer for the same property.
+ You cannot provide both an overriding setter and an overriding property
+ observer for the same property.
  \
  \
- If you want to observe changes to a property’s value, and you are already providing a custom setter for that property, you can simply observe any value changes from within the custom setter.
+ If you want to observe changes to a property’s value, and you are already
+ providing a custom setter for that property, you can simply observe any value
+ changes from within the custom setter.
  */
 /*: 
- ## Preventing Overrides
+ ## Preventing overrides
  
- You can mark an entire class as final by writing the final modifier before the class keyword in its class definition (final class).
+ You can mark an entire class as final by writing the final modifier before the
+ class keyword in its class definition (`final class`).
  */
 class ClassWithMethodsAndPropertiesFinal {
   //_____________________________________________
-  // Instance Property
+  // Instance Properties
   final var storedProperty = ""
   final var computedProperty: Int {
     get { 0 }
@@ -114,7 +118,7 @@ class ClassWithMethodsAndPropertiesFinal {
   final func instanceMethod() { }
   
   //_____________________________________________
-  // Type Property
+  // Type Properties
   static var typeStoredProperty = 0
   
   static var typeComputedProperty: Int {
@@ -141,46 +145,46 @@ class ClassWithMethodsAndPropertiesFinal {
  ### Designated initializers
  
  Every class must have at least one designated initializer.
- 
- * Fully initializes all properties.
- * Delegates up to a superclass initializer.
- * Assigning a value to an inherited property.
+ 1. It fully initializes all properties.
+ 2. It delegates up to a superclass initializer.
+ 3. It assigns a value to an inherited property.
  
  ### Convenience initializers
  
  Convenience initializers are secondary, supporting initializers for a class.
  
- Convenience initializers are written  with the convenience modifier placed before the init keyword.
- 
- * Delegate across to another initializer.
- * Assigning a value to any property (including properties defined by the same class).
+ A Convenience initializer is written with the convenience modifier placed
+ before the init keyword.
+ 1. It delegates across to another initializer.
+ 2. It assigns a value to any property (including properties defined by the same
+ class).
  */
-class SomeSuperClass {
-  var propertySuperClass: Int = 0
+class SuperclassInitializers {
+  var propertySuperclass: Int = 0
 }
 
-class SomeSubClass: SomeSuperClass {
-  var propertySubClass1: Int
-  var propertySubClass2: Int
+class SubclassInitializers: SuperclassInitializers {
+  var propertySubclass1: Int
+  var propertySubclass2: Int
   
   //_____________________________________________
   // Designated Initializers
-  init(propertySubClass1: Int, propertySubClass2: Int) {
+  init(propertySubclass1: Int, propertySubclass2: Int) {
     // Fully initializes all properties.
-    self.propertySubClass1 = propertySubClass1
-    self.propertySubClass2 = propertySubClass2
+    self.propertySubclass1 = propertySubclass1
+    self.propertySubclass2 = propertySubclass2
     
     // Delegates up to a superclass initializer.
     super.init()
     
     // Assigning a value to an inherited property.
-    propertySuperClass = 1
+    propertySuperclass = 1
   }
   
   override init() {
     // Fully initializes all properties.
-    self.propertySubClass1 = 1
-    self.propertySubClass2 = 2
+    self.propertySubclass1 = 1
+    self.propertySubclass2 = 2
     
     // Delegates up to a superclass initializer.
     super.init()
@@ -188,33 +192,38 @@ class SomeSubClass: SomeSuperClass {
   
   //_____________________________________________
   // Convenience Initializers
-  convenience init(propertySubClass1: Int) {
+  convenience init(propertySubclass1: Int) {
     // Delegate across to another initializer.
     self.init()
     
     // Assigning a value to any property (including properties defined by the
     // same class).
-    self.propertySubClass1 = propertySubClass1
+    self.propertySubclass1 = propertySubclass1
   }
   
 }
 /*:
- ### Automatic Initializer Inheritance
+ ### Automatic initializer inheritance
  Swift subclasses do not inherit their superclass initializers by default.
  
- Assuming that you provide default values for any new properties you introduce in a subclass.
+ Assuming that you provide default values for any new properties you introduce
+ in a subclass.
  
  * If your subclass doesn’t define any designated initializers.
- it automatically inherits all of its superclass designated initializers.
+ It automatically inherits all of its superclass designated initializers.
  
- * If your subclass provides an implementation of all of its superclass designated initializers
+ * If your subclass provides an implementation of all of its superclass
+ designated initializers
  then it automatically inherits all of the superclass convenience initializers.
  */
 /*:
  ### Failable initializer
- You can override a failable initializer with a nonfailable initializer but not the other way around.
+ You can override a failable initializer with a nonfailable initializer but not
+ the other way around.
  
- Initialization failure propagates through initializer delegation. Specifically, if a failable initializer delegates to an initializer that fails and returns nil, then the initializer that delegated also fails and implicitly returns nil.
+ Initialization failure propagates through initializer delegation. Specifically,
+ if a failable initializer delegates to an initializer that fails and returns
+ nil, then the initializer that delegated also fails and implicitly returns nil.
  */
 class ClassWithFailableInitializer {
   var property: Int
@@ -232,7 +241,7 @@ class ClassWithFailableInitializer {
   }
 }
 
-class SubClassWithFailableInitializer: ClassWithFailableInitializer {
+class SubclassWithFailableInitializer: ClassWithFailableInitializer {
   
   // Override a failable initializer with a nonfailable initializer
   override init(property: Int) {
@@ -243,13 +252,13 @@ class SubClassWithFailableInitializer: ClassWithFailableInitializer {
   }
   
 }
-//: ### Required Initializers
+//: ### Required initializers
 class ClassWithRequiredInitializer {
-  // Every subclass of the class must implement that initializer
+  // Every subclass of the class must implement this initializer
   required init() { }
 }
 
-class SubClassWithRequiredInitializer: ClassWithRequiredInitializer {
+class SubclassWithRequiredInitializer: ClassWithRequiredInitializer {
   // You must also write the required modifier before every subclass
   // implementation of a required initializer
   // You do not write the override modifier when overriding a required
@@ -259,86 +268,73 @@ class SubClassWithRequiredInitializer: ClassWithRequiredInitializer {
 /*:
  ## Deinitialization
  
- * The superclass deinitializer is called automatically at the end of a subclass deinitializer implementation.
- * Superclass deinitializers are always called, even if a subclass does not provide its own deinitializer.
- * The subclass object is not deallocated until all deinitializers in its inheritance chain have finished executing.
+ * The superclass deinitializer is called automatically at the end of a
+ subclass deinitializer implementation.
+ * Superclass deinitializers are always called, even if a subclass does not
+ provide its own deinitializer.
+ * The subclass object is not deallocated until all deinitializers in its
+ inheritance chain have finished executing.
  */
 class ClassWithDeinit {
   deinit { }
 }
 /*:
- ## Automatic Reference Counting
+ ## Automatic reference counting
  
- * Weak references must be declared as variables, to indicate that their value can change at runtime.
- * If you try to access an unowned reference after the instance that it references is deallocated, you will trigger a runtime error.
+ * Weak references must be declared as variables, to indicate that their value
+ can change at runtime.
+ * If you try to access an unowned reference after the instance that it
+ references is deallocated, you will trigger a runtime error.
  */
 /*:
  - note: See ARC.pdf in Resources
  */
 //: ### Lifetime
-func lifetime() {
-  class WeakClass {
+do {
+  class ClassB {
     let value = 10
   }
   
-  class LifetimeClass {
-    weak var weakInstance: WeakClass?
+  class ClassA {
+    weak var weakInstance: ClassB?
     var value: Int { weakInstance!.value }
   }
   
-  let weakInstance = WeakClass()
-  let lifetime = LifetimeClass()
-  lifetime.weakInstance = weakInstance
+  let value = ClassB()
+  let instance = ClassA()
+  instance.weakInstance = value
   
   do {
-    withExtendedLifetime(weakInstance) {
-      assert(lifetime.value == 10)
+    withExtendedLifetime(value) {
+      assert(instance.value == 10)
     }
   }
   
   do {
-    assert(lifetime.value == 10)
-    withExtendedLifetime(weakInstance) { }
+    assert(instance.value == 10)
+    withExtendedLifetime(value) { }
   }
   
   do {
-    defer {withExtendedLifetime(weakInstance){ }}
-    lifetime.weakInstance = weakInstance
-    assert(lifetime.value == 10)
+    defer {withExtendedLifetime(value){ }}
+    instance.weakInstance = value
+    assert(instance.value == 10)
   }
   
-  // assert(lifetime.value == 10) // Error
+//   assert(instance.value == 10) // Error
 }
-
-lifetime()
 /*:
- ## Identity Operators
+ ## Identity operators
  
  * Identical to ===
  * Not identical to !==
  */
 class ClassIdentityOperators { }
 
-let object1 = ClassIdentityOperators()
+let object1A = ClassIdentityOperators()
 let object2 = ClassIdentityOperators()
-let object3 = object1
+let object1B = object1A
 
-object1 === object2
-object1 === object3
-//: ## Distinguish between methods or initializers whose names differ only by the names of their arguments
-class SomeClass {
-  func someMethod(_ x: Int, y: Int) { }
-  func someMethod(_ x: Int, z: Int) { }
-  func overloadedMethod(_ x: Int, y: Int) { }
-  func overloadedMethod(_ x: Int, y: Bool) { }
-}
-
-let instance = SomeClass()
-
-// let a = instance.someMethod              // Ambiguous
-let b = instance.someMethod(_:y:)        // Unambiguous
-
-// let c = instance.overloadedMethod        // Ambiguous
-// let d = instance.overloadedMethod(_:y:)  // Still ambiguous
-let e: (Int, Bool) -> Void  = instance.overloadedMethod(_:y:)  // Unambiguous
+object1A === object2
+object1A === object1B
 //: [Next](@next)

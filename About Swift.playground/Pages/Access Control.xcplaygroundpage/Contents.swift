@@ -1,64 +1,62 @@
 //: [Previous](@previous)
 //: # Access Control
 /*:
- ## Modules and Source Files
+ ## Modules and source files
  
  * A module is a single unit of code distribution.
  * A source file is a single Swift source code file within a module.
  */
 /*:
- ## Access Levels
+ ## Access levels
  
- * **Open access** and **public access** enable entities to be used within any source file.
+ * **Open access** and **public access** enable entities to be used within any
+ source file.
  * **Package access** enables entities to be used within the same package.
- * **Internal** access enables entities to be used within any source file from their defining module (default).
- * **File-private** access restricts the use of an entity to its own defining source file.
- * **Private access** restricts the use of an entity to the enclosing declaration, and to extensions of that declaration that are in the same file.
+ * **Internal** access enables entities to be used within any source file from
+ their defining module (default).
+ * **File-private** access restricts the use of an entity to its own defining
+ source file.
+ * **Private access** restricts the use of an entity to the enclosing
+ declaration, and to extensions of that declaration that are in the same file.
  */
 /*:
- Open access applies only to classes and class members, and it differs from public access as follows:
- * Classes with public access, or any more restrictive access level, can be subclassed only within the module where they’re defined.
- * Open classes can be subclassed within the module where they’re defined, and within any module that imports the module where they’re defined.
+ Open access applies only to classes and propertys, and it differs from
+ public access as follows:
+ * Classes with public access, or any more restrictive access level, can be
+ subclassed only within the module where they’re defined.
+ * Open classes can be subclassed within the module where they’re defined, and
+ within any module that imports the module where they’re defined.
  ___
- * Class members with public access, or any more restrictive access level, can be overridden by subclasses only within the module where they’re defined
- * Open class members can be overridden by subclasses within the module where they’re defined, and within any module that imports the module where they’re defined.
+ * propertys with public access, or any more restrictive access level, can
+ be overridden by subclasses only within the module where they’re defined
+ * Open propertys can be overridden by subclasses within the module where
+ they’re defined, and within any module that imports the module where they’re
+ defined.
+
+ No entity can be defined in terms of another entity that has a lower (more
+ restrictive) access level.
  */
-/*:
- ## Custom Types
- No entity can be defined in terms of another entity that has a lower (more restrictive) access level.
- */
-public class SomePublicClass {                 // explicitly public class
-  public var somePublicProperty = 0            // explicitly public class member
-  var someInternalProperty = 0                 // implicitly internal class member
-  fileprivate func someFilePrivateMethod() { } // explicitly file-private class member
-  private func somePrivateMethod() { }         // explicitly private class member
+public class PublicClass {                 // explicitly public class
+  public var publicProperty = 0            // explicitly public f
+  var internalProperty = 0                 // implicitly internal property
+  fileprivate var filePrivateProperty = 0  // explicitly file-private property
+  private var privateProperty = 0          // explicitly private property
+  
+  public private(set) var propertyWithPublicGetterAndPrivateSetter = 0
 }
 
-class SomeInternalClass {                      // implicitly internal class
-  var someInternalProperty = 0                 // implicitly internal class member
-  fileprivate func someFilePrivateMethod() { } // explicitly file-private class member
-  private func somePrivateMethod() { }         // explicitly private class member
+class InternalClass {                      // implicitly internal class
+  var internalProperty = 0                 // implicitly internal property
+  fileprivate var filePrivateProperty = 0  // explicitly file-private property
+  private var privateProperty = 0          // explicitly private property
 }
 
-fileprivate class SomeFilePrivateClass {       // explicitly file-private class
-  func someFilePrivateMethod() { }             // implicitly file-private class member
-  private func somePrivateMethod() { }         // explicitly private class member
+fileprivate class FilePrivateClass {       // explicitly file-private class
+  var filePrivateProperty = 0              // implicitly file-private property
+  private var privateProperty = 0          // explicitly private property
 }
 
-private class SomePrivateClass {               // explicitly private class
-  func somePrivateMethod() { }                 // implicitly private class member
-}
-//: ## Swift allows the get of a property to be more accessible than its set
-public struct TrackedString {
-  
-  public private(set) var numberOfEdits = 0
-  
-  public var value: String = "" {
-    didSet {
-      numberOfEdits += 1
-    }
-  }
-  
-  public init() { }
+private class PrivateClass {               // explicitly private class
+  var privateProperty = 0                  // implicitly private property
 }
 //: [Next](@next)

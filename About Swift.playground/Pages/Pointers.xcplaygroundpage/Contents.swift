@@ -4,7 +4,7 @@
  ## Pointers for typed data
  
  * `UnsafeMutablePointer` - mutating pointer.
- * `UnsafePointer` - non mutating pointer.
+ * `UnsafePointer` - non-mutating pointer.
  */
 //: ### Allocate
 let intArray = UnsafeMutablePointer<Int>.allocate(capacity: 2)
@@ -33,40 +33,30 @@ intArray.move()
 intArray.deinitialize(count: 2)
 //: ### Deallocate
 intArray.deallocate()
-//: ### Example Deinitialize
-class SomeClass {
-  deinit {
-    print("deinit SomeClass")
-  }
-}
-
-struct SomeStruct {
-  var someClass: SomeClass
-  
-  init(someClass: SomeClass) {
-    self.someClass = someClass
+//: ### Example deinitialization
+do {
+  class Class {
+    deinit {
+      print("deinit")
+    }
   }
   
+  struct Structure {
+    var value: Class
+    
+    init(_ value: Class) {
+      self.value = value
+    }
+    
+  }
+  
+  let p = UnsafeMutablePointer<Structure>.allocate(capacity: 1)
+  p.initialize(repeating: Structure(Class()),
+               count: 1)
+  
+  p.deinitialize(count: 1) // print "deinit" in the console
+  p.deallocate()
 }
-
-let p = UnsafeMutablePointer<SomeStruct>.allocate(capacity: 1)
-p.initialize(repeating: SomeStruct(someClass: SomeClass()),
-             count: 1)
-
-p.deinitialize(count: 1) // print "deinit SomeClass" in the console
-p.deallocate()
-//: ### Obtain a pointer to the stored property referred to by a key path
-struct AStruct {
-  var bool: Bool = true
-  var float: Float = 1.1
-}
-var aStruct = AStruct()
-
-withUnsafeMutablePointer(to: &aStruct) {
-  let pointer = $0.pointer(to: \.bool)!
-  pointer.pointee = false
-}
-aStruct.bool
 //: ### Temporarily rebinds the memory
 var tuple = (false, true)
 withUnsafeMutablePointer(to: &tuple) {
@@ -76,49 +66,73 @@ withUnsafeMutablePointer(to: &tuple) {
   }
 }
 tuple
+//: ### Obtain a pointer to a stored property
+do {
+  struct Structure {
+    var float: Float = 1.1
+    var bool: Bool = true
+  }
+  
+  do {
+    var value = Structure()
+    withUnsafeMutablePointer(to: &value) {
+      let pointer = $0.pointer(to: \.bool)!
+      pointer.pointee.toggle()
+    }
+    value.bool
+  }
+  do {
+    var value = Structure()
+    let offset = MemoryLayout.offset(of: \Structure.bool)
+    withUnsafePointer(to: &value) {
+      let pointer = UnsafeMutableRawPointer(mutating: $0) + offset!
+      pointer.assumingMemoryBound(to: Bool.self).pointee.toggle()
+    }
+    value.bool
+  }
+}
 /*:
  ## Pointers for untyped data
  
  * `UnsafeMutableRawPointer` - mutating pointer.
- * `UnsafeRawPointer` - non mutating pointer.
+ * `UnsafeRawPointer` - non-mutating pointer.
  
- A memory location may only be bound to one type at a time
+ A memory location may only be bound to one type at a time.
  */
 let rawPointer: UnsafeMutableRawPointer = {
-  let int16Pointer = UnsafeMutablePointer<Int16>.allocate(capacity: 1)
-  int16Pointer.initialize(to: 258) // 2 * 2^0 + 1 * 2^8
+  let int16Pointer = UnsafeMutablePointer<UInt16>.allocate(capacity: 1)
+  int16Pointer.initialize(to: 0xabcd)
   return UnsafeMutableRawPointer(int16Pointer)
 }()
 
-rawPointer.advanced(by: 0).load(as: UInt8.self) // 2 * 2^0 = 2
-rawPointer.advanced(by: 1).load(as: UInt8.self) // 1 * 2^8 = 256
-rawPointer.storeBytes(of: 3, as: UInt8.self)
-rawPointer.advanced(by: 0).load(as: UInt8.self) // 3 * 2^0 = 3
-rawPointer.advanced(by: 1).load(as: UInt8.self) // 1 * 2^8 = 256
+String(rawPointer.advanced(by: 0).load(as: UInt8.self), radix: 16)
+String(rawPointer.advanced(by: 1).load(as: UInt8.self), radix: 16)
+rawPointer.storeBytes(of: 0xff, as: UInt8.self)
 
 // Use this method when you have a raw pointer to memory that has already
 // been bound to the specified type.
-let int16Pointer = rawPointer.assumingMemoryBound(to: Int16.self)
-int16Pointer.pointee
+let uint16Pointer = rawPointer.assumingMemoryBound(to: UInt16.self)
+String(uint16Pointer.pointee, radix: 16)
 
 // Bind or rebind to the specified type
-let uint8Pointer = rawPointer.bindMemory(to: UInt8.self, capacity: 4)
+let uint8Pointer = rawPointer.bindMemory(to: UInt8.self, capacity: 2)
 // Accessing int16Pointer is now undefined
-uint8Pointer.advanced(by: 0).pointee // 3 * 2^0 = 3
-uint8Pointer.advanced(by: 1).pointee // 1 * 2^8 = 256
+String(uint8Pointer.advanced(by: 0).pointee, radix: 16)
+String(uint8Pointer.advanced(by: 1).pointee, radix: 16)
 
 rawPointer.deallocate()
 /*: ### You can obtain the next/preceding pointer properly aligned with
  `alignedUp(for:)` and `alignedDown(for:)`
  */
 /*:
- ## Buffer Pointers
+ ## Buffer pointers
  
  A non-owning pointer to a buffer of elements
- stored contiguously in memory, presenting a collection interface to the underlying elements.
+ stored contiguously in memory, presenting a collection interface to the
+ underlying elements.
  
  * `UnsafeMutableBufferPointer` - for mutating elements.
- * `UnsafeBufferPointer` - for non mutating elements.
+ * `UnsafeBufferPointer` - for non-mutating elements.
  */
 let storage = UnsafeMutablePointer<Int>.allocate(capacity: 10)
 let buffer = UnsafeMutableBufferPointer(start: storage, count: 10)
@@ -140,12 +154,12 @@ withUnsafeTemporaryAllocation(of: Int.self, capacity: 10) {
   (buffer: UnsafeMutableBufferPointer<Int>) in
 }
 /*:
- ## Buffer Pointers for untyped data
+ ## Buffer pointers for untyped data
  
  * `UnsafeMutableRawBufferPointer` - mutating buffer pointer.
- * `UnsafeRawBufferPointer` - non mutating buffer pointer.
+ * `UnsafeRawBufferPointer` - non-mutating buffer pointer.
  */
-//: ### Unaligned Loads and Stores
+//: ### Unaligned loads and stores
 import Foundation
 let data = Data([0x0, 0x0, 0x0, 0xff, 0xff, 0xff, 0xff, 0x0])
 let unalignedData = data.dropFirst(3)
@@ -157,9 +171,10 @@ unalignedData.withUnsafeBytes { (buffer: UnsafeRawBufferPointer) in
 // Fatal error: load from misaligned raw pointer
 // unalignedData.withUnsafeBytes { $0.load(as: UInt32.self) }
 /*:
- ## Managed Buffer
+ ## Managed buffer
  
- A class whose instances contain a property of type Header and raw storage for an array of Element, whose size is determined at instance creation.
+ A class whose instances contain a property of type `Header` and raw storage for
+ an array of `Element`, whose size is determined at instance creation.
  */
 class StackBuffer<Element> : ManagedBuffer<Int, Element> {
   
@@ -257,7 +272,7 @@ stack.pop()
 stack2.pop()
 stack2.pop()
 stack2.pop()
-//: ## Sequences and MutableCollections Contiguous Storage
+//: ## Sequences and MutableCollections contiguous storage
 var numbers = [1, 2, 3, 4, 5]
 
 let sum = numbers.withContiguousStorageIfAvailable { buffer -> Int in
@@ -275,9 +290,12 @@ numbers.withContiguousMutableStorageIfAvailable { buffer in
 }
 numbers
 /*:
- ## Array Initializer with Access to Uninitialized Storage
+ ## Array initializer with access to uninitialized storage
  
- The memory in the range buffer[0..<initializedCount] must be initialized at the end of the closure’s execution, and the memory in the range buffer[initializedCount...] must be uninitialized. This postcondition must hold even if the initializer closure throws an error.
+ The memory in the range `buffer[0..<initializedCount]` must be initialized at
+ the end of the closure’s execution, and the memory in the range
+ `buffer[initializedCount...]` must be uninitialized. This postcondition must
+ hold even if the initializer closure throws an error.
  */
 let array = Array<Int>(unsafeUninitializedCapacity: 6) { (buffer, initializedCount) in
   buffer[0] = 0
@@ -288,18 +306,19 @@ let array = Array<Int>(unsafeUninitializedCapacity: 6) { (buffer, initializedCou
   initializedCount = 6
 }
 array
-//: ## Conversion to a Pointer Type
+//: ## Conversion to a pointer type
 func takeUnsafePointer<T>(_ pointer: UnsafePointer<T>) { }
 func takeunsafeMutablePointer<T>(_ pointer: UnsafeMutablePointer<T>) { }
 func takeUnsafePointerCChar(_ pointer: UnsafePointer<CChar>) { }
-//: ### Explicit Conversion
+//: ### Explicit conversion
 var explicitValue = 1
 withUnsafePointer(to: explicitValue) { takeUnsafePointer($0)  }
 withUnsafeMutablePointer(to: &explicitValue) { takeunsafeMutablePointer($0) }
 /*:
- ### Implicit Conversion
+ ### Implicit conversion
  
- A pointer that’s created by these implicit conversions is valid only for the duration of the function call.
+ A pointer that’s created by these implicit conversions is valid only for the
+ duration of the function call.
  */
 var value = 1
 takeUnsafePointer(&value)
