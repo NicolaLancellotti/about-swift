@@ -1,31 +1,25 @@
 //: [Previous](@previous)
 //: # Numbers, Bool and Time
 /*:
- ## Numbers
- 
- * Integers and floating-point numbers conform to the `Numeric` protocol.
- * Signed integers and floating-point numbers conform to the `SignedNumeric`
- protocol.
- 
- `Numeric` protocol conforms to `AdditiveArithmetic` which values  support
- addition and subtraction.
+ ## Numeric Protocols
+ Indentation represents protocol inheritance.
+ - `AdditiveArithmetic` (addition and subtraction)
+    - `Numeric` (multiplication)
+        - `SignedNumeric` (negation)
+            - `FloatingPoint` (floating-point numeric type)
+                - `BinaryFloatingPoint` (binary floating-point type)
+        - `BinaryInteger` (binary integer type)
+            - `SignedInteger` (integer type that can represent both positive and negative values)
+            - `UnsignedInteger` (integer type that can represent only nonnegative values)
+            - `FixedWidthInteger` (binary integer type with fixed size)
  */
 /*:
- ### Integers
- 
- Integers conform to the `FixedWidthInteger` protocol
- which inherits from the `BinaryInteger` protocol.
- 
- The `FixedWidthInteger` protocol adds binary bitwise operations, bit shifts,
- and overflow handling to the operations supported by the BinaryInteger
- protocol.
+ ## Numbers
  */
 /*:
  ### Signed integers
- 
- Signed integers conform to the `SignedInteger` protocol.
- * On a 32-bit platform, Int is the same size as `Int32`.
- * On a 64-bit platform, Int is the same size as `Int64`.
+ * On a 32-bit platform, `Int` is the same size as `Int32`.
+ * On a 64-bit platform, `Int` is the same size as `Int64`.
  */
 Int.min
 Int.max
@@ -43,10 +37,8 @@ Int8.min
 Int8.max
 /*:
  ### Unsigned integers
- 
- Unsigned integers conform to the `UnsignedInteger` protocol.
- * On a 32-bit platform, UInt is the same size as `UInt32`.
- * On a 64-bit platform, UInt is the same size as `UInt64`.
+ * On a 32-bit platform, `UInt` is the same size as `UInt32`.
+ * On a 64-bit platform, `UInt` is the same size as `UInt64`.
  */
 UInt.min
 UInt.max
@@ -64,27 +56,25 @@ UInt8.min
 UInt8.max
 /*:
  ### Floating-point numbers
- 
- Floating-point numbers conform to the `BinaryFloatingPoint` protocol
- which inherits from the `FloatingPoint` protocol.
- 
  * `Float16` represents a 16-bit floating-point number.
  * `Float32` (`Float`) represents a 32-bit floating-point number.
  * `Float64` (`Double`) represents a 64-bit floating-point number.
  * `Float80` represents a 80-bit floating-point number.
  */
 //: ### Numeric literals
-let decimalInteger =       17
-let binaryInteger =      0b10001  // 17 in binary notation
-let octalInteger =       0o21     // 17 in octal notation
-let hexadecimalInteger = 0x11     // 17 in hexadecimal notation
+let paddedDecimalInteger = 033_071
+String(paddedDecimalInteger, radix: 2)
 
-let decimalFloat = 1.25e-2    // 1.25 * 10^-2
-let hexadecimalFloat = 0xFp-2 // 15 * 2^-2
+// Each octal digit corresponds to log2(8) = 3 binary digits
+var binaryInteger = 0b1_000_000_100_101_111
+let octalInteger = 0o100457
 
-let paddedDouble = 000123.456
-let oneMillion = 1_000_000
-let justOverOneMillion = 1_000_000.000_000_1
+// Each hexadecimal digit corresponds to log2(16) = 4 binary digits
+binaryInteger = 0b1000_0001_0010_1111
+let hexadecimalInteger = 0x812f
+
+let decimalFloat = 1.25e-2    // 1.25 * 10^(-2)
+let hexadecimalFloat = 0xfp-2 // 15 * 2^-2
 //: ### Operators
 3 + 2
 3 - 2
@@ -97,7 +87,7 @@ let justOverOneMillion = 1_000_000.000_000_1
 /*:
  ### Logical operators
  
- The Swift logical operators && and || are left-associative, meaning that
+ The Swift logical operators `&&` and `||` are left-associative, meaning that
  compound expressions with multiple logical operators evaluate the leftmost
  subexpression first.
  */
@@ -170,7 +160,7 @@ false
 
 var boolValue = true
 boolValue.toggle()
-//: ## Random Number Generators
+//: ## Random number generators
 Bool.random()
 Int.random(in: 0...10)
 UInt.random(in: 0...10)

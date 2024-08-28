@@ -41,11 +41,12 @@ var model = Model()
 
 withObservationTracking {
   // The apply closure accesses `trackedStoredProperty1` which accesses `trackedProperty`
-  print(model.trackedStoredProperty1)
-  
+  model.trackedStoredProperty1
 } onChange: {
   // The onChange closure will trigger when `trackedStoredProperty1`
   // or `trackedProperty` change.
   print("The model has changed")
 }
+
+model.trackedProperty = "value"
 //: [Next](@next)

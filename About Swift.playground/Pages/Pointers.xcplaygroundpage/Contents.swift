@@ -34,13 +34,19 @@ intArray.deinitialize(count: 2)
 //: ### Deallocate
 intArray.deallocate()
 //: ### Example deinitialization
-do {
-  class Class {
-    deinit {
-      print("deinit")
-    }
+class Class {
+  let value: Int
+  
+  init(value: Int) {
+    self.value = value
   }
   
+  deinit {
+    print("Deinit \(value)")
+  }
+}
+
+do {
   struct Structure {
     var value: Class
     
@@ -51,7 +57,7 @@ do {
   }
   
   let p = UnsafeMutablePointer<Structure>.allocate(capacity: 1)
-  p.initialize(repeating: Structure(Class()),
+  p.initialize(repeating: Structure(Class(value: 0)),
                count: 1)
   
   p.deinitialize(count: 1) // print "deinit" in the console
@@ -331,4 +337,25 @@ takeUnsafePointer(arrayValue)
 
 var stringValue = ""
 takeUnsafePointerCChar(stringValue)
+/*:
+ ## Unmanaged
+ */
+do {
+  let unmanaged = Unmanaged.passRetained(Class(value: 1)) // rc = 1
+  
+  let _: Unmanaged = unmanaged.retain() // rc = 2
+  unmanaged.release() // rc = 1
+  
+  let _: Class = unmanaged.takeUnretainedValue() // rc = 1
+  let _: Class = unmanaged.takeRetainedValue() // rc = 0
+}
+
+do {
+  let opaque = Unmanaged.passRetained(Class(value: 2)).toOpaque() // rc = 1
+  Unmanaged<Class>.fromOpaque(opaque).release() // rc = 0
+}
+
+do {
+  let _ = Unmanaged.passUnretained(Class(value: 3)) // rc = 0
+}
 //: [Next](@next)

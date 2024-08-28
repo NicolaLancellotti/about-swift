@@ -129,7 +129,7 @@ Regex {
   
   CharacterClass.digit // /\d/
   CharacterClass.digit.inverted // /\D/
-  CharacterClass.hexDigit // regex syntes: /\p{Hex_Digit}/
+  CharacterClass.hexDigit // /\p{Hex_Digit}/
   
   CharacterClass.word // /\w/
   CharacterClass.word.inverted // /\W/
@@ -272,8 +272,8 @@ do {
  */
 do {
   enum Value: String {
-    case A = "a"
-    case B = "b"
+    case a
+    case b
   }
   
   let regex = Regex {
@@ -328,19 +328,23 @@ do {
  ### CustomConsumingRegexComponent
  
  `CustomConsumingRegexComponent` protocol allows types from outside the standard
- library participate in regex builders and RegexComponent algorithms.
+ library to participate in regex builders and `RegexComponent` algorithms.
  */
 import Foundation
 
 do  {
-  let format: Date.FormatString = "\(day: .twoDigits)/\(month: .twoDigits)/\(year: .padded(4))"
+  let format: Date.FormatString = 
+    "\(day: .twoDigits)/\(month: .twoDigits)/\(year: .padded(4))"
   let timeZone = TimeZone(identifier: "UTC")!
   let locale = Locale(identifier: "en-UK")
   
   let regex = Regex {
-    Capture(Date.ParseStrategy(format: format, locale: locale,
+    // Date.ParseStrategy implements CustomConsumingRegexComponent
+    Capture(Date.ParseStrategy(format: format,
+                               locale: locale,
                                timeZone: timeZone))
     "-"
+    // RegexComponent has a `date` method too
     Capture(.date(format: format, locale: locale, timeZone: timeZone))
   }
   
@@ -368,9 +372,6 @@ do {
 }
 /*:
  ### ASCII-only character classes
- The default character classes match only ASCII values instead of the full
- Unicode range of characters.
- 
  Regex syntax: `(?DSWP)...`
  - Regex syntax `(?D)`: Match only ASCII members for `\d`, `[:digit:]`, and
  `CharacterClass.digit`.
@@ -394,14 +395,14 @@ do {
   string.contains(regex2)
 }
 /*:
- ### Unicode word boundaries
- Regex syntax: `(?-w)...`
+ ### Simple word boundaries
+ Regex syntax (disable Unicode default word boundaries): `(?-w)...`
  */
 do {
   let regex1 = Regex {
     CharacterClass.any
     Anchor.wordBoundary
-  }.wordBoundaryKind(.default)
+  }.wordBoundaryKind(.simple)
   
   //    /(?-w).\b/ //  unsupported
   let regex2 = /.\b/.wordBoundaryKind(.simple)
@@ -423,10 +424,10 @@ do {
  ### Single line mode (. matches newlines)
  Regex syntax: `(?s)...`
  
- This option applies only to . used in regex syntax and does not affect the
- behavior of CharacterClass.any, which always matches any character or Unicode
- scalar. To get the default . behavior when using RegexBuilder syntax, use
- CharacterClass.anyNonNewline.
+ This option applies only to `.` used in regex syntax and does not affect the
+ behavior of `CharacterClass.any`, which always matches any character or
+ Unicode scalar. To get the default `.` behavior when using `RegexBuilder`
+ syntax, use `CharacterClass.anyNonNewline`.
  */
 do {
   let regex1 = /.+/.dotMatchesNewlines()
@@ -441,14 +442,14 @@ do {
 }
 /*:
  ### Multiline mode
- By default, the start and end anchors (^ and $) match only the beginning and
- end of a string. In multiline mode, they also match the beginning and end of
- each line.
+ By default, the start and end anchors (`^` and `$`) match only the beginning
+ and end of a string. In multiline mode, they also match the beginning and end
+ of each line.
  
  Regex syntax: `(?m)...`
  
  This option applies only to anchors used in regex syntax. The anchors defined
- in RegexBuilder are specific about matching at the start/end of the input or
+ in `RegexBuilder` are specific about matching at the start/end of the input or
  the line, and therefore are not affected by this option.
  */
 do {
@@ -487,8 +488,9 @@ do {
  
  Regex syntax: `(?U)...`
  
- The U option toggles the "eagerness" of quantifiers, so that quantifiers are
- reluctant by default, and only become eager when ? is added to the quantifier.
+ The `U` option toggles the "eagerness" of quantifiers, so that quantifiers are
+ reluctant by default, and only become eager when `?` is added to the
+ quantifier.
  
  This change only applies within regex syntax.
  */

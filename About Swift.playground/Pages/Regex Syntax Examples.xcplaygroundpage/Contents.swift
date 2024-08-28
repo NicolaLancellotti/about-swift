@@ -2,15 +2,14 @@
 /*:
  # Regex Syntax Examples
  The syntax is a superset of the following regular expression engines:
- - PCRE 2
- - Oniguruma
- - ICU
- - .NET
+ - `PCRE 2`,
+ - `Oniguruma`,
+ - `ICU`,
+ - `.NET`.
  */
-//: ## Top-level
+//: ## Alternation
 #/
-a | b   # Alternation
-abc|def # Concatenation
+a | b
 /#
 //: ## Concatenated subexpressions
 #/
