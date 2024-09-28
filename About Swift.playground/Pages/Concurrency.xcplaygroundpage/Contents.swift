@@ -230,12 +230,6 @@ class MyGlobalActorIsolatedClass {
  ### Metatypes
  Metatypes such as `Int.Type` implicitly conform to the `Sendable` protocol.
  
- ### Key path literals
- Key paths themselves conform to the `Sendable` protocol. However, to ensure
- that it is safe to share key paths, key path literals can only capture values
- of types that conform to the Sendable protocol. This affects uses of subscripts
- in key paths.
- 
  ### Sendable functions and closures
  Any values that the function or closure captures must be sendable.
  
@@ -249,10 +243,17 @@ class MyGlobalActorIsolatedClass {
  In a context that expects a sendable closure, a closure that satisfies the
  requirements implicitly conforms to `Sendable`.
  
+ Global functions implicitly conform to the `Sendable` protocol.
+ 
  A closure formed within an actor-isolated context is
  - actor-isolated if it is non-sendable (it cannot escape the concurrency
- domain)
- - non-isolated if it is @Sendable
+ domain),
+ - non-isolated if it is @Sendable.
+ 
+ ### Sendable methods
+ Implicitly conform to `Sendable`:
+ - unapplied references to methods of a Sendable type,
+ - partially-applied methods of a Sendable type.
  */
 class NonSendableClass: Hashable, Equatable {
   var value: Int = 0
@@ -267,24 +268,38 @@ class NonSendableClass: Hashable, Equatable {
 
 final class SendableClass: Sendable {
   let value: Int = 0
+  func method() {}
 }
 
 func sendable() {
   let letString: String = ""
   var varString: String = ""
+  
   let sendableInstance = SendableClass()
+  let nonSendableInstance = NonSendableClass()
+  
+  let unappliedMethod = SendableClass.method
+  let partiallyAppliedMethod = sendableInstance.method
+  
+  let sendableKeyPath = \SendableClass.value // KeyPath<SendableClass, Int> & Sendable
+  let nonsendableKeyPath1: KeyPath<SendableClass, Int> = \SendableClass.value
+  let nonsendableKeyPath2 = \Dictionary<NonSendableClass, Int>[nonSendableInstance]
   
   let pointer = UnsafeMutablePointer<Int>.allocate(capacity: 1);
   pointer.pointee = 10;
-  let nonSendableInstance = NonSendableClass()
   
   let sendableClosure =  { @Sendable [varString] in
     let _ = letString
     let _ = varString
     let _ = sendableInstance
+    let _ = unappliedMethod
+    let _ = partiallyAppliedMethod
+    let _ = sendableKeyPath
+    
     // Errors
-//     let _ = pointer
-//     let _ = \Dictionary<NonSendableClass, Int>[nonSendableInstance]
+    //    let _ = nonsendableKeyPath1
+    //    let _ = nonsendableKeyPath2
+    //    let _ = pointer
   }
 }
 /*:
