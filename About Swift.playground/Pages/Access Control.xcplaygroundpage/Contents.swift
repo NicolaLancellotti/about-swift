@@ -59,4 +59,16 @@ fileprivate class FilePrivateClass {       // explicitly file-private class
 private class PrivateClass {               // explicitly private class
   var privateProperty = 0                  // implicitly private property
 }
+/*:
+ ## Access-level modifiers on import declarations
+ 
+ * The access level is declared in front of the import declaration using:
+ `public` (default), `package`, `internal`, `fileprivate`, and `private`.
+ 
+ * The `@usableFromInline` attribute can be applied to an import declaration to
+ allow referencing a dependency from inlinable code while limiting which
+ declarations signatures can reference it. The attribute `@usableFromInline` can
+ be used only on package and internal imports. It marks the dependency as
+ visible to clients.
+ */
 //: [Next](@next)
