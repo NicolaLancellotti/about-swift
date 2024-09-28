@@ -73,4 +73,25 @@ final class AboutSwiftMacrosTests: XCTestCase {
     throw XCTSkip(unsupported)
 #endif
   }
+  
+  //: MARK: Attached Function Body Macro
+  
+  func testAttachedFunctionBodyMacro() {
+#if canImport(AboutSwiftMacrosMacros)
+    assertMacroExpansion(
+            """
+            @Hello
+            func printHello() -> Void {}
+            """,
+            expandedSource: """
+            func printHello() -> Void {
+                print("Hello")
+            }
+            """,
+            macros: ["Hello": AttachedFunctionBodyMacroExample.self]
+    )
+#else
+    throw XCTSkip(unsupported)
+#endif
+  }
 }

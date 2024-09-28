@@ -64,6 +64,19 @@ public struct AttachedExtensionMacroExample: ExtensionMacro {
   }
 }
 
+//: MARK: Attached Function Body Macro
+
+public struct AttachedFunctionBodyMacroExample: BodyMacro {
+  public static func expansion(
+     of node: AttributeSyntax,
+     providingBodyFor declaration: some DeclSyntaxProtocol & WithOptionalCodeBlockSyntax,
+     in context: some MacroExpansionContext
+  ) throws -> [CodeBlockItemSyntax] {
+    let syntax: CodeBlockItemSyntax = #"print("Hello")"#
+    return [syntax]
+  }
+}
+
 //: MARK: Main
 
 @main
@@ -71,6 +84,7 @@ struct AboutSwiftMacrosPlugin: CompilerPlugin {
   let providingMacros: [Macro.Type] = [
     FreestandingExpressionMacroExample.self,
     FreestandingDeclarationMacroExample.self,
-    AttachedExtensionMacroExample.self
+    AttachedExtensionMacroExample.self,
+    AttachedFunctionBodyMacroExample.self
   ]
 }

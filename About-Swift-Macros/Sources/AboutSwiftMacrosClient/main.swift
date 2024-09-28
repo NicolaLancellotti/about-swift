@@ -15,3 +15,10 @@ assert(DeclaredStruct.value == 10)
 struct Struct {}
 assert(Struct.value == "Hello")
 assert(Struct() == Struct())
+
+//: MARK: Attached Function Body Macro
+
+@Hello
+func printHello() -> Void {}
+
+printHello()
