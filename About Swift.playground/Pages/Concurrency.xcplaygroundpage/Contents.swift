@@ -302,6 +302,22 @@ let sendableClosure =  { @Sendable [varString] in
  */
 nonisolated(unsafe) var nonisolatedUnsageGlobal: Int!
 /*:
+ ## Isolated default value expressions
+ Default value expressions have the same isolation as the enclosing function or
+ the corresponding stored property.
+ */
+@MainActor func requiresMainActor() -> Int { 0 }
+
+@MainActor func useDefault(value: Int = requiresMainActor()) { }
+
+@MainActor func mainActorCaller() {
+  useDefault() // okay
+}
+
+func nonisolatedCaller() async {
+  await useDefault() // call is implicitly async
+}
+/*:
  ## Structured concurrency
  A task is a unit of work that can be run asynchronously as part of your
  program.
