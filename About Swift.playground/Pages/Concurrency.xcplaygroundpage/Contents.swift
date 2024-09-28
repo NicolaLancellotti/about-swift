@@ -1,6 +1,24 @@
 //: [Previous](@previous)
 //: # Concurrency
 /*:
+ ## Utils
+ */
+class NonSendableClass: Hashable, Equatable {
+  var value: Int = 0
+  
+  func hash(into hasher: inout Hasher) {
+    hasher.combine(value)
+  }
+  static func ==(lhs: NonSendableClass, rhs: NonSendableClass) -> Bool {
+    lhs.value == rhs.value
+  }
+}
+
+final class SendableClass: Sendable {
+  let value: Int = 0
+  func method() {}
+}
+/*:
  ## Async/await
  
  An asynchronous function is a special kind of function that can be suspended
@@ -143,6 +161,29 @@ func actorIsolatedFunction(actor: isolated MyActor, actor2:  MyActor) async {
   await actor2.actorIsolatedMethod1()
 }
 /*:
+ ### Inheritance of actor isolation for async functions
+ */
+func inheritedActorIsolation(
+  isolation actor: isolated (any Actor)? =  #isolation,
+  instance: NonSendableClass) async {
+    instance.value += 1
+  }
+
+extension MyActor {
+  func foo() async {
+    let nonSendable = NonSendableClass()
+    await inheritedActorIsolation(instance: nonSendable)
+    // same as:
+    await inheritedActorIsolation(isolation: self,
+                                  instance: nonSendable)
+    
+    // Error
+    // await inheritedActorIsolation(isolation: nil  /* nonisolated */,
+    //                               instance: nonSendable)
+    
+  }
+}
+/*:
  ### Global actors
  
  Any declaration can state that it is actor-isolated to that particular global
@@ -255,22 +296,6 @@ class MyGlobalActorIsolatedClass {
  - unapplied references to methods of a Sendable type,
  - partially-applied methods of a Sendable type.
  */
-class NonSendableClass: Hashable, Equatable {
-  var value: Int = 0
-  
-  func hash(into hasher: inout Hasher) {
-    hasher.combine(value)
-  }
-  static func ==(lhs: NonSendableClass, rhs: NonSendableClass) -> Bool {
-    lhs.value == rhs.value
-  }
-}
-
-final class SendableClass: Sendable {
-  let value: Int = 0
-  func method() {}
-}
-
 func sendable() {
   let letString: String = ""
   var varString: String = ""
@@ -664,6 +689,7 @@ func localActor() async throws {
   // Executes the passed body only when the distributed actor is a local instance
   await actor.whenLocal { isolatedActor in
     let _ = isolatedActor.storedProperty
+    let _ : any Actor = isolatedActor.asLocalActor
   }
 }
 
