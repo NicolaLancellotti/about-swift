@@ -24,6 +24,9 @@
 Int.min
 Int.max
 
+Int128.max
+Int128.min
+
 Int64.min
 Int64.max
 
@@ -42,6 +45,9 @@ Int8.max
  */
 UInt.min
 UInt.max
+
+UInt128.max
+UInt128.min
 
 UInt64.min
 UInt64.max
