@@ -603,11 +603,18 @@ func readIDFromMainActor() -> Int { readIDFromThreadLocal() }
  */
 import Distributed
 
-// It is possible to declare a module default actor system type
-typealias DefaultDistributedActorSystem = LocalTestingDistributedActorSystem
+// MARK: - API
 
-distributed actor DistributedActor: Identifiable {
-  typealias ActorSystem = LocalTestingDistributedActorSystem
+@Resolvable
+protocol MyDistributedActorProtocol: DistributedActor
+    where ActorSystem: DistributedActorSystem<any Codable> {
+  distributed func distributedMethod() -> Int
+}
+
+// MARK: - Server
+
+distributed actor MyDistributedActor<ActorSystem>: MyDistributedActorProtocol
+    where ActorSystem: DistributedActorSystem<any Codable> {
   
   // Stored properties cannot be declared distributed nor nonisolated
   var storedProperty: Int
@@ -635,24 +642,40 @@ distributed actor DistributedActor: Identifiable {
   distributed var computedProperty: Int { 0 }
 }
 
-func distributedActors(actor: DistributedActor) async throws {
-  // Stored properties are not accessible across distributed actors
-  // actor.storedProperty // Error
+// MARK: - Distributed Actor System
+
+typealias MyDistributedActorSystem = LocalTestingDistributedActorSystem
+let actorSystem = MyDistributedActorSystem()
+
+// MARK: - Local Actor
+
+func localActor() async throws {
+  let actor = MyDistributedActor(value: 1, actorSystem: actorSystem)
+  _ = actor.id
   
   // Remote calls are implicitly throwing and async,
   // to account for the potential networking involved
   let _ = try await actor.distributedMethod()
+  let _ = try await actor.computedProperty
+  
+  // Stored properties are not accessible across distributed actors
+  // actor.storedProperty // Error
   
   // Executes the passed body only when the distributed actor is a local instance
   await actor.whenLocal { isolatedActor in
     let _ = isolatedActor.storedProperty
   }
 }
-//: ### Creating a local actor
-let actorSystem = LocalTestingDistributedActorSystem()
-let localActor = DistributedActor(value: 1, actorSystem: actorSystem)
-let id = localActor.id
-//: ### Resolving a potentially remote actor
-let potentiallyRemoteActor = try DistributedActor.resolve(id: id,
-                                                           using: actorSystem)
+
+// MARK: - Potentially Remote Actors
+
+func resolveUsingAConcreteActor(id: MyDistributedActorSystem.ActorID) async throws {
+  let actor = try MyDistributedActor.resolve(id: id, using: actorSystem)
+  let _ = try await actor.distributedMethod()
+}
+
+func resolveUsingResolvable(id: MyDistributedActorSystem.ActorID) async throws {
+  let actor = try $MyDistributedActorProtocol.resolve(id: id, using: actorSystem)
+  let _ = try await actor.distributedMethod()
+}
 //: [Next](@next)
