@@ -30,4 +30,7 @@ partialRangeThrough.contains(5)
 
 let partialRangeUpTo: PartialRangeUpTo = ..<5.0
 partialRangeUpTo.contains(5)
+//: ## Range set
+var rangeSet = RangeSet([1..<10, 20..<30])
+rangeSet.insert(contentsOf: 8..<15)
 //: [Next](@next)
