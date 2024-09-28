@@ -139,4 +139,15 @@ instance.id
 
 class Class: Identifiable { }
 Class().id
+/*:
+ ## BitwiseCopyable
+ 
+ Conforming types are bitwise-copyable.
+ 
+ The compiler will infer conformance to `BitwiseCopyable` for any non-exported
+ struct or enum defined within the module whose stored members are all
+ `BitwiseCopyable`, except those for which conformance is explicitly suppressed.
+ */
+extension Structure: BitwiseCopyable {
+}
 //: [Next](@next)
