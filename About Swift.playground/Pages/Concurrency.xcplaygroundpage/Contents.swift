@@ -714,4 +714,46 @@ func resolveUsingResolvable(id: MyDistributedActorSystem.ActorID) async throws {
   let actor = try $MyDistributedActorProtocol.resolve(id: id, using: actorSystem)
   let _ = try await actor.distributedMethod()
 }
+/*:
+ ## Custom actor executors
+ */
+import Dispatch
+
+final class MySerialExecutor: SerialExecutor {
+  let queue: DispatchSerialQueue = .init(label: "MySerialExecutorQueue")
+  
+  func enqueue(_ job: consuming ExecutorJob) {
+    let unownedJob = UnownedJob(job)
+    queue.async {
+      unownedJob.runSynchronously(on: self.asUnownedSerialExecutor())
+    }
+  }
+  
+  //  Default Implementation:
+  //  func asUnownedSerialExecutor() -> UnownedSerialExecutor {
+  //    UnownedSerialExecutor(ordinary: self)
+  //  }
+}
+
+actor MyActorWithCustomExecutor {
+  nonisolated let unownedExecutor: UnownedSerialExecutor
+  
+  init(unownedExecutor: UnownedSerialExecutor) {
+    self.unownedExecutor = unownedExecutor
+  }
+}
+
+do {
+  let serialExecutor = MySerialExecutor()
+  let actor = MyActorWithCustomExecutor(unownedExecutor: serialExecutor.asUnownedSerialExecutor())
+}
+
+do {
+  let dispatchSerialQueue: DispatchSerialQueue = .init(label: "dispatchSerialQueue")
+  let actor = MyActorWithCustomExecutor(unownedExecutor: dispatchSerialQueue.asUnownedSerialExecutor())
+}
+
+do {
+  let actor = MyActorWithCustomExecutor(unownedExecutor: MainActor.sharedUnownedExecutor)
+}
 //: [Next](@next)
