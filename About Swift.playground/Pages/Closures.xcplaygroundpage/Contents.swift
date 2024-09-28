@@ -101,17 +101,21 @@ sum(10, 5)
  A closure is said to escape a function when the closure is passed as an
  argument to the function, but is called after the function returns.
  */
-var completionHandlers: [() -> Void] = []
-
-func functionWithEscapingClosure(completionHandler: @escaping () -> Void) {
-  completionHandlers.append(completionHandler)
+do {
+  var completionHandlers: [() -> Void] = []
+  
+  func functionWithEscapingClosure(completionHandler: @escaping () -> Void) {
+    completionHandlers.append(completionHandler)
+  }
 }
 /*:
  ### Allow a nonescaping closure to temporarily be used as if it were allowed to escape
  */
 import Dispatch
 
-func runSimultaneously(_ f: () -> (), and g: () -> (), on q: DispatchQueue) {
+func runSimultaneously(_ f: @Sendable () -> (),
+                       and g: @Sendable () -> (),
+                       on q: DispatchQueue) {
   // DispatchQueue.async normally has to be able to escape its closure
   // since it may be called at any point after the operation is queued.
   // By using a barrier, we ensure it does not in practice escape.
@@ -239,10 +243,9 @@ func multithreadedFunction(queue: DispatchQueue, x: inout Int) {
   defer { x = localX }
   
   // Operate on localX asynchronously, then wait before returning.
-  queue.async {
+  queue.asyncAndWait {
     increment(&localX)
   }
-  queue.sync { }
 }
 //: ## Setting a default property value with a closure or function
 class ClassWithSetPropertyWithClosure {

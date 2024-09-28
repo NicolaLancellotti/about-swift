@@ -25,6 +25,6 @@ void ImportCAsMembersSetValue(ImportCAsMembers* instance, int32_t value);
 CF_SWIFT_NAME(ImportCAsMembers.incremented(self:by:))
 int ImportCAsMembersIncrementedBy(const ImportCAsMembers* instance, int32_t value);
 
-#endif
-
 CF_ASSUME_NONNULL_END
+
+#endif

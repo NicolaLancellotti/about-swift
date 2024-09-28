@@ -7,10 +7,10 @@ import SwiftSyntaxMacros
 
 public struct FreestandingExpressionMacroExample: ExpressionMacro {
   public static func expansion(
-    of node: some SwiftSyntax.FreestandingMacroExpansionSyntax,
-    in context: some SwiftSyntaxMacros.MacroExpansionContext
-  ) throws -> SwiftSyntax.ExprSyntax {
-    let sum = node.argumentList.map {
+    of node: some FreestandingMacroExpansionSyntax,
+    in context: some MacroExpansionContext
+  ) throws -> ExprSyntax {
+    let sum = node.arguments.map {
       Int($0.expression.as(IntegerLiteralExprSyntax.self)!.literal.text)!
     }.reduce(0) { partialResult, value in
       value + partialResult
@@ -23,10 +23,10 @@ public struct FreestandingExpressionMacroExample: ExpressionMacro {
 
 public struct FreestandingDeclarationMacroExample: DeclarationMacro {
   public static func expansion(
-    of node: some SwiftSyntax.FreestandingMacroExpansionSyntax,
-    in context: some SwiftSyntaxMacros.MacroExpansionContext
-  ) throws -> [SwiftSyntax.DeclSyntax] {
-    guard let argument = node.argumentList.first?.expression else {
+    of node: some FreestandingMacroExpansionSyntax,
+    in context: some MacroExpansionContext
+  ) throws -> [DeclSyntax] {
+    guard let argument = node.arguments.first?.expression else {
       fatalError("compiler bug: the macro does not have any arguments")
     }
     return ["""
@@ -42,12 +42,12 @@ public struct FreestandingDeclarationMacroExample: DeclarationMacro {
 
 public struct AttachedExtensionMacroExample: ExtensionMacro {
   public static func expansion(
-    of node: SwiftSyntax.AttributeSyntax,
-    attachedTo declaration: some SwiftSyntax.DeclGroupSyntax,
-    providingExtensionsOf type: some SwiftSyntax.TypeSyntaxProtocol,
-    conformingTo protocols: [SwiftSyntax.TypeSyntax],
-    in context: some SwiftSyntaxMacros.MacroExpansionContext
-  ) throws -> [SwiftSyntax.ExtensionDeclSyntax] {
+    of node: AttributeSyntax,
+    attachedTo declaration: some DeclGroupSyntax,
+    providingExtensionsOf type: some TypeSyntaxProtocol,
+    conformingTo protocols: [TypeSyntax],
+    in context: some MacroExpansionContext
+  ) throws -> [ExtensionDeclSyntax] {
     guard case let .argumentList(arguments) = node.arguments,
           let expression = arguments.first?.expression else {
       fatalError("compiler bug: the macro does not have any arguments")

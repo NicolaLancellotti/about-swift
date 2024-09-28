@@ -1,4 +1,4 @@
-import Foundation
+//: [Previous](@previous)
 /*:
  # Interoperability
  
@@ -16,6 +16,8 @@ import Foundation
  * Swift-style variadics.
  * Nested types.
  */
+import Foundation
+
 class Class : NSObject {
   
   init(property: String = "Hello") {
@@ -157,3 +159,4 @@ do {
   object.property = ""
   instance.object?.property
 }
+//: [Next](@next)

@@ -119,7 +119,7 @@ class ClassWithMethodsAndPropertiesFinal {
   
   //_____________________________________________
   // Type Properties
-  static var typeStoredProperty = 0
+  static let typeStoredProperty = 0
   
   static var typeComputedProperty: Int {
     get { 0 }

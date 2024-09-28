@@ -169,14 +169,14 @@ value.property
  */
 //: ## Type properties
 struct StructureWithTypeProperties {
-  static var typeProperty = 10
+  static let typeProperty = 10
   
   static var computedTypeProperty: Int {
     typeProperty * 2
   }
 }
 
-StructureWithTypeProperties.typeProperty = 11
+StructureWithTypeProperties.typeProperty
 StructureWithTypeProperties.computedTypeProperty
 //: ## Methods
 struct StructureWithMethods {

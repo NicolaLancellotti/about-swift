@@ -16,6 +16,6 @@ void ImportCAsOpaqueSetValue(ImportCAsOpaqueRef instance, int32_t value);
 
 void ImportCAsOpaqueRelease(ImportCAsOpaqueRef instance);
 
-#endif
-
 CF_ASSUME_NONNULL_END
+
+#endif

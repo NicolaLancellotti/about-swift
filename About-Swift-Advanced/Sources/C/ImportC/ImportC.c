@@ -1,4 +1,4 @@
-#import "ImportC.h"
+#include "ImportC.h"
 
 #pragma mark - Variable arguments
 

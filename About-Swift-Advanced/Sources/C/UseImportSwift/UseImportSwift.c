@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include "UseImportSwift.h"
-#import "ImportSwiftAsFunctions.h"
-#import "ImportSwiftAsPointers.h"
+#include "ImportSwiftAsFunctions.h"
+#include "ImportSwiftAsPointers.h"
 
 void useImportSwift(void)
 {
@@ -17,7 +17,7 @@ void useImportSwift(void)
   
   {
     // Import Swift As Pointers
-    const Lib* lib = getLib();
+    Lib const *lib = getLib();
     void *value = lib->value.create(2);
     void *owner = lib->owner.create("Hello world!", 10);
     lib->owner.setValue(owner, value);
