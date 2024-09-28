@@ -46,4 +46,11 @@ func operators() {
     let value1 = copy value // explicit copy
   }
 }
+/*:
+ ## Partial consumption
+ - Noncopyable aggregates without deinits can be consumed field-by-field, if
+ they are defined in the current module or frozen.
+ - Noncopyable aggregates with a deinit can be consumed field-by-field within
+ that deinit.
+ */
 //: [Next](@next)
