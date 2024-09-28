@@ -48,6 +48,7 @@
         <page name='Regex Syntax Examples'/>
         <page name='Copy-on-write'/>
         <page name='Type-erasing wrappers'/>
+        <page name='Synchronization'/>
         <page name='Interoperability'/>
     </pages>
 </playground>

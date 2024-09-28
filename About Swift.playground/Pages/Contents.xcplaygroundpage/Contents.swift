@@ -47,6 +47,7 @@
  - [Regex Syntax Examples](Regex%20Syntax%20Examples)
  - [Copy-on-write](Copy-on-write)
  - [Type-erasing wrappers](Type-erasing%20wrappers)
+ - [Synchronization](Synchronization)
  - [Interoperability](Interoperability)
  ****
  [Next](@next)
