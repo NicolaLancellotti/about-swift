@@ -1,4 +1,12 @@
 # About Swift
+
+**This branch is often rebased, checkout `main` for a stable branch.**
+
+### TODO
+- SE-0414
+- SE-0430
+- SE-0434
+
 [![Version](https://img.shields.io/badge/swift-6-orange.svg)](https://swift.org/)
 ![header](header.png)
 
