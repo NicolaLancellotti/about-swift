@@ -204,6 +204,16 @@ class MyGlobalActorIsolatedClass {
   }
 }
 /*:
+ ### @isolated(any) function types
+ A function value with this type dynamically carries the isolation of the
+ function that was used to initialize it.
+ */
+func functionWithIsolatedAny(_ operation: @isolated(any) () -> ()) async {
+  let _: (any Actor)? = operation.isolation
+  await operation()
+}
+await functionWithIsolatedAny {  }
+/*:
  ### Non-delegating initializers
  - **An initializer**
     - has a nonisolated self reference if it is:
