@@ -46,9 +46,9 @@ enum MyErrorType: Error {
  
  Only throwing functions can propagate errors.
  */
-func canThrowErrors(_ mustThrow: Bool = false) throws -> Int {
+func canThrowErrors(_ mustThrow: Bool = false) throws(MyErrorType) -> Int {
   if mustThrow {
-    throw MyErrorType.error1
+    throw .error1
   }
   return 0
 }
@@ -61,9 +61,9 @@ func canThrowErrors(_ mustThrow: Bool = false) throws -> Int {
  */
 do {
   try canThrowErrors()
-} catch MyErrorType.error1, MyErrorType.error3 {
+} catch .error1, .error3 {
   
-} catch MyErrorType.error2(let value) where value > 3{
+} catch .error2(let value) where value > 3{
   
 } catch {
   
@@ -84,6 +84,14 @@ do {
  If an error actually is thrown, you’ll get a runtime error.
  */
 let value3 = try! canThrowErrors()
+/*:
+ ## Throwing any Error or Never
+ Typed throws generalizes over both untyped throws and non-throwing functions.
+ - `func foo() throws(any Error) { ... }` is equivalent to untyped throws:\
+   `func foo() throws { ... }`
+ - `func bar() throws(Never) { ... }` is equivalent to a non-throwing function:\
+   `func bar() { ... }`
+ */
 /*:
  ## Rethrowing functions and methods
  
