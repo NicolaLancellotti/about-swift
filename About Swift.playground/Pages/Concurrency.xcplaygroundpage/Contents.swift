@@ -8,32 +8,32 @@
  
  You write `await` in front of the call to mark the possible suspension point.
  */
-func asyncFunc(_ x: Int) async throws -> Int {
+func asyncFunction1(_ x: Int) async throws -> Int {
   x + 1
 }
 
-func asyncFunc2() async throws -> Int {
-  let  _ = try await asyncFunc(1)
+func asyncFunction2() async throws -> Int {
+  let  _ = try await asyncFunction1(1)
   
   // An await operand may contain more than one potential suspension point
-  let _ = try await asyncFunc(asyncFunc(1))
+  let _ = try await asyncFunction1(asyncFunction1(1))
   
   // Async Closures
   let _ = { () async throws -> Int in
-    try await asyncFunc(1)
+    try await asyncFunction1(1)
   }
   
   // Implicitly Async Closure
   let _ = {
-    try await asyncFunc(1)
+    try await asyncFunction1(1)
   }
   
   // Calling Asynchronous Functions in Parallel
   // An async let that was declared but never awaited on explicitly, will be
   // cancelled and awaited on implicitly.
-  async let first = asyncFunc(1)
-  async let second = asyncFunc(2)
-  return try await first + second
+  async let x = asyncFunction1(1)
+  async let y = asyncFunction1(2)
+  return try await x + y
 }
 //: ## Async sequences
 struct Counter : AsyncSequence {
@@ -50,13 +50,9 @@ struct Counter : AsyncSequence {
     var current = 1
     
     mutating func next() async -> Int? {
-      guard current <= howHigh else {
-        return nil
-      }
-      
-      let result = current
-      current += 1
-      return result
+      guard current <= howHigh else { return nil }
+      defer { current += 1 }
+      return current
     }
   }
 }
@@ -83,9 +79,9 @@ func asyncSequence() async {
  
  All actor types implicitly conform to a the protocol `Actor`.
  */
-actor AnActor {
+actor MyActor {
   init(value: Int) {
-    self.actorIsolatedVar = value
+    self.actorIsolatedProperty = value
   }
   
   // Delegating Initializer
@@ -93,35 +89,35 @@ actor AnActor {
     self.init(value: 0)
   }
   
-  func actorIsolatedFunc() {}
+  func actorIsolatedMethod1() {}
   
-  func actorIsolatedFunc1() {
+  func actorIsolatedMethod2() {
     // Synchronous actor functions can be called synchronously on the actor's
     // self, but cross-actor references require an asynchronous call.
-    actorIsolatedFunc()
+    actorIsolatedMethod1()
   }
   
-  var actorIsolatedVar: Int
+  var actorIsolatedProperty: Int
   
   let constant = 1
   
   // Non-isolated declarations
-  nonisolated let nonIsolatedLet: Int = 0
+  nonisolated let nonIsolatedLetProperty: Int = 0
   
-  nonisolated func nonIsolatedFunc() { }
+  nonisolated func nonIsolatedMethod() { }
   
   // async functions that are not actor-isolated should formally run on a
   // generic executor associated with no actor.
-  nonisolated func nonIsolatedAsyncFunc() async { }
+  nonisolated func nonIsolatedAsyncMethod() async { }
 }
 
 func actors() async {
-  let actor = AnActor()
+  let actor = MyActor()
   
-  await actor.actorIsolatedFunc()
+  await actor.actorIsolatedMethod1()
   
   // Actor-isolated properties are read-only
-  let _ = await actor.actorIsolatedVar
+  let _ = await actor.actorIsolatedProperty
   // await actor.actorIsolatedVar = 1 // Error
   
   let _ = actor.constant
@@ -131,9 +127,9 @@ func actors() async {
   // let _ = await actor.constant
   
   // Non-isolated declarations
-  let _ = actor.nonIsolatedLet
-  actor.nonIsolatedFunc()
-  await actor.nonIsolatedAsyncFunc()
+  let _ = actor.nonIsolatedLetProperty
+  actor.nonIsolatedMethod()
+  await actor.nonIsolatedAsyncMethod()
 }
 /*:
  ### Actor-isolated parameters
@@ -142,9 +138,9 @@ func actors() async {
  
  A given function cannot have multiple isolated parameters.
  */
-func actorIsolatedFunc(actor: isolated AnActor, actor2:  AnActor) async {
-  actor.actorIsolatedFunc()
-  await actor2.actorIsolatedFunc()
+func actorIsolatedFunction(actor: isolated MyActor, actor2:  MyActor) async {
+  actor.actorIsolatedMethod1()
+  await actor2.actorIsolatedMethod1()
 }
 /*:
  ### Global actors
@@ -153,16 +149,16 @@ func actorIsolatedFunc(actor: isolated AnActor, actor2:  AnActor) async {
  actor by naming the global actor type as an attribute
  */
 @globalActor
-public struct AGlobalActor {
-  public actor MyActor {}
-  public static let shared = MyActor()
+public struct MyGlobalActor {
+  public actor ActorImpl {}
+  public static let shared = ActorImpl()
 }
 
-@AGlobalActor
-class AnActorIsolatedClass {
+@MyGlobalActor
+class MyGlobalActorIsolatedClass {
   var value: Int = 0
   
-  func function() {
+  func method() {
     value = 1
   }
 }
@@ -190,7 +186,7 @@ class AnActorIsolatedClass {
   - *Isolated initializers*
      - No data races because they gain actor-isolation prior to calling the
  initializer itself.
-  - *Non-isolated initializer*
+  - *Non-isolated initializers*
       - The isolation of self decays to nonisolated during any use of self that
  is not a direct stored-property access.
  ### Deinitializers
@@ -204,41 +200,41 @@ class AnActorIsolatedClass {
  You can safely pass values of a sendable type from one concurrency domain to
  another.
  
- To declare conformance to Sendable without any compiler enforcement, write
+ To declare conformance to `Sendable` without any compiler enforcement, write
  `@unchecked Sendable`.
  
  ### Sendable structures and enumerations
- To satisfy the requirements of the Sendable protocol, an enumeration or
+ To satisfy the requirements of the `Sendable` protocol, an enumeration or
  structure must have only sendable members and associated values.
  
- Implicitly conform to Sendable:
+ Implicitly conform to `Sendable`:
  - Frozen structures and enumerations
  - Structures and enumerations that aren’t `public` and aren’t marked
  `@usableFromInline`
  
  ### Sendable actors
- Actors implicitly conform to Sendable.
+ Actors implicitly conform to `Sendable`.
  
  ### Sendable classes
- To satisfy the requirements of the Sendable protocol, a class must:
- - Be marked final
- - Contain only stored properties that are immutable and sendable
- - Have no superclass or have NSObject as the superclass
+ To satisfy the requirements of the `Sendable` protocol, a class must:
+ - be marked final,
+ - contain only stored properties that are immutable and sendable,
+ - have no superclass or have NSObject as the superclass.
  
  Classes marked with `@MainActor` are implicitly sendable.
  
  ### Tuples
- Tuples, whose elements are sendable, implicitly conform to the Sendable
+ Tuples, whose elements are sendable, implicitly conform to the `Sendable`
  protocol.
  
  ### Metatypes
- Metatypes such as `Int.Type` implicitly conform to the Sendable protocol.
+ Metatypes such as `Int.Type` implicitly conform to the `Sendable` protocol.
  
  ### Key path literals
- Key paths themselves conform to the Sendable protocol. However, to ensure that
- it is safe to share key paths, key path literals can only capture values of
- types that conform to the Sendable protocol. This affects uses of subscripts in
- key paths.
+ Key paths themselves conform to the `Sendable` protocol. However, to ensure
+ that it is safe to share key paths, key path literals can only capture values
+ of types that conform to the Sendable protocol. This affects uses of subscripts
+ in key paths.
  
  ### Sendable functions and closures
  Any values that the function or closure captures must be sendable.
@@ -254,41 +250,48 @@ class AnActorIsolatedClass {
  requirements implicitly conforms to `Sendable`.
  
  A closure formed within an actor-isolated context is
- - actor-isolated if it is non-@Sendable (it cannot escape the concurrency
+ - actor-isolated if it is non-sendable (it cannot escape the concurrency
  domain)
  - non-isolated if it is @Sendable
  */
-let letString: String = ""
-var varString: String = ""
-
-let pointer = UnsafeMutablePointer<Int>.allocate(capacity: 1);
-pointer.pointee = 10;
-
-class Class: Hashable, Equatable {
+class NonSendableClass: Hashable, Equatable {
   var value: Int = 0
   
   func hash(into hasher: inout Hasher) {
     hasher.combine(value)
   }
-  static func ==(lhs: Class, rhs: Class) -> Bool {
+  static func ==(lhs: NonSendableClass, rhs: NonSendableClass) -> Bool {
     lhs.value == rhs.value
   }
 }
-let instance = Class()
 
-let sendableClosure =  { @Sendable [varString] in
-  let _ = letString
-  let _ = varString
+final class SendableClass: Sendable {
+  let value: Int = 0
+}
+
+func sendable() {
+  let letString: String = ""
+  var varString: String = ""
+  let sendableInstance = SendableClass()
   
-  // Errors
-  // let _ = pointer
-  // let _ = \Dictionary<Class, Int>[Class]
+  let pointer = UnsafeMutablePointer<Int>.allocate(capacity: 1);
+  pointer.pointee = 10;
+  let nonSendableInstance = NonSendableClass()
+  
+  let sendableClosure =  { @Sendable [varString] in
+    let _ = letString
+    let _ = varString
+    let _ = sendableInstance
+    // Errors
+//     let _ = pointer
+//     let _ = \Dictionary<NonSendableClass, Int>[nonSendableInstance]
+  }
 }
 /*:
  ## Global and static variables
  Global and Static Variables must either be
  - isolated to a global actor, or
- - immutable and of Sendable type.
+ - immutable and of `Sendable` type.
  
  Top-level global variables are implicitly assigned a `@MainActor`.
  */
@@ -300,7 +303,7 @@ let sendableClosure =  { @Sendable [varString] in
  - It can be used as a more granular opt out for `Sendable` checking,
  eliminating the need for `@unchecked Sendable`.
  */
-nonisolated(unsafe) var nonisolatedUnsageGlobal: Int!
+nonisolated(unsafe) var nonisolatedUnsafeGlobal: Int = 0
 /*:
  ## Isolated default value expressions
  Default value expressions have the same isolation as the enclosing function or
@@ -333,10 +336,10 @@ func nonisolatedCaller() async {
  
  The async-let syntax creates a child task.
  */
-let list = [1, 2, 3]
+let array = [1, 2, 3]
 
 let result = try await withThrowingTaskGroup(of: Int.self) { group in
-  for value in list {
+  for value in array {
     group.addTask { value * 10 }
   }
   
@@ -350,7 +353,7 @@ let result = try await withThrowingTaskGroup(of: Int.self) { group in
  ### DiscardingTaskGroup
  - `[Throwing]DiscardingTaskGroup` automatically cleans up its child `Task`s
  when those `Task`s complete.
- - `[Throwing]DiscardingTaskGroup` do not have a `next()` method, nor do they
+ - `[Throwing]DiscardingTaskGroup`s do not have a `next()` method, nor do they
  conform to `AsyncSequence`.
  
  A failure of a single child task, immediately causes cancellation of the group
@@ -425,7 +428,7 @@ func cancellationHandler() async {
   }
 }
 //: ## Suspending execution
-func SuspendingFunc() async throws {
+func SuspendingExectution() async throws {
   await Task.yield()
   
   // It will throw CancellationError if the task is cancelled while it sleeps,
@@ -443,7 +446,7 @@ withUnsafeCurrentTask { unsafeCurrentTask in
   
 }
 //: ## Task local values
-func taskLocals() async {
+func taskLocalValues() async {
   enum TaskLocals {
     @TaskLocal
     static var value: Int = 0
@@ -473,8 +476,8 @@ func taskLocals() async {
   
   assert(syncFunc() == 0)
   let value = await asyncFunc()
-//  assert(value == 0)
 }
+await taskLocalValues()
 /*:
  ## Asynchronous main
  
@@ -503,14 +506,11 @@ func continuation() async throws -> Int {
   let value = try await withCheckedThrowingContinuation{ continuation in
     functionWithClosure { value in
       switch value {
-      case .success(let v):
-        continuation.resume(returning: v)
-      case .failure(let e):
-        continuation.resume(throwing: e)
+      case .success(let value): continuation.resume(returning: value)
+      case .failure(let error): continuation.resume(throwing: error)
       }
     }
   }
-  
   return value
 }
 /*:
@@ -576,7 +576,7 @@ func readIDFromMainActor() -> Int { readIDFromThreadLocal() }
  
  Distributed actors implicitly conform to the `DistributedActor` protocol.
  
- `Distributed methods` can be called on "remote" references of distributed
+ Distributed methods can be called on "remote" references of distributed
  actors, turning those invocations into remote procedure calls.
  All parameter types and return type of such methods must be or conform to
  the `SerializationRequirement` type.
@@ -591,7 +591,7 @@ import Distributed
 // It is possible to declare a module default actor system type
 typealias DefaultDistributedActorSystem = LocalTestingDistributedActorSystem
 
-distributed actor ADistributedActor: Identifiable {
+distributed actor DistributedActor: Identifiable {
   typealias ActorSystem = LocalTestingDistributedActorSystem
   
   // Stored properties cannot be declared distributed nor nonisolated
@@ -614,23 +614,19 @@ distributed actor ADistributedActor: Identifiable {
     // self.actorSystem.resignID(self.id)
   }
   
-  distributed func distributedFunc() -> Int {
-    return storedProperty
-  }
+  distributed func distributedMethod() -> Int { storedProperty }
   
   // Computed properties can only be distributed if they are get-only
-  distributed var computedProperty: Int {
-    0
-  }
+  distributed var computedProperty: Int { 0 }
 }
 
-func distributedActors(actor: ADistributedActor) async throws {
+func distributedActors(actor: DistributedActor) async throws {
   // Stored properties are not accessible across distributed actors
-  // actor.value // Error
+  // actor.storedProperty // Error
   
   // Remote calls are implicitly throwing and async,
   // to account for the potential networking involved
-  let _ = try await actor.distributedFunc()
+  let _ = try await actor.distributedMethod()
   
   // Executes the passed body only when the distributed actor is a local instance
   await actor.whenLocal { isolatedActor in
@@ -639,9 +635,9 @@ func distributedActors(actor: ADistributedActor) async throws {
 }
 //: ### Creating a local actor
 let actorSystem = LocalTestingDistributedActorSystem()
-let localActor = ADistributedActor(value: 1, actorSystem: actorSystem)
+let localActor = DistributedActor(value: 1, actorSystem: actorSystem)
 let id = localActor.id
 //: ### Resolving a potentially remote actor
-let potentiallyRemoteActor = try ADistributedActor.resolve(id: id,
+let potentiallyRemoteActor = try DistributedActor.resolve(id: id,
                                                            using: actorSystem)
 //: [Next](@next)
