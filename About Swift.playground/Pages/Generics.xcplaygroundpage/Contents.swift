@@ -156,6 +156,18 @@ struct VariadicType< /* generic parameter pack: */ each T, U> {
 }
 
 VariadicType(values: (1, "a"), value: true)
+//: ### Pack iteration
+func allZeros<each Element: AdditiveArithmetic>(_ values: repeat each Element) -> Bool {
+  for value in repeat each values  {
+    if value != .zero {
+      return false
+    }
+  }
+  return true
+}
+
+allZeros(Int8(0), Float(0))
+allZeros(Int8(0), Float(1))
 //: ## Dispaching
 struct GenericStruct<T> {
   var property: String { "Generic" }
