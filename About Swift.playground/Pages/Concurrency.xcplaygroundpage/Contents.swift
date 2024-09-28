@@ -415,7 +415,8 @@ await withDiscardingTaskGroup { group in
 /*:
  ## Unstructured concurrency
  
- An unstructured task doesn’t have a parent task.
+ An unstructured task doesn’t have a parent task and does not inherit the task
+ executor preference.
  
  Tasks run to completion even if there are no remaining uses of their task
  handle.
@@ -435,7 +436,8 @@ do {
 /*:
  ### Detached tasks
  
- A detached task does not inherit priority, task-local values, or the actor
+ A detached task is an unstructured task that does not inherit priority,
+ task-local values, or the actor
  context.
  */
 do {
@@ -487,14 +489,6 @@ func SuspendingExectution() async throws {
   try await Task.sleep(until: .now + .seconds(3), clock: .continuous)
 }
 
-/*:
- ## withUnsafeCurrentTask
- 
- Calls a closure with an unsafe reference to the current task.
- */
-withUnsafeCurrentTask { unsafeCurrentTask in
-  
-}
 //: ## Task local values
 func taskLocalValues() async {
   enum TaskLocals {
@@ -528,6 +522,15 @@ func taskLocalValues() async {
   let value = await asyncFunc()
 }
 await taskLocalValues()
+/*:
+ ## withUnsafeCurrentTask
+ 
+ Calls a closure with an unsafe reference to the current task.
+ */
+withUnsafeCurrentTask { unsafeCurrentTask in
+  guard let unsafeCurrentTask else { return }
+  unsafeCurrentTask.unownedTaskExecutor
+}
 /*:
  ## Asynchronous main
  
@@ -715,17 +718,18 @@ func resolveUsingResolvable(id: MyDistributedActorSystem.ActorID) async throws {
   let _ = try await actor.distributedMethod()
 }
 /*:
- ## Custom actor executors
+ ## Custom executors
  */
 import Dispatch
 
-final class MySerialExecutor: SerialExecutor {
+final class MySerialExecutor: SerialExecutor, TaskExecutor {
   let queue: DispatchSerialQueue = .init(label: "MySerialExecutorQueue")
   
   func enqueue(_ job: consuming ExecutorJob) {
-    let unownedJob = UnownedJob(job)
+    let job = UnownedJob(job)
     queue.async {
-      unownedJob.runSynchronously(on: self.asUnownedSerialExecutor())
+      job.runSynchronously(isolatedTo: self.asUnownedSerialExecutor(),
+                           taskExecutor: self.asUnownedTaskExecutor())
     }
   }
   
@@ -738,7 +742,9 @@ final class MySerialExecutor: SerialExecutor {
   //    UnownedSerialExecutor(ordinary: self)
   //  }
 }
-
+/*:
+ ### Custom actor executors
+ */
 actor MyActorWithCustomExecutor {
   nonisolated let unownedExecutor: UnownedSerialExecutor
   
@@ -764,4 +770,47 @@ do {
 do {
   let actor = MyActorWithCustomExecutor(unownedExecutor: MainActor.sharedUnownedExecutor)
 }
+/*:
+ ### Task executor preference
+ - Task executors, unlike serial executors, are explicitly owned by tasks as long
+ as they are running on the given task executor.
+ - Structured tasks inherit the task executor preference.
+ - Unstructured tasks do not inherit the task executor preference.
+ 
+ `func` execution semantics:
+ ```
+ switch is isolated {
+ case true:
+  switch actor has unownedExecutor {
+  case true: on specified executor
+  case false:
+    switch task has executor preference {
+    case true: on Task's preferred executor
+    case false: on default (actor) executor
+    }
+  }
+ case false:
+  switch task has executor preference {
+  case true: on Task's preferred executor
+  case false: on global concurrent executor
+  }
+ }
+ ```
+ */
+func specifyTaskExecutorPreference(taskExecutor: any TaskExecutor) async {
+  await withTaskExecutorPreference(taskExecutor) {
+    
+  }
+  
+  // Structured concurrency
+  await withThrowingTaskGroup(of: Void.self) { group in
+    group.addTask(executorPreference: taskExecutor) {}
+  }
+  
+  // Unstructured concurrency
+  Task(executorPreference: taskExecutor) {}
+  Task.detached(executorPreference: taskExecutor) {}
+}
+await specifyTaskExecutorPreference(taskExecutor: MySerialExecutor())
+await specifyTaskExecutorPreference(taskExecutor: globalConcurrentExecutor)
 //: [Next](@next)
