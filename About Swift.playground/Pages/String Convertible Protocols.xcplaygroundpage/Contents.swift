@@ -29,6 +29,17 @@ extension Structure: CustomDebugStringConvertible {
 debugPrint(instance)
 String(reflecting: instance)
 /*:
+ ## DebugDescription
+ 
+ The `DebugDescription` macro converts compatible description implementations
+ written in Swift to an LLDB Type Summary.
+ 
+ It supports `lldbDescription`, `debugDescription` and `description`.
+ */
+@DebugDescription
+extension Structure {
+}
+/*:
  ## LosslessStringConvertible
  
  A type that can be represented as a string in a lossless, unambiguous way.
