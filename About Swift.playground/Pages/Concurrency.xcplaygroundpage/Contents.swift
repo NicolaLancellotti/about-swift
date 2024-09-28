@@ -729,6 +729,10 @@ final class MySerialExecutor: SerialExecutor {
     }
   }
   
+  public func checkIsolated() {
+    dispatchPrecondition(condition: .onQueue(queue))
+  }
+  
   //  Default Implementation:
   //  func asUnownedSerialExecutor() -> UnownedSerialExecutor {
   //    UnownedSerialExecutor(ordinary: self)
@@ -746,6 +750,10 @@ actor MyActorWithCustomExecutor {
 do {
   let serialExecutor = MySerialExecutor()
   let actor = MyActorWithCustomExecutor(unownedExecutor: serialExecutor.asUnownedSerialExecutor())
+
+  serialExecutor.queue.sync {
+    actor.assertIsolated() // calls checkIsolated()
+  }
 }
 
 do {
