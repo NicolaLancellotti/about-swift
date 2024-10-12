@@ -354,6 +354,20 @@ func regionBasedIsolation() async {
   await MyActor().takeNonSendable(x)
 }
 /*:
+ - A `sending` function parameter requires that the argument value be in a
+ disconnected region.
+ At the point of the call, the disconnected region is no longer in the caller's
+ isolation domain, allowing the callee to send the parameter value to a region
+ that is opaque to the caller.
+ - A `sending` result requires that the function implementation returns a value
+ in a disconnected region.
+ */
+func sending(x: sending NonSendableClass,
+             y: sending NonSendableClass) async -> sending NonSendableClass {
+  await MyActor().takeNonSendable(x)
+  return y
+}
+/*:
  ## Global and static variables
  Global and Static Variables must either be
  - isolated to a global actor, or
