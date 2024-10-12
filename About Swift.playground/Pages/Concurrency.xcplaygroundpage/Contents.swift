@@ -186,8 +186,13 @@ extension MyActor {
 /*:
  ### Global actors
  
- Any declaration can state that it is actor-isolated to that particular global
- actor by naming the global actor type as an attribute
+ - Any declaration can state that it is actor-isolated to that particular global
+ actor by naming the global actor type as an attribute.
+ - Stored properties of `Sendable` type in a global-actor-isolated value type
+ are treated as `nonisolated` when used within the module that defines the
+ property.
+ - A global-actor-isolated subclass of a non-isolated, non-Sendable class is
+ allowed, but it must be non-Sendable.
  */
 @globalActor
 public struct MyGlobalActor {
@@ -294,12 +299,16 @@ await functionWithIsolatedAny {  }
  In a context that expects a sendable closure, a closure that satisfies the
  requirements implicitly conforms to `Sendable`.
  
- Global functions implicitly conform to the `Sendable` protocol.
- 
  A closure formed within an actor-isolated context is
  - actor-isolated if it is non-sendable (it cannot escape the concurrency
  domain),
  - non-isolated if it is @Sendable.
+ 
+ *Global functions* and *global-actor-isolated functions and closures*
+ implicitly conform to the `Sendable` protocol.
+
+ *Global-actor-isolated closures* are allowed to capture non-Sendable values
+ despite being `@Sendable`.
  
  ### Sendable methods
  Implicitly conform to `Sendable`:
