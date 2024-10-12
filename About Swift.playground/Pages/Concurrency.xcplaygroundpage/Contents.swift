@@ -338,6 +338,22 @@ func sendable() {
   }
 }
 /*:
+ ### Region based Isolation
+ Through the usage of isolation regions, the compiler can now prove that
+ sending a value that does not conform to the Sendable protocol over an
+ isolation boundary cannot result in races because the value (and any other
+ value that might reference it) is not used in the caller after the point of
+ sending.
+ */
+extension MyActor {
+  func takeNonSendable(_ x: NonSendableClass) {  }
+}
+
+func regionBasedIsolation() async {
+  let x = NonSendableClass()
+  await MyActor().takeNonSendable(x)
+}
+/*:
  ## Global and static variables
  Global and Static Variables must either be
  - isolated to a global actor, or
